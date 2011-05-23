@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>core</artifactId>
         <groupId>eu.alert-project.iccs.stardom</groupId>
+        <artifactId>core</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>connector</artifactId>
-    <packaging>jar</packaging>
-
-    <name>ALERT - STARDOM Connector</name>
+    <artifactId>alert-connector</artifactId>
+    <name>ALERT - STARDOM Alert Connector</name>
+    <packaging>war</packaging>
 
     <dependencies>
 
@@ -72,12 +71,8 @@
             <artifactId>spring-security-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>facelets-taglib-jsf20-spring-3</artifactId>
-        </dependency>
 
-        <!-- JSON Web Services -->
+       <!-- JSON Web Services -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
@@ -125,44 +120,36 @@
             <artifactId>jpa-api</artifactId>
         </dependency>
 
-
          <!-- View -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+
+        <!-- Inhouse -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>el-api</artifactId>
-            <version>2.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>el-impl</artifactId>
-            <version>2.2</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
+            <groupId>com.existanze.libraries</groupId>
+            <artifactId>servlet-api</artifactId>
         </dependency>
 
 
+        <!-- Local -->
         <!-- Local -->
         <dependency>
             <version>${project.version}</version>
             <groupId>${project.groupId}</groupId>
             <artifactId>domain</artifactId>
+        </dependency>
+        <dependency>
+            <version>${project.version}</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>connector</artifactId>
         </dependency>
         <dependency>
             <version>${project.version}</version>
@@ -173,4 +160,3 @@
 
     </dependencies>
 </project>
-
