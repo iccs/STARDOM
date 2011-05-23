@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <packaging>pom</packaging>
+
+    <groupId>eu.alert-project.iccs.stardom</groupId>
+    <artifactId>core</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>Alert - STARDOM Core</name>
+
+    <modules>
+        <module>eu.alert-project.iccs.stardom.identifier</module>
+        <module>eu.alert-project.iccs.stardom.constructor</module>
+        <module>eu.alert-project.iccs.stardom.connector</module>
+        <module>eu.alert-project.iccs.stardom.datastore</module>
+        <module>eu.alert-project.iccs.stardom.alert</module>
+    </modules>
+
+    <properties>
+
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--  Test -->
+        <junit.junit.version>4.8.1</junit.junit.version>
+        <org.dbunit.dbunit.version>2.4.8</org.dbunit.dbunit.version>
+
+        <org.slf4j.slf4j-api.version>1.6.1</org.slf4j.slf4j-api.version>
+        <org.springframework.version>3.0.3.RELEASE</org.springframework.version>
+
+        <!-- JPA -->
+		<org.hibernate.hibernate-core.version>3.5.1-Final</org.hibernate.hibernate-core.version>
+		<org.hibernate.hibernate-entitymanager>3.5.1-Final</org.hibernate.hibernate-entitymanager>
+		<org.hibernate.hibernate-annotations>3.5.1-Final</org.hibernate.hibernate-annotations>
+        <concurrent.concurrent.version>1.3.4</concurrent.concurrent.version>
+		<javax.transaction.jta.version>1.1</javax.transaction.jta.version>
+
+        <commons-lang.commons-lang.version>2.4</commons-lang.commons-lang.version>
+
+
+        <commons-codec.commons-codec.version>1.3</commons-codec.commons-codec.version>
+        <mysql.mysql-connector-java.version>5.1.16</mysql.mysql-connector-java.version>
+        <org.apache.tiles.version>2.2.2</org.apache.tiles.version>
+        <javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
+        <org.freemarker.version>2.3.16</org.freemarker.version>
+    </properties>
+
+    <build>
+        <pluginManagement>
+
+            <plugins>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>yuicompressor-maven-plugin</artifactId>
+                    <version>1.1</version>
+                </plugin>
+            </plugins>
+
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>utf-8</encoding>
+                </configuration>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${org.slf4j.slf4j-api.version}</version>
+            </dependency>
+
+
+            <!-- Platform -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-core</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-config</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-acl</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-web</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
+            <!-- http://stackoverflow.com/questions/2925040/secifanygranted-roles-role-admin-tag-ignored -->
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>facelets-taglib-jsf20-spring-3</artifactId>
+                <version>0.5</version>
+            </dependency>
+
+            <!-- Webservices -->
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-core-asl</artifactId>
+                <version>1.8.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>1.8.1</version>
+            </dependency>
+
+            <!-- JPA -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.mysql-connector-java.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate.java-persistence</groupId>
+                <artifactId>jpa-api</artifactId>
+                <version>2.0-cr-1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${org.hibernate.hibernate-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>concurrent</groupId>
+                <artifactId>concurrent</artifactId>
+                <version>${concurrent.concurrent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${org.hibernate.hibernate-entitymanager}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-annotations</artifactId>
+                <version>${org.hibernate.hibernate-annotations}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jolbox</groupId>
+                <artifactId>bonecp</artifactId>
+                <version>0.7.1.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.transaction</groupId>
+                <artifactId>jta</artifactId>
+                <version>${javax.transaction.jta.version}</version>
+            </dependency>
+
+            <!-- View -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>${javax.servlet.jstl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tiles</groupId>
+                <artifactId>tiles-servlet</artifactId>
+                <version>${org.apache.tiles.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tiles</groupId>
+                <artifactId>tiles-extras</artifactId>
+                <version>${org.apache.tiles.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tiles</groupId>
+                <artifactId>tiles-jsp</artifactId>
+                <version>${org.apache.tiles.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${org.freemarker.version}</version>
+            </dependency>
+
+
+            <dependency>
+              <groupId>com.sun.faces</groupId>
+              <artifactId>jsf-api</artifactId>
+              <version>2.1.1-b04</version>
+            </dependency>
+
+            <dependency>
+              <groupId>com.sun.faces</groupId>
+              <artifactId>jsf-impl</artifactId>
+              <version>2.1.1-b04</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.richfaces</groupId>
+                <artifactId>richfaces-bom</artifactId>
+                <version>4.0.0.Final</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.primefaces</groupId>
+                <artifactId>primefaces</artifactId>
+                <version>2.2</version>
+                <!-- Stable -> 2.2 -->
+            </dependency>
+
+            <!--  JSR 303 with Hibernate Validator -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>1.0.0.GA</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>4.1.0.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.existanze.libraries</groupId>
+                <artifactId>jsr303</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+
+
+            <!-- Required by @DateTimeFormat validation annotation -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>1.6.2</version>
+            </dependency>
+
+
+            <!-- Inhouse -->
+            <dependency>
+                <groupId>com.existanze.libraries</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>0.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.existanze.spring.jsf2</groupId>
+                <artifactId>viewscope-library</artifactId>
+                <version>0.0.3</version>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
+
+    <dependencies>
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j.slf4j-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${org.slf4j.slf4j-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${org.slf4j.slf4j-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <!-- Commong Dependencies -->
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons-lang.commons-lang.version}</version>
+        </dependency>
+
+
+         <!--  Test Dependencies  -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>${org.dbunit.dbunit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons-codec.commons-codec.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+</project>
