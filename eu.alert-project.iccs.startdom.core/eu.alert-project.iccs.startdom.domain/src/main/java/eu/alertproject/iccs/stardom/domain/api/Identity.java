@@ -14,6 +14,7 @@ public class Identity {
 
     private String uuid;
     private List<Person> isPersons;
+
     private List<Person> isNotPersons;
 
     /**
