@@ -4,7 +4,7 @@
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.metrics">
+    <content url="file://$MODULE_DIR$/../eu.alert-project.iccs.stardom.core">
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
