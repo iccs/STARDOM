@@ -1,7 +1,13 @@
 package eu.alertproject.iccs.stardom.domain.api;
 
+import com.existanze.libraries.orm.dao.CommonDao;
+import com.existanze.libraries.orm.domain.SimpleBean;
+
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by IntelliJ IDEA.
@@ -10,12 +16,41 @@ import java.util.List;
  * Time: 10:22
  * To change this template use File | Settings | File Templates.
  */
-public class Identity {
+@Entity
+@Table(name="identity")
+public class Identity implements SimpleBean{
 
+    @TableGenerator(
+            name="tseq",
+            table="sequence",
+            pkColumnName="sequence_name",
+            valueColumnName="sequence_index",
+            pkColumnValue="identity_sequence",
+            allocationSize = 1)
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.TABLE, generator="tseq")
+    private Integer id;
+
+    @Column
     private String uuid;
-    private List<Person> isPersons;
 
-    private List<Person> isNotPersons;
+
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "identity_is_person",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name="identity_id")
+    )
+    private Set<Person> isPersons;
+
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "identity_not_person",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name="identity_id")
+    )
+    private Set<Person> isNotPersons;
 
     /**
      * This creates an Identiy having a #uuid of {@System.currentTimeMillis}
@@ -30,28 +65,36 @@ public class Identity {
     public Identity(String uuid) {
         this.uuid = uuid;
 
-        isPersons = new ArrayList<Person>();
-        isNotPersons = new ArrayList<Person>();
+        isPersons = new HashSet<Person>();
+        isNotPersons = new HashSet<Person>();
     }
 
+
+    public Integer getId(){
+        return id;
+    }
+
+    public void setId(Integer id){
+        this.id = id;
+    }
 
     public String getUuid() {
         return uuid;
     }
 
-    public List<Person> getPersons() {
+    public Set<Person> getPersons() {
         return isPersons;
     }
 
-    public void setPersons(List<Person> persons) {
+    public void setPersons(Set<Person> persons) {
         isPersons = persons;
     }
 
-    public List<Person> getNotPersons() {
+    public Set<Person> getNotPersons() {
         return isNotPersons;
     }
 
-    public void setNotPersons(List<Person> notPersons) {
+    public void setNotPersons(Set<Person> notPersons) {
         isNotPersons = notPersons;
     }
 

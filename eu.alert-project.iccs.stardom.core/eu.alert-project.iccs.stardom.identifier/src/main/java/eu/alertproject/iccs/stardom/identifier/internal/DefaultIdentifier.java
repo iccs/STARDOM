@@ -346,7 +346,7 @@ public class DefaultIdentifier implements Identifier{
 
     private List<Person> hasMatchingPoperty(Identity i, Person p){
 
-        List<Person> persons = i.getPersons();
+        Set<Person> persons = i.getPersons();
 
         List<Person> ret = new ArrayList<Person>();
 
@@ -367,7 +367,8 @@ public class DefaultIdentifier implements Identifier{
                     Object personValue = method.invoke(person);
                     Object lookupValue = method.invoke(p);
 
-                    if(StringUtils.equalsIgnoreCase(personValue.toString(), lookupValue.toString())){
+                    if( (personValue == null && lookupValue == null)
+                        || StringUtils.equalsIgnoreCase(personValue.toString(), lookupValue.toString())){
                         ret.add(person);
                         break;
                     }

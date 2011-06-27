@@ -1,17 +1,18 @@
 package eu.alertproject.iccs.stardom.identifier;
 
+import eu.alertproject.iccs.stardom.domain.api.Identity;
+import eu.alertproject.iccs.stardom.domain.api.Person;
 import eu.alertproject.iccs.stardom.identifier.api.Identifier;
 import eu.alertproject.iccs.stardom.identifier.api.IdentifierWeightConfiguration;
 import eu.alertproject.iccs.stardom.identifier.api.LevelWeightConfiguration;
 import eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration;
 import eu.alertproject.iccs.stardom.identifier.internal.DefaultIdentifier;
-import eu.alertproject.iccs.stardom.domain.api.Identity;
-import eu.alertproject.iccs.stardom.domain.api.Person;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -102,20 +103,21 @@ public class DefaultIdentifierTest {
 
         Assert.assertEquals(2, identity.getPersons().size());
 
+        Iterator<Person> personIterator = identity.getPersons().iterator();
         assertPerson(
                     persons.get(0),
-                    identity.getPersons().get(0));
+                    personIterator.next());
 
         assertPerson(
                     persons.get(1),
-                    identity.getPersons().get(1));
+                    personIterator.next());
 
 
 
         Assert.assertEquals(1, identityB.getPersons().size());
         assertPerson(
                     persons.get(2),
-                    identityB.getPersons().get(0));
+                    identityB.getPersons().iterator().next());
 
 
 

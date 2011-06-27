@@ -11,5 +11,17 @@
 
     <artifactId>domain</artifactId>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>org.hibernate.java-persistence</groupId>
+            <artifactId>jpa-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.existanze.libraries</groupId>
+            <artifactId>orm</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
