@@ -72,7 +72,6 @@
     <orderEntry type="library" name="Maven: org.hibernate.java-persistence:jpa-api:2.0-cr-1" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:1.6.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
-    <orderEntry type="library" name="Maven: com.existanze.libraries:servlet-api:0.0.2" level="project" />
     <orderEntry type="module" module-name="eu.alert-project.iccs.startdom.domain" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />

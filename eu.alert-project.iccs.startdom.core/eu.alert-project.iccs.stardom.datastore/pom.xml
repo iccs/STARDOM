@@ -12,5 +12,174 @@
     <packaging>jar</packaging>
     <name>ALERT - STARDOM Datastore</name>
 
+    <properties>
+
+        <db.migration.host>localhost</db.migration.host>
+        <db.migration.port>8889</db.migration.port>
+        <db.migration.db></db.migration.db>
+        <db.migration.username></db.migration.username>
+        <db.migration.password></db.migration.password>
+
+    </properties>
+    <profiles>
+        <profile>
+            <id>code</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>dev</value>
+                </property>
+            </activation>
+            <properties>
+                <db.migration.host>localhost</db.migration.host>
+                <db.migration.port>8889</db.migration.port>
+                <db.migration.db>alert_dev</db.migration.db>
+                <db.migration.username>alert</db.migration.username>
+                <db.migration.password>1234</db.migration.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>test</value>
+                </property>
+            </activation>
+            <properties>
+                <db.migration.host>localhost</db.migration.host>
+                <db.migration.port>8889</db.migration.port>
+                <db.migration.db>alert_test</db.migration.db>
+                <db.migration.username>alert</db.migration.username>
+                <db.migration.password>1234</db.migration.password>
+            </properties>
+        </profile>
+    </profiles>
+    <build>
+
+        <plugins>
+            <plugin>
+                <groupId>com.carbonfive.db-support</groupId>
+                <artifactId>db-migration-maven-plugin</artifactId>
+                <version>0.9.9-m5</version>
+                <configuration>
+                    <url>jdbc:mysql://${db.migration.host}:${db.migration.port}/${db.migration.db}</url>
+                    <username>${db.migration.username}</username>
+                    <password>${db.migration.password}</password>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.16</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<workingDirectory>target/test-classes/</workingDirectory>
+				</configuration>
+			</plugin>
+        </plugins>
+    </build>
+    <dependencies>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.existanze.libraries</groupId>
+            <artifactId>orm</artifactId>
+        </dependency>
+
+
+        <!-- Needed for the time comparison -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>org.hibernate.java-persistence</groupId>
+            <artifactId>jpa-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.existanze.libraries</groupId>
+            <artifactId>jsr303</artifactId>
+        </dependency>
+
+
+
+        <dependency>
+			<groupId>com.jolbox</groupId>
+			<artifactId>bonecp</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+        </dependency>
+
+
+    </dependencies>
 
 </project>
