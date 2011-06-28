@@ -13,7 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="person")
-public class Person implements SimpleBean{
+public class Profile implements SimpleBean{
 
     @TableGenerator(
             name="tseq",
@@ -40,10 +40,10 @@ public class Person implements SimpleBean{
     private String email;
 
 
-    public Person() {
+    public Profile() {
     }
 
-    public Person(String name, String lastname, String username, String email) {
+    public Profile(String name, String lastname, String username, String email) {
         this.name = name;
         this.lastname = lastname;
         this.username = username;
@@ -96,13 +96,13 @@ public class Person implements SimpleBean{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Person person = (Person) o;
+        Profile profile = (Profile) o;
 
-        if (email != null ? !email.equals(person.email) : person.email != null) return false;
-        if (id != null ? !id.equals(person.id) : person.id != null) return false;
-        if (lastname != null ? !lastname.equals(person.lastname) : person.lastname != null) return false;
-        if (name != null ? !name.equals(person.name) : person.name != null) return false;
-        if (username != null ? !username.equals(person.username) : person.username != null) return false;
+        if (email != null ? !email.equals(profile.email) : profile.email != null) return false;
+        if (id != null ? !id.equals(profile.id) : profile.id != null) return false;
+        if (lastname != null ? !lastname.equals(profile.lastname) : profile.lastname != null) return false;
+        if (name != null ? !name.equals(profile.name) : profile.name != null) return false;
+        if (username != null ? !username.equals(profile.username) : profile.username != null) return false;
 
         return true;
     }
@@ -119,7 +119,7 @@ public class Person implements SimpleBean{
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Profile{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +

@@ -1,0 +1,50 @@
+<dataset>
+
+    <profile
+          id="1"
+          name="John"
+          lastname="Smith"
+          username="jsmith"
+          email="jsmith@hotmail.com"/>
+
+    <profile
+          id="2"
+          name="John"
+          lastname="Smith"
+          username="jsmith"
+          email="jsmith@gmail.com"/>
+
+
+    <profile
+          id="3"
+          name="John"
+          lastname="Steward"
+          username="jsmiths"
+          email="jsmith@gmail.com"/>
+
+    <profile
+          id="4"
+          name="Fotis"
+          lastname="Paraskevopoulos"
+          username="fotisp"
+          email="fotisp@superemail.ex"/>
+
+
+    <profile
+          id="5"
+          name="Fotis"
+          lastname="Paraskevopoulos"
+          username="fotakis"
+          email="fotisp@superemail.ex"/>
+
+    <profile
+          id="6"
+          name="Fotios"
+          lastname="Paraskevopoulos"
+          username="whatever"
+          email="fotisp@hotm.ex"/>
+
+    <sequence
+        sequence_name="profile_sequence"
+        sequence_index="7"/>
+</dataset>

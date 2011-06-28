@@ -1,0 +1,30 @@
+<dataset>
+
+    <identity_is_profile
+            identity_id="1"
+            profile_id="1"/>
+
+    <identity_is_profile
+            identity_id="1"
+            profile_id="2"/>
+
+
+    <identity_is_profile
+            identity_id="2"
+            profile_id="3"/>
+
+
+    <identity_is_profile
+            identity_id="3"
+            profile_id="4"/>
+
+    <identity_is_profile
+            identity_id="3"
+            profile_id="5"/>
+
+    <identity_is_profile
+            identity_id="4"
+            profile_id="6"/>
+
+
+</dataset>
