@@ -1,14 +1,17 @@
 package eu.alertproject.iccs.stardom.identifier.internal;
 
+import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
+import eu.alertproject.iccs.stardom.datastore.api.dao.ProfileDao;
+import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.identifier.api.Identifier;
 import eu.alertproject.iccs.stardom.identifier.api.IdentifierWeightConfiguration;
 import eu.alertproject.iccs.stardom.identifier.api.LevelWeightConfiguration;
 import eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
-import eu.alertproject.iccs.stardom.domain.api.Person;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -27,6 +30,12 @@ import java.util.*;
 public class DefaultIdentifier implements Identifier{
 
     private Logger logger = LoggerFactory.getLogger(DefaultIdentifier.class);
+
+    @Autowired
+    IdentityDao identityDao;
+
+    @Autowired
+    ProfileDao profileDao;
 
     private IdentifierWeightConfiguration weightConfiguration;
 
@@ -70,7 +79,7 @@ public class DefaultIdentifier implements Identifier{
     }
 
     @Override
-    public boolean match(Person a, Person b){
+    public boolean match(Profile a, Profile b){
         logger.trace("boolean match() A({}) and B ({})",a,b);
 
         double anIf = getIf(a, b);
@@ -79,7 +88,7 @@ public class DefaultIdentifier implements Identifier{
 
     }
 
-    public double getIf(Person a, Person b) {
+    public double getIf(Profile a, Profile b) {
 
 
 
@@ -202,18 +211,130 @@ public class DefaultIdentifier implements Identifier{
                 + ((1-misLevel)*levelWeights.getLevelMl());
     }
 
+
     @Override
-    public Identity find(Person person) {
-        return null;
+    public Identity find(Profile profile) {
+
+        List<Identity> possibleMatches = identityDao.findPossibleMatches(profile);
+        Map<Identity, List<Profile>> matches = new HashMap<Identity, List<Profile>>();
+
+        for(Identity i : possibleMatches){
+
+            logger.trace("List<Identity> identify() find candidate identity  ");
+            List<Profile> identityMatchedProfiles = hasMatchingPoperty(i, profile);
+
+            if(identityMatchedProfiles.size() <= 0 ){
+                logger.trace("List<Identity> identify() No matching cadidate found, a new one is created");
+
+                Identity newIdentity = new Identity();
+                newIdentity.addToProfiles(profile);
+
+                Identity insert = identityDao.insert(i);
+                return insert;
+
+            }else{
+
+                /**
+                 * Each time an identity is matched we can't just look at the IF and
+                 * return the match, because there may be other candidate identities
+                 * that will do the work!.
+                 *
+                 * Store the possible identities in order to check the isPersons array
+                 * for all the possible identities
+                 *
+                 */
+                logger.trace("List<Identity> identify() Possible matches found added to hash");
+                logger.trace("List<Identity> identify() {}", identityMatchedProfiles);
+                matches.put(i, identityMatchedProfiles);
+            }
+        }
+
+        /**
+         *
+         * For each of the possible identities, look for matching persons in the isPersons
+         * array list.
+         *
+         * Get the IF of each and store in this array.
+         *
+         * We are trying to avoid the case where 2 possible matched identities exist, but the
+         * IF of one is greater than the other
+         *
+         */
+        Iterator<Identity> iterator = matches.keySet().iterator();
+        List<PossibleProfileIdentity> possibleIdentities = new ArrayList<PossibleProfileIdentity>();
+
+
+        while(iterator.hasNext()){
+
+
+            Identity next = iterator.next();
+            logger.trace("List<Identity> identify() checking if it is in identity {}",next.getUuid());
+
+            List<Profile> possibleProfiles = matches.get(next);
+            for(Profile lookupProfile : possibleProfiles){
+
+                logger.trace("List<Identity> identify() checking {} agains {} ",profile, lookupProfile);
+                double anIf = getIf(profile, lookupProfile);
+
+                logger.trace("List<Identity> identify() got an IF of {} ",anIf);
+                if(anIf >= this.getWeightConfiguration().getThreshold()){
+
+                    logger.trace("List<Identity> identify() It is a possible identity keep it");
+                    possibleIdentities.add(
+                            new PossibleProfileIdentity(
+                                    next,
+                                    lookupProfile,
+                                    anIf)
+                    );
+                }
+            }
+        }
+
+        /**
+         * When none of the possible candidates has been matched then
+         * we have exhausted all options and we need to create new
+         * identity in our array
+         */
+        if(possibleIdentities.size() <= 0){
+            //no one was matched, create the identity
+            logger.trace("List<Identity> identify() No possible identity matched  a new one is created");
+            Identity newIdentity = new Identity();
+            newIdentity.addToProfiles(profile);
+            Identity insert = identityDao.insert(newIdentity);
+
+            return insert;
+
+        }else{
+
+            /**
+             * We assume there are more than 1 items in this list, so we
+             * sort based on the IF and add to the identity the profile with the
+             * greatest IF
+             */
+            Collections.<PossibleProfileIdentity>sort(possibleIdentities);
+            PossibleProfileIdentity possibleProfileIdentity = possibleIdentities.get(0);
+
+            // The followin is probably redundant, I don't have time to check
+            // TODO Make this better
+            Identity identity = possibleProfileIdentity.getIdentity();
+            Identity byId = identityDao.findById(identity.getId());
+
+            Profile byId1 = profileDao.findById(possibleProfileIdentity.getProfile().getId());
+            byId.addToProfiles(byId1);
+
+            Identity update = identityDao.update(byId);
+            return update;
+
+        }
     }
 
     /**
      * TODO Make this better than O(n2)
-     * @param person
+     * @param profile
      * @return
      */
     @Override
-    public List<Identity> identify(List<Person> person) {
+    public List<Identity> identify(List<Profile> profile) {
 
         ArrayList<Identity> identities = new ArrayList<Identity>();
 
@@ -221,25 +342,25 @@ public class DefaultIdentifier implements Identifier{
          * Here you should find a common property with a existing
          * identity, check if the identity matches,
          * if none is found then create one and loop to the next
-         * person
+         * profile
          *
          */
-        for(Person p : person){
+        for(Profile p : profile){
 
-            logger.trace("List<Identity> identify() checking person {} ",p);
+            logger.trace("List<Identity> identify() checking profile {} ",p);
 
-            Map<Identity, List<Person>> matches = new HashMap<Identity, List<Person>>();
+            Map<Identity, List<Profile>> matches = new HashMap<Identity, List<Profile>>();
 
 
             for(Identity i : identities){
 
                 logger.trace("List<Identity> identify() find candidate identity  ");
-                List<Person> identityMatchedPersons = hasMatchingPoperty(i, p);
+                List<Profile> identityMatchedProfiles = hasMatchingPoperty(i, p);
 
-                if(identityMatchedPersons.size() <= 0 ){
+                if(identityMatchedProfiles.size() <= 0 ){
                     logger.trace("List<Identity> identify() No matching cadidate found, a new one is created");
                     Identity newIdentity = new Identity();
-                    newIdentity.addToPerson(p);
+                    newIdentity.addToProfiles(p);
                     identities.add(newIdentity);
 
                 }else{
@@ -254,8 +375,8 @@ public class DefaultIdentifier implements Identifier{
                      *
                      */
                     logger.trace("List<Identity> identify() Possible matches found added to hash");
-                    logger.trace("List<Identity> identify() {}",identityMatchedPersons);
-                    matches.put(i, identityMatchedPersons);
+                    logger.trace("List<Identity> identify() {}", identityMatchedProfiles);
+                    matches.put(i, identityMatchedProfiles);
                 }
             }
 
@@ -275,7 +396,7 @@ public class DefaultIdentifier implements Identifier{
              * IF of one is greater than the other
              *
              */
-            List<PossiblePersonIdentity> possibleIdentities = new ArrayList<PossiblePersonIdentity>();
+            List<PossibleProfileIdentity> possibleIdentities = new ArrayList<PossibleProfileIdentity>();
 
 
             while(iterator.hasNext()){
@@ -284,18 +405,18 @@ public class DefaultIdentifier implements Identifier{
                 Identity next = iterator.next();
                 logger.trace("List<Identity> identify() checking if it is in identity {}",next.getUuid());
 
-                List<Person> possiblePersons = matches.get(next);
-                for(Person lookupPerson : possiblePersons){
+                List<Profile> possibleProfiles = matches.get(next);
+                for(Profile lookupProfile : possibleProfiles){
 
-                    logger.trace("List<Identity> identify() checking {} agains {} ",p, lookupPerson);
-                    double anIf = getIf(p, lookupPerson);
+                    logger.trace("List<Identity> identify() checking {} agains {} ",p, lookupProfile);
+                    double anIf = getIf(p, lookupProfile);
 
                     logger.trace("List<Identity> identify() got an IF of {} ",anIf);
                     if(anIf >= this.getWeightConfiguration().getThreshold()){
 
                         logger.trace("List<Identity> identify() It is a possible identity keep it");
                         possibleIdentities.add(
-                                new PossiblePersonIdentity(
+                                new PossibleProfileIdentity(
                                         next,
                                         p,
                                         anIf)
@@ -314,19 +435,19 @@ public class DefaultIdentifier implements Identifier{
                 //no one was matched, create the identity
                 logger.trace("List<Identity> identify() No possible identity matched  a new one is created");
                 Identity newIdentity = new Identity();
-                newIdentity.addToPerson(p);
+                newIdentity.addToProfiles(p);
                 identities.add(newIdentity);
 
             }else{
 
                 /**
                  * We assume there are more than 1 items in this list, so we
-                 * sort based on the IF and add to the identity the person with the
+                 * sort based on the IF and add to the identity the profile with the
                  * greatest IF
                  */
-                Collections.<PossiblePersonIdentity>sort(possibleIdentities);
-                PossiblePersonIdentity possiblePersonIdentity = possibleIdentities.get(0);
-                possiblePersonIdentity.getIdentity().addToPerson(possiblePersonIdentity.getPerson());
+                Collections.<PossibleProfileIdentity>sort(possibleIdentities);
+                PossibleProfileIdentity possibleProfileIdentity = possibleIdentities.get(0);
+                possibleProfileIdentity.getIdentity().addToProfiles(possibleProfileIdentity.getProfile());
 
             }
         }
@@ -344,32 +465,37 @@ public class DefaultIdentifier implements Identifier{
      * @return
      */
 
-    private List<Person> hasMatchingPoperty(Identity i, Person p){
+    private List<Profile> hasMatchingPoperty(Identity i, Profile p){
 
-        Set<Person> persons = i.getPersons();
+        Set<Profile> profiles = i.getProfiles();
 
-        List<Person> ret = new ArrayList<Person>();
+        List<Profile> ret = new ArrayList<Profile>();
 
 
-        Field[] fields = Person.class.getDeclaredFields();
+        Field[] fields = Profile.class.getDeclaredFields();
 
         /**
-         * Check each of the available persons in the current identity,
-         * and look to se if there is any person that has a matching
-         * property to that of person p!
+         * Check each of the available profiles in the current identity,
+         * and look to se if there is any profile that has a matching
+         * property to that of profile p!
          *
          */
-        for(Person person : persons){
+        for(Profile profile : profiles){
             for(Field f: fields){
-                try {
-                    Method method = Person.class.getMethod("get" + StringUtils.capitalize(f.getName()));
 
-                    Object personValue = method.invoke(person);
+                if(StringUtils.equalsIgnoreCase(f.getName(), "id")){
+                    continue;
+                }
+
+                try {
+                    Method method = Profile.class.getMethod("get" + StringUtils.capitalize(f.getName()));
+
+                    Object personValue = method.invoke(profile);
                     Object lookupValue = method.invoke(p);
 
                     if( (personValue == null && lookupValue == null)
                         || StringUtils.equalsIgnoreCase(personValue.toString(), lookupValue.toString())){
-                        ret.add(person);
+                        ret.add(profile);
                         break;
                     }
 
@@ -391,22 +517,22 @@ public class DefaultIdentifier implements Identifier{
     }
 
 
-    class PossiblePersonIdentity implements Comparable<PossiblePersonIdentity> {
+    class PossibleProfileIdentity implements Comparable<PossibleProfileIdentity> {
 
         private Identity identity;
-        private Person person;
+        private Profile profile;
         private double matchIf;
 
-        PossiblePersonIdentity(Identity identity, Person person, double matchIf) {
+        PossibleProfileIdentity(Identity identity, Profile profile, double matchIf) {
             this.identity = identity;
-            this.person = person;
+            this.profile = profile;
             this.matchIf = matchIf;
         }
 
         @Override
-        public int compareTo(PossiblePersonIdentity possiblePersonIdentity) {
+        public int compareTo(PossibleProfileIdentity possibleProfileIdentity) {
             return Double.valueOf(getMatchIf()).compareTo(
-                                Double.valueOf(possiblePersonIdentity.getMatchIf()));
+                                Double.valueOf(possibleProfileIdentity.getMatchIf()));
 
 
         }
@@ -415,8 +541,8 @@ public class DefaultIdentifier implements Identifier{
             return identity;
         }
 
-        public Person getPerson() {
-            return person;
+        public Profile getProfile() {
+            return profile;
         }
 
         public double getMatchIf() {

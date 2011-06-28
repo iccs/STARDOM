@@ -1,18 +1,15 @@
 package eu.alertproject.iccs.stardom.alertconnector.api;
 
+import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.identifier.api.LevelWeightConfiguration;
 import eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration;
 import eu.alertproject.iccs.stardom.connector.api.Connector;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
-import eu.alertproject.iccs.stardom.domain.api.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -88,8 +85,8 @@ public class AlertConnector implements Connector {
 
 
         return identificationService.match(
-                new Person(firstNameA,lastNameA,usernameA,emailA),
-                new Person(firstNameB,lastNameB,usernameB,emailB),
+                new Profile(firstNameA,lastNameA,usernameA,emailA),
+                new Profile(firstNameB,lastNameB,usernameB,emailB),
                 threshold,
                 new LevelWeightConfiguration(ulWeight,vpuWeight,mlWeight),
                 new PropertyWeightConfiguration(PropertyWeightConfiguration.Property.FIRSTNAME,firstNameUl,firstNameVpu,firstNameMl),
@@ -101,12 +98,28 @@ public class AlertConnector implements Connector {
     }
 
     @Override
-    public Identity find(Person person) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    @RequestMapping(value = "/identification/find", method = RequestMethod.POST)
+    public @ResponseBody Identity find(
+                            @RequestParam String firstName ,
+                            @RequestParam String lastName ,
+                            @RequestParam String userName ,
+                            @RequestParam String email
+                            ) {
+
+        Identity identity = identificationService.findIdentity(new Profile(firstName,lastName,userName,email));
+
+        return identity;
+
     }
 
     @Override
-    public List<Identity> identify(List<Person> person) {
+    @RequestMapping(value = "/identification/list", method = RequestMethod.GET)
+    public @ResponseBody List<Identity> getAll() {
+        return identificationService.findAll();
+    }
+
+    @Override
+    public List<Identity> identify(List<Profile> profile) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

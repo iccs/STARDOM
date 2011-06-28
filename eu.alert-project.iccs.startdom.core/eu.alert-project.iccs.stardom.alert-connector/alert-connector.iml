@@ -12,7 +12,11 @@
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="fileset1" name="My Fileset" removed="false">
+          <file>file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.alert-connector/src/main/webapp/WEB-INF/classes/applicationContext.xml</file>
+        </fileset>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
@@ -20,7 +24,6 @@
     <output-test url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.alert-connector/target/test-classes" />
     <content url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.alert-connector">
       <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.alert-connector/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.alert-connector/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.alert-connector/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.alert-connector/target/generated-sources/annotations" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.alert-connector/target/alert-connector-0.0.1-SNAPSHOT" />
@@ -31,6 +34,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.3" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:3.0.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-asm:3.0.3.RELEASE" level="project" />
@@ -80,6 +84,8 @@
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.6.1" level="project" />
     <orderEntry type="module" module-name="connector" />
+    <orderEntry type="library" name="Maven: org.springframework.security:facelets-taglib-jsf20-spring-3:0.5" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="module" module-name="identifier" />
     <orderEntry type="module" module-name="datastore" />
     <orderEntry type="library" name="Maven: com.jolbox:bonecp:0.7.1.RELEASE" level="project" />
@@ -87,7 +93,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.8.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:3.0.3.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.dbunit:dbunit:2.4.8" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: commons-codec:commons-codec:1.3" level="project" />
   </component>
 </module>
 

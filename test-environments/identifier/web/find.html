@@ -9,48 +9,43 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            console.log('ready');
 
+            $('#refresh').click(function(){
 
-            $('.slider').slider(
-                {
-                    range: "min",
-                    min: 0,
-                    max: 1,
-                    step: 0.01,
-                    create:function(event,ui){
-                        var s = "#"+this.title;
-                        var current = $(s)
+                $.ajax({
+                    url: 'http://localhost:8080/ws/identification/list',
+                    success:function(data){
+                        console.log(data);
 
-                        var slider = this;
-                        $(this).slider("value",current.attr("value"));
-
-                        current.blur(function(){
-                            $(slider).slider("value",$(this).attr("value"));
-                        });
-
-                    },
-                    slide: function(event, ui){
-                        //change the value of the corresponding input
-                        var s = "#"+this.title;
-                        console.log("title "+s);
-                        var current = $(s)
-
-                        current.val(ui.value);
-                        checkWeights();
                     }
+                });
+            });
 
-                }
-            );
+            $('#nonAjax').click(function(){
+
+                $('#resultContents').html("");
+
+                $.ajax({
+                    url: 'http://localhost:8080/ws/identification/find',
+                    type: 'POST',
+                    data: $('#profile').serialize(),
+                    success: function(result) {
+                        $('#resultContents').html(result);
+                    }
+                });
+
+                $('#firstNameA').val();
+                $('#lastNameA').val();
+                $('#usernameA').val();
+                $('#emailA').val();
+
+
+            });
+
         });
 
 
         function checkWeights(){
-
-
-
-
-
 
 
         }
@@ -59,219 +54,40 @@
 <body>
 
 <div id="identificationUi">
-
-
-    <form id="identificationForm" action="http://localhost:8080/ws/identification/match" method="POST">
-
-        <table>
-            <thead>
-                <tr>
-                    <th colspan="2">General Configuration Options</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="label">Threshold</td>
-                    <td>
-                        <div class="slider" title="threshold"></div>
-                        <input type="text" name="threshold" id="threshold" value="0.74"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label">Univocity Level Weight</td>
-                    <td>
-                        <div class="slider" title="ulWeight"></div>
-                        <input type="text" name="ulWeight" id="ulWeight" value="0.45"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label">Values Per User Weight</td>
-                    <td>
-                        <div class="slider" title="vpuWeight"></div>
-                        <input type="text" name="vpuWeight" id="vpuWeight" value="0.35"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label">Misleading Level Weight</td>
-                    <td><div class="slider" title="mlWeight"></div>
-                        <input type="text" name="mlWeight" id="mlWeight" value="0.20"/>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table>
+    <form id="profile">
+    <table>
+        <thead>
             <tr>
-
-                <td>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th colspan="2">Univocity Level</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="slider" title="firstNameUl"></div>
-                                    <input type="text" name="firstNameUl" id="firstNameUl" value="0.2"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="slider" title="lastNameUl"></div>
-                                    <input type="text" name="lastNameUl" id="lastNameUl" value="0.8"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="slider" title="usernameNameUl"></div>
-                                    <input type="text" name="usernameNameUl" id="usernameNameUl" value="0.8"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="slider" title="emailUl"></div>
-                                    <input type="text" name="emailUl" id="emailUl" value="1"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th colspan="2">Values Per User Level</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                     <div class="slider" title="firstNameVpu"></div>
-                                    <input type="text" name="firstNameVpu" id="firstNameVpu" value="0.8"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="slider" title="lastNameVpu"></div>
-                                    <input type="text" name="lastNameVpu" id="lastNameVpu" value="0.8"/>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="slider" title="usernameVpu"></div>
-                                    <input type="text" name="usernameVpu" id="usernameVpu" value="0.2"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="slider" title="emailVpu"></div>
-                                    <input type="text" name="emailVpu" id="emailVpu" value="0.4"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th colspan="2">Misleading Level</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><div class="slider" title="firstNameMl"></div>
-                                <input type="text" name="firstNameMl" id="firstNameMl" value="0.2"/></td>
-                            </tr>
-                            <tr>
-                                <td><div class="slider" title="lastNameMl"></div>
-                                <input type="text" name="lastNameMl" id="lastNameMl" value="0.8"/></td>
-                            </tr>
-                            <tr>
-                                <td><div class="slider" title="usernameMl"></div>
-                                <input type="text" name="usernameMl" id="usernameMl" value="0.2"/></td>
-                            </tr>
-                            <tr>
-                                <td><div class="slider" title="emailMl"></div>
-                                <input type="text" name="emailMl" id="emailMl" value="0.4"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th colspan="2">Person A</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="label">Firstname</td>
-                                <td><input type="text" name="firstNameA"/></td>
-                            </tr>
-                            <tr>
-                                <td class="label">Lastname</td>
-                                <td><input type="text" name="lastNameA"/></td>
-                            </tr>
-                            <tr>
-                                <td class="label">Username</td>
-                                <td><input type="text" name="usernameA"/></td>
-                            </tr>
-                            <tr>
-                                <td class="label">Email</td>
-                                <td><input type="text" name="emailA"/></td>
-                            </tr>
-                        </tbody>
-
-
-                    </table>
-                </td>
-
-                <td>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th colspan="2">Person B</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="label">Firstname</td>
-                                <td><input type="text" name="firstNameB"/></td>
-                            </tr>
-                            <tr>
-                                <td class="label">Lastname</td>
-                                <td><input type="text" name="lastNameB"/></td>
-                            </tr>
-                            <tr>
-                                <td class="label">Username</td>
-                                <td><input type="text" name="usernameB"/></td>
-                            </tr>
-                            <tr>
-                                <td class="label">Email</td>
-                                <td><input type="text" name="emailB"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-
+                <th colspan="2">Person A</th>
             </tr>
-        </table>
-
-
-        <div class="controls">
-            <input type="Submit" value="Test" id="nonAjax"/>
-
-        </div>
-
+        </thead>
+        <tbody>
+            <tr>
+                <td class="label">Firstname</td>
+                <td><input type="text" name="firstName" id="firstname"/></td>
+            </tr>
+            <tr>
+                <td class="label">Lastname</td>
+                <td><input type="text" name="lastName" id="lastname"/></td>
+            </tr>
+            <tr>
+                <td class="label">Username</td>
+                <td><input type="text" name="userName" id="username"/></td>
+            </tr>
+            <tr>
+                <td class="label">Email</td>
+                <td><input type="text" name="email" id="email"/></td>
+            </tr>
+        </tbody>
+    </table>
     </form>
+    <div class="controls">
+        <input type="Submit" value="Test" id="nonAjax"/>
+        <input type="button" value="List" id="refresh"/>
+
+    </div>
+
 </div>
-<div class="results">
-    Check it out!!
-</div>
+
 </body>
 </html>

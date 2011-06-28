@@ -1,5 +1,11 @@
 package eu.alertproject.iccs.stardom.datastore.api.dao;
 
+import com.existanze.libraries.orm.dao.CommonDao;
+import eu.alertproject.iccs.stardom.domain.api.Identity;
+import eu.alertproject.iccs.stardom.domain.api.Profile;
+
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: fotis
@@ -7,5 +13,7 @@ package eu.alertproject.iccs.stardom.datastore.api.dao;
  * Time: 09:41
  * To change this template use File | Settings | File Templates.
  */
-public interface IdentityDao {
+public interface IdentityDao extends CommonDao<Identity> {
+
+    List<Identity> findPossibleMatches(Profile profile);
 }

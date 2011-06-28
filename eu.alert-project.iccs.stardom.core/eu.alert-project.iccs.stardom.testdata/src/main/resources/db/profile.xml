@@ -44,7 +44,21 @@
           username="whatever"
           email="fotisp@hotm.ex"/>
 
+    <profile
+          id="7"
+          name="Fotis"
+          lastname="Petroul"
+          username="fpetroul"
+          email="petroulf@hotmail.com"/>
+
+    <profile
+          id="8"
+          name="Fotis"
+          lastname="Petroul"
+          username="petroulf"
+          email="petroulf@gmail.com"/>
+
     <sequence
         sequence_name="profile_sequence"
-        sequence_index="7"/>
+        sequence_index="9"/>
 </dataset>

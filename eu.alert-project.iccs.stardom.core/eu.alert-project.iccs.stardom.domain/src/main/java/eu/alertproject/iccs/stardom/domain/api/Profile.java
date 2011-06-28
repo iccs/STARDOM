@@ -12,7 +12,7 @@ import javax.persistence.*;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@Table(name="person")
+@Table(name="profile")
 public class Profile implements SimpleBean{
 
     @TableGenerator(
@@ -20,7 +20,7 @@ public class Profile implements SimpleBean{
             table="sequence",
             pkColumnName="sequence_name",
             valueColumnName="sequence_index",
-            pkColumnValue="person_sequence",
+            pkColumnValue="profile_sequence",
             allocationSize = 1)
 
     @Id

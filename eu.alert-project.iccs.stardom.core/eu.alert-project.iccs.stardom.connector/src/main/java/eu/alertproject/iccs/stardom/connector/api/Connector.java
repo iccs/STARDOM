@@ -1,7 +1,7 @@
 package eu.alertproject.iccs.stardom.connector.api;
 
 import eu.alertproject.iccs.stardom.domain.api.Identity;
-import eu.alertproject.iccs.stardom.domain.api.Person;
+import eu.alertproject.iccs.stardom.domain.api.Profile;
 
 import java.util.List;
 
@@ -29,7 +29,9 @@ public interface Connector {
 
 
 
-    public Identity find(Person person);
-    public List<Identity> identify(List<Person> person);
+    public Identity find(String firstName, String lastName, String userName, String email);
+    public List<Identity> identify(List<Profile> profile);
+
+    public List<Identity> getAll();
 
 }

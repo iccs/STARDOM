@@ -1,7 +1,7 @@
 package eu.alertproject.iccs.stardom.identifier.api;
 
 import eu.alertproject.iccs.stardom.domain.api.Identity;
-import eu.alertproject.iccs.stardom.domain.api.Person;
+import eu.alertproject.iccs.stardom.domain.api.Profile;
 
 import java.util.List;
 
@@ -14,8 +14,19 @@ import java.util.List;
  */
 public interface Identifier {
 
-    public boolean match(Person a, Person b);
-    public Identity find(Person person);
-    public List<Identity> identify(List<Person> person);
+    public boolean match(Profile a, Profile b);
+
+    /**
+     * The following methods searches the local store for
+     * an Identity which matches this profile.
+     *
+     * I case a profile is not found an new Identity should
+     * be created.
+     *
+     * @param profile
+     * @return
+     */
+    public Identity find(Profile profile);
+    public List<Identity> identify(List<Profile> profile);
 
 }

@@ -26,5 +26,13 @@
             identity_id="4"
             profile_id="6"/>
 
+    <identity_is_profile
+            identity_id="5"
+            profile_id="7"/>
+
+    <identity_is_profile
+            identity_id="5"
+            profile_id="8"/>
+
 
 </dataset>

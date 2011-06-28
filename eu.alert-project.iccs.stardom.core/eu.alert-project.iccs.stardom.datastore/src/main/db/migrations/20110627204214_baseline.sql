@@ -16,28 +16,28 @@ create table `identity` (
 insert into sequence values('identity_sequence',0);
 
 
-create table person(
+create table profile(
   id int primary key not null unique,
   `name` varchar(255) not null,
   `lastname` varchar(255) not null,
   `username` varchar(50) not null,
   `email` varchar(255) not null
 )type innodb;
-insert into sequence values('person_sequence',0);
+insert into sequence values('profile_sequence',0);
 
 
-create table identity_is_person(
+create table identity_is_profile(
   identity_id int not null,
-  person_id int not null,
+  profile_id int not null,
   FOREIGN KEY(identity_id) REFERENCES `identity`(id) ON DELETE CASCADE,
-  FOREIGN KEY(person_id) REFERENCES person(id) ON DELETE CASCADE
+  FOREIGN KEY(profile_id) REFERENCES profile(id) ON DELETE CASCADE
 ) type=innodb;
 
-create table identity_not_person(
+create table identity_not_profile(
   identity_id int not null,
-  person_id int not null,
+  profile_id int not null,
   FOREIGN KEY(identity_id) REFERENCES `identity`(id) ON DELETE CASCADE,
-  FOREIGN KEY(person_id) REFERENCES person(id) ON DELETE CASCADE
+  FOREIGN KEY(profile_id) REFERENCES profile(id) ON DELETE CASCADE
 ) type=innodb;
 
 

@@ -20,6 +20,7 @@
         <module>eu.alert-project.iccs.stardom.ui</module>
         <module>eu.alert-project.iccs.stardom.domain</module>
         <module>eu.alert-project.iccs.stardom.metrics</module>
+        <module>eu.alert-project.iccs.stardom.testdata</module>
     </modules>
 
     <properties>
@@ -167,6 +168,12 @@
                 <version>${org.springframework.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
             <!-- http://stackoverflow.com/questions/2925040/secifanygranted-roles-role-admin-tag-ignored -->
             <dependency>
                 <groupId>org.springframework.security</groupId>
@@ -252,12 +259,6 @@
               <version>2.1.1-b04</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.primefaces</groupId>
-                <artifactId>primefaces</artifactId>
-                <version>2.2</version>
-                <!-- Stable -> 2.2 -->
-            </dependency>
 
             <!--  JSR 303 with Hibernate Validator -->
             <dependency>
@@ -278,11 +279,32 @@
             </dependency>
 
 
+
+            <!-- Test -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dbunit</groupId>
+                <artifactId>dbunit</artifactId>
+                <version>${org.dbunit.dbunit.version}</version>
+            </dependency>
+
+
+
             <!-- Required by @DateTimeFormat validation annotation -->
             <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>1.6.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.commons-codec.version}</version>
             </dependency>
 
 
@@ -344,19 +366,16 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${org.springframework.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
-            <version>${org.dbunit.dbunit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

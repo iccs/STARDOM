@@ -36,7 +36,6 @@ public abstract class SpringDbUnitJpaTest {
     private DataSource dataSource;
 
 
-
     public abstract void postConstruct();
     protected abstract String[] getDatasetFiles();
 

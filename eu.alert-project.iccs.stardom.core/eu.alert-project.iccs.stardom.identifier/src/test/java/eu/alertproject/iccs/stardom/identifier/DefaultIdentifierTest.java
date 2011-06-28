@@ -1,7 +1,7 @@
 package eu.alertproject.iccs.stardom.identifier;
 
 import eu.alertproject.iccs.stardom.domain.api.Identity;
-import eu.alertproject.iccs.stardom.domain.api.Person;
+import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.identifier.api.Identifier;
 import eu.alertproject.iccs.stardom.identifier.api.IdentifierWeightConfiguration;
 import eu.alertproject.iccs.stardom.identifier.api.LevelWeightConfiguration;
@@ -58,8 +58,8 @@ public class DefaultIdentifierTest {
     @Test
     public void testMatch() {
 
-        Person pA = new Person("John","Smith","jsmith","jsmith@gmail.com");
-        Person pB = new Person("Juan","Smith","jsmith","jsmith@hotmail.com");
+        Profile pA = new Profile("John","Smith","jsmith","jsmith@gmail.com");
+        Profile pB = new Profile("Juan","Smith","jsmith","jsmith@hotmail.com");
 
         boolean match = identifier.match(pA, pB);
 
@@ -70,8 +70,8 @@ public class DefaultIdentifierTest {
     @Test
     public void testNotMatch(){
 
-        Person pA = new Person("John","Steward","jsmiths","jsmith@gmail.com");
-        Person pB = new Person("John","Smith","jsmith","jsmith@hotmail.com");
+        Profile pA = new Profile("John","Steward","jsmiths","jsmith@gmail.com");
+        Profile pB = new Profile("John","Smith","jsmith","jsmith@hotmail.com");
 
 
         boolean match = identifier.match(pA, pB);
@@ -83,14 +83,14 @@ public class DefaultIdentifierTest {
     public void testIdentify(){
 
 
-        List<Person> persons  =  new ArrayList<Person>();
+        List<Profile> profiles =  new ArrayList<Profile>();
 
-        persons.add(new Person("Fotis","Paraskevopoulos","fotisp","fotisp@superemail.ex"));
-        persons.add(new Person("Fotis","Paraskevopoulos","fotakis","fotisp@superemail.ex"));
-        persons.add(new Person("Fotios","Paraskevopoulos","whatever","fotisp@hotm.ex"));
+        profiles.add(new Profile("Fotis","Paraskevopoulos","fotisp","fotisp@superemail.ex"));
+        profiles.add(new Profile("Fotis","Paraskevopoulos","fotakis","fotisp@superemail.ex"));
+        profiles.add(new Profile("Fotios","Paraskevopoulos","whatever","fotisp@hotm.ex"));
 
 
-        List<Identity> identify = identifier.identify(persons);
+        List<Identity> identify = identifier.identify(profiles);
 
 
         Assert.assertNotNull(identify);
@@ -101,23 +101,23 @@ public class DefaultIdentifierTest {
         Identity identity = identify.get(0);
         Identity identityB = identify.get(1);
 
-        Assert.assertEquals(2, identity.getPersons().size());
+        Assert.assertEquals(2, identity.getProfiles().size());
 
-        Iterator<Person> personIterator = identity.getPersons().iterator();
+        Iterator<Profile> personIterator = identity.getProfiles().iterator();
         assertPerson(
-                    persons.get(0),
+                    profiles.get(0),
                     personIterator.next());
 
         assertPerson(
-                    persons.get(1),
+                    profiles.get(1),
                     personIterator.next());
 
 
 
-        Assert.assertEquals(1, identityB.getPersons().size());
+        Assert.assertEquals(1, identityB.getProfiles().size());
         assertPerson(
-                    persons.get(2),
-                    identityB.getPersons().iterator().next());
+                    profiles.get(2),
+                    identityB.getProfiles().iterator().next());
 
 
 
@@ -130,8 +130,8 @@ public class DefaultIdentifierTest {
      * @param b
      */
     private void assertPerson(
-            Person a,
-            Person b
+            Profile a,
+            Profile b
     ){
         Assert.assertEquals(a,b);
     }

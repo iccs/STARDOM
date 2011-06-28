@@ -1,12 +1,9 @@
 package eu.alertproject.iccs.stardom.domain.api;
 
-import com.existanze.libraries.orm.dao.CommonDao;
 import com.existanze.libraries.orm.domain.SimpleBean;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -38,19 +35,19 @@ public class Identity implements SimpleBean{
 
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(
-            name = "identity_is_person",
-            joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name="identity_id")
+            name = "identity_is_profile",
+            joinColumns = @JoinColumn(name = "identity_id"),
+            inverseJoinColumns = @JoinColumn(name="profile_id")
     )
-    private Set<Person> isPersons;
+    private Set<Profile> profiles;
 
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(
-            name = "identity_not_person",
-            joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name="identity_id")
+            name = "identity_not_profile",
+            joinColumns = @JoinColumn(name = "identity_id"),
+            inverseJoinColumns = @JoinColumn(name="profile_id")
     )
-    private Set<Person> isNotPersons;
+    private Set<Profile> notProfiles;
 
     /**
      * This creates an Identiy having a #uuid of {@System.currentTimeMillis}
@@ -65,8 +62,8 @@ public class Identity implements SimpleBean{
     public Identity(String uuid) {
         this.uuid = uuid;
 
-        isPersons = new HashSet<Person>();
-        isNotPersons = new HashSet<Person>();
+        profiles = new HashSet<Profile>();
+        notProfiles = new HashSet<Profile>();
     }
 
 
@@ -78,28 +75,32 @@ public class Identity implements SimpleBean{
         this.id = id;
     }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
     public String getUuid() {
         return uuid;
     }
 
-    public Set<Person> getPersons() {
-        return isPersons;
+    public Set<Profile> getProfiles() {
+        return profiles;
     }
 
-    public void setPersons(Set<Person> persons) {
-        isPersons = persons;
+    public void setProfiles(Set<Profile> profiles) {
+        this.profiles = profiles;
     }
 
-    public Set<Person> getNotPersons() {
-        return isNotPersons;
+    public Set<Profile> getNotProfiles() {
+        return notProfiles;
     }
 
-    public void setNotPersons(Set<Person> notPersons) {
-        isNotPersons = notPersons;
+    public void setNotProfiles(Set<Profile> notProfiles) {
+        this.notProfiles = notProfiles;
     }
 
-    public void addToPerson(Person p){
-        this.isPersons.add(p);
+    public void addToProfiles(Profile p){
+        this.profiles.add(p);
     }
 
     @Override
