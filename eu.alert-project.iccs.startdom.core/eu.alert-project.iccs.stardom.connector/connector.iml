@@ -4,12 +4,11 @@
     <output url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.connector/target/classes" />
     <output-test url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.connector/target/test-classes" />
     <content url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.connector">
-      <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.connector/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.connector/src/main/resources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.connector/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.connector/target/generated-sources/annotations" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.connector/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.connector/target/maven-archiver" />
-      <excludeFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.connector/target/test-classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -59,7 +58,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.el:el-api:2.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.glassfish.web:el-impl:2.2" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:1.6.2" level="project" />
-    <orderEntry type="module" module-name="eu.alert-project.iccs.startdom.domain" />
+    <orderEntry type="module" module-name="domain" />
     <orderEntry type="library" name="Maven: com.existanze.libraries:orm:0.0.3" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.4" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.6.1" level="project" />

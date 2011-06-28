@@ -4,8 +4,8 @@
     <output url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.identifier/target/classes" />
     <output-test url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.identifier/target/test-classes" />
     <content url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.identifier">
-      <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.identifier/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.identifier/src/main/resources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.identifier/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.identifier/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.identifier/src/test/resources" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.identifier/target/generated-sources/test-annotations" isTestSource="true" />
@@ -17,7 +17,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="eu.alert-project.iccs.startdom.domain" />
+    <orderEntry type="module" module-name="domain" />
     <orderEntry type="library" name="Maven: org.hibernate.java-persistence:jpa-api:2.0-cr-1" level="project" />
     <orderEntry type="library" name="Maven: com.existanze.libraries:orm:0.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.1" level="project" />
