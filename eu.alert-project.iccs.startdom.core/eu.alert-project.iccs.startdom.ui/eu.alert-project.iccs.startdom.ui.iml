@@ -3,7 +3,6 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.ui/target/classes" />
     <output-test url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.ui/target/test-classes" />
-    <exclude-output />
     <content url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.ui">
       <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.ui/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.ui/src/test/java" isTestSource="true" />

@@ -9,6 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.metrics/eu.alert-project.iccs.stardom.metrics.loc/target/generated-sources/annotations" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/../../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.metrics/eu.alert-project.iccs.stardom.metrics.loc/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/../../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.metrics/eu.alert-project.iccs.stardom.metrics.loc/target/maven-archiver" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.metrics/eu.alert-project.iccs.stardom.metrics.loc/target/test-classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/surefire" />
     </content>
     <orderEntry type="inheritedJdk" />
