@@ -15,7 +15,7 @@
     <properties>
 
         <db.migration.host>localhost</db.migration.host>
-        <db.migration.port>8889</db.migration.port>
+        <db.migration.port>${db.port}</db.migration.port>
         <db.migration.db></db.migration.db>
         <db.migration.username></db.migration.username>
         <db.migration.password></db.migration.password>
@@ -32,7 +32,7 @@
             </activation>
             <properties>
                 <db.migration.host>localhost</db.migration.host>
-                <db.migration.port>8889</db.migration.port>
+                <db.migration.port>${db.port}</db.migration.port>
                 <db.migration.db>alert_dev</db.migration.db>
                 <db.migration.username>alert</db.migration.username>
                 <db.migration.password>1234</db.migration.password>
