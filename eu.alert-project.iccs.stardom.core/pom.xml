@@ -388,13 +388,13 @@
     </dependencies>
 
     <repositories>
+
         <repository>
-            <id>svnkit</id>
-            <url>http://maven.svnkit.com/maven2</url>
-            <snapshots>
-			    <enabled>false</enabled>
-			</snapshots>
+          <id>imu-repository</id>
+          <name>Maven Repository Manager running on repo.mycompany.com</name>
+          <url>http://imu.epd.ece.ntua.gr:9991/artifactory/repos/</url>
         </repository>
+
     </repositories>
 
 </project>
