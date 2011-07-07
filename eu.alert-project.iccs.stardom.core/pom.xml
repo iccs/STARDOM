@@ -174,13 +174,6 @@
                 <version>${org.springframework.version}</version>
             </dependency>
 
-            <!-- http://stackoverflow.com/questions/2925040/secifanygranted-roles-role-admin-tag-ignored -->
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>facelets-taglib-jsf20-spring-3</artifactId>
-                <version>0.5</version>
-            </dependency>
-
             <!-- Webservices -->
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
@@ -397,4 +390,11 @@
 
     </repositories>
 
+	<pluginRepositories>
+	    <pluginRepository>
+          <id>imu-repository</id>
+          <name>Maven Repository Manager running on repo.mycompany.com</name>
+          <url>http://imu.epd.ece.ntua.gr:9991/artifactory/repos/</url>
+	    </pluginRepository>
+	</pluginRepositories>
 </project>
