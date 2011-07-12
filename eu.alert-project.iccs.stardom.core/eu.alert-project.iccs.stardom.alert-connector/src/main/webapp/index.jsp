@@ -6,11 +6,11 @@
 
 	<body>
 		<h1>STARDOM Web Services</h1>
-
         <ul>
-            <li><a href="http://<%=request.getRequestURI() %>/ws/identification/match">
-                "http://<%=request.getRequestURI() %>/ws/identification/match" - POST</a></li>
+            <li><a href="<%=request.getRequestURL()%>ws/identification/match">
+                "<%=request.getRequestURL()%>ws/identification/match" - POST</a></li>
         </ul>
+
 	</body>
 
 </html>

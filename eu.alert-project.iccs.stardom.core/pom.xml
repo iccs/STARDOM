@@ -21,6 +21,7 @@
         <module>eu.alert-project.iccs.stardom.domain</module>
         <module>eu.alert-project.iccs.stardom.metrics</module>
         <module>eu.alert-project.iccs.stardom.testdata</module>
+        <module>eu.alert-project.iccs.stardom.bus</module>
     </modules>
 
     <properties>
@@ -271,7 +272,12 @@
                 <version>0.0.1</version>
             </dependency>
 
-
+            <!-- EventBus -->
+            <dependency>
+                <groupId>org.bushe</groupId>
+                <artifactId>eventbus</artifactId>
+                <version>1.4</version>
+            </dependency>
 
             <!-- Test -->
             <dependency>
@@ -354,6 +360,16 @@
             <version>${commons-lang.commons-lang.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.bushe</groupId>
+            <artifactId>eventbus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>bus</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
          <!--  Test Dependencies  -->
         <dependency>

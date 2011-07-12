@@ -43,6 +43,8 @@
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.bushe:eventbus:1.4" level="project" />
+    <orderEntry type="module" module-name="eu.alert-project.iccs.stardom.bus" />
     <orderEntry type="library" scope="TEST" name="Maven: commons-codec:commons-codec:1.3" level="project" />
   </component>
 </module>
