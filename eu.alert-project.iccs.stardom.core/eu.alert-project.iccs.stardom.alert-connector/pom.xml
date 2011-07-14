@@ -88,6 +88,17 @@
             <artifactId>jackson-mapper-asl</artifactId>
         </dependency>
 
+        <!-- Xml Web Services -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+        </dependency>
+
 
 
         <!--  JSR 303 with Hibernate Validator -->
@@ -103,7 +114,6 @@
             <groupId>com.existanze.libraries</groupId>
             <artifactId>jsr303</artifactId>
         </dependency>
-
 
         <!-- Jpa -->
         <dependency>

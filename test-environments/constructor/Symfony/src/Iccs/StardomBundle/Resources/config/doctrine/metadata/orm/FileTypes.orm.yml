@@ -1,0 +1,20 @@
+FileTypes:
+  type: entity
+  table: file_types
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    fileId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: file_id
+    type:
+      type: text
+      nullable: true
+  lifecycleCallbacks: {  }

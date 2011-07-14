@@ -6,4 +6,8 @@ package eu.alertproject.iccs.stardom.connector.api;
  * Time: 14:41
  */
 public class ScmConnectorContext extends AbstractConnectorContext<DefaultScmAction>{
+
+
+
+
 }

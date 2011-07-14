@@ -11,4 +11,25 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>identifier</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- TODO Check if this relationship is really needed -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>connector</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>bus</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

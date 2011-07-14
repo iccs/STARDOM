@@ -1,0 +1,32 @@
+Actions:
+  type: entity
+  table: actions
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    type:
+      type: string
+      length: 1
+      fixed: false
+      nullable: true
+    fileId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: file_id
+    commitId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: commit_id
+    branchId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: branch_id
+  lifecycleCallbacks: {  }

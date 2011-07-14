@@ -1,0 +1,22 @@
+Iccs\StardomBundle\Entity\TagRevisions:
+  type: entity
+  table: tag_revisions
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    tagId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: tag_id
+    commitId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: commit_id
+  lifecycleCallbacks: {  }

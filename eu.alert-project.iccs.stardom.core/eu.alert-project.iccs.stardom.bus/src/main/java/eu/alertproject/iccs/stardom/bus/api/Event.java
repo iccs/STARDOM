@@ -14,4 +14,13 @@ public class Event {
         this.source = source;
         this.payload = payload;
     }
+
+
+    public Object getSource() {
+        return source;
+    }
+
+    public Object getPayload() {
+        return payload;
+    }
 }

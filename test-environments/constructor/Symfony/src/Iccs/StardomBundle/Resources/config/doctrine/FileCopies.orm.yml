@@ -1,0 +1,36 @@
+Iccs\StardomBundle\Entity\FileCopies:
+  type: entity
+  table: file_copies
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    toId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: to_id
+    fromId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: from_id
+    fromCommitId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: from_commit_id
+    newFileName:
+      type: text
+      nullable: true
+      column: new_file_name
+    actionId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: action_id
+  lifecycleCallbacks: {  }

@@ -8,4 +8,6 @@ package eu.alertproject.iccs.stardom.connector.api;
  * To change this template use File | Settings | File Templates.
  */
 public interface ScmAction extends ConnectorAction {
+
+    enum RepositoryType{Git,Svn,Cvs}
 }

@@ -1,0 +1,42 @@
+Iccs\StardomBundle\Entity\FunctionsSrc:
+  type: entity
+  table: functions_src
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    fileId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: file_id
+    commitId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: commit_id
+    moduleId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: module_id
+    header:
+      type: string
+      length: 255
+      fixed: false
+      nullable: true
+    startLine:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: start_line
+    endLine:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: end_line
+  lifecycleCallbacks: {  }
