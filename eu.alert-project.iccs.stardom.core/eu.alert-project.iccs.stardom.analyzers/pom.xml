@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>eu.alert-project.iccs.stardom.analyzers.scm</module>
+        <module>eu.alert-project.iccs.startdom.analyzers.its</module>
+        <module>eu.alert-project.iccs.stardom.analyzers.mailing</module>
     </modules>
 
     <dependencies>

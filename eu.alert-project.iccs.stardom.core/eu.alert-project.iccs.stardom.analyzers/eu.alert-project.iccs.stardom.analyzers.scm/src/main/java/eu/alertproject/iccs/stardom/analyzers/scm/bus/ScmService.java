@@ -1,4 +1,4 @@
-package eu.alertproject.iccs.stardom.analyzers.scm.constructor;
+package eu.alertproject.iccs.stardom.analyzers.scm.bus;
 
 import eu.alertproject.iccs.stardom.bus.api.ScmEvent;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
@@ -24,9 +24,9 @@ import java.util.List;
  * Time: 15:52
  */
 @EventHandler
-public class ScmAnalyzeService {
+public class ScmService {
 
-    private Logger logger = LoggerFactory.getLogger(ScmAnalyzeService.class);
+    private Logger logger = LoggerFactory.getLogger(ScmService.class);
 
     @Autowired
     Identifier findIdentifier;

@@ -25,7 +25,6 @@ public class ScmActivityAnalyzer extends AbstractScmAnalyzer {
         }
 
         sqm.increaseQuantity();
-
         getMetricsService().save(identity, sqm);
     }
 }

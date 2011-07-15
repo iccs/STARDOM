@@ -1,4 +1,4 @@
-package eu.alertproject.iccs.stardom.constructor.api;
+package eu.alertproject.iccs.stardom.analyzers.its.bus;
 
 import eu.alertproject.iccs.stardom.bus.api.ItsEvent;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;

@@ -22,7 +22,6 @@
       <excludeFolder url="file://$MODULE_DIR$/target/alert-connector-0.0.1-SNAPSHOT" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
-      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/war" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -96,6 +95,8 @@
     <orderEntry type="module" module-name="constructor" />
     <orderEntry type="module" module-name="eu.alert-project.iccs.stardom.bus" />
     <orderEntry type="module" module-name="eu.alert-project.iccs.stardom.analyzers.scm" />
+    <orderEntry type="module" module-name="eu.alert-project.iccs.startdom.analyzers.its" />
+    <orderEntry type="module" module-name="eu.alert-project.iccs.stardom.analyzers.mailing" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.8.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:3.0.3.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.dbunit:dbunit:2.4.8" level="project" />
