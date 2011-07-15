@@ -2,6 +2,7 @@ package eu.alertproject.iccs.stardom.datastore.internal.dao;
 
 import com.existanze.libraries.orm.dao.JpaCommonDao;
 import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.expr.BooleanExpression;
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
@@ -18,14 +19,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
  * User: fotis
  * Date: 28/06/11
  * Time: 09:43
- * To change this template use File | Settings | File Templates.
  */
 @Repository("identityDao")
 public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDao{
@@ -52,20 +52,22 @@ public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDa
         q.from(qi);
         q.leftJoin(qi.profiles,qp);
 
+        List<BooleanExpression> be = new ArrayList<BooleanExpression>();
+
         if(!StringUtils.isEmpty(profile.getName())){
-            q.where(qp.name.toUpperCase().eq(profile.getName().toUpperCase()));
+            be.add(qp.name.toUpperCase().eq(profile.getName().toUpperCase()));
         }
 
         if(!StringUtils.isEmpty(profile.getLastname())){
-            q.where(qp.lastname.toUpperCase().eq(profile.getLastname().toUpperCase()));
+            be.add(qp.lastname.toUpperCase().eq(profile.getLastname().toUpperCase()));
         }
 
         if(!StringUtils.isEmpty(profile.getUsername())){
-            q.where(qp.username.toUpperCase().eq(profile.getUsername().toUpperCase()));
+            be.add(qp.username.toUpperCase().eq(profile.getUsername().toUpperCase()));
         }
 
         if(!StringUtils.isEmpty(profile.getEmail())){
-            q.where(qp.email.toUpperCase().eq(profile.getEmail().toUpperCase()));
+            be.add(qp.email.toUpperCase().eq(profile.getEmail().toUpperCase()));
         }
 //
 //
@@ -88,8 +90,9 @@ public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDa
 //        query.setParameter("lastname",profile.getLastname().toUpperCase());
 //        query.setParameter("username",profile.getUsername().toUpperCase());
 
+        q.where(BooleanExpression.anyOf(be.toArray(new BooleanExpression[]{})));
+        q.distinct();
 
-        List<Identity> list = q.list(qi);
-        return list;
+        return q.list(qi);
     }
 }

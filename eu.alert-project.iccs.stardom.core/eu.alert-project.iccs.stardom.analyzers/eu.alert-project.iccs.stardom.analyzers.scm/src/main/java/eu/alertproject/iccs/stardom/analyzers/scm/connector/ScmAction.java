@@ -1,4 +1,8 @@
-package eu.alertproject.iccs.stardom.connector.api;
+package eu.alertproject.iccs.stardom.analyzers.scm.connector;
+
+import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
+
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -10,4 +14,8 @@ package eu.alertproject.iccs.stardom.connector.api;
 public interface ScmAction extends ConnectorAction {
 
     enum RepositoryType{Git,Svn,Cvs}
+
+
+    public Date getDate();
+
 }

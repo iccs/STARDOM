@@ -1,4 +1,4 @@
-package eu.alertproject.iccs.stardom.connector.api;
+package eu.alertproject.iccs.stardom.analyzers.scm.connector;
 
 import java.util.List;
 

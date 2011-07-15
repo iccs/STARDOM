@@ -74,12 +74,13 @@
 
 
     <!-- Services -->
-    <bean class="eu.alertproject.iccs.stardom.constructor.api.ScmAnalyzeService"/>
+    <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmAnalyzeService"/>
     <bean class="eu.alertproject.iccs.stardom.constructor.api.ItsAnalyzeService"/>
     <bean class="eu.alertproject.iccs.stardom.constructor.api.MailingListAnalyzeService"/>
 
 
     <bean class="eu.alertproject.iccs.stardom.bus.api.annotation.EventHandlersBeanPostProcessor"/>
+    <bean class="eu.alertproject.iccs.stardom.constructor.api.spring.AnalyzerBeanPostProcessor"/>
 
 
     <!--  The documentation specified that this will inject the the persistence unit into the class -->

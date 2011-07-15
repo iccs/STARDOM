@@ -22,6 +22,7 @@
         <module>eu.alert-project.iccs.stardom.metrics</module>
         <module>eu.alert-project.iccs.stardom.testdata</module>
         <module>eu.alert-project.iccs.stardom.bus</module>
+        <module>eu.alert-project.iccs.stardom.analyzers</module>
     </modules>
 
     <properties>

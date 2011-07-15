@@ -152,7 +152,6 @@
 
 
         <!-- Local -->
-        <!-- Local -->
         <dependency>
             <version>${project.version}</version>
             <groupId>${project.groupId}</groupId>
@@ -172,6 +171,13 @@
             <version>${project.version}</version>
             <groupId>${project.groupId}</groupId>
             <artifactId>identifier</artifactId>
+        </dependency>
+
+        <!-- Analyzers -->
+        <dependency>
+            <version>${project.version}</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>analyzers-scm</artifactId>
         </dependency>
 
 

@@ -1,4 +1,4 @@
-package eu.alertproject.iccs.stardom.connector.api;
+package eu.alertproject.iccs.stardom.analyzers.scm.connector;
 
 import java.util.Date;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
  * Date: 12/07/11
  * Time: 14:44
  */
-public class DefaultScmAction implements ScmAction{
+public class DefaultScmAction implements ScmAction {
 
     private Date date;
     private RepositoryType type;
@@ -20,6 +20,7 @@ public class DefaultScmAction implements ScmAction{
     private String comment;
 
 
+    @Override
     public Date getDate() {
         return date;
     }
