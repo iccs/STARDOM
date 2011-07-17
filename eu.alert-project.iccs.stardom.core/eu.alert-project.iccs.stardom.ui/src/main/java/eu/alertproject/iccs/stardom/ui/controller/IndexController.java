@@ -1,6 +1,7 @@
 package eu.alertproject.iccs.stardom.ui.controller;
 
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
+import eu.alertproject.iccs.stardom.ui.utils.PaginationBuilderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,8 @@ import java.util.Properties;
 @Controller
 public class IndexController {
 
+    @Autowired
+    PaginationBuilderService paginationBuilderService;
 
     @Autowired
     private Properties systemProperties;
@@ -28,11 +31,14 @@ public class IndexController {
     @Autowired
     private IdentityDao identityDao;
     private int max;
+    private Integer pagesSize;
 
     @PostConstruct
     public void init(){
 
         this.max = Integer.valueOf(systemProperties.get("ui.page.size").toString());
+        this.pagesSize = Integer.valueOf(systemProperties.get("ui.paginator.size").toString());
+
 
     }
 
@@ -50,24 +56,14 @@ public class IndexController {
 
     private Map<String, Object> buildPages(int selectedPage){
 
-
-        Map<String,Object> pagination = new HashMap<String, Object>();
-
-
         int count = identityDao.count();
-        int totalSize = (int) Math.ceil(count/max);
-        int pagesSize = Integer.valueOf(systemProperties.get("ui.paginator.size").toString());
+        int numberOfPages=(int) Math.ceil(count/max);
 
-        Integer[] pages = new Integer[pagesSize];
 
-        for(int i =1; i <= (count/max); i++){
-            pages[i-1]=i;
-        }
-
-        pagination.put("first",1);
-        pagination.put("pages",pages);
-        pagination.put("last",);
-
+        Map<String,Object> pagination = paginationBuilderService.buildPages(
+                selectedPage,
+                numberOfPages,
+                pagesSize);
 
         return pagination;
     }
@@ -80,7 +76,7 @@ public class IndexController {
         ModelAndView mv = new ModelAndView();
 
 
-        mv.addObject("pagination", buildPages());
+        mv.addObject("pagination", buildPages(page));
         mv.addObject("selected", page );
         mv.addObject("identities", identityDao.findAllPaginableOrderByLastName(
                 offest * max,

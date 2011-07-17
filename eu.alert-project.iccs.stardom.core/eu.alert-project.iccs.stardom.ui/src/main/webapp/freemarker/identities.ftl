@@ -60,7 +60,6 @@ recommend sticking to 'spring' -->
                     <a href="<@spring.url "/ui/identities/${pagination['first']}"/>">&laquo; First</a>
                 </#if>
                 </li>
-
                 <#list pagination['pages'] as page>
                     <li class="page <#if page == selected>selected</#if>" >
                         <a href="<@spring.url "/ui/identities/${page}"/>">#{page}</a>
