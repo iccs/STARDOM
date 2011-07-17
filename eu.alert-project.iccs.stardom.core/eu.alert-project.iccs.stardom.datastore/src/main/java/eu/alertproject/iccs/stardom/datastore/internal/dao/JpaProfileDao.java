@@ -3,7 +3,6 @@ package eu.alertproject.iccs.stardom.datastore.internal.dao;
 import com.existanze.libraries.orm.dao.JpaCommonDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.ProfileDao;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**

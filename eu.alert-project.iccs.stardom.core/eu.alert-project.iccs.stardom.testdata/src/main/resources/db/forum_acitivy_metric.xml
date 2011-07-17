@@ -1,0 +1,40 @@
+<dataset>
+
+    <metric
+        id="10"
+        identity_id="1"
+        created_at="2007-06-16"/>
+
+    <metric_quantitative
+        id="10"
+        quantity="10"/>
+
+    <forum_activity_metric
+        id="10"/>
+
+    <metric
+        id="11"
+        identity_id="2"
+        created_at="2007-06-17"/>
+
+    <metric_quantitative
+        id="11"
+        quantity="15"/>
+
+    <forum_activity_metric
+        id="11"/>
+
+    <metric
+        id="12"
+        identity_id="3"
+        created_at="2007-06-20"/>
+
+    <metric_quantitative
+        id="12"
+        quantity="0"/>
+
+    <forum_activity_metric
+        id="12"/>
+
+
+</dataset>

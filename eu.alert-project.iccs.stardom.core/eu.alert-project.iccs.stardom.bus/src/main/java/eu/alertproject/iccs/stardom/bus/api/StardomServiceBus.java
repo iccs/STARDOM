@@ -2,8 +2,6 @@ package eu.alertproject.iccs.stardom.bus.api;
 
 import org.bushe.swing.event.EventServiceExistsException;
 import org.bushe.swing.event.EventServiceLocator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *

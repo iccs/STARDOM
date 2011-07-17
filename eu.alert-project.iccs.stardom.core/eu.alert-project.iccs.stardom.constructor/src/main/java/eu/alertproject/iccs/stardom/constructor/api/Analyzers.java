@@ -1,7 +1,9 @@
 package eu.alertproject.iccs.stardom.constructor.api;
 
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,10 +11,15 @@ import java.util.List;
  * Date: 15/07/11
  * Time: 22:34
  */
+@Service("analyzers")
 public class Analyzers {
 
     private List<Analyzer<ConnectorAction>> analyzers;
 
+
+    public Analyzers() {
+        this.analyzers = new ArrayList<Analyzer<ConnectorAction>>();
+    }
 
     public List<Analyzer<ConnectorAction>> getAnalyzers() {
         return analyzers;

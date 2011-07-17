@@ -20,6 +20,7 @@ public class Bus {
             throw new IllegalArgumentException("Can't publish null.");
         }
 
+        EventServiceLocator.getEventBusService();
         EventServiceLocator.getEventBusService().publish(event);
 
     }

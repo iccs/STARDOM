@@ -1,0 +1,40 @@
+<dataset>
+
+    <metric
+        id="13"
+        identity_id="1"
+        created_at="2006-06-16"/>
+
+    <metric_quantitative
+        id="13"
+        quantity="20"/>
+
+    <its_activity_metric
+        id="13"/>
+
+    <metric
+        id="14"
+        identity_id="2"
+        created_at="2006-06-17"/>
+
+    <metric_quantitative
+        id="14"
+        quantity="25"/>
+
+    <its_activity_metric
+        id="14"/>
+
+    <metric
+        id="15"
+        identity_id="3"
+        created_at="2006-06-20"/>
+
+    <metric_quantitative
+        id="15"
+        quantity="0"/>
+
+    <its_activity_metric
+        id="15"/>
+
+
+</dataset>

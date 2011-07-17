@@ -1,0 +1,41 @@
+<dataset>
+
+
+    <metric
+        id="19"
+        identity_id="1"
+        created_at="2001-06-16"/>
+
+    <metric_quantitative
+        id="19"
+        quantity="30"/>
+
+    <scm_api_usage_count_metric
+        id="19"/>
+
+    <metric
+        id="20"
+        identity_id="2"
+        created_at="2001-06-17"/>
+
+    <metric_quantitative
+        id="20"
+        quantity="35"/>
+
+    <scm_api_usage_count_metric
+        id="20"/>
+
+    <metric
+        id="21"
+        identity_id="3"
+        created_at="2001-06-20"/>
+
+    <metric_quantitative
+        id="21"
+        quantity="0"/>
+
+    <scm_api_usage_count_metric
+        id="21"/>
+
+
+</dataset>

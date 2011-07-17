@@ -9,16 +9,9 @@ import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.domain.api.QIdentity;
 import eu.alertproject.iccs.stardom.domain.api.QProfile;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.expression.spel.ast.QualifiedIdentifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
 
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,6 +84,48 @@ public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDa
 //        query.setParameter("username",profile.getUsername().toUpperCase());
 
         q.where(BooleanExpression.anyOf(be.toArray(new BooleanExpression[]{})));
+        q.distinct();
+
+        return q.list(qi);
+    }
+
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public List<Identity> findAllPaginableOrderByLastName(int from, int pageSize) {
+
+        JPAQuery q = new JPAQuery(getEntityManager());
+        QIdentity qi = QIdentity.identity;
+        QProfile qp = QProfile.profile;
+
+        q.from(qi);
+        q.leftJoin(qi.profiles,qp);
+        q.orderBy(qp.lastname.asc());
+        q.limit(pageSize);
+        q.offset(from);
+
+
+//
+//
+//
+//
+//        Query query = getEntityManager().createQuery(
+//                "SELECT DISTINCT i FROM Identity i " +
+//                        " LEFT JOIN i.profiles p"+
+//                        " WHERE    " +
+//                        "       UPPER(p.email) = :email " +
+//                        " OR    UPPER(p.name) = :name" +
+//                        " OR    UPPER(p.lastname) = :lastname " +
+//                        " OR    UPPER(p.username) = :username");
+//
+//
+//
+//
+//        query.setParameter("email",profile.getEmail().toUpperCase());
+//        query.setParameter("name",profile.getName().toUpperCase());
+//        query.setParameter("lastname",profile.getLastname().toUpperCase());
+//        query.setParameter("username",profile.getUsername().toUpperCase());
+
         q.distinct();
 
         return q.list(qi);

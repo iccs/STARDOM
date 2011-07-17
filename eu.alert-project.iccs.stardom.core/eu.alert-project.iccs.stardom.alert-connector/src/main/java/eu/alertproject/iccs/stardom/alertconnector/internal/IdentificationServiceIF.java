@@ -1,5 +1,6 @@
 package eu.alertproject.iccs.stardom.alertconnector.internal;
 
+import eu.alertproject.iccs.stardom.alertconnector.api.IdentificationService;
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
@@ -7,12 +8,9 @@ import eu.alertproject.iccs.stardom.identifier.api.Identifier;
 import eu.alertproject.iccs.stardom.identifier.api.IdentifierWeightConfiguration;
 import eu.alertproject.iccs.stardom.identifier.api.LevelWeightConfiguration;
 import eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration;
-import eu.alertproject.iccs.stardom.alertconnector.api.IdentificationService;
 import eu.alertproject.iccs.stardom.identifier.internal.DefaultIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.PostConstruct;
 import java.util.List;

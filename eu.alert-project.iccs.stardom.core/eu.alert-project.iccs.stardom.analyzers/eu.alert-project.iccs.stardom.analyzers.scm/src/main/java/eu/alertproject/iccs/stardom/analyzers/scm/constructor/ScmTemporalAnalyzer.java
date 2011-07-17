@@ -3,6 +3,7 @@ package eu.alertproject.iccs.stardom.analyzers.scm.constructor;
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmAction;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ScmTemporalMetric;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -15,22 +16,31 @@ public class ScmTemporalAnalyzer extends AbstractScmAnalyzer{
 
 
     @Override
+    @Transactional
     public void analyze(Identity identity, ScmAction action) {
+
+        if(identity == null){
+            return;
+        }
 
         Date date = action.getDate();
 
-        ScmTemporalMetric stm = new ScmTemporalMetric();
+        ScmTemporalMetric stm = getMetricDao().<ScmTemporalMetric>getForIdentity(identity,ScmTemporalMetric.class);
+
         //check if the metric exists
-        if(!getMetricsService().hasMetric(identity, ScmTemporalMetric.class)){
+        if(stm == null){
+
+            stm = new ScmTemporalMetric();
+            stm.setIdentity(identity);
 
             //create
-            stm = getMetricsService().<ScmTemporalMetric>getMetric(identity, ScmTemporalMetric.class);
+            stm = (ScmTemporalMetric) getMetricDao().insert(stm);
 
         }
 
-        stm.setWhen(date);
-        getMetricsService().save(identity, stm);
+        stm.setTemporal(date);
 
+        getMetricDao().update(stm);
 
     }
 }

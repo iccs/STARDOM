@@ -2,12 +2,12 @@ package eu.alertproject.iccs.stardom.identifier.internal;
 
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.ProfileDao;
+import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.identifier.api.Identifier;
 import eu.alertproject.iccs.stardom.identifier.api.IdentifierWeightConfiguration;
 import eu.alertproject.iccs.stardom.identifier.api.LevelWeightConfiguration;
 import eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration;
-import eu.alertproject.iccs.stardom.domain.api.Identity;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

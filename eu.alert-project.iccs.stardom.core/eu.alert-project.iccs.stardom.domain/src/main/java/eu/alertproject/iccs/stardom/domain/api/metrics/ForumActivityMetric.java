@@ -1,6 +1,7 @@
 package eu.alertproject.iccs.stardom.domain.api.metrics;
 
-import javax.persistence.DiscriminatorValue;
+import eu.alertproject.iccs.stardom.domain.api.MetricQuantitative;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -10,5 +11,12 @@ import javax.persistence.Table;
  * Time: 19:08
  */
 
-public class ForumActivityMetric {
+@Entity
+@Table(name="forum_activity_metric")
+public class ForumActivityMetric extends MetricQuantitative{
+
+    @Override
+    public String getLabel() {
+        return "Forum Activity";
+    }
 }

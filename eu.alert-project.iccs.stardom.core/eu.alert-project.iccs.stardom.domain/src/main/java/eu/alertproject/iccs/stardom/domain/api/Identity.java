@@ -7,11 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * User: fotis
  * Date: 23/05/11
  * Time: 10:22
- * To change this template use File | Settings | File Templates.
  */
 @Entity
 @Table(name="identity")
@@ -24,7 +22,6 @@ public class Identity implements SimpleBean{
             valueColumnName="sequence_index",
             pkColumnValue="identity_sequence",
             allocationSize = 1)
-
     @Id
     @GeneratedValue(strategy= GenerationType.TABLE, generator="tseq")
     private Integer id;
@@ -49,8 +46,13 @@ public class Identity implements SimpleBean{
     )
     private Set<Profile> notProfiles;
 
+
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "identity")
+    @OrderBy("createdAt")
+    private Set<Metric> metrics;
+
     /**
-     * This creates an Identiy having a #uuid of {@System.currentTimeMillis}
+     * This constructor creates an Identiy having a #uuid of {@System.currentTimeMillis}
      */
     public Identity() {
 
@@ -103,6 +105,14 @@ public class Identity implements SimpleBean{
         this.profiles.add(p);
     }
 
+    public Set<Metric> getMetrics() {
+        return metrics;
+    }
+
+    public void setMetrics(Set<Metric> metrics) {
+        this.metrics = metrics;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -118,5 +128,13 @@ public class Identity implements SimpleBean{
     @Override
     public int hashCode() {
         return uuid != null ? uuid.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Identity{" +
+                "id=" + id +
+                ", uuid='" + uuid + '\'' +
+                '}';
     }
 }

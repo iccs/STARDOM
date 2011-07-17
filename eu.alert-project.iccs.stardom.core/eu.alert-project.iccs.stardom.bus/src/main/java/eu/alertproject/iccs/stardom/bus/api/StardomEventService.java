@@ -2,6 +2,7 @@ package eu.alertproject.iccs.stardom.bus.api;
 
 import org.bushe.swing.event.ThreadSafeEventService;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.SmartLifecycle;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -12,7 +13,7 @@ import java.util.concurrent.Executors;
  * Date: 12/07/11
  * Time: 16:25
  */
-public class StardomEventService extends ThreadSafeEventService{
+public class StardomEventService extends ThreadSafeEventService implements SmartLifecycle {
 
     private org.slf4j.Logger logger = LoggerFactory.getLogger(StardomEventService.class);
 
@@ -42,4 +43,39 @@ public class StardomEventService extends ThreadSafeEventService{
        });
 
    }
+
+
+    @Override
+    public boolean isAutoStartup() {
+        return false;
+    }
+
+    @Override
+    public void stop(Runnable callback) {
+        logger.debug("void stop()");
+        threadPool.shutdownNow();
+    }
+
+    @Override
+    public void start() {
+        logger.debug("void start()");
+    }
+
+    @Override
+    public void stop() {
+        logger.debug("void stop()");
+
+        threadPool.shutdownNow();
+    }
+
+    @Override
+    public boolean isRunning() {
+        logger.debug("boolean isRunning()");
+        return !threadPool.isTerminated();
+    }
+
+    @Override
+    public int getPhase() {
+        return Integer.MIN_VALUE;
+    }
 }

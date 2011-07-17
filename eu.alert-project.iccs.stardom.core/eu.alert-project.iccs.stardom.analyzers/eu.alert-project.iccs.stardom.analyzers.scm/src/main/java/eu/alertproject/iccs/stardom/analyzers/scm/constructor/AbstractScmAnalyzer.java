@@ -2,7 +2,7 @@ package eu.alertproject.iccs.stardom.analyzers.scm.constructor;
 
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmAction;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
-import eu.alertproject.iccs.stardom.constructor.api.MetricsService;
+import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,10 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public abstract class AbstractScmAnalyzer implements Analyzer<ScmAction> {
 
-    @Autowired
-    private MetricsService metricsService;
 
-    public MetricsService getMetricsService() {
-        return metricsService;
+    @Autowired
+    private MetricDao metricDao;
+
+    public MetricDao getMetricDao() {
+        return metricDao;
     }
 }

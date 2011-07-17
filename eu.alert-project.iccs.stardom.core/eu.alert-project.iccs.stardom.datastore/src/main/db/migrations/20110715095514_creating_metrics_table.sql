@@ -1,13 +1,15 @@
 create table metric(
   id int primary key not null unique,
-  created_at timestamp not null default CURRENT_TIMESTAMP
+  identity_id int not null,
+  created_at timestamp not null default CURRENT_TIMESTAMP,
+  FOREIGN KEY (identity_id) REFERENCES `identity`(id) ON DELETE CASCADE ON UPDATE CASCADE
 )type innodb;
 insert into sequence values('metric_sequence',0);
 
 
 create table metric_temporal(
   id int primary key not null unique,
-  `when` timestamp not null,
+  temporal timestamp not null,
   FOREIGN KEY (id) REFERENCES metric(id) ON DELETE CASCADE ON UPDATE CASCADE
 )type innodb;
 
@@ -17,6 +19,60 @@ create table metric_quantitative(
   `quantity` integer not null default 0,
   FOREIGN KEY (id) REFERENCES metric(id) ON DELETE CASCADE ON UPDATE CASCADE
 )type innodb;
+
+
+create table scm_activity_metric(
+  id int primary key not null unique,
+  FOREIGN KEY (id) REFERENCES metric_quantitative(id) ON DELETE CASCADE ON UPDATE CASCADE
+)type innodb;
+
+create table scm_api_introduced_metric(
+  id int primary key not null unique,
+  FOREIGN KEY (id) REFERENCES metric_quantitative(id) ON DELETE CASCADE ON UPDATE CASCADE
+)type innodb;
+
+create table scm_api_usage_count_metric(
+  id int primary key not null unique,
+  FOREIGN KEY (id) REFERENCES metric_quantitative(id) ON DELETE CASCADE ON UPDATE CASCADE
+)type innodb;
+
+
+create table scm_temporal_metric(
+  id int primary key not null unique,
+  FOREIGN KEY (id) REFERENCES metric_temporal(id) ON DELETE CASCADE ON UPDATE CASCADE
+)type innodb;
+
+
+create table forum_activity_metric(
+  id int primary key not null unique,
+  FOREIGN KEY (id) REFERENCES metric_quantitative(id) ON DELETE CASCADE ON UPDATE CASCADE
+)type innodb;
+
+
+create table forum_temporal_metric(
+  id int primary key not null unique,
+  FOREIGN KEY (id) REFERENCES metric_temporal(id) ON DELETE CASCADE ON UPDATE CASCADE
+)type innodb;
+
+create table its_activity_metric(
+  id int primary key not null unique,
+  FOREIGN KEY (id) REFERENCES metric_quantitative(id) ON DELETE CASCADE ON UPDATE CASCADE
+)type innodb;
+
+create table its_temporal_metric(
+  id int primary key not null unique,
+  FOREIGN KEY (id) REFERENCES metric_temporal(id) ON DELETE CASCADE ON UPDATE CASCADE
+)type innodb;
+
+
+
+
+
+-- ScmApiIntroducedMetric
+-- ScmApiUsageCountMetric
+-- ScmTemporalMetric
+
+
 
 
 

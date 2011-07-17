@@ -1,10 +1,5 @@
 package eu.alertproject.iccs.stardom.connector.api;
 
-import eu.alertproject.iccs.stardom.domain.api.Identity;
-import eu.alertproject.iccs.stardom.domain.api.Profile;
-
-import java.util.List;
-
 /**
  * Created by IntelliJ IDEA.
  * User: fotis

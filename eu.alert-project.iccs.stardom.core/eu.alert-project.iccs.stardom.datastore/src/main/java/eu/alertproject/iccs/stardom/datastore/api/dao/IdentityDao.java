@@ -16,4 +16,5 @@ import java.util.List;
 public interface IdentityDao extends CommonDao<Identity> {
 
     List<Identity> findPossibleMatches(Profile profile);
+    List<Identity> findAllPaginableOrderByLastName(int page, int pageSize);
 }

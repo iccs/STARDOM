@@ -141,7 +141,6 @@
             <artifactId>joda-time</artifactId>
         </dependency>
 
-        <!-- Inhouse -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>

@@ -8,22 +8,25 @@ import java.util.Date;
  * Date: 15/07/11
  * Time: 21:18
  */
+@Entity
 @Table(name="metric_temporal")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorValue("metric_temporal")
 public abstract class MetricTemporal extends Metric{
 
-    @Column(name="when")
+    @Column(name="temporal")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date when;
+    private Date temporal;
 
-    public Date getWhen() {
-        return when;
+    public Date getTemporal() {
+        return temporal;
     }
 
-    public void setWhen(Date when) {
-        this.when = when;
+    public void setTemporal(Date temporal) {
+        this.temporal = temporal;
     }
 
-
+    @Override
+    public Object getValue() {
+        return getTemporal();
+    }
 }
