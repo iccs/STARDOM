@@ -5,6 +5,15 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="PHP 5.3.6">
+        <CLASSES>
+          <root url="file:///Applications/MAMP/bin/php/php5.3.6/lib/php" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

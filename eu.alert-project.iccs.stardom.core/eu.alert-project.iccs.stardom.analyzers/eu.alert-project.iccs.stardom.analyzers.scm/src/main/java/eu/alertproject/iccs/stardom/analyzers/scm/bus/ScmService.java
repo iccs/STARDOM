@@ -1,7 +1,6 @@
 package eu.alertproject.iccs.stardom.analyzers.scm.bus;
 
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmConnectorContext;
-import eu.alertproject.iccs.stardom.bus.api.ScmEvent;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
@@ -61,6 +60,13 @@ public class ScmService {
 
         //whatever your do, do it here
         for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
+            //if you are wondering how on earth this
+            //is not breaking, it is because if context.getAction()
+            // is not an instance of ScmAction, it will throw
+            // a class cast exception.
+
+            // I don't know how correct this is but for now
+            // I am leaving this as is
             a.analyze(identity,context.getAction());
         }
 

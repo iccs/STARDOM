@@ -23,10 +23,13 @@
 
     <!-- JSR303 -->
     <mvc:annotation-driven />
+    
+    <!-- Resources -->
+    <mvc:default-servlet-handler/>
 
     <!-- freemarker config -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-      <property name="templateLoaderPath" value="/freemarker/"/>
+      <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
     </bean>
 
     <!--
@@ -36,10 +39,11 @@
 
     -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-      <property name="cache" value="true"/>
-      <property name="prefix" value=""/>
-      <property name="suffix" value=".ftl"/>
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".ftl"/>
     </bean>
+
 
     <!-- Keeping this here for reference -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

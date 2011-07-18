@@ -63,7 +63,7 @@
                 <artifactId>db-migration-maven-plugin</artifactId>
                 <version>0.9.9-m5</version>
                 <configuration>
-                    <url>jdbc:mysql://${db.migration.host}:${db.migration.port}/${db.migration.db}</url>
+                    <url>jdbc:mysql://${db.migration.host}:${db.migration.port}/${db.migration.db}?allowMultiQueries=true</url>
                     <username>${db.migration.username}</username>
                     <password>${db.migration.password}</password>
                 </configuration>

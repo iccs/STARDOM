@@ -19,4 +19,6 @@ public abstract class AbstractScmAnalyzer implements Analyzer<ScmAction> {
     public MetricDao getMetricDao() {
         return metricDao;
     }
+
+
 }

@@ -1,0 +1,40 @@
+<dataset>
+
+    <metric
+        id="28"
+        type="metric_temporal"
+        identity_id="1"
+        created_at="1998-06-16"/>
+
+    <metric_temporal
+        id="28"
+        temporal="2014-07-16"/>
+
+    <mailing_list_temporal_metric
+        id="28"/>
+
+    <metric
+        id="29"
+        identity_id="2"
+        created_at="1998-06-16"/>
+
+    <metric_temporal
+        id="29"
+        temporal="2014-07-17"/>
+
+    <mailing_list_temporal_metric
+        id="29"/>
+
+    <metric
+        id="30"
+        identity_id="3"
+        created_at="1998-06-16"/>
+
+    <metric_temporal
+        id="30"
+        temporal="2014-07-15"/>
+
+    <mailing_list_temporal_metric
+        id="30"/>
+
+</dataset>

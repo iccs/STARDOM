@@ -43,6 +43,8 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
                 "/db/forum_temporal_metric.xml",
                 "/db/its_activity_metric.xml",
                 "/db/its_temporal_metric.xml",
+                "/db/mailing_list_activity_metric.xml",
+                "/db/mailing_list_temporal_metric.xml",
                 "/db/metric_sequence.xml",
         };  //To change body of implemented methods use File | Settings | File Templates.
     }

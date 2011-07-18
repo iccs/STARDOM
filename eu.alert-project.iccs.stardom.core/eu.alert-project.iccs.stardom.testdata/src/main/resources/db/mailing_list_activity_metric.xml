@@ -1,0 +1,40 @@
+<dataset>
+
+    <metric
+        id="25"
+        identity_id="1"
+        created_at="1999-06-16"/>
+
+    <metric_quantitative
+        id="25"
+        quantity="90"/>
+
+    <mailing_list_activity_metric
+        id="25"/>
+
+    <metric
+        id="26"
+        identity_id="2"
+        created_at="1999-06-17"/>
+
+    <metric_quantitative
+        id="26"
+        quantity="95"/>
+
+    <mailing_list_activity_metric
+        id="26"/>
+
+    <metric
+        id="27"
+        identity_id="3"
+        created_at="1999-06-20"/>
+
+    <metric_quantitative
+        id="27"
+        quantity="0"/>
+
+    <mailing_list_activity_metric
+        id="27"/>
+
+
+</dataset>

@@ -33,7 +33,7 @@ public class PaginationBuilderService {
      *     http://stackoverflow.com/questions/163809/smart-pagination-algorithm
      * </p>
      *
-     * @param selectedPage The currently selected page, can be null
+     * @param selectedPage The currently selected page, can't be null
      * @return
      */
     public Map<String, Object> buildPages(

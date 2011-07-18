@@ -32,6 +32,7 @@ public class AnalyzerBeanPostProcessor implements BeanPostProcessor {
 
         if(bean instanceof Analyzer<?>){
             logger.debug("Adding analyzer {}",bean);
+
             analyzers.add((Analyzer<ConnectorAction>) bean);
         }
         return bean;  //To change body of implemented methods use File | Settings | File Templates.
