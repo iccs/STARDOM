@@ -35,6 +35,7 @@
     <parameter key="mailer_password"></parameter>
     <parameter key="locale">en</parameter>
     <parameter key="secret">ThisTokenIsNotSoSecretChangeIt</parameter>
+    <parameter key="iccs_ws_host">http://localhost:9090</parameter>
     <parameter key="router_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\RouterListener</parameter>
     <parameter key="session_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\SessionListener</parameter>
     <parameter key="controller_resolver.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver</parameter>
@@ -361,6 +362,10 @@
     <parameter key="security.extra.controller_listener.class">JMS\SecurityExtraBundle\Controller\ControllerListener</parameter>
     <parameter key="security.access.iddqd_voter.class">JMS\SecurityExtraBundle\Security\Authorization\Voter\IddqdVoter</parameter>
     <parameter key="security.extra.secure_all_services">false</parameter>
+    <parameter key="stardom.base_url">http://localhost:9090/ws/constructor/action/scm</parameter>
+    <parameter key="stardom.its_action">http://localhost:9090/ws/constructor/action/scm/ws/constructor/action/its</parameter>
+    <parameter key="stardom.ml_action">http://localhost:9090/ws/constructor/action/scm/ws/constructor/action/scm</parameter>
+    <parameter key="stardom.scm_action">http://localhost:9090/ws/constructor/action/scm/ws/constructor/action/mail</parameter>
     <parameter key="web_profiler.debug_toolbar.class">Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>

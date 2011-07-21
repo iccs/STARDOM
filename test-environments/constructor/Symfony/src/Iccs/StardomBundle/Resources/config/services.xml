@@ -4,6 +4,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="stardom.base_url">%iccs_ws_host%/ws/constructor/action/scm</parameter>
+        <parameter key="stardom.its_action">%stardom.base_url%/ws/constructor/action/its</parameter>
+        <parameter key="stardom.ml_action">%stardom.base_url%/ws/constructor/action/scm</parameter>
+        <parameter key="stardom.scm_action">%stardom.base_url%/ws/constructor/action/mail</parameter>
+    </parameters>
     <!--
     <parameters>
         <parameter key="stardom.example.class">Iccs\StardomBundle\Example</parameter>
