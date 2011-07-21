@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputArgument;
 use Iccs\StardomBundle\Entity\Scmlog;
 use Iccs\StardomBundle\Entity\People;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Tidy;
 use DOMDocument;
 use DOMNodeList;
@@ -21,7 +22,7 @@ use DOMNode;
 
 
 
-class ItsCommand extends Command {
+class ItsCommand extends ContainerAwareCommand{
     /**
      * Configure command, set parameters definition and help.
      */

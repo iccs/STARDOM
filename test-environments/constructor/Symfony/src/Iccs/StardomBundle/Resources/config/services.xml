@@ -7,7 +7,7 @@
     <parameters>
         <parameter key="stardom.base_url">%stardom.host%/ws/constructor/action</parameter>
         <parameter key="stardom.its_action">%stardom.base_url%/its</parameter>
-        <parameter key="stardom.ml_action">%stardom.base_url%/mail</parameter>
+        <parameter key="stardom.mail_action">%stardom.base_url%/mail</parameter>
         <parameter key="stardom.scm_action">%stardom.base_url%/scm</parameter>
     </parameters>
 
