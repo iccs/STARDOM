@@ -3,6 +3,8 @@ package eu.alertproject.iccs.stardom.analyzers.scm.constructor;
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmAction;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ScmActivityMetric;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class ScmActivityAnalyzer extends AbstractScmAnalyzer {
 
+    private Logger logger = LoggerFactory.getLogger(ScmActivityAnalyzer.class);
+    
     @Override
     @Transactional
     public void analyze(Identity identity, ScmAction action) {
@@ -38,6 +42,7 @@ public class ScmActivityAnalyzer extends AbstractScmAnalyzer {
         sqm.increaseQuantity();
 
         getMetricDao().update(sqm);
-
+        
+        logger.trace("void analyze()");
     }
 }

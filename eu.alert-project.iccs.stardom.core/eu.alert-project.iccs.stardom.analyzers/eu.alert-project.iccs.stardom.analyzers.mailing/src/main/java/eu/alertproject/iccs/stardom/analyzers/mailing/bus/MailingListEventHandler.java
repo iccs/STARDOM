@@ -70,7 +70,11 @@ public class MailingListEventHandler {
 
         //whatever your do, do it here
         for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
-            a.analyze(identity,context.getAction());
+            try{
+                a.analyze(identity,context.getAction());
+            }catch (ClassCastException e){
+                //silence
+            }
         }
 //
 

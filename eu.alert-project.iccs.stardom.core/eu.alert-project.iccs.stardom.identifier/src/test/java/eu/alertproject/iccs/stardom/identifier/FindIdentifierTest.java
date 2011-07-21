@@ -60,6 +60,24 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
 
 
     @Test
+    public void testMatchWithEmptyUsername(){
+
+        Profile pA = new Profile("Stephan","Kulow","","coolo@kde.org");
+
+        Identity identity = findIdentifier.find(pA);
+        Assert.assertNotNull(identity);
+
+        Profile pB = new Profile("Stephan","Kulow","","coolo@kde.org");
+        Identity identity1 = findIdentifier.find(pB);
+
+        Assert.assertEquals(identity.getUuid(),identity1.getUuid());
+
+        List<Identity> all = identityDao.findAll();
+        Assert.assertEquals(1,all.size(),0);
+
+    }
+
+    @Test
     public void testNullPropertiesNoMatch(){
 
         Profile pA = new Profile("John","Smith","","jsmith@gmail.com");

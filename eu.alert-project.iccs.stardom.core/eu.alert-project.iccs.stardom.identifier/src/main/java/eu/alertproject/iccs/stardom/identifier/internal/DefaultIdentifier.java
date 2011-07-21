@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -107,7 +108,7 @@ public class DefaultIdentifier implements Identifier{
 
         if(
             (!StringUtils.isEmpty(a.getLastname()) && !StringUtils.isEmpty(b.getLastname()))
-            && StringUtils.endsWithIgnoreCase(a.getLastname(),b.getLastname())){
+            && StringUtils.endsWithIgnoreCase(a.getLastname(), b.getLastname())){
             double v = calculateIf(this.weightConfiguration.getLastName());
             logger.trace("boolean getIf() Found a last name match {}",v);
 
@@ -116,7 +117,7 @@ public class DefaultIdentifier implements Identifier{
 
         if(
             (!StringUtils.isEmpty(a.getEmail()) && !StringUtils.isEmpty(b.getEmail()))
-            && StringUtils.endsWithIgnoreCase(a.getEmail(),b.getEmail())){
+            && StringUtils.endsWithIgnoreCase(a.getEmail(), b.getEmail())){
 
             double v = calculateIf(this.weightConfiguration.getEmail());
             logger.trace("boolean getIf() Found an email match {}",v);
@@ -125,7 +126,7 @@ public class DefaultIdentifier implements Identifier{
 
         if(
             (!StringUtils.isEmpty(a.getUsername()) && !StringUtils.isEmpty(b.getUsername()))
-            && StringUtils.equalsIgnoreCase(a.getUsername(),b.getUsername())){
+            && StringUtils.equalsIgnoreCase(a.getUsername(), b.getUsername())){
 
             double v = calculateIf(this.weightConfiguration.getUsername());
             logger.trace("boolean getIf() Found a username match {}",v);
@@ -220,6 +221,7 @@ public class DefaultIdentifier implements Identifier{
 
 
     @Override
+    @Transactional
     public Identity find(Profile profile) {
 
         List<Identity> possibleMatches = identityDao.findPossibleMatches(profile);

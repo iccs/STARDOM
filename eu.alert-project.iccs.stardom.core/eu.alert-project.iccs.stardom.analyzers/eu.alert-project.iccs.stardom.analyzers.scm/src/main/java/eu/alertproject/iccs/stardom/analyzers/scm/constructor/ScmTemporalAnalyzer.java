@@ -3,6 +3,8 @@ package eu.alertproject.iccs.stardom.analyzers.scm.constructor;
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmAction;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ScmTemporalMetric;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -13,6 +15,8 @@ import java.util.Date;
  * Time: 22:44
  */
 public class ScmTemporalAnalyzer extends AbstractScmAnalyzer{
+
+    private Logger logger = LoggerFactory.getLogger(ScmTemporalAnalyzer.class);
 
 
     @Override
@@ -41,6 +45,7 @@ public class ScmTemporalAnalyzer extends AbstractScmAnalyzer{
         stm.setTemporal(date);
 
         getMetricDao().update(stm);
+        logger.trace("void analyze()");
 
     }
 }

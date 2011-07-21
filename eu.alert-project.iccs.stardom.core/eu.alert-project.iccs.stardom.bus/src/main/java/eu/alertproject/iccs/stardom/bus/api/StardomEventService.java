@@ -23,7 +23,7 @@ public class StardomEventService extends ThreadSafeEventService implements Smart
     public StardomEventService() {
         super();
         logger.trace(" Starting thread pool");
-        threadPool = Executors.newFixedThreadPool(15);
+        threadPool = Executors.newSingleThreadExecutor();
     }
 
     /**
