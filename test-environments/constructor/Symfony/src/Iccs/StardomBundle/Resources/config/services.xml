@@ -5,11 +5,12 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="stardom.base_url">%iccs_ws_host%/ws/constructor/action</parameter>
+        <parameter key="stardom.base_url">%stardom.host%/ws/constructor/action</parameter>
         <parameter key="stardom.its_action">%stardom.base_url%/its</parameter>
         <parameter key="stardom.ml_action">%stardom.base_url%/mail</parameter>
         <parameter key="stardom.scm_action">%stardom.base_url%/scm</parameter>
     </parameters>
+
     <!--
     <parameters>
         <parameter key="stardom.example.class">Iccs\StardomBundle\Example</parameter>

@@ -25,6 +25,36 @@
         <module>eu.alert-project.iccs.stardom.ui</module>
     </modules>
 
+    <profiles>
+        <profile>
+            <id>build-dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>build</name>
+                    <value>dev</value>
+                </property>
+            </activation>
+            <properties>
+                <db.port>8889</db.port>
+            </properties>
+        </profile>
+        <profile>
+            <id>build-iccs</id>
+            <activation>
+                <property>
+                    <name>build</name>
+                    <value>iccs</value>
+                </property>
+            </activation>
+            <properties>
+                <db.port>3306</db.port>
+            </properties>
+        </profile>
+
+
+    </profiles>
+
     <properties>
 
 
@@ -76,9 +106,13 @@
                     <encoding>utf-8</encoding>
                 </configuration>
             </plugin>
-
-
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
     <dependencyManagement>
