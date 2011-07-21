@@ -210,7 +210,7 @@ class ItsCommand extends Command {
         echo $values . PHP_EOL;
         echo "********************".PHP_EOL.PHP_EOL;
 
-        $session = curl_init("http://localhost:9090/ws/constructor/action/its/".$action);
+        $session = curl_init($this->getContainer()->getParameter("stardom.its_action")."/".$action);
         curl_setopt($session, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         curl_setopt($session, CURLOPT_POST, 1);
         curl_setopt($session, CURLOPT_POSTFIELDS, $values);

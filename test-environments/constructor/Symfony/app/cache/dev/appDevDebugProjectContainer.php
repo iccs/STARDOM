@@ -339,7 +339,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getForm_CsrfProviderService()
     {
-        return $this->services['form.csrf_provider'] = new \Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider($this->get('session'), 'ThisTokenIsNotSoSecretChangeIt');
+        return $this->services['form.csrf_provider'] = new \Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider($this->get('session'), 'IccsStardom');
     }
 
     /**
@@ -2091,7 +2091,7 @@ class appDevDebugProjectContainer extends Container
             'mailer_user' => '',
             'mailer_password' => '',
             'locale' => 'en',
-            'secret' => 'ThisTokenIsNotSoSecretChangeIt',
+            'secret' => 'IccsStardom',
             'iccs_ws_host' => 'http://localhost:9090',
             'router_listener.class' => 'Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener',
             'session_listener.class' => 'Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener',
@@ -2112,7 +2112,7 @@ class appDevDebugProjectContainer extends Container
             'translation.loader.xliff.class' => 'Symfony\\Component\\Translation\\Loader\\XliffFileLoader',
             'debug.event_dispatcher.class' => 'Symfony\\Bundle\\FrameworkBundle\\Debug\\TraceableEventDispatcher',
             'debug.container.dump' => '/Users/fotis/Development/idea/STARDOM/test-environments/constructor/Symfony/app/cache/dev/appDevDebugProjectContainer.xml',
-            'kernel.secret' => 'ThisTokenIsNotSoSecretChangeIt',
+            'kernel.secret' => 'IccsStardom',
             'exception_listener.controller' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\ExceptionController::showAction',
             'session.class' => 'Symfony\\Component\\HttpFoundation\\Session',
             'session.storage.native.class' => 'Symfony\\Component\\HttpFoundation\\SessionStorage\\NativeSessionStorage',
@@ -2431,10 +2431,10 @@ class appDevDebugProjectContainer extends Container
             'security.extra.controller_listener.class' => 'JMS\\SecurityExtraBundle\\Controller\\ControllerListener',
             'security.access.iddqd_voter.class' => 'JMS\\SecurityExtraBundle\\Security\\Authorization\\Voter\\IddqdVoter',
             'security.extra.secure_all_services' => false,
-            'stardom.base_url' => 'http://localhost:9090/ws/constructor/action/scm',
-            'stardom.its_action' => 'http://localhost:9090/ws/constructor/action/scm/ws/constructor/action/its',
-            'stardom.ml_action' => 'http://localhost:9090/ws/constructor/action/scm/ws/constructor/action/scm',
-            'stardom.scm_action' => 'http://localhost:9090/ws/constructor/action/scm/ws/constructor/action/mail',
+            'stardom.base_url' => 'http://localhost:9090/ws/constructor/action',
+            'stardom.its_action' => 'http://localhost:9090/ws/constructor/action/its',
+            'stardom.ml_action' => 'http://localhost:9090/ws/constructor/action/mail',
+            'stardom.scm_action' => 'http://localhost:9090/ws/constructor/action/scm',
             'web_profiler.debug_toolbar.class' => 'Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener',
             'web_profiler.debug_toolbar.intercept_redirects' => false,
             'web_profiler.debug_toolbar.mode' => 2,

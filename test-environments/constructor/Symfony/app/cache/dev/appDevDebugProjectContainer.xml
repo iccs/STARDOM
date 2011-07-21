@@ -34,7 +34,7 @@
     <parameter key="mailer_user"></parameter>
     <parameter key="mailer_password"></parameter>
     <parameter key="locale">en</parameter>
-    <parameter key="secret">ThisTokenIsNotSoSecretChangeIt</parameter>
+    <parameter key="secret">IccsStardom</parameter>
     <parameter key="iccs_ws_host">http://localhost:9090</parameter>
     <parameter key="router_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\RouterListener</parameter>
     <parameter key="session_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\SessionListener</parameter>
@@ -55,7 +55,7 @@
     <parameter key="translation.loader.xliff.class">Symfony\Component\Translation\Loader\XliffFileLoader</parameter>
     <parameter key="debug.event_dispatcher.class">Symfony\Bundle\FrameworkBundle\Debug\TraceableEventDispatcher</parameter>
     <parameter key="debug.container.dump">/Users/fotis/Development/idea/STARDOM/test-environments/constructor/Symfony/app/cache/dev/appDevDebugProjectContainer.xml</parameter>
-    <parameter key="kernel.secret">ThisTokenIsNotSoSecretChangeIt</parameter>
+    <parameter key="kernel.secret">IccsStardom</parameter>
     <parameter key="exception_listener.controller">Symfony\Bundle\FrameworkBundle\Controller\ExceptionController::showAction</parameter>
     <parameter key="session.class">Symfony\Component\HttpFoundation\Session</parameter>
     <parameter key="session.storage.native.class">Symfony\Component\HttpFoundation\SessionStorage\NativeSessionStorage</parameter>
@@ -362,10 +362,10 @@
     <parameter key="security.extra.controller_listener.class">JMS\SecurityExtraBundle\Controller\ControllerListener</parameter>
     <parameter key="security.access.iddqd_voter.class">JMS\SecurityExtraBundle\Security\Authorization\Voter\IddqdVoter</parameter>
     <parameter key="security.extra.secure_all_services">false</parameter>
-    <parameter key="stardom.base_url">http://localhost:9090/ws/constructor/action/scm</parameter>
-    <parameter key="stardom.its_action">http://localhost:9090/ws/constructor/action/scm/ws/constructor/action/its</parameter>
-    <parameter key="stardom.ml_action">http://localhost:9090/ws/constructor/action/scm/ws/constructor/action/scm</parameter>
-    <parameter key="stardom.scm_action">http://localhost:9090/ws/constructor/action/scm/ws/constructor/action/mail</parameter>
+    <parameter key="stardom.base_url">http://localhost:9090/ws/constructor/action</parameter>
+    <parameter key="stardom.its_action">http://localhost:9090/ws/constructor/action/its</parameter>
+    <parameter key="stardom.ml_action">http://localhost:9090/ws/constructor/action/mail</parameter>
+    <parameter key="stardom.scm_action">http://localhost:9090/ws/constructor/action/scm</parameter>
     <parameter key="web_profiler.debug_toolbar.class">Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
@@ -926,7 +926,7 @@
     </service>
     <service id="form.csrf_provider" class="Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider">
       <argument type="service" id="session"/>
-      <argument>ThisTokenIsNotSoSecretChangeIt</argument>
+      <argument>IccsStardom</argument>
     </service>
     <service id="form.type.csrf" class="Symfony\Component\Form\Extension\Csrf\Type\CsrfType">
       <tag name="form.type" alias="csrf"/>
