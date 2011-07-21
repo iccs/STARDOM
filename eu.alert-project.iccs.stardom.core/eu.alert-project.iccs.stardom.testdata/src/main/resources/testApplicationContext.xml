@@ -13,9 +13,7 @@
 
     <context:annotation-config />
 
-    <context:component-scan base-package="eu.alertproject.iccs.stardom.domain.api" />
-    <context:component-scan base-package="eu.alertproject.iccs.stardom.datastore" />
-
+    <context:component-scan base-package="eu.alertproject.iccs.stardom" />
 
     <tx:annotation-driven/>
 

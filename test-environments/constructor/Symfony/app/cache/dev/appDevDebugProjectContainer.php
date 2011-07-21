@@ -199,7 +199,7 @@ class appDevDebugProjectContainer extends Container
         $b = new \Doctrine\Common\EventManager();
         $b->addEventSubscriber(new \Doctrine\DBAL\Event\Listeners\MysqlSessionInit('UTF8'));
 
-        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('dbname' => 'cvsanaly_kde', 'host' => 'localhost', 'user' => 'alert', 'password' => '1234', 'driver' => 'pdo_mysql', 'port' => NULL, 'driverOptions' => array()), $a, $b, array());
+        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('dbname' => 'cvsanaly_kde_solid', 'host' => 'localhost', 'user' => 'alert', 'password' => '1234', 'driver' => 'pdo_mysql', 'port' => NULL, 'driverOptions' => array()), $a, $b, array());
     }
 
     /**
@@ -2083,7 +2083,7 @@ class appDevDebugProjectContainer extends Container
             'kernel.container_class' => 'appDevDebugProjectContainer',
             'database_driver' => 'pdo_mysql',
             'database_host' => 'localhost',
-            'database_name' => 'cvsanaly_kde',
+            'database_name' => 'cvsanaly_kde_solid',
             'database_user' => 'alert',
             'database_password' => '1234',
             'mailer_transport' => 'smtp',

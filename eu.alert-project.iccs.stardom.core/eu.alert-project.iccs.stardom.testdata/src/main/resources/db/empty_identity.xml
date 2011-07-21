@@ -1,0 +1,20 @@
+<dataset>
+
+
+    <identity/>
+
+    <profile/>
+
+    <identity_is_profile />
+
+
+    <sequence
+        sequence_name="identity_sequence"
+        sequence_index="1"/>
+
+    <sequence
+        sequence_name="profile_sequence"
+        sequence_index="1"/>
+
+
+</dataset>

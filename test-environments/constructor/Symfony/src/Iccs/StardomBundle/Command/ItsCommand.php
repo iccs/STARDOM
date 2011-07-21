@@ -31,7 +31,8 @@ class ItsCommand extends Command {
         ->setDescription('Loads the database cvsanaly, and simulates REST api calls into the stardom component')
         ->setDefinition(
             array(
-                new InputArgument("xml_file",InputArgument::REQUIRED,"This is the xml file exported from the KDE bugzilla")
+                new InputArgument("xml_file",InputArgument::REQUIRED,"This is the xml file exported from the KDE bugzilla"),
+                new InputOption("dryrun","null",InputOption::VALUE_NONE,"Whether to ommit posting to the webservice")
             ));
 
     }
@@ -42,7 +43,7 @@ class ItsCommand extends Command {
 
 
         $xml_file = $input->getArgument("xml_file");
-        $output->writeln("Reading ".$xml_file);
+        $output->writeln("Correcint Malformed XML".$xml_file);
 
         // Specify configuration
         $config = array(
@@ -66,40 +67,83 @@ class ItsCommand extends Command {
 
         $output->writeLn("About to process ".$nodeList->length);
 
+        $names = array();
+        $emails= array();
         /** @var $node DOMDocument */
         foreach($nodeList as $node){
 
-            //get reporter
 
             $reporter = $node->getElementsByTagName("reporter")->item(0);
             $reporter_email= $reporter->nodeValue;
             $reporter_name = $reporter->getAttribute("name");
 
-            $bug_status = $node->getElementsByTagName("bug_status")->item(0);
-            $bug_severity = $node->getElementsByTagName("bug_severity")->item(0);
+            $bug_id = $node->getElementsByTagName("bug_id")->item(0)->nodeValue;
+            $bug_status = $node->getElementsByTagName("bug_status")->item(0)->nodeValue;
+            $bug_severity = $node->getElementsByTagName("bug_severity")->item(0)->nodeValue;
 
-            $assigned_to = $node->getElementsByTagName("assigned_to")->item(0)->nodeValue;
+            $bug_create=$node->getElementsByTagName("creation_ts")->item(0)->nodeValue;
+            $date = date("c",strtotime($bug_create));
 
 
-            $output->writeln("Reporter ".$reporter_email);
-            $output->writeln("Reporter ".$reporter_name);
+
+            $assigned_to = $node->getElementsByTagName("assigned_to")->item(0);
+            $assigned_to_name = $assigned_to->nodeValue;
+            $assigned_to_email = $assigned_to->getAttribute("name");
+
+
+
 
 
             //get cc reporters
             $ccList = $node->getElementsByTagName("cc");
-            $output->writeln("Numbe of CCs ".$ccList->length);
+//            $output->writeln("Numbe of CCs ".$ccList->length);
 
             $ccs = array();
             foreach($ccList as $cc){
 
                 array_push(
                     $ccs,
-                    $cc->nodeValue
+                    array(
+                        "email"=>$cc->nodeValue
+                    )
                 );
 
             }
 
-            $output->writeln("CC ",print_r($ccs));
+//            $output->writeln("CC ",print_r($ccs));
+
+
+            //create a payload for the bugs
+            //bug comment
+            $payload= array(
+                "profile"=>array(
+                        "id"=>"",
+                        "name"=>"",
+                        "lastname"=>"",
+                        "username"=>"",
+                        "email"=>"",
+                ),
+                "action" => array(
+                    "bugId"=>$bug_id,
+                    "bugStatus"=>$bug_status,
+                    "severity"=>$bug_severity,
+                    "date"=>$date,
+                    "assigned"=>array(
+                        "name" => $assigned_to_name,
+                        "email"=> $assigned_to_email
+                    ),
+                    "reporter"=>array(
+                        "name" => $reporter_name,
+                        "email"=> $reporter_email
+                    ),
+                    "cc"=>$ccs
+                )
+            );
+
+            if (!$input->getOption("dryrun")) {
+                $this->postPayload($payload, "add");
+            }
+
 
 
             //get comments
@@ -109,56 +153,76 @@ class ItsCommand extends Command {
                 //do a payload
 
                 $who = $comment->getElementsByTagName("who")->item(0);
-                $commenter_email = $this->fixemail($who->nodeValue);
-
-                $name = explode(" ",$who->getAttribute("name"));
-                $commenter_name=array("","");
-                $commenter_username= "";
-
-                if(sizeof($name) > 1){
-                    $commenter_name = $name;
-                }else if(sizeof($name) > 0 ){
-                    $commenter_username = $name[0];
-                }
+                $commenter_email = $who->nodeValue;
+                $commenter_name = $who->getAttribute("name");
 
 
+                if(!in_array($who->getAttribute("name"),$names)){ array_push($names, $who->getAttribute("name"));}
+                if(!in_array($commenter_email,$emails)){ array_push($emails, $commenter_email);}
 
 
+                $bug_when = $comment->getElementsByTagName("bug_when")->item(0)->nodeValue;
+                $date = date("c",strtotime($bug_when));
+//                $output->writeln($bug_when." ->".date("c",$date));
 
-                $date = $comment->getElementsByTagName("bug_when")->item(0)->nodeValue;
+
                 $text = $comment->getElementsByTagName("thetext")->item(0)->nodeValue;
 
 
                 //bug comment
                 $payload= array(
                     "profile"=>array(
-                        "name"=>$commenter_name[0],
-                        "lastname"=>$commenter_name[1],
-                        "username"=>$commenter_username,
-                        "email"=>$commenter_email
+                        "id"=>"",
+                        "name"=>"",
+                        "lastname"=>"",
+                        "username"=>"",
+                        "email"=>"",
+                    ),
+                    "action" => array(
+                        "name"=>$commenter_name,
+                        "email"=>$commenter_email,
+                        "date"=>$date,
+                        "text"=>$text
                     )
                 );
 
-                $output->writeln("Comment payload ".print_r($payload,true));
+                if(!$input->getOption("dryrun")){
+                    $this->postPayload($payload,"comment");
+                }
 
+
+//              $output->writeln("Comment payload ".print_r($payload,true));
 
             }
 
 
         }
 
-
-
     }
 
-
-    private function fixemail($mail){
-
-        $parts = explode(" ",$mail);
+    private function postPayload($payload,$action)
+    {
 
 
-        return $parts[0]."@".$parts[1].".".$parts[2];
+        $values = json_encode($payload);
 
+        echo "********************".PHP_EOL.PHP_EOL;
+        echo $values . PHP_EOL;
+        echo "********************".PHP_EOL.PHP_EOL;
+
+        $session = curl_init("http://localhost:9090/ws/constructor/action/its/".$action);
+        curl_setopt($session, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($session, CURLOPT_POST, 1);
+        curl_setopt($session, CURLOPT_POSTFIELDS, $values);
+
+        // Tell curl not to return headers, but do return the response
+        curl_setopt($session, CURLOPT_HEADER, false);
+        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($session);
+        curl_close($session);
+
+        return $response;
     }
 
 }

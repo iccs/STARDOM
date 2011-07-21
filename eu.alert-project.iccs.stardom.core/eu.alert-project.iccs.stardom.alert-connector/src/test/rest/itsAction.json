@@ -1,9 +1,27 @@
 {
-    "profile":{"id":"",
-    "name":"Fotis",
-    "lastname":"Paraskevopoulos",
-    "username":"",
-    "email":"fotis@mail.ntua.gr"
-    },
-    "action":{}
+    "profile":{},
+    "action":{
+        "bugId":12,
+        "bugStatus":"FIXED",
+        "severity":"major",
+        "date":"Mon, 15 Sep 2008 15:13:04 +0200",
+        "assigned":{
+            "name":"Fotis Paraskevopoulos",
+            "email":"fotis existanze com"
+        },
+        "reporter":{
+            "name":"G Mentzas",
+            "email":"g m ntua gr"
+        },
+        "cc":[
+            {
+                "name":"Dimitris Panagiotou",
+                "email": "d panag mail ntua gr"
+            },
+            {
+                "name":"Dimitris Apostolou",
+                "email": "dapost mail ntua gr"
+            }
+        ]
+    }
 }

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class ItsTemporalMetric extends MetricTemporal{
 
     @Override
-    public Object getValue() {
-        return "ITS Last Date";
+    public String getLabel() {
+        return "ITS Activity";
     }
 }

@@ -26,7 +26,7 @@
     <parameter key="kernel.container_class">appDevDebugProjectContainer</parameter>
     <parameter key="database_driver">pdo_mysql</parameter>
     <parameter key="database_host">localhost</parameter>
-    <parameter key="database_name">cvsanaly_kde</parameter>
+    <parameter key="database_name">cvsanaly_kde_solid</parameter>
     <parameter key="database_user">alert</parameter>
     <parameter key="database_password">1234</parameter>
     <parameter key="mailer_transport">smtp</parameter>
@@ -1618,7 +1618,7 @@
     </service>
     <service id="doctrine.dbal.default_connection" class="Doctrine\DBAL\Connection" factory-method="createConnection" factory-service="doctrine.dbal.connection_factory">
       <argument type="collection">
-        <argument key="dbname">cvsanaly_kde</argument>
+        <argument key="dbname">cvsanaly_kde_solid</argument>
         <argument key="host">localhost</argument>
         <argument key="user">alert</argument>
         <argument key="password">1234</argument>

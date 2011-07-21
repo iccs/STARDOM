@@ -17,7 +17,6 @@
         <module>eu.alert-project.iccs.stardom.connector</module>
         <module>eu.alert-project.iccs.stardom.datastore</module>
         <module>eu.alert-project.iccs.stardom.alert-connector</module>
-        <module>eu.alert-project.iccs.stardom.ui</module>
         <module>eu.alert-project.iccs.stardom.domain</module>
         <module>eu.alert-project.iccs.stardom.metrics</module>
         <module>eu.alert-project.iccs.stardom.testdata</module>

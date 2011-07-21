@@ -47,30 +47,34 @@ recommend sticking to 'spring' -->
                         <#include "identity/metrics.ftl"/>
                     </div>
                     <div class="ci">
-                        25
+                        ?
                     </div>
                 </li>
             </#list>
         </ul>
 
         <div class="pagination clearfix">
-            <ul>
-                <li class="page">
-                <#if selected != pagination['first']>
-                    <a href="<@spring.url "/identities/${pagination['first']}"/>">&laquo; First</a>
-                </#if>
-                </li>
-                <#list pagination['pages'] as page>
-                    <li class="page <#if page == selected>selected</#if>" >
-                        <a href="<@spring.url "/identities/${page}"/>">${page}</a>
+            <#assign pages = pagination['pages'] />
+            <#if pages?has_content>
+                <ul>
+                    <li class="page">
+                    <#if selected != pagination['first']>
+                        <a href="<@spring.url "/identities/${pagination['first']}"/>">&laquo; First</a>
+                    </#if>
                     </li>
-                </#list>
+                        <#list pages as page>
+                            <li class="page <#if page == selected >selected</#if>" >
+                                <a href="<@spring.url "/identities/${page}"/>">${page}</a>
+                            </li>
+                        </#list>
+                    <#if selected != pagination['last']>
+                        <li class="page"><a href="<@spring.url "/identities/${pagination['last']}"/>">Last &raquo;</a></li>
+                    </#if>
 
-                <#if selected != pagination['last']>
-                    <li class="page"><a href="<@spring.url "/identities/${pagination['last']}"/>">Last &raquo;</a></li>
-                </#if>
-
-            </ul>
+                </ul>
+            <#else>
+                Empty
+            </#if>
         </div>
     </div>
 </body>

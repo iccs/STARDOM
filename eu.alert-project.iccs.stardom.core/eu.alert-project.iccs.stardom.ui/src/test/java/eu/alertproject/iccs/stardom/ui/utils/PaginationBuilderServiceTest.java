@@ -146,7 +146,24 @@ public class PaginationBuilderServiceTest  {
     }
 
 
+    @Test
+    public void testProductionCase(){
 
+        Map<String,Object> stringObjectMap = paginationBuilderService.buildPages(19, 166, 4);
+
+        Integer[] pages = (Integer[]) stringObjectMap.get("pages");
+        Integer selected = (Integer) stringObjectMap.get("selected");
+
+
+        Assert.assertEquals(19,selected, 0);
+        Assert.assertEquals(9, pages.length);
+
+        testPages(pages,
+                new Integer[]{
+                      15,16,17,18,19,20,21,22,23
+                });
+
+    }
 
 
     private void testPages(Integer[] actual, Integer[] pages){
@@ -155,7 +172,6 @@ public class PaginationBuilderServiceTest  {
 
         logger.trace("void testPages(actual) {} ",actual);
         Assert.assertArrayEquals(pages,actual);
-
 
     }
 }

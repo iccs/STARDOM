@@ -95,8 +95,9 @@ public class DefaultIdentifier implements Identifier{
         //check if any of the information in between them is the same
         List<Double> ifs = new ArrayList<Double>();
 
-        if(StringUtils.endsWithIgnoreCase(a.getName(),b.getName())){
-
+        if(
+                (!StringUtils.isEmpty(a.getName()) && !StringUtils.isEmpty(b.getName()))
+            &&  StringUtils.endsWithIgnoreCase(a.getName(),b.getName())){
 
             double v = calculateIf(this.weightConfiguration.getFirstName());
             logger.trace("boolean getIf() Found a first name match {}",v);
@@ -104,21 +105,27 @@ public class DefaultIdentifier implements Identifier{
             ifs.add(v);
         }
 
-        if(StringUtils.endsWithIgnoreCase(a.getLastname(),b.getLastname())){
+        if(
+            (!StringUtils.isEmpty(a.getLastname()) && !StringUtils.isEmpty(b.getLastname()))
+            && StringUtils.endsWithIgnoreCase(a.getLastname(),b.getLastname())){
             double v = calculateIf(this.weightConfiguration.getLastName());
             logger.trace("boolean getIf() Found a last name match {}",v);
 
             ifs.add(v);
         }
 
-        if(StringUtils.endsWithIgnoreCase(a.getEmail(),b.getEmail())){
+        if(
+            (!StringUtils.isEmpty(a.getEmail()) && !StringUtils.isEmpty(b.getEmail()))
+            && StringUtils.endsWithIgnoreCase(a.getEmail(),b.getEmail())){
 
             double v = calculateIf(this.weightConfiguration.getEmail());
             logger.trace("boolean getIf() Found an email match {}",v);
             ifs.add(v);
         }
 
-        if(StringUtils.equalsIgnoreCase(a.getUsername(),b.getUsername())){
+        if(
+            (!StringUtils.isEmpty(a.getUsername()) && !StringUtils.isEmpty(b.getUsername()))
+            && StringUtils.equalsIgnoreCase(a.getUsername(),b.getUsername())){
 
             double v = calculateIf(this.weightConfiguration.getUsername());
             logger.trace("boolean getIf() Found a username match {}",v);
@@ -315,15 +322,37 @@ public class DefaultIdentifier implements Identifier{
             PossibleProfileIdentity possibleProfileIdentity = possibleIdentities.get(0);
 
             // The followin is probably redundant, I don't have time to check
-            // TODO Make this better
             Identity identity = possibleProfileIdentity.getIdentity();
+
+            //refresh
             Identity byId = identityDao.findById(identity.getId());
 
-            Profile byId1 = profileDao.findById(possibleProfileIdentity.getProfile().getId());
-            byId.addToProfiles(byId1);
+            // check if the profile comming in is a full match with the
+            // profiles already in the identity
+            Set<Profile> profiles = byId.getProfiles();
 
-            Identity update = identityDao.update(byId);
-            return update;
+
+            boolean profileExists = false;
+            for(Profile existing : profiles){
+
+                if(
+                    StringUtils.equals(existing.getName(),profile.getName())
+                    && StringUtils.equals(existing.getLastname(),profile.getLastname())
+                    && StringUtils.equals(existing.getUsername(),profile.getUsername())
+                    && StringUtils.equals(existing.getEmail(),profile.getEmail())){
+
+                    profileExists = true;
+                    break;
+
+                }
+
+            }
+
+            if(!profileExists){
+                byId.addToProfiles(profile);
+            }
+
+            return identityDao.update(byId);
 
         }
     }
@@ -493,8 +522,11 @@ public class DefaultIdentifier implements Identifier{
                     Object personValue = method.invoke(profile);
                     Object lookupValue = method.invoke(p);
 
+
                     if( (personValue == null && lookupValue == null)
                         || StringUtils.equalsIgnoreCase(personValue.toString(), lookupValue.toString())){
+
+
                         ret.add(profile);
                         break;
                     }

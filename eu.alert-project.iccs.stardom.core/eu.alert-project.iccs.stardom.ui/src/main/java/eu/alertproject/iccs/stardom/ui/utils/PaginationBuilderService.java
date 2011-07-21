@@ -1,9 +1,11 @@
 package eu.alertproject.iccs.stardom.ui.utils;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,6 +74,19 @@ public class PaginationBuilderService {
             for(int i =0 ; i < returnSize; i++){
                 pages[i] = (totalPages-returnSize+1)+i;
             }
+
+
+        }else{
+            //it is in the middle
+            //get the previous four numbers and the next four numbers
+
+            pages[depthSize]=selectedPage;
+            for(int i=0; i< depthSize; i++){
+
+                pages[i]= selectedPage-(depthSize-i);
+                pages[depthSize+1+i] = selectedPage+1+i;
+            }
+
 
 
         }
