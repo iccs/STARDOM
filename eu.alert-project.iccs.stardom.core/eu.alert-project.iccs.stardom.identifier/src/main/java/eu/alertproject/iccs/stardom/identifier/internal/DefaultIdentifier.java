@@ -4,10 +4,7 @@ import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.ProfileDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
-import eu.alertproject.iccs.stardom.identifier.api.Identifier;
-import eu.alertproject.iccs.stardom.identifier.api.IdentifierWeightConfiguration;
-import eu.alertproject.iccs.stardom.identifier.api.LevelWeightConfiguration;
-import eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration;
+import eu.alertproject.iccs.stardom.identifier.api.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +28,9 @@ import java.util.*;
 public class DefaultIdentifier implements Identifier{
 
     private Logger logger = LoggerFactory.getLogger(DefaultIdentifier.class);
+
+    @Autowired
+    SluggifierService sluggifierService;
 
     @Autowired
     IdentityDao identityDao;
@@ -223,6 +223,9 @@ public class DefaultIdentifier implements Identifier{
     @Override
     @Transactional
     public Identity find(Profile profile) {
+
+        //sluggify profile email
+        profile.setEmail(sluggifierService.sluggify(profile.getEmail()));
 
         List<Identity> possibleMatches = identityDao.findPossibleMatches(profile);
         Map<Identity, List<Profile>> matches = new HashMap<Identity, List<Profile>>();

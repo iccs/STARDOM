@@ -25,7 +25,7 @@ public class MailingListEventHandler {
     private Logger logger = LoggerFactory.getLogger(MailingListEventHandler.class);
 
     @Autowired
-    Identifier findIdentifier;
+    Identifier identifier;
 
     @Autowired
     Analyzers analyzers;
@@ -63,7 +63,7 @@ public class MailingListEventHandler {
         context.setProfile(profile);
 
 //        //do your magic
-        Identity identity = findIdentifier.find(profile);
+        Identity identity = identifier.find(profile);
         logger.trace("void event() Identity {}",identity.getUuid());
 //
 

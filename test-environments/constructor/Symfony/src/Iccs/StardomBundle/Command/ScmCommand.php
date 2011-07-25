@@ -73,6 +73,7 @@ class ScmCommand extends DoctrineCommand{
         }
 
 
+        $emails=array();
         //get the files
         //http://stackoverflow.com/questions/2461762/force-freeing-memory-in-php
         foreach($commits as &$commit){
@@ -91,6 +92,10 @@ class ScmCommand extends DoctrineCommand{
                 "username"=>"",
                 "email"=>$person->getEmail()
             );
+
+            if(!in_array($person->getEmail(),$emails)){
+                array_push($emails,$person->getEmail());
+            }
 
             unset($person);
 
@@ -165,6 +170,11 @@ class ScmCommand extends DoctrineCommand{
 
         echo "\t".(memory_get_usage() / 1024).PHP_EOL;
         gc_collect_cycles();
+
+
+        foreach($emails as $e){
+            $output->writeln($e);
+        }
     }
 
 

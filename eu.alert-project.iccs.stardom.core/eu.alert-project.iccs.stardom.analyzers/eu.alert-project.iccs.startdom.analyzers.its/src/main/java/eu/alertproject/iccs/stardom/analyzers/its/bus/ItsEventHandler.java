@@ -25,7 +25,7 @@ public class ItsEventHandler {
     private Logger logger = LoggerFactory.getLogger(ItsEventHandler.class);
 
     @Autowired
-    Identifier findIdentifier;
+    Identifier identifier;
 
     @Autowired
     Analyzers analyzers;
@@ -118,7 +118,7 @@ public class ItsEventHandler {
         context.setProfile(generate);
 
 
-        Identity identity = findIdentifier.find(context.getProfile());
+        Identity identity = identifier.find(context.getProfile());
         logger.trace("void event() Identity {}",identity.getUuid());
 
         //whatever your do, do it here
@@ -135,7 +135,7 @@ public class ItsEventHandler {
     private void handleDirtyProfile(Profile dirty, DefaultItsAction action ){
         Profile generate = profileFromItsKdeWhoService.generate(dirty.getName(), dirty.getEmail());
 
-        Identity identity = findIdentifier.find(generate);
+        Identity identity = identifier.find(generate);
 
         CleanItsAction cia = new CleanItsAction();
         cia.setDate(action.getDate());

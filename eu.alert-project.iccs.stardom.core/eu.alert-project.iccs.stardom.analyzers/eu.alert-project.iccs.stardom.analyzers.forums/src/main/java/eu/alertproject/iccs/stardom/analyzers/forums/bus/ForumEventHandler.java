@@ -25,7 +25,7 @@ public class ForumEventHandler {
     private Logger logger = LoggerFactory.getLogger(ForumEventHandler.class);
 
     @Autowired
-    Identifier findIdentifier;
+    Identifier identifier;
 
     @Autowired
     MetricDao metricDao;
@@ -56,7 +56,7 @@ public class ForumEventHandler {
 
 
         //do your magic
-        Identity identity = findIdentifier.find(context.getProfile());
+        Identity identity = identifier.find(context.getProfile());
         logger.trace("void event() Identity {}",identity.getUuid());
 
         //whatever your do, do it here

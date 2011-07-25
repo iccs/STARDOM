@@ -31,14 +31,14 @@ public class  IdentificationServiceIF implements IdentificationService {
     IdentityDao identityDao;
 
     @Autowired
-    Identifier findIdentifier;
+    Identifier identifier;
 
-    private DefaultIdentifier identifier;
+    private DefaultIdentifier runtimeIdentifier;
 
     @PostConstruct
     private void init(){
 
-        this.identifier = new DefaultIdentifier();
+        this.runtimeIdentifier = new DefaultIdentifier();
 
 
 
@@ -57,7 +57,7 @@ public class  IdentificationServiceIF implements IdentificationService {
             PropertyWeightConfiguration email) {
 
 
-        this.identifier.setWeightConfiguration(
+        this.runtimeIdentifier.setWeightConfiguration(
             new IdentifierWeightConfiguration(
               threshold,
               configuration,
@@ -68,12 +68,12 @@ public class  IdentificationServiceIF implements IdentificationService {
             )
         );
 
-        return this.identifier.match(a,b);
+        return this.runtimeIdentifier.match(a,b);
     }
 
     @Override
     public Identity findIdentity(Profile profile) {
-        return this.findIdentifier.find(profile);
+        return this.identifier.find(profile);
     }
 
     @Override
