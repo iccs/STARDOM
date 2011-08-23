@@ -10,8 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,7 +20,7 @@ import java.util.List;
 public class FindIdentifierTest extends SpringDbUnitJpaTest {
 
     @Autowired
-    Identifier findIdentifier;
+    Identifier identifier;
 
     @Autowired
     IdentityDao identityDao;
@@ -45,11 +43,11 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
 
         Profile pA = new Profile("John","Smith","jsmith","jsmith@gmail.com");
 
-        Identity identity = findIdentifier.find(pA);
+        Identity identity = identifier.find(pA);
         Assert.assertNotNull(identity);
 
         Profile pB = new Profile("Juan","Smith","jsmith","jsmith@hotmail.com");
-        Identity identity1 = findIdentifier.find(pB);
+        Identity identity1 = identifier.find(pB);
 
         Assert.assertEquals(identity.getUuid(),identity1.getUuid());
 
@@ -63,11 +61,11 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
 
         Profile pA = new Profile("John","Smith","jsmith","jsmith@gmail.com");
 
-        Identity identity = findIdentifier.find(pA);
+        Identity identity = identifier.find(pA);
         Assert.assertNotNull(identity);
 
         Profile pB = new Profile("Juan","Smith","jsmith","jsmith hotmail com");
-        Identity identity1 = findIdentifier.find(pB);
+        Identity identity1 = identifier.find(pB);
 
         Assert.assertEquals(identity.getUuid(),identity1.getUuid());
 
@@ -82,11 +80,11 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
 
         Profile pA = new Profile("Stephan","Kulow","","coolo@kde.org");
 
-        Identity identity = findIdentifier.find(pA);
+        Identity identity = identifier.find(pA);
         Assert.assertNotNull(identity);
 
         Profile pB = new Profile("Stephan","Kulow","","coolo@kde.org");
-        Identity identity1 = findIdentifier.find(pB);
+        Identity identity1 = identifier.find(pB);
 
         Assert.assertEquals(identity.getUuid(),identity1.getUuid());
 
@@ -100,11 +98,11 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
 
         Profile pA = new Profile("John","Smith","","jsmith@gmail.com");
 
-        Identity identity = findIdentifier.find(pA);
+        Identity identity = identifier.find(pA);
         Assert.assertNotNull(identity);
 
         Profile pB = new Profile("Juan","Smith","","jsmith@hotmail.com");
-        Identity identity1 = findIdentifier.find(pB);
+        Identity identity1 = identifier.find(pB);
 
         Assert.assertFalse(identity.getUuid().equals(identity1.getUuid()));
 
@@ -122,12 +120,12 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
 
         Profile pA = new Profile("John","Steward","jsmiths","jsmith@gmail.com");
 
-        Identity identity = findIdentifier.find(pA);
+        Identity identity = identifier.find(pA);
         Assert.assertNotNull(identity);
 
 
         Profile pB = new Profile("John","Smith","jsmith","jsmith@hotmail.com");
-        Identity identity1 = findIdentifier.find(pB);
+        Identity identity1 = identifier.find(pB);
 
         Assert.assertNotSame(identity.getUuid(),identity1.getUuid());
 
@@ -150,11 +148,11 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
         Profile profileB1 = new Profile("Fotios", "Paraskevopoulos", "whatever", "fotisp@hotm.ex");
 
 
-        Identity identityA1 = findIdentifier.find(profileA1);
+        Identity identityA1 = identifier.find(profileA1);
         Assert.assertNotNull(identityA1);
         Assert.assertEquals(1,profileDao.findAll().size(),0);
 
-        Identity identityB1 = findIdentifier.find(profileB1);
+        Identity identityB1 = identifier.find(profileB1);
         Assert.assertNotNull(identityB1);
 
         Assert.assertEquals(2,profileDao.findAll().size(),0);
@@ -163,7 +161,7 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
 
         Assert.assertEquals(2, identityDao.findAll().size(), 0);
 
-        Identity identityA2 = findIdentifier.find(profileA2);
+        Identity identityA2 = identifier.find(profileA2);
         Assert.assertNotNull(identityA2);
         Assert.assertEquals(3,profileDao.findAll().size(),0);
 
@@ -189,11 +187,11 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
         Profile profileB1 = new Profile("Fotios", "Paraskevopoulos", "whatever", "fotisp@hotm.ex");
 
 
-        Identity identityA1 = findIdentifier.find(profileA1);
+        Identity identityA1 = identifier.find(profileA1);
         Assert.assertNotNull(identityA1);
         Assert.assertEquals(1,profileDao.findAll().size(),0);
 
-        Identity identityB1 = findIdentifier.find(profileB1);
+        Identity identityB1 = identifier.find(profileB1);
         Assert.assertNotNull(identityB1);
 
         Assert.assertEquals(2,profileDao.findAll().size(),0);
@@ -202,7 +200,7 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
 
         Assert.assertEquals(2, identityDao.findAll().size(), 0);
 
-        Identity identityA2 = findIdentifier.find(profileA2);
+        Identity identityA2 = identifier.find(profileA2);
         Assert.assertNotNull(identityA2);
         Assert.assertEquals(2,profileDao.findAll().size(),0);
 
@@ -210,6 +208,26 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
         Assert.assertFalse(identityA2.getUuid().equals(identityB1.getUuid()));
 
         Assert.assertEquals(2,identityDao.findAll().size(),0);
+
+
+
+    }
+
+    @Test
+    public void testIdentityMatchEmptyEmail(){
+
+        Profile pA = new Profile("","","","coolo@kde.org");
+
+        Identity identity = identifier.find(pA);
+        Assert.assertNotNull(identity);
+
+        Profile pB = new Profile("","","","coolo@kde.org");
+        Identity identity1 = identifier.find(pB);
+
+        Assert.assertEquals(identity.getUuid(),identity1.getUuid());
+
+        List<Identity> all = identityDao.findAll();
+        Assert.assertEquals(1,all.size(),0);
 
 
 

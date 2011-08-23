@@ -29,7 +29,12 @@
 
     <!-- freemarker config -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-      <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+        <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="locale">el_GR</prop>
+            </props>
+        </property>
     </bean>
 
     <!--

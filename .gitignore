@@ -1,3 +1,5 @@
 /.idea
+scripts
+*.iml
 target
 partners
