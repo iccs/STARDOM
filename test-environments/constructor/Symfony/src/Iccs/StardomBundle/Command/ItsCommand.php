@@ -92,9 +92,6 @@ class ItsCommand extends ContainerAwareCommand{
             $assigned_to_email = $assigned_to->getAttribute("name");
 
 
-
-
-
             //get cc reporters
             $ccList = $node->getElementsByTagName("cc");
 //            $output->writeln("Numbe of CCs ".$ccList->length);
@@ -144,6 +141,79 @@ class ItsCommand extends ContainerAwareCommand{
             if (!$input->getOption("dryrun")) {
                 $this->postPayload($payload, "add");
             }
+
+
+            //get the activity of the bug
+            $python_script = __DIR__."/t.py";
+
+            $activity_xml="";
+            $command = sprintf('/usr/bin/python %s %s',$python_script,$bug_id);
+            $temp = exec($command, $activity_xml);
+
+
+            $output->writeln("\n\n***************************");
+            $output->writeln("Activity for bug id ".$bug_id);
+
+            /**
+             * Adding root node because of the Entity error
+             * http://www.phphaven.com/article.php?id=14
+             */
+            $activity_xml= sprintf("<activity>%s</activity>",trim(implode($activity_xml)));
+
+//            $output->writeln($activity_xml,true);
+
+            $tidy->parseString($activity_xml);
+            $tidy->cleanRepair();
+
+            /** @var $doc DOMDocument */
+            $activityDoc = new DOMDocument(null,"utf8");
+            $activityDoc->loadXML($tidy);
+
+
+            /**
+               <activity>
+                <change>
+                  <who>asraniel@fryx.ch</who>
+                  <when>2009-12-17 11:25:11</when>
+                  <changeitem>
+                    <what>CC</what>
+                    <removed></removed>
+                    <added>asraniel@fryx.ch</added>
+                  </changeitem>
+                  <changeitem>
+                    <what>Component</what>
+                    <removed>widget-kickoff</removed>
+                    <added>general</added>
+                  </changeitem>
+                  <changeitem>
+                    <what>Product</what>
+                    <removed>plasma</removed>
+                    <added>solid</added>
+                  </changeitem>
+                </change>
+                </activity>
+             */
+
+            $activities = $doc->getElementsByTagName('activity');
+
+
+            foreach($activities as $activity){
+
+                $changes= $activity->getElementsByTagName("change");
+
+                foreach($changes as $change){
+
+                    $what=$change->getElementsByTagName("what")->item(0)->nodeValue;
+                    $activityDate = $change->getElementsByTagName("when")->item(0)->nodeValue;
+
+                    $output->writeln($what);
+
+                }
+
+            }
+
+            $output->writeln("***************************\n\n");
+
 
 
 
