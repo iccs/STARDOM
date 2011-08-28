@@ -515,6 +515,10 @@ public class DefaultIdentifier implements Identifier{
          *
          */
         for(Profile profile : profiles){
+            /**
+             * In order to check the properties we use reflection to access each property
+             * in conformance with the java beans
+             */
             for(Field f: fields){
 
                 if(StringUtils.equalsIgnoreCase(f.getName(), "id")){
@@ -528,10 +532,22 @@ public class DefaultIdentifier implements Identifier{
                     Object lookupValue = method.invoke(p);
 
 
-                    if( (personValue == null && lookupValue == null)
-                        || StringUtils.equalsIgnoreCase(personValue.toString(), lookupValue.toString())){
-
-
+                    /**
+                     * If both values are null, we are assuming that they are the same, because
+                     * other properties migh cause a match
+                     *
+                     * if either of the properties is null then we need to compare their values
+                     *
+                     */
+                    if(
+                        (personValue == null && lookupValue == null)
+                    ){
+                        ret.add(profile);
+                        break;
+                    }else if(
+                        (personValue != null && lookupValue !=null)
+                        && StringUtils.equalsIgnoreCase(personValue.toString(), lookupValue.toString())
+                    ){
                         ret.add(profile);
                         break;
                     }

@@ -9,9 +9,13 @@ import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.domain.api.QIdentity;
 import eu.alertproject.iccs.stardom.domain.api.QProfile;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +26,10 @@ import java.util.List;
  */
 @Repository("identityDao")
 public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDao{
+
+    private Logger logger = LoggerFactory.getLogger(JpaIdentityDao.class);
+
+
     protected JpaIdentityDao() {
         super(Identity.class);
     }
@@ -33,6 +41,7 @@ public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDa
         insert.setUuid(org.apache.commons.codec.digest.DigestUtils.md5Hex(String.valueOf(insert.getId())));
         return insert;
     }
+
 
     @SuppressWarnings({"unchecked"})
     @Override

@@ -82,6 +82,13 @@ class ItsCommand extends ContainerAwareCommand{
             $bug_status = $node->getElementsByTagName("bug_status")->item(0)->nodeValue;
             $bug_severity = $node->getElementsByTagName("bug_severity")->item(0)->nodeValue;
 
+            $resolution="";
+            if($bug_status=="RESOLVED"){
+                $resolution = $node->getElementsByTagName("resolution")->item(0)->nodeValue;
+            }
+
+
+
             $bug_create=$node->getElementsByTagName("creation_ts")->item(0)->nodeValue;
             $date = date("c",strtotime($bug_create));
 
@@ -124,6 +131,7 @@ class ItsCommand extends ContainerAwareCommand{
                 "action" => array(
                     "bugId"=>$bug_id,
                     "bugStatus"=>$bug_status,
+                    "resolution"=>$resolution,
                     "severity"=>$bug_severity,
                     "date"=>$date,
                     "assigned"=>array(
@@ -141,80 +149,7 @@ class ItsCommand extends ContainerAwareCommand{
             if (!$input->getOption("dryrun")) {
                 $this->postPayload($payload, "add");
             }
-
-
-            //get the activity of the bug
-            $python_script = __DIR__."/t.py";
-
-            $activity_xml="";
-            $command = sprintf('/usr/bin/python %s %s',$python_script,$bug_id);
-            $temp = exec($command, $activity_xml);
-
-
-            $output->writeln("\n\n***************************");
-            $output->writeln("Activity for bug id ".$bug_id);
-
-            /**
-             * Adding root node because of the Entity error
-             * http://www.phphaven.com/article.php?id=14
-             */
-            $activity_xml= sprintf("<activity>%s</activity>",trim(implode($activity_xml)));
-
-//            $output->writeln($activity_xml,true);
-
-            $tidy->parseString($activity_xml);
-            $tidy->cleanRepair();
-
-            /** @var $doc DOMDocument */
-            $activityDoc = new DOMDocument(null,"utf8");
-            $activityDoc->loadXML($tidy);
-
-
-            /**
-               <activity>
-                <change>
-                  <who>asraniel@fryx.ch</who>
-                  <when>2009-12-17 11:25:11</when>
-                  <changeitem>
-                    <what>CC</what>
-                    <removed></removed>
-                    <added>asraniel@fryx.ch</added>
-                  </changeitem>
-                  <changeitem>
-                    <what>Component</what>
-                    <removed>widget-kickoff</removed>
-                    <added>general</added>
-                  </changeitem>
-                  <changeitem>
-                    <what>Product</what>
-                    <removed>plasma</removed>
-                    <added>solid</added>
-                  </changeitem>
-                </change>
-                </activity>
-             */
-
-            $activities = $doc->getElementsByTagName('activity');
-
-
-            foreach($activities as $activity){
-
-                $changes= $activity->getElementsByTagName("change");
-
-                foreach($changes as $change){
-
-                    $what=$change->getElementsByTagName("what")->item(0)->nodeValue;
-                    $activityDate = $change->getElementsByTagName("when")->item(0)->nodeValue;
-
-                    $output->writeln($what);
-
-                }
-
-            }
-
-            $output->writeln("***************************\n\n");
-
-
+            $this->handleActivity($bug_id, $output, $tidy);
 
 
             //get comments
@@ -266,6 +201,112 @@ class ItsCommand extends ContainerAwareCommand{
 
             }
 
+
+        }
+
+    }
+
+    protected function handleActivity($bug_id, $output, $tidy)
+    { //get the activity of the bug
+        $python_script = __DIR__ . "/t.py";
+
+        $activity_xml = "";
+        $command = sprintf('/usr/bin/python %s %s', $python_script, $bug_id);
+        $temp = exec($command, $activity_xml);
+
+        /**
+         * Adding root node because of the Entity error
+         * http://www.phphaven.com/article.php?id=14
+         */
+        $activity_xml = sprintf("<activity>%s</activity>", trim(implode($activity_xml)));
+
+        //            $output->writeln($activity_xml,true);
+
+        $tidy->parseString($activity_xml);
+        $tidy->cleanRepair();
+
+        /** @var $doc DOMDocument */
+        $activityDoc = new DOMDocument(null, "utf8");
+        $activityDoc->loadXML($tidy);
+
+
+        /**
+        <activity>
+            <change>
+                <who>asraniel@fryx.ch</who>
+                <when>2009-12-17 11:25:11</when>
+            <changeitem>
+                <what>CC</what>
+                <removed></removed>
+                <added>asraniel@fryx.ch</added>
+            </changeitem>
+            <changeitem>
+                <what>Component</what>
+                <removed>widget-kickoff</removed>
+                <added>general</added>
+            </changeitem>
+            <changeitem>
+                <what>Product</what>
+                <removed>plasma</removed>
+                <added>solid</added>
+            </changeitem>
+            </change>
+        </activity>
+         */
+
+        $activities = $activityDoc->getElementsByTagName('activity');
+        foreach ($activities as $activity) {
+
+            $changes = $activity->getElementsByTagName("change");
+
+            foreach ($changes as $change) {
+
+                $who = $change->getElementsByTagName("who")->item(0)->nodeValue;
+                $activityDate =
+                        date("D, d M Y H:i:s O",strtotime($change->getElementsByTagName("when")->item(0)->nodeValue));
+
+                //get the change items
+                $changeitems = $change->getElementsByTagName("changeitem");
+                foreach($changeitems as $changeitem){
+
+                    $what = $changeitem->getElementsByTagName("what")->item(0)->nodeValue;
+                    $added = $changeitem->getElementsByTagName("added")->item(0)->nodeValue;
+                    $removed = $changeitem->getElementsByTagName("removed")->item(0)->nodeValue;
+
+
+                    $output->writeln(
+                        sprintf(
+                            "On %s changed %s to %s -> %s ",
+                            $activityDate,
+                            $who,
+                            $removed,
+                            $added
+                        ));
+
+                    //bug comment
+                    $payload= array(
+                        "profile"=>array(
+                            "id"=>"",
+                            "name"=>"",
+                            "lastname"=>"",
+                            "username"=>"",
+                            "email"=>$who,
+                        ),
+                        "action" => array(
+                            "bugId"=>$bug_id,
+                            "date"=>$activityDate,
+                            "what"=>$what,
+                            "added"=>$added,
+                            "removed"=>$removed
+                        )
+                    );
+
+                    $this->postPayload($payload,"history");
+
+
+                }
+
+            }
 
         }
 

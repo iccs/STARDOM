@@ -14,5 +14,8 @@ import java.util.List;
 public interface MetricDao extends CommonDao<Metric>{
 
     public List<Metric> getForIdentity(Identity identity);
-    public <T extends Metric> T getForIdentity(Identity identity, Class<T> aClass);
+    public <T extends Metric> List<T> getForIdentity(Identity identity, Class<T> aClass);
+    public <T extends Metric> T getMostRecentMetric(Identity identity, Class<T> aClass);
+
+
 }

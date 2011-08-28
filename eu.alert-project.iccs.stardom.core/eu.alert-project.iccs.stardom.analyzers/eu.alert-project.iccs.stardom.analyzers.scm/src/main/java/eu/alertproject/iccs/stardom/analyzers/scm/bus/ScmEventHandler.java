@@ -1,6 +1,7 @@
 package eu.alertproject.iccs.stardom.analyzers.scm.bus;
 
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmConnectorContext;
+import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
@@ -111,6 +112,9 @@ public class ScmEventHandler {
             }
         },"scm-handler-event");
 
+        /*
+        Once we get around our threading issues handle this and start the thread
+         */
 //        t.start();
     }
 
@@ -161,10 +165,14 @@ public class ScmEventHandler {
                 a.analyze(identity,context.getAction());
             }catch (ClassCastException e){
                 //silence
+            }catch (Exception e){
+                logger.warn("Error during analyzer action ",e);
             }
 
 
         }
+
+
 
     }
 

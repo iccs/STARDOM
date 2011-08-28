@@ -27,25 +27,16 @@ public class ScmTemporalAnalyzer extends AbstractScmAnalyzer{
             return;
         }
 
-        Date date = action.getDate();
 
-        ScmTemporalMetric stm = getMetricDao().<ScmTemporalMetric>getForIdentity(identity,ScmTemporalMetric.class);
+        ScmTemporalMetric newMetrics  = new ScmTemporalMetric();
+        newMetrics.setIdentity(identity);
+        newMetrics.setCreatedAt(new Date());
+        newMetrics.setTemporal(action.getDate());
 
-        //check if the metric exists
-        if(stm == null){
 
-            stm = new ScmTemporalMetric();
-            stm.setIdentity(identity);
+        ScmTemporalMetric metric = (ScmTemporalMetric) getMetricDao().insert(newMetrics);
 
-            //create
-            stm = (ScmTemporalMetric) getMetricDao().insert(stm);
-
-        }
-
-        stm.setTemporal(date);
-
-        getMetricDao().update(stm);
-        logger.trace("void analyze()");
+        logger.trace("void analyze() {} ",metric);
 
     }
 }

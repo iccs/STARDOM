@@ -3,6 +3,9 @@ package eu.alertproject.iccs.stardom.analyzers.its.constructor;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsAction;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ItsTemporalMetric;
+import eu.alertproject.iccs.stardom.domain.api.metrics.ScmTemporalMetric;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -13,6 +16,8 @@ import java.util.Date;
  */
 public class ItsTemporalAnalyzer extends AbstractItsAnalyzer{
 
+    private Logger logger = LoggerFactory.getLogger(ItsTemporalAnalyzer.class);
+
     @Override
     public void analyze(Identity identity, ItsAction action) {
 
@@ -20,23 +25,16 @@ public class ItsTemporalAnalyzer extends AbstractItsAnalyzer{
             return;
         }
 
-        Date date = action.getDate();
 
-        ItsTemporalMetric itm = getMetricDao().<ItsTemporalMetric>getForIdentity(identity,ItsTemporalMetric.class);
+        ItsTemporalMetric newMetrics  = new ItsTemporalMetric();
+        newMetrics.setIdentity(identity);
+        newMetrics.setCreatedAt(new Date());
+        newMetrics.setTemporal(action.getDate());
 
-        //check if the metric exists
-        if(itm== null){
 
-            itm = new ItsTemporalMetric();
-            itm.setIdentity(identity);
+        ItsTemporalMetric metric = (ItsTemporalMetric) getMetricDao().insert(newMetrics);
 
-            //create
-            itm = (ItsTemporalMetric) getMetricDao().insert(itm);
-
-        }
-
-        itm.setTemporal(date);
-        getMetricDao().update(itm);
+        logger.trace("void analyze() {} ", metric);
 
     }
 }

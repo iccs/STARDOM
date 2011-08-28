@@ -8,6 +8,8 @@ import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ItsActivityMetric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ItsTemporalMetric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ScmActivityMetric;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +22,9 @@ import java.util.List;
  */
 public class ItsActivityAnalyzer extends AbstractItsAnalyzer{
 
+    private Logger logger = LoggerFactory.getLogger(ItsActivityAnalyzer.class);
+
+
     //Idenity here is null carefull
     @Override
     public void analyze(Identity identity, ItsAction action) {
@@ -28,34 +33,24 @@ public class ItsActivityAnalyzer extends AbstractItsAnalyzer{
             return;
         }
 
-        ItsActivityMetric sqm = getMetricDao().<ItsActivityMetric>getForIdentity(identity, ItsActivityMetric.class);
+        ItsActivityMetric sqm = getMetricDao().<ItsActivityMetric>getMostRecentMetric(identity, ItsActivityMetric.class);
 
+        ItsActivityMetric newMetric = new ItsActivityMetric();
+        newMetric.setCreatedAt(action.getDate());
+        newMetric.setIdentity(identity);
+        newMetric.setQuantity(sqm == null ? 0 : sqm.getQuantity());
 
-        //check if the metric exists
-        if( sqm == null){
-            //create
+        newMetric.increaseQuantity();
 
-            sqm  = new ItsActivityMetric();
-            sqm.setIdentity(identity);
-            sqm.setQuantity(0);
-            sqm = (ItsActivityMetric) getMetricDao().insert(sqm);
+        newMetric = (ItsActivityMetric) getMetricDao().insert(newMetric);
 
-        }
+        logger.trace("void analyze() {} ",newMetric);
 
-        sqm.increaseQuantity();
-
-        getMetricDao().update(sqm);
-
-//        if(action instanceof DefaultItsAction){
-//            handleItsAction(identity, (DefaultItsAction) action);
-//        }else if(action instanceof DefaultItsCommentAction){
-//            handleItsCommentAction(identity, (DefaultItsCommentAction) action);
-//        }
     }
 
     private void handleItsAction(Identity identity, DefaultItsAction action){
 
-        ItsActivityMetric sqm = getMetricDao().<ItsActivityMetric>getForIdentity(identity, ItsActivityMetric.class);
+        ItsActivityMetric sqm = getMetricDao().<ItsActivityMetric>getMostRecentMetric(identity, ItsActivityMetric.class);
 
         //check if the metric exists
         if( sqm == null){
@@ -79,7 +74,7 @@ public class ItsActivityAnalyzer extends AbstractItsAnalyzer{
     private void handleItsCommentAction(Identity identity, DefaultItsCommentAction action){
 
 
-        ItsActivityMetric sqm = getMetricDao().<ItsActivityMetric>getForIdentity(identity, ItsActivityMetric.class);
+        ItsActivityMetric sqm = getMetricDao().<ItsActivityMetric>getMostRecentMetric(identity, ItsActivityMetric.class);
 
         //check if the metric exists
         if( sqm == null){

@@ -1,6 +1,6 @@
 package eu.alertproject.iccs.stardom.analyzers.mailing.bus;
 
-import eu.alertproject.iccs.stardom.analyzers.mailing.connector .MailingListConnectorContext;
+import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
 import eu.alertproject.iccs.stardom.analyzers.mailing.internal.ProfileFromMailFromService;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
@@ -76,9 +76,5 @@ public class MailingListEventHandler {
                 //silence
             }
         }
-//
-
-
-
     }
 }

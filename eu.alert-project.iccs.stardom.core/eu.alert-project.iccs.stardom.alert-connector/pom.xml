@@ -176,6 +176,11 @@
         <dependency>
             <version>${project.version}</version>
             <groupId>${project.groupId}</groupId>
+            <artifactId>analyzers-audit</artifactId>
+        </dependency>
+        <dependency>
+            <version>${project.version}</version>
+            <groupId>${project.groupId}</groupId>
             <artifactId>analyzers-scm</artifactId>
         </dependency>
 
@@ -195,6 +200,11 @@
             <version>${project.version}</version>
             <groupId>${project.groupId}</groupId>
             <artifactId>analyzers-forums</artifactId>
+        </dependency>
+        <dependency>
+            <version>${project.version}</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ml</artifactId>
         </dependency>
 
 

@@ -60,7 +60,7 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
         bean.setIdentity(byId);
         metricDao.insert(bean);
 
-        T forIdentity = metricDao.getForIdentity(byId, metricClass);
+        T forIdentity = metricDao.getMostRecentMetric(byId, metricClass);
 
         Assert.assertEquals(DateFormatUtils.format(forIdentity.getCreatedAt(),"yyyy-MM-dd"),
                             DateFormatUtils.format(new Date(),"yyyy-MM-dd"));
@@ -79,7 +79,7 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
     ){
 
         Identity byId = identityDao.findById(identityId);
-        T forIdentity = metricDao.getForIdentity(byId, metricClass);
+        T forIdentity = metricDao.getMostRecentMetric(byId, metricClass);
         Assert.assertNotNull(forIdentity);
 
 
@@ -91,7 +91,7 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
         metricDao.update(forIdentity);
 
 
-        T updateForIdentity = metricDao.getForIdentity(byId, metricClass);
+        T updateForIdentity = metricDao.getMostRecentMetric(byId, metricClass);
         Assert.assertNotNull(updateForIdentity);
         Assert.assertEquals(updateQuantity, updateForIdentity.getQuantity(),0);
 
@@ -109,7 +109,7 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
         bean.setIdentity(byId);
         metricDao.insert(bean);
 
-        T forIdentity = metricDao.getForIdentity(byId, metricClass);
+        T forIdentity = metricDao.getMostRecentMetric(byId, metricClass);
 
         Assert.assertEquals(DateFormatUtils.format(forIdentity.getCreatedAt(),"yyyy-MM-dd"),
                             DateFormatUtils.format(new Date(),"yyyy-MM-dd"));
@@ -126,7 +126,7 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
     ){
 
         Identity byId = identityDao.findById(identityId);
-        T forIdentity = metricDao.getForIdentity(byId, metricClass);
+        T forIdentity = metricDao.getMostRecentMetric(byId, metricClass);
         Assert.assertNotNull(forIdentity);
 
 
@@ -138,7 +138,7 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
         metricDao.update(forIdentity);
 
 
-        T updateForIdentity = metricDao.getForIdentity(byId, metricClass);
+        T updateForIdentity = metricDao.getMostRecentMetric(byId, metricClass);
         Assert.assertNotNull(updateForIdentity);
         Assert.assertEquals(
                 DateUtils.round(updateWhen, Calendar.HOUR),
@@ -157,7 +157,7 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
 
         Identity identity = identityDao.findById(identityId);
 
-        T forIdentity = metricDao.getForIdentity(identity, metricClass);
+        T forIdentity = metricDao.getMostRecentMetric(identity, metricClass);
 
         Assert.assertNotNull(forIdentity);
 
@@ -177,7 +177,7 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
 
         Identity identity = identityDao.findById(identityId);
 
-        T forIdentity = metricDao.getForIdentity(identity, metricClass);
+        T forIdentity = metricDao.getMostRecentMetric(identity, metricClass);
         Assert.assertNotNull(forIdentity);
 
         Assert.assertEquals(DateFormatUtils.format(forIdentity.getCreatedAt(),"yyyy-MM-dd"),created);
@@ -191,7 +191,7 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
 
         Identity identity = identityDao.findById(identityId);
 
-        T forIdentity = metricDao.getForIdentity(identity, metricClass);
+        T forIdentity = metricDao.getMostRecentMetric(identity, metricClass);
         Assert.assertNull(forIdentity);
     }
 

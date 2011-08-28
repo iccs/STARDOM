@@ -2,8 +2,11 @@ package eu.alertproject.iccs.stardom.analyzers.mailing.constructor;
 
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListAction;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
+import eu.alertproject.iccs.stardom.domain.api.metrics.ItsActivityMetric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.MailingListActivityMetric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ScmActivityMetric;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -14,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class MailingListActivityAnalyzer extends AbstractMailingListAnalyzer {
 
+    private Logger logger = LoggerFactory.getLogger(MailingListActivityAnalyzer.class);
+
     @Override
     public void analyze(Identity identity, MailingListAction action) {
 
@@ -21,22 +26,18 @@ public class MailingListActivityAnalyzer extends AbstractMailingListAnalyzer {
             return;
         }
 
-        MailingListActivityMetric sqm = getMetricDao().<MailingListActivityMetric>getForIdentity(identity,MailingListActivityMetric.class);
+        MailingListActivityMetric sqm = getMetricDao().<MailingListActivityMetric>getMostRecentMetric(identity, MailingListActivityMetric.class);
 
-        //check if the metric exists
-        if( sqm == null){
-            //create
+        MailingListActivityMetric newMetric = new MailingListActivityMetric();
+        newMetric.setCreatedAt(action.getDate());
+        newMetric.setIdentity(identity);
+        newMetric.setQuantity(sqm == null ? 0 : sqm.getQuantity());
 
-            sqm  = new MailingListActivityMetric();
-            sqm.setIdentity(identity);
-            sqm.setQuantity(0);
-            sqm = (MailingListActivityMetric) getMetricDao().insert(sqm);
+        newMetric.increaseQuantity();
 
-        }
+        newMetric = (MailingListActivityMetric) getMetricDao().insert(newMetric);
 
-        sqm.increaseQuantity();
-
-        getMetricDao().update(sqm);
+        logger.trace("void analyze() {} ", newMetric);
 
     }
 }

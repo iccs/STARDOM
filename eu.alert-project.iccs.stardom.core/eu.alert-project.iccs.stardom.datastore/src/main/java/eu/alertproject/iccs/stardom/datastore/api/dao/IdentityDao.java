@@ -4,6 +4,7 @@ import com.existanze.libraries.orm.dao.CommonDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
 
+import java.util.Date;
 import java.util.List;
 
 /**

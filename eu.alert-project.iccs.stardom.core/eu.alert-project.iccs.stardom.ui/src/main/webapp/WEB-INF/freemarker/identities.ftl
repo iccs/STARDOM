@@ -16,6 +16,7 @@ recommend sticking to 'spring' -->
 
 <body>
     <div class="container">
+        <#include "ui/pagination.ftl"/>
         <div class="header clearfix">
             <div class="identity">
                 Identity
@@ -31,15 +32,15 @@ recommend sticking to 'spring' -->
             </div>
         </div>
         <ul class="identity-list">
-            <#list identities as identity>
+            <#list identities as identityBean>
                 <li class="identity clearfix">
                     <div class="identity">
                         <img src="<@spring.url "/static/images/identity.png"/>" alt="Identity" border="none"/>
                         <br/>
-                        <p class="identity-uuid">${identity.uuid}</p>
+                        <p class="identity-uuid">${identityBean.identity.uuid}</p>
                     </div>
                     <div class="profiles">
-                        <#list identity.profiles as profile>
+                        <#list identityBean.identity.profiles as profile>
                             <#include "identity/profile.ftl"/>
                         </#list>
                     </div>
@@ -53,29 +54,6 @@ recommend sticking to 'spring' -->
             </#list>
         </ul>
 
-        <div class="pagination clearfix">
-            <#assign pages = pagination['pages'] />
-            <#if pages?has_content>
-                <ul>
-                    <li class="page">
-                    <#if selected != pagination['first']>
-                        <a href="<@spring.url "/identities/${pagination['first']}"/>">&laquo; First</a>
-                    </#if>
-                    </li>
-                        <#list pages as page>
-                            <li class="page <#if page == selected >selected</#if>" >
-                                <a href="<@spring.url "/identities/${page}"/>">${page}</a>
-                            </li>
-                        </#list>
-                    <#if selected != pagination['last']>
-                        <li class="page"><a href="<@spring.url "/identities/${pagination['last']}"/>">Last &raquo;</a></li>
-                    </#if>
-
-                </ul>
-            <#else>
-                Empty
-            </#if>
-        </div>
-    </div>
+        <#include "ui/pagination.ftl"/>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package eu.alertproject.iccs.stardom.analyzers.forums.bus;
 
 import eu.alertproject.iccs.stardom.analyzers.forums.connector.ForumConnectorContext;
+import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;

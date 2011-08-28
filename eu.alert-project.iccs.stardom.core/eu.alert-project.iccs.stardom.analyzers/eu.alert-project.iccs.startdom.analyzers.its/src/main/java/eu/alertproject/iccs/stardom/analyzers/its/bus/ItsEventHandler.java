@@ -2,6 +2,7 @@ package eu.alertproject.iccs.stardom.analyzers.its.bus;
 
 import eu.alertproject.iccs.stardom.analyzers.its.connector.*;
 import eu.alertproject.iccs.stardom.analyzers.its.internal.ProfileFromItsKdeWhoService;
+import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
@@ -121,6 +122,7 @@ public class ItsEventHandler {
         Identity identity = identifier.find(context.getProfile());
         logger.trace("void event() Identity {}",identity.getUuid());
 
+
         //whatever your do, do it here
         for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
             try{
@@ -131,6 +133,51 @@ public class ItsEventHandler {
         }
 
     }
+
+    @EventSubscriber(eventClass = ItsHistoryEvent.class)
+    public void historyEvent(ItsHistoryEvent event){
+        logger.trace("void event() {}",event);
+
+        Object payload = event.getPayload();
+
+        if(payload == null || !(payload instanceof ItsHistoryConnectorContext)){
+            logger.debug("Ignoring Payload {}",payload);
+            return;
+        }
+
+        ItsHistoryConnectorContext context = (ItsHistoryConnectorContext) payload;
+        logger.trace("void event() {}",context.getProfile());
+        logger.trace("void event() {}",context.getAction());
+
+
+        //we need to create or
+
+        /**
+         * The profiles comming in the comments is all messed up and we need to
+         * handle this here before sending it over to the analyzer
+         *
+         *
+         * The name and email of the comments follow this convention
+         * <who name="Random name">cgiboudeaux gmx com</who>
+         *
+         */
+
+        Identity identity = identifier.find(context.getProfile());
+        logger.trace("void event() Identity {}",identity.getUuid());
+
+
+        //whatever your do, do it here
+        for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
+            try{
+                a.analyze(identity,context.getAction());
+            }catch (ClassCastException e){
+                //silence
+            }
+        }
+
+
+    }
+
 
     private void handleDirtyProfile(Profile dirty, DefaultItsAction action ){
         Profile generate = profileFromItsKdeWhoService.generate(dirty.getName(), dirty.getEmail());

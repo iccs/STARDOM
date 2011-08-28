@@ -1,6 +1,11 @@
 package eu.alertproject.iccs.stardom.ui.controller;
 
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
+import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
+import eu.alertproject.iccs.stardom.domain.api.Identity;
+import eu.alertproject.iccs.stardom.domain.api.Metric;
+import eu.alertproject.iccs.stardom.domain.api.metrics.*;
+import eu.alertproject.iccs.stardom.ui.beans.IdentityBean;
 import eu.alertproject.iccs.stardom.ui.utils.PaginationBuilderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * User: fotis
@@ -30,6 +33,10 @@ public class IndexController {
 
     @Autowired
     private IdentityDao identityDao;
+
+    @Autowired
+    private MetricDao metricDao;
+
     private int max;
     private Integer pagesSize;
 
@@ -78,10 +85,53 @@ public class IndexController {
 
         mv.addObject("pagination", buildPages(page));
         mv.addObject("selected", page );
-        mv.addObject("identities", identityDao.findAllPaginableOrderByLastName(
+
+
+        /*
+         * The code bellow should be in an external service
+         */
+
+        List<Identity> allPaginableOrderByLastName = identityDao.findAllPaginableOrderByLastName(
                 offest * max,
                 max
-        ));
+        );
+
+        List<IdentityBean> beans = new ArrayList<IdentityBean>();
+
+
+
+        List<Class<? extends Metric>> metrics =
+                new ArrayList<Class<? extends Metric>>();
+
+
+        metrics.add(ScmActivityMetric.class);
+        metrics.add(ScmTemporalMetric.class);
+        metrics.add(ItsActivityMetric.class);
+        metrics.add(ItsTemporalMetric.class);
+        metrics.add(MailingListActivityMetric.class);
+        metrics.add(MailingListTemporalMetric.class);
+
+        for(Identity i : allPaginableOrderByLastName){
+
+            IdentityBean identityBean = new IdentityBean();
+            identityBean.setIdentity(i);
+
+
+            //for all of the possible metrics build the metrics array
+
+            List<Metric> beanMetrics = identityBean.getMetrics();
+            for(Class<? extends Metric> m : metrics){
+                Metric recentMetric = metricDao.getMostRecentMetric(i, m);
+                if(recentMetric != null ){
+                    beanMetrics.add(recentMetric);
+                }
+            }
+
+
+            beans.add(identityBean);
+        }
+
+        mv.addObject("identities", beans);
 
 
         mv.setViewName(page == 0? null : "identities");

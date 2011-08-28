@@ -3,6 +3,8 @@ package eu.alertproject.iccs.stardom.analyzers.mailing.constructor;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListAction;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.metrics.MailingListTemporalMetric;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -12,6 +14,7 @@ import java.util.Date;
  * Time: 09:37
  */
 public class MailingListTemporalAnalyzer extends AbstractMailingListAnalyzer{
+    private Logger logger = LoggerFactory.getLogger(MailingListTemporalAnalyzer.class);
 
     @Override
     public void analyze(Identity identity, MailingListAction action) {
@@ -20,22 +23,16 @@ public class MailingListTemporalAnalyzer extends AbstractMailingListAnalyzer{
             return;
         }
 
-        Date date = action.getDate();
 
-        MailingListTemporalMetric itm = getMetricDao().<MailingListTemporalMetric>getForIdentity(identity,MailingListTemporalMetric.class);
+        MailingListTemporalMetric newMetrics  = new MailingListTemporalMetric();
+        newMetrics.setIdentity(identity);
+        newMetrics.setCreatedAt(new Date());
+        newMetrics.setTemporal(action.getDate());
 
-        //check if the metric exists
-        if(itm== null){
 
-            itm = new MailingListTemporalMetric();
-            itm.setIdentity(identity);
+        MailingListTemporalMetric metric = (MailingListTemporalMetric) getMetricDao().insert(newMetrics);
 
-            //create
-            itm = (MailingListTemporalMetric) getMetricDao().insert(itm);
-        }
-
-        itm.setTemporal(date);
-        getMetricDao().update(itm);
+        logger.trace("void analyze() {} ", metric);
 
     }
 }

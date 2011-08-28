@@ -39,9 +39,10 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
      * @param aClass A subclass of metric
      * @return The metric if it exists, null otherwise
      */
+    @SuppressWarnings({"unchecked"})
     @Override
     @Transactional(readOnly = true)
-    public <T extends Metric> T getForIdentity(Identity identity, Class<T> aClass) {
+    public <T extends Metric> List<T> getForIdentity(Identity identity, Class<T> aClass) {
 
         if(identity == null){
             return null;
@@ -50,6 +51,26 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
         Query query = getEntityManager().createQuery(
                 "SELECT m FROM " + aClass.getName() + " m " +
                 "WHERE m.identity.id = :id");
+        query.setParameter("id",identity.getId());
+
+        return query.getResultList();
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public <T extends Metric> T getMostRecentMetric(Identity identity, Class<T> aClass) {
+
+        if(identity == null){
+            return null;
+        }
+
+        Query query = getEntityManager().createQuery(
+                "SELECT m FROM " + aClass.getName() + " m " +
+                "WHERE m.identity.id = :id " +
+                "ORDER BY m.createdAt DESC");
+
+        query.setMaxResults(1);
         query.setParameter("id",identity.getId());
 
         T ret = null;

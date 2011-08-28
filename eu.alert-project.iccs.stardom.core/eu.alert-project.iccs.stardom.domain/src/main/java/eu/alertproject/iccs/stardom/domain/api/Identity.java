@@ -47,7 +47,7 @@ public class Identity implements SimpleBean{
     private Set<Profile> notProfiles;
 
 
-    @OneToMany(fetch=FetchType.EAGER, mappedBy = "identity")
+    @OneToMany(fetch=FetchType.LAZY, mappedBy = "identity")
     @OrderBy("createdAt")
     private Set<Metric> metrics;
 

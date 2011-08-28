@@ -26,23 +26,15 @@ public class ScmActivityAnalyzer extends AbstractScmAnalyzer {
             return;
         }
 
-        ScmActivityMetric sqm = getMetricDao().<ScmActivityMetric>getForIdentity(identity,ScmActivityMetric.class);
+        ScmActivityMetric sqm = getMetricDao().<ScmActivityMetric>getMostRecentMetric(identity,ScmActivityMetric.class);
 
-        //check if the metric exists
-        if( sqm == null){
-            //create
+        ScmActivityMetric newMetric = new ScmActivityMetric();
+        newMetric.setCreatedAt(action.getDate());
+        newMetric.setIdentity(identity);
+        newMetric.setQuantity(sqm == null ? 0 : sqm.getQuantity());
+        newMetric.increaseQuantity();
+        newMetric = (ScmActivityMetric) getMetricDao().insert(newMetric);
 
-            sqm  = new ScmActivityMetric();
-            sqm.setIdentity(identity);
-            sqm.setQuantity(0);
-            sqm = (ScmActivityMetric) getMetricDao().insert(sqm);
-
-        }
-
-        sqm.increaseQuantity();
-
-        getMetricDao().update(sqm);
-        
-        logger.trace("void analyze()");
+        logger.trace("void analyze() {} ",newMetric);
     }
 }

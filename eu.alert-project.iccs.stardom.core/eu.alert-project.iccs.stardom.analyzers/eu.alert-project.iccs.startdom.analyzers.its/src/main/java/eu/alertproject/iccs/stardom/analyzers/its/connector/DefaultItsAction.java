@@ -15,6 +15,7 @@ public class DefaultItsAction implements ItsAction{
     private Integer bugId;
     private String bugStatus;
     private String severity;
+    private String resolution;
     private Date date;
     private Profile assigned;
     private Profile reporter;
@@ -46,6 +47,14 @@ public class DefaultItsAction implements ItsAction{
 
     public void setBugStatus(String bugStatus) {
         this.bugStatus = bugStatus;
+    }
+
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
     }
 
     public String getSeverity() {

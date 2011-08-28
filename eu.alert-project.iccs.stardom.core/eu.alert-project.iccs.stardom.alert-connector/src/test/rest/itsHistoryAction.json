@@ -1,0 +1,16 @@
+{
+    "profile":{
+        "id":"",
+        "name":"",
+        "lastname":"",
+        "username":"",
+        "email":"hell@world.lan"
+    },
+    "action":{
+        "bugId":12,
+        "date":"Mon, 15 Sep 2008 15:13:04 +0200",
+        "what":"Status",
+        "added":"RESOLVED",
+        "removed":"REOPENED"
+    }
+}
