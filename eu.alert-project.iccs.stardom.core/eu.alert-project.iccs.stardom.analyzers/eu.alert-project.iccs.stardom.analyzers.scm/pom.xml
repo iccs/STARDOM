@@ -11,12 +11,4 @@
 
     <artifactId>analyzers-scm</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <version>${project.version}</version>
-            <artifactId>analyzers-audit</artifactId>
-        </dependency>
-
-    </dependencies>
 </project>

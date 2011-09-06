@@ -10,13 +10,4 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>analyzers-mailing</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <version>${project.version}</version>
-            <artifactId>analyzers-audit</artifactId>
-        </dependency>
-    </dependencies>
-
 </project>
