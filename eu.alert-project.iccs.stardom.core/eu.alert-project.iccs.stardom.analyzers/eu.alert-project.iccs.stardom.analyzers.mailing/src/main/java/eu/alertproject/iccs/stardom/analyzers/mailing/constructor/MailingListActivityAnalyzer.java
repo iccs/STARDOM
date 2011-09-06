@@ -20,6 +20,7 @@ public class MailingListActivityAnalyzer extends AbstractMailingListAnalyzer {
     private Logger logger = LoggerFactory.getLogger(MailingListActivityAnalyzer.class);
 
     @Override
+    @Transactional
     public void analyze(Identity identity, MailingListAction action) {
 
         if(identity == null ){
@@ -31,7 +32,7 @@ public class MailingListActivityAnalyzer extends AbstractMailingListAnalyzer {
         MailingListActivityMetric newMetric = new MailingListActivityMetric();
         newMetric.setCreatedAt(action.getDate());
         newMetric.setIdentity(identity);
-        newMetric.setQuantity(sqm == null ? 0 : sqm.getQuantity());
+        newMetric.setQuantity(sqm == null ? 1 : sqm.getQuantity());
 
         newMetric.increaseQuantity();
 

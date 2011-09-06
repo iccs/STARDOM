@@ -128,7 +128,7 @@ public class ScmEventHandler {
 
 
     @EventSubscriber(eventClass = ScmEvent.class)
-    public void event(ScmEvent event){
+    public synchronized void event(ScmEvent event){
 
         //add the event to the queue and process one by one
         Object payload = event.getPayload();

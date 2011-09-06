@@ -10,6 +10,7 @@ import eu.alertproject.iccs.stardom.domain.api.metrics.ItsTemporalMetric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ScmActivityMetric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +28,7 @@ public class ItsActivityAnalyzer extends AbstractItsAnalyzer{
 
     //Idenity here is null carefull
     @Override
+    @Transactional
     public void analyze(Identity identity, ItsAction action) {
 
         if(identity == null ){
@@ -38,7 +40,7 @@ public class ItsActivityAnalyzer extends AbstractItsAnalyzer{
         ItsActivityMetric newMetric = new ItsActivityMetric();
         newMetric.setCreatedAt(action.getDate());
         newMetric.setIdentity(identity);
-        newMetric.setQuantity(sqm == null ? 0 : sqm.getQuantity());
+        newMetric.setQuantity(sqm == null ? 1 : sqm.getQuantity());
 
         newMetric.increaseQuantity();
 

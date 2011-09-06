@@ -29,7 +29,6 @@ public class ScmActionController implements ConstructorConnector<ScmConnectorCon
         logger.trace("void scmAction() {} {}",context.getProfile(),context.getAction());
 
         //create the action
-
         ScmEvent scmEvent = new ScmEvent(this,context);
         Bus.publish(scmEvent);
 

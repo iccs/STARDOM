@@ -6,6 +6,7 @@ import eu.alertproject.iccs.stardom.domain.api.metrics.ItsTemporalMetric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ScmTemporalMetric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -19,6 +20,7 @@ public class ItsTemporalAnalyzer extends AbstractItsAnalyzer{
     private Logger logger = LoggerFactory.getLogger(ItsTemporalAnalyzer.class);
 
     @Override
+    @Transactional
     public void analyze(Identity identity, ItsAction action) {
 
         if(identity == null){
@@ -30,7 +32,6 @@ public class ItsTemporalAnalyzer extends AbstractItsAnalyzer{
         newMetrics.setIdentity(identity);
         newMetrics.setCreatedAt(new Date());
         newMetrics.setTemporal(action.getDate());
-
 
         ItsTemporalMetric metric = (ItsTemporalMetric) getMetricDao().insert(newMetrics);
 

@@ -1,6 +1,6 @@
 package eu.alertproject.iccs.stardom.alertconnector.api;
 
-import eu.alertproject.iccs.stardom.connector.api.Connector;
+import eu.alertproject.iccs.stardom.connector.api.IdentifierConnector;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.identifier.api.LevelWeightConfiguration;
@@ -24,9 +24,9 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Controller
-public class AlertConnector implements Connector {
+public class IdentifierController implements IdentifierConnector {
 
-    private Logger logger = LoggerFactory.getLogger(AlertConnector.class);
+    private Logger logger = LoggerFactory.getLogger(IdentifierController.class);
 
     @Autowired
     IdentificationService identificationService;

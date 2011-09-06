@@ -7,7 +7,7 @@ package eu.alertproject.iccs.stardom.connector.api;
  * Time: 10:25
  * To change this template use File | Settings | File Templates.
  */
-public interface Connector extends IdentifierConnector{
+public interface Connector {
 
 
 

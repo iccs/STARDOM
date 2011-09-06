@@ -2,8 +2,8 @@
     "profile":{},
     "action":{
         "from":"Fotis Paraskevopoulos <hello@world.com>",
-        "subject":"What is up !",
         "date":"Mon, 15 Sep 2008 15:13:04 +0200",
+        "subject":"What is up !",
         "text":"This is a long long text"
     }
 

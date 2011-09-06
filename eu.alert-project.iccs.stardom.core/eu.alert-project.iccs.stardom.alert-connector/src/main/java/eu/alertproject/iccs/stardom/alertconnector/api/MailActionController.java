@@ -28,7 +28,7 @@ public class MailActionController implements ConstructorConnector<MailingListCon
     @RequestMapping(value = "/constructor/action/mail", method = RequestMethod.POST)
     public @ResponseBody void action(@RequestBody MailingListConnectorContext context) {
 
-        logger.trace("void forumAction() {} {}",context.getAction());
+        logger.trace("void mailAction() {} {}",context.getAction());
 
         //create the action
 

@@ -1,11 +1,15 @@
 #!/bin/bash
 
-php5="/Applications/MAMP/bin/php/php5.3.6/bin/php"
+php5=`which php`
+max_records=5000
+echo "Using $php5"
+
 
 for l in {0..21};
 do
-  from=$(($l * 10))
-	$php5 app/console iccs:scm $from 5000;
-	sleep 30;
+  from=$(($l * $max_records))
+  echo "Geting 5000 records from the database starting at $from"
+  $php5 app/console iccs:scm $from $max_records;
+  sleep 30;
 done;
 

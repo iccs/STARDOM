@@ -113,20 +113,17 @@
         <dependency>
           <groupId>com.mysema.querydsl</groupId>
           <artifactId>querydsl-apt</artifactId>
-          <version>2.1.2</version>
           <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.mysema.querydsl</groupId>
             <artifactId>querydsl-core</artifactId>
-            <version>2.1.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.mysema.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
-            <version>2.1.2</version>
         </dependency>
 
 

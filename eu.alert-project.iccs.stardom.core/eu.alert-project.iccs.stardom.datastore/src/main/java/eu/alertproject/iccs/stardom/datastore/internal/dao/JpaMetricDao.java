@@ -64,6 +64,7 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
         if(identity == null){
             return null;
         }
+        logger.trace("T getMostRecentMetric() {} ",aClass.getName());
 
         Query query = getEntityManager().createQuery(
                 "SELECT m FROM " + aClass.getName() + " m " +

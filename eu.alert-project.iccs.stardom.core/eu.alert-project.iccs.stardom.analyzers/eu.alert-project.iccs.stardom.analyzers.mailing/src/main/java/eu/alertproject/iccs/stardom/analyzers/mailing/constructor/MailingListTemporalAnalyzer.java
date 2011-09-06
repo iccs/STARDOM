@@ -5,6 +5,7 @@ import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.metrics.MailingListTemporalMetric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ public class MailingListTemporalAnalyzer extends AbstractMailingListAnalyzer{
     private Logger logger = LoggerFactory.getLogger(MailingListTemporalAnalyzer.class);
 
     @Override
+    @Transactional
     public void analyze(Identity identity, MailingListAction action) {
 
         if(identity == null){

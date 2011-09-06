@@ -23,7 +23,7 @@ public class StardomEventService extends ThreadSafeEventService implements Smart
     public StardomEventService() {
         super();
         logger.trace(" Starting thread pool");
-        threadPool = Executors.newSingleThreadExecutor();
+//        threadPool = Executors.newSingleThreadExecutor();
     }
 
     /**
@@ -35,13 +35,14 @@ public class StardomEventService extends ThreadSafeEventService implements Smart
    protected void publish(final Object event, final String topic, final Object eventObj,
            final List subscribers, final List vetoSubscribers, final StackTraceElement[] callingStack) {
 
-       threadPool.submit(new Runnable() {
-           @Override
-           public void run() {
-               logger.trace("void run(callingStack) Publishing event {} for topic {}",eventObj,topic);
-               StardomEventService.super.publish(event, topic, eventObj, subscribers, vetoSubscribers, callingStack);
-           }
-       });
+       StardomEventService.super.publish(event, topic, eventObj, subscribers, vetoSubscribers, callingStack);
+//       threadPool.submit(new Runnable() {
+//           @Override
+//           public void run() {
+//               logger.trace("void run(callingStack) Publishing event {} for topic {}",eventObj,topic);
+//               StardomEventService.super.publish(event, topic, eventObj, subscribers, vetoSubscribers, callingStack);
+//           }
+//       });
 
    }
 
@@ -54,7 +55,7 @@ public class StardomEventService extends ThreadSafeEventService implements Smart
     @Override
     public void stop(Runnable callback) {
         logger.debug("void stop()");
-        threadPool.shutdownNow();
+//        threadPool.shutdownNow();
     }
 
     @Override
@@ -65,13 +66,13 @@ public class StardomEventService extends ThreadSafeEventService implements Smart
     @Override
     public void stop() {
         logger.debug("void stop()");
-        threadPool.shutdownNow();
+//        threadPool.shutdownNow();
     }
 
     @Override
     public boolean isRunning() {
         logger.debug("boolean isRunning()");
-        return !threadPool.isTerminated();
+        return false;//!threadPool.isTerminated();
     }
 
     @Override

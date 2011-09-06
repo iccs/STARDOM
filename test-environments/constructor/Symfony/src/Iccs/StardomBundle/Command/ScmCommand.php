@@ -143,7 +143,7 @@ class ScmCommand extends DoctrineCommand{
             unset($actions);
 //
             $action=array(
-                "date"=>date("Y-m-d",$commit['commitDate']->getTimestamp()),
+                "date"=>date("D, d M Y H:i:s O",$commit['commitDate']->getTimestamp()),
                 "type"=>"Svn",
                 "uid"=>$commit['commitId'],
                 "revission"=>$commit['revission'],

@@ -3,3 +3,4 @@ scripts
 *.iml
 target
 partners
+*.dump

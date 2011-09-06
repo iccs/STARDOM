@@ -161,11 +161,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>connector</artifactId>
         </dependency>
-        <dependency>
-            <version>${project.version}</version>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>constructor</artifactId>
-        </dependency>
+
         <dependency>
             <version>${project.version}</version>
             <groupId>${project.groupId}</groupId>
@@ -173,11 +169,6 @@
         </dependency>
 
         <!-- Analyzers -->
-        <dependency>
-            <version>${project.version}</version>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>analyzers-audit</artifactId>
-        </dependency>
         <dependency>
             <version>${project.version}</version>
             <groupId>${project.groupId}</groupId>
