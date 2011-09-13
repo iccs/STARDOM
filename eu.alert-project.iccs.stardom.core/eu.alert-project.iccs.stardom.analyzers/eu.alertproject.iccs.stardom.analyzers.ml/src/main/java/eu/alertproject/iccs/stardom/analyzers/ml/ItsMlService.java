@@ -88,6 +88,26 @@ public class ItsMlService {
             ItsMl insert = itsMlDao.insert(newBugAction);
             logger.trace("void event() Assigned to Changed {}",insert);
 
+        }else if(StringUtils.endsWithIgnoreCase(what,"CC")){
+
+            logger.trace("void recordItsHistory() cc added");
+
+
+            //this person was added as cc
+            Profile p = new Profile();
+            p.setEmail(action.getAdded());
+            Identity identity = identifier.find(p);
+
+            ItsMl newBugAction = new ItsMl();
+            newBugAction.setStatus("CC");
+            newBugAction.setUuid(identity.getUuid());
+            newBugAction.setBugId(action.getBugId());
+            newBugAction.setWhen(action.getDate());
+
+
+            ItsMl insert = itsMlDao.insert(newBugAction);
+            logger.trace("void event() Assigned to Changed {}",insert);
+
         }
 
     }

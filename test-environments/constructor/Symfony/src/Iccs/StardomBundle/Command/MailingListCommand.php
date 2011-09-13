@@ -19,6 +19,7 @@ use RecursiveDirectoryIterator;
 
 class MailingListCommand extends DoctrineCommand
 {
+    public $payloadAmount = 0;
 
 
     /**
@@ -120,9 +121,7 @@ class MailingListCommand extends DoctrineCommand
                             array_push($addresses,$message['action']['from']);
                         }
 
-                        if(!$input->getOption("dryrun")){
-                            $this->postPayload($message);
-                        }
+                        $this->postPayload($message,$input->getOption("dryrun"));
 
 
                     }
@@ -143,9 +142,7 @@ class MailingListCommand extends DoctrineCommand
                     }
 
 
-                    if(!$input->getOption("dryrun")){
-                        $this->postPayload($payload);
-                    }
+                    $this->postPayload($payload,$input->getOption("dryrun"));
 
 
                 }
@@ -157,13 +154,20 @@ class MailingListCommand extends DoctrineCommand
         }
 
 
-        echo "\t" . (memory_get_usage() / 1024) . PHP_EOL;
-        gc_collect_cycles();
+        echo "Number of messages processed ".$this->payloadAmount;
+
     }
 
 
-    private function postPayload($payload)
+    private function postPayload($payload,$dryrun)
     {
+
+        $this->payloadAmount++;
+
+        if($dryrun){
+            return;
+        }
+
 
 
         $values = json_encode($payload);
