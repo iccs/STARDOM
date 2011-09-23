@@ -1,7 +1,5 @@
 package eu.alertproject.iccs.stardom.alertconnector.api;
 
-import eu.alertproject.iccs.stardom.analyzers.forums.bus.ForumEvent;
-import eu.alertproject.iccs.stardom.analyzers.forums.connector.ForumConnectorContext;
 import eu.alertproject.iccs.stardom.analyzers.mailing.bus.MailingEvent;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;

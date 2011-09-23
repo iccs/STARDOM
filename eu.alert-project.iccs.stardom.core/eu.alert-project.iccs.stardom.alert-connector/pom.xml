@@ -186,12 +186,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>analyzers-mailing</artifactId>
         </dependency>
-
-        <dependency>
-            <version>${project.version}</version>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>analyzers-forums</artifactId>
-        </dependency>
         <dependency>
             <version>${project.version}</version>
             <groupId>${project.groupId}</groupId>
