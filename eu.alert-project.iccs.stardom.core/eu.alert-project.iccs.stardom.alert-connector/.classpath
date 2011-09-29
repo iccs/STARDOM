@@ -2,20 +2,6 @@
 <classpath>
 	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.iam.jdt.core.mavenClasspathContainer"/>
-	<classpathentry exported="true" kind="lib" path="/home/dpana/.m2/repository/org/springframework/spring-beans/3.0.4.RELEASE/spring-beans-3.0.4.RELEASE.jar" sourcepath="/home/dpana/.m2/repository/org/springframework/spring-beans/3.0.4.RELEASE/spring-beans-3.0.4.RELEASE-sources.jar">
-		<attributes>
-			<attribute name="org.eclipse.iam.jdt.core.classpath.containertype" value="jar"/>
-			<attribute name="org.eclipse.iam.jdt.core.classpath.container.groupId" value="org.springframework"/>
-			<attribute name="org.eclipse.iam.jdt.core.classpath.container.scope" value="compile"/>
-			<attribute name="org.eclipse.iam.jdt.core.classpath.container.artifactId" value="spring-beans"/>
-			<attribute name="org.eclipse.iam.jdt.core.classpath.container.version" value="3.0.4.RELEASE"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="/eu.alert-project.iccs.stardom.datastore"/>
-	<classpathentry kind="src" path="/eu.alert-project.iccs.stardom.identifier"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="/eu.alert-project.iccs.startdom.analyzers.its"/>
-	<classpathentry kind="src" path="/eu.alert-project.iccs.stardom.analyzers.scm"/>
-	<classpathentry kind="src" path="/eu.alert-project.iccs.stardom.analyzers.mailing"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

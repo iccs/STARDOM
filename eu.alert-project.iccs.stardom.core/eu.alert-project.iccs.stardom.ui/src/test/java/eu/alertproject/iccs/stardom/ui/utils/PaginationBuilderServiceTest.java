@@ -1,4 +1,4 @@
-package src.test.java.eu.alertproject.iccs.stardom.ui.utils;
+package eu.alertproject.iccs.stardom.ui.utils;
 
 import jsr166y.LinkedTransferQueue;
 import org.junit.Assert;
@@ -6,8 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import eu.alertproject.iccs.stardom.ui.utils.PaginationBuilderService;
 
 import java.util.Map;
 
