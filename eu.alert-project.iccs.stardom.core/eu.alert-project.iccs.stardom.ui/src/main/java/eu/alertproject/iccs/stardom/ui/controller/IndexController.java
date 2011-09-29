@@ -1,5 +1,6 @@
 package eu.alertproject.iccs.stardom.ui.controller;
 
+import eu.alertproject.iccs.stardom.constructor.api.CiCalculatorService;
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
@@ -36,6 +37,9 @@ public class IndexController {
 
     @Autowired
     private MetricDao metricDao;
+
+    @Autowired
+    private CiCalculatorService ciCalculatorService;
 
     private int max;
     private Integer pagesSize;
@@ -120,12 +124,30 @@ public class IndexController {
             //for all of the possible metrics build the metrics array
 
             List<Metric> beanMetrics = identityBean.getMetrics();
+
+            double ci = 0.0;
+            int scm = 0;
+            int its = 0;
+            int mailing =0;
             for(Class<? extends Metric> m : metrics){
                 Metric recentMetric = metricDao.getMostRecentMetric(i, m);
+
                 if(recentMetric != null ){
+                    if(m == ScmActivityMetric.class){
+                        scm = ((Number)recentMetric.getValue()).intValue();
+                    }else if(m == ItsActivityMetric.class){
+                        its = ((Number)recentMetric.getValue()).intValue();
+                    }else if(m == MailingListActivityMetric.class){
+                        mailing=((Number)recentMetric.getValue()).intValue();
+                    }
+
                     beanMetrics.add(recentMetric);
                 }
+
             }
+
+            identityBean.setCi(ciCalculatorService.ci(scm,its,mailing));
+
 
 
             beans.add(identityBean);
@@ -137,5 +159,7 @@ public class IndexController {
         mv.setViewName(page == 0? null : "identities");
         return mv;
     }
+
+
 
 }
