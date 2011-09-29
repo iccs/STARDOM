@@ -15,6 +15,7 @@ public class IdentityBean {
 
     private Identity identity;
     private List<Metric> metrics;
+    private double ci;
 
     public IdentityBean() {
         metrics = new ArrayList<Metric>();
@@ -34,5 +35,13 @@ public class IdentityBean {
 
     public void setMetrics(List<Metric> metrics) {
         this.metrics = metrics;
+    }
+
+    public double getCi() {
+        return ci;
+    }
+
+    public void setCi(double ci) {
+        this.ci = ci;
     }
 }

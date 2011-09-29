@@ -48,7 +48,7 @@ recommend sticking to 'spring' -->
                         <#include "identity/metrics.ftl"/>
                     </div>
                     <div class="ci">
-                        ?
+                        ${identityBean.ci}
                     </div>
                 </li>
             </#list>

@@ -1,0 +1,199 @@
+/* We use Eric Meyer's reset stylesheet 100% of the time  =========================================== */
+
+/* Eric Meyer's Reset CSS -- http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
+-------------------------------------------------------------------------- */
+
+* { margin: 0; padding: 0; font-weight: normal; } /* Safari seems to ignore a lot of the reset style sheet and I am not sure why. */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
+:focus { outline: 0; } /* remember to define focus styles! */
+ins { text-decoration: none; } /* remember to highlight inserts somehow! */
+del { text-decoration: line-through; }
+table { border-collapse: separate; border-spacing: 0; } /* tables still need 'cellspacing="0"' in the markup */
+blockquote:before, blockquote:after, q:before, q:after { content: ""; }
+blockquote, q { quotes: "" ""; }
+
+@blue:#3A6997;
+
+@layout-identity:25%;
+@layout-profile:35%;
+@layout-metrics:30%;
+@layout-ci:5%;
+
+body{
+    font-size:10pt;
+}
+
+.container{
+    display:block;
+    overflow:hidden;
+    width:980px;
+    min-width:980px;
+    margin:auto;
+
+}
+
+.header{
+
+    background-color:#E9E9E9;
+    border:1px solid black;
+    margin: 10px 0px;
+
+    div{
+
+        float:left;
+        font-weight:bolder;
+        font-size: 140%;
+
+
+        &.identity{
+            width: @layout-identity;
+        }
+
+        &.profiles{
+            width: @layout-profile;
+        }
+        &.metrics{
+            width: @layout-metrics;
+        }
+        &.ci{
+            width: @layout-ci;
+        }
+    }
+}
+
+.identity-list{
+
+
+    li.identity{
+
+
+        list-style:none;
+        width:100%;
+        padding: 5px 0px;
+        margin: 5px 0px;
+        border-bottom: 1px solid gray;
+
+        div{
+
+            float:left;
+
+            &.identity{
+                width: @layout-identity;
+            }
+
+            &.profiles{
+                width: @layout-profile;
+            }
+            &.metrics{
+                width: @layout-metrics;
+            }
+            &.ci{
+                width: @layout-ci;
+
+                font-size:200%;
+                font-color:black;
+            }
+        }
+    }
+
+    .identity-uuid{
+        font-size:90%;
+        color: @blue;
+        font-weight:bolder;
+    }
+
+}
+
+div.profile{
+
+    min-width:300px;
+    border: 1px solid gray;
+    padding:5px;
+
+    ul{
+        li{
+            display:block;
+
+            label{
+                display:inline-block;
+                font-weight:bolder;
+                width: 90px;
+            }
+        }
+    }
+}
+
+div.metrics-list{
+
+    ul{
+
+        li{
+            display:block;
+            list-style:none;
+            padding:3px;
+
+
+            label{
+                font-weight:bolder;
+                margin-right: 3px;
+            }
+
+
+        }
+        // TODO Check why & notation didn't work here
+        li.odd{
+          background-color:#E9E9E9;
+        }
+
+
+    }
+
+}
+
+
+div.pagination{
+
+    display:block;
+    width:100%;
+    margin: 5px 0px;
+    text-align:center;
+
+    li.page{
+        display:inline;
+        list-style:none;
+
+
+        a{
+
+            font-size: 110%;
+
+            &:link,
+            &:visited{
+                text-decoration: none;
+                color: @blue;
+            }
+
+            &:hover,
+            &:active{
+                color: @blue;
+                text-decoration: underline overline;
+            }
+
+
+        }&.selected{
+            font-size: 130%;
+            font-weight: bolder;
+
+        }
+
+    }
+}
+
+.clearfix:after {
+   content: ".";
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
