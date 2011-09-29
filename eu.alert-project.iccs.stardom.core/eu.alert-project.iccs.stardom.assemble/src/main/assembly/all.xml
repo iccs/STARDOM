@@ -5,6 +5,7 @@
     <id>all</id>
     <formats>
         <format>dir</format>
+        <format>zip</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <moduleSets>
@@ -14,7 +15,6 @@
                 <include>${project.groupId}:ui</include>
                 <include>${project.groupId}:alert-connector</include>
             </includes>
-            
             <binaries>
                 <excludes>
                     <exclude>
@@ -25,4 +25,25 @@
             </binaries>
         </moduleSet>
     </moduleSets>
+
+    <fileSets>
+        <fileSet>
+            <directory>${basedir}/../</directory>
+            <outputDirectory>sources</outputDirectory>
+            <excludes>
+                <exclude>**/*.iml</exclude>
+                <exclude>**/target/**</exclude>
+                <exclude>**/bin/**</exclude>
+                <exclude>**/.settings/**</exclude>
+                <exclude>**/.classpath</exclude>
+                <exclude>**/.project</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${basedir}/../../test-environments</directory>
+            <excludes>
+                <exclude>**/*.iml</exclude>
+            </excludes>
+        </fileSet>
+    </fileSets>
 </assembly>
