@@ -32,7 +32,6 @@
             </activation>
             <properties>
                 <db.migration.host>localhost</db.migration.host>
-                <db.migration.port>${db.port}</db.migration.port>
                 <db.migration.db>alert_dev</db.migration.db>
                 <db.migration.username>alert</db.migration.username>
                 <db.migration.password>1234</db.migration.password>
@@ -48,11 +47,54 @@
             </activation>
             <properties>
                 <db.migration.host>localhost</db.migration.host>
-                <db.migration.port>${db.port}</db.migration.port>
                 <db.migration.db>alert_test</db.migration.db>
                 <db.migration.username>alert</db.migration.username>
                 <db.migration.password>1234</db.migration.password>
             </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>prod</value>
+                </property>
+            </activation>
+            <properties>
+                <db.migration.host>localhost</db.migration.host>
+                <db.migration.db>alert_test</db.migration.db>
+                <db.migration.username>alert</db.migration.username>
+                <db.migration.password>1234</db.migration.password>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.carbonfive.db-support</groupId>
+                        <artifactId>db-migration-maven-plugin</artifactId>
+                        <version>0.9.9-m5</version>
+                        <configuration>
+                            <url>jdbc:mysql://${db.migration.host}:${db.port}/${db.migration.db}?allowMultiQueries=true</url>
+                            <username>${db.migration.username}</username>
+                            <password>${db.migration.password}</password>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>reset</goal>
+                                </goals>
+                                <phase>test-compile</phase>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>mysql</groupId>
+                                <artifactId>mysql-connector-java</artifactId>
+                                <version>${mysql.mysql-connector-java.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
     <build>
@@ -63,7 +105,7 @@
                 <artifactId>db-migration-maven-plugin</artifactId>
                 <version>0.9.9-m5</version>
                 <configuration>
-                    <url>jdbc:mysql://${db.migration.host}:${db.migration.port}/${db.migration.db}?allowMultiQueries=true</url>
+                    <url>jdbc:mysql://${db.migration.host}:${db.port}/${db.migration.db}?allowMultiQueries=true</url>
                     <username>${db.migration.username}</username>
                     <password>${db.migration.password}</password>
                 </configuration>
@@ -71,7 +113,7 @@
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.16</version>
+                        <version>${mysql.mysql-connector-java.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>

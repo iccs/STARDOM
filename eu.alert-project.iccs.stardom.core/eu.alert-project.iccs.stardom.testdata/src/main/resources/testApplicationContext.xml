@@ -46,66 +46,66 @@
 	</bean>
 
 
-    <bean id="identifier" class="eu.alertproject.iccs.stardom.identifier.internal.DefaultIdentifier">
-        <constructor-arg>
-            <bean class="eu.alertproject.iccs.stardom.identifier.api.IdentifierWeightConfiguration">
-                <constructor-arg><value>${identifier.threshold}</value></constructor-arg>
-                <constructor-arg>
-                        <bean class="eu.alertproject.iccs.stardom.identifier.api.LevelWeightConfiguration">
-                            <constructor-arg><value>${identifier.weights.univocity}</value></constructor-arg>
-                            <constructor-arg><value>${identifier.weights.valuesperuser}</value></constructor-arg>
-                            <constructor-arg><value>${identifier.weights.misleading}</value></constructor-arg>
-                        </bean>
-                </constructor-arg>
-                <constructor-arg>
-                        <bean class="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration">
-                            <constructor-arg>
-                                <util:constant static-field="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration.Property.FIRSTNAME"/>
-                            </constructor-arg>
-                            <constructor-arg><value>${identifier.properties.firstname.ul}</value></constructor-arg>
-                            <constructor-arg><value>${identifier.properties.firstname.vpl}</value></constructor-arg>
-                            <constructor-arg><value>${identifier.properties.firstname.ml}</value></constructor-arg>
-                        </bean>
-                </constructor-arg>
+    <!--<bean id="identifier" class="eu.alertproject.iccs.stardom.identifier.internal.DefaultIdentifier">-->
+        <!--<constructor-arg>-->
+            <!--<bean class="eu.alertproject.iccs.stardom.identifier.api.IdentifierWeightConfiguration">-->
+                <!--<constructor-arg><value>${identifier.threshold}</value></constructor-arg>-->
+                <!--<constructor-arg>-->
+                        <!--<bean class="eu.alertproject.iccs.stardom.identifier.api.LevelWeightConfiguration">-->
+                            <!--<constructor-arg><value>${identifier.weights.univocity}</value></constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.weights.valuesperuser}</value></constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.weights.misleading}</value></constructor-arg>-->
+                        <!--</bean>-->
+                <!--</constructor-arg>-->
+                <!--<constructor-arg>-->
+                        <!--<bean class="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration">-->
+                            <!--<constructor-arg>-->
+                                <!--<util:constant static-field="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration.Property.FIRSTNAME"/>-->
+                            <!--</constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.firstname.ul}</value></constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.firstname.vpl}</value></constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.firstname.ml}</value></constructor-arg>-->
+                        <!--</bean>-->
+                <!--</constructor-arg>-->
 
 
-                <constructor-arg>
-                        <bean class="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration">
-                            <constructor-arg>
-                                <util:constant static-field="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration.Property.LASTNAME"/>
-                            </constructor-arg>
-                            <constructor-arg><value>${identifier.properties.lastname.ul}</value></constructor-arg>
-                            <constructor-arg><value>${identifier.properties.lastname.vpl}</value></constructor-arg>
-                            <constructor-arg><value>${identifier.properties.lastname.ml}</value></constructor-arg>
-                        </bean>
-                </constructor-arg>
+                <!--<constructor-arg>-->
+                        <!--<bean class="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration">-->
+                            <!--<constructor-arg>-->
+                                <!--<util:constant static-field="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration.Property.LASTNAME"/>-->
+                            <!--</constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.lastname.ul}</value></constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.lastname.vpl}</value></constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.lastname.ml}</value></constructor-arg>-->
+                        <!--</bean>-->
+                <!--</constructor-arg>-->
 
 
-                <constructor-arg>
-                        <bean class="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration">
-                            <constructor-arg>
-                                <util:constant static-field="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration.Property.USERNAME"/>
-                            </constructor-arg>
-                            <constructor-arg><value>${identifier.properties.username.ul}</value></constructor-arg>
-                            <constructor-arg><value>${identifier.properties.username.vpl}</value></constructor-arg>
-                            <constructor-arg><value>${identifier.properties.username.ml}</value></constructor-arg>
-                        </bean>
-                </constructor-arg>
+                <!--<constructor-arg>-->
+                        <!--<bean class="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration">-->
+                            <!--<constructor-arg>-->
+                                <!--<util:constant static-field="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration.Property.USERNAME"/>-->
+                            <!--</constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.username.ul}</value></constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.username.vpl}</value></constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.username.ml}</value></constructor-arg>-->
+                        <!--</bean>-->
+                <!--</constructor-arg>-->
 
-                <constructor-arg>
-                        <bean class="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration">
-                            <constructor-arg>
-                                <util:constant static-field="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration.Property.EMAIL"/>
-                            </constructor-arg>
-                            <constructor-arg><value>${identifier.properties.email.ul}</value></constructor-arg>
-                            <constructor-arg><value>${identifier.properties.email.vpl}</value></constructor-arg>
-                            <constructor-arg><value>${identifier.properties.email.ml}</value></constructor-arg>
-                        </bean>
-                </constructor-arg>
-            </bean>
-        </constructor-arg>
+                <!--<constructor-arg>-->
+                        <!--<bean class="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration">-->
+                            <!--<constructor-arg>-->
+                                <!--<util:constant static-field="eu.alertproject.iccs.stardom.identifier.api.PropertyWeightConfiguration.Property.EMAIL"/>-->
+                            <!--</constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.email.ul}</value></constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.email.vpl}</value></constructor-arg>-->
+                            <!--<constructor-arg><value>${identifier.properties.email.ml}</value></constructor-arg>-->
+                        <!--</bean>-->
+                <!--</constructor-arg>-->
+            <!--</bean>-->
+        <!--</constructor-arg>-->
 
-    </bean>
+    <!--</bean>-->
 
 
 <!--  The documentation specified that this will inject the the persistence unit into the class -->

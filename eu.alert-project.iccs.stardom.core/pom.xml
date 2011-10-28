@@ -38,9 +38,6 @@
                     <value>dev</value>
                 </property>
             </activation>
-            <properties>
-                <db.port>8889</db.port>
-            </properties>
         </profile>
         <profile>
             <id>build-iccs</id>
@@ -50,12 +47,7 @@
                     <value>iccs</value>
                 </property>
             </activation>
-            <properties>
-                <db.port>3306</db.port>
-            </properties>
         </profile>
-
-
     </profiles>
 
     <properties>
@@ -85,11 +77,11 @@
         <org.apache.tiles.version>2.2.2</org.apache.tiles.version>
         <javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
         <org.freemarker.version>2.3.16</org.freemarker.version>
+
     </properties>
 
     <build>
         <pluginManagement>
-
             <plugins>
                 <plugin>
                     <groupId>net.alchim31.maven</groupId>
@@ -461,7 +453,6 @@
     </dependencies>
 
     <repositories>
-
         <repository>
           <id>imu-repository</id>
           <name>Maven Repository Manager running on repo.mycompany.com</name>
@@ -469,7 +460,6 @@
         </repository>
 
     </repositories>
-
 	<pluginRepositories>
 	    <pluginRepository>
           <id>imu-repository</id>
