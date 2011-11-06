@@ -30,24 +30,18 @@
 
     <profiles>
         <profile>
-            <id>build-dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-                <property>
-                    <name>build</name>
-                    <value>dev</value>
-                </property>
-            </activation>
-        </profile>
-        <profile>
-            <id>build-iccs</id>
+            <id>force-port</id>
             <activation>
                 <property>
                     <name>build</name>
-                    <value>iccs</value>
+                    <value>force</value>
                 </property>
             </activation>
+            <properties>
+                <db.port>8889</db.port>
+            </properties>
         </profile>
+
     </profiles>
 
     <properties>
@@ -353,6 +347,23 @@
                 <version>${org.dbunit.dbunit.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-core</artifactId>
+                <version>5.5.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-pool</artifactId>
+                <version>5.5.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-camel</artifactId>
+                <version>5.5.1</version>
+            </dependency>
 
 
             <!-- Required by @DateTimeFormat validation annotation -->
@@ -366,6 +377,12 @@
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>${commons-codec.commons-codec.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>1.4</version>
             </dependency>
 
 
@@ -421,6 +438,7 @@
             <artifactId>commons-lang</artifactId>
             <version>${commons-lang.commons-lang.version}</version>
         </dependency>
+
 
         <dependency>
             <groupId>org.bushe</groupId>

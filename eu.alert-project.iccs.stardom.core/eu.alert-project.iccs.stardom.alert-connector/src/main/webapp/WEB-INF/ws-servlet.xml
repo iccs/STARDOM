@@ -27,7 +27,6 @@
     <mvc:annotation-driven />
 
 
-
     <bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="1"/>
         <property name="favorPathExtension" value="true"/>
@@ -187,4 +186,51 @@
     <bean class="eu.alertproject.iccs.stardom.analyzers.mailing.constructor.MailingListActivityAnalyzer"/>
     <bean class="eu.alertproject.iccs.stardom.analyzers.mailing.constructor.MailingListTemporalAnalyzer"/>
 
+
+
+
+    <!-- Active MQ -->
+    <!-- ActiveMQ -->
+    <bean   id="jmsConnectionFactory"
+            class="org.apache.activemq.ActiveMQConnectionFactory" >
+        <property name="brokerURL" value="${activemq.brokerURL}" />
+        <property name="userName" value="${activemq.userName}" />
+        <property name="password" value="${activemq.password}" />
+    </bean>
+
+    <bean id="pooledJmsConnectionFactory"
+          class="org.apache.activemq.pool.PooledConnectionFactory"
+          destroy-method="stop">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+    </bean>
+
+    <bean id="jmsConfig"
+          class="org.apache.camel.component.jms.JmsConfiguration">
+        <property name="connectionFactory" ref="pooledJmsConnectionFactory"/>
+        <property name="transacted" value="false"/>
+        <property name="concurrentConsumers" value="10"/>
+    </bean>
+
+    <bean id="activemq"
+          class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="configuration" ref="jmsConfig"/>
+    </bean>
+
+    <!--<bean id="mailNewMailListener" class="eu.alertproject.iccs.stardom.activemqconnector.internal.MailNewMailListener"/>-->
+
+    <bean id="iccsMlNewMailConsumer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg value="ICCS.MailingList.NewEmail" />
+            </bean>
+        </property>
+        <property name="messageListener" ref="mailNewMailListener"/>
+    </bean>
+
+        <!-- Spring JMS Template -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="pooledJmsConnectionFactory" />
+    </bean>
 </beans>
