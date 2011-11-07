@@ -223,7 +223,9 @@
         <property name="destination">
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
-                <constructor-arg value="ICCS.MailingList.NewEmail" />
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsMlNewMail"/>
+                </constructor-arg>
             </bean>
         </property>
         <property name="messageListener" ref="mailNewMailListener"/>

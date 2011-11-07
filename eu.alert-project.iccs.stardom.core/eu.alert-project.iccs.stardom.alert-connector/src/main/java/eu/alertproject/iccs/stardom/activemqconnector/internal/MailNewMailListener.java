@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.TextMessage;
 import java.io.IOException;
 
 /**
@@ -25,6 +27,11 @@ public class MailNewMailListener implements Subscriber {
 
     private Logger logger = LoggerFactory.getLogger(MailNewMailListener.class);
 
+
+
+    private int messageCount = 0;
+
+
     @PostConstruct
     public void loaded(){
         logger.info("Loaded {}",this.getClass());
@@ -35,7 +42,7 @@ public class MailNewMailListener implements Subscriber {
 
         logger.trace("void onMessage() {} ",message);
 
-        if(!(message instanceof ActiveMQMessage)){
+        if(!(message instanceof TextMessage)){
 
             logger.warn("I can't handle this message {} ",message);
             return;
@@ -46,19 +53,29 @@ public class MailNewMailListener implements Subscriber {
             MailingListConnectorContext context = null;
 
 
+
             ObjectMapper mapper = new ObjectMapper();
+
+            String text = ((TextMessage) message).getText();
+
+            logger.trace("void onMessage() Text to parse {} ",text);
             context= mapper.readValue(
-                            IOUtils.toInputStream((String) ((ActiveMQMessage) message).getProperty("message"))
+                            IOUtils.toInputStream(text)
                             ,MailingListConnectorContext.class);
 
             MailingEvent mailEvent = new MailingEvent(this,context);
-            Bus.publish(mailEvent);
+            logger.trace("void onMessage() {} ",mailEvent);
+
+//            Bus.publish(mailEvent);
+
+            logger.debug("Sending message {} ",messageCount++);
 
         } catch (IOException e) {
-            logger.warn("Couldn't handle the message content ");
+            logger.warn("Couldn't handle and translate the message content {}",e);
+        } catch (JMSException e) {
+            logger.warn("Couldn't retrieve the message content {}", e);
         } finally {
+
         }
-
-
     }
 }
