@@ -11,5 +11,6 @@ import eu.alertproject.iccs.stardom.domain.api.Identity;
 public interface Analyzer<T extends ConnectorAction> {
 
     public void analyze(Identity identity, T action);
+    public boolean canHandle(ConnectorAction action);
 
 }

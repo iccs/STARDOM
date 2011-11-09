@@ -6,6 +6,7 @@ import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.connector.api.Subscriber;
 import org.apache.activemq.command.ActiveMQMessage;
 import org.apache.commons.io.IOUtils;
+import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +57,7 @@ public class MailNewMailListener implements Subscriber {
 
             ObjectMapper mapper = new ObjectMapper();
 
+
             String text = ((TextMessage) message).getText();
 
             logger.trace("void onMessage() Text to parse {} ",text);
@@ -66,7 +68,7 @@ public class MailNewMailListener implements Subscriber {
             MailingEvent mailEvent = new MailingEvent(this,context);
             logger.trace("void onMessage() {} ",mailEvent);
 
-//            Bus.publish(mailEvent);
+            Bus.publish(mailEvent);
 
             logger.debug("Sending message {} ",messageCount++);
 

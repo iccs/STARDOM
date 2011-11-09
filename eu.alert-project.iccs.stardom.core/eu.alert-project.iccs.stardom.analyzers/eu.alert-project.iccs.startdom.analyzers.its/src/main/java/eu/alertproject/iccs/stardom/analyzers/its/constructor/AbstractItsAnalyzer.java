@@ -1,6 +1,7 @@
 package eu.alertproject.iccs.stardom.analyzers.its.constructor;
 
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsAction;
+import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
@@ -18,5 +19,10 @@ public abstract class AbstractItsAnalyzer  implements Analyzer<ItsAction> {
 
     public MetricDao getMetricDao() {
         return metricDao;
+    }
+
+    @Override
+    public boolean canHandle(ConnectorAction action) {
+        return action instanceof ItsAction;
     }
 }

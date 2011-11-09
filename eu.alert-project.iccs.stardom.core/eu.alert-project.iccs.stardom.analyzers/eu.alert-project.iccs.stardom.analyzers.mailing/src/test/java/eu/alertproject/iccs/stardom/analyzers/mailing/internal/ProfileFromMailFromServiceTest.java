@@ -13,13 +13,13 @@ import org.junit.Test;
  */
 public class ProfileFromMailFromServiceTest {
 
-    private ProfileFromMailFromService profileFromMailFromService;
+    private ProfileFromMailFromServiceWs profileFromMailFromService;
 
 
 
     @Before
     public void init(){
-        profileFromMailFromService = new ProfileFromMailFromService();
+        profileFromMailFromService = new ProfileFromMailFromServiceWs();
     }
 
 

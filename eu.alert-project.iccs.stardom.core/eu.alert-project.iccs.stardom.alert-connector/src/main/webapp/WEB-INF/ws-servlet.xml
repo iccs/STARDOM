@@ -163,6 +163,10 @@
 
     </bean>
 
+   <!-- ProfileParser-->
+   <bean id="profileFromMailFromService" class="eu.alertproject.iccs.stardom.analyzers.mailing.internal.ProfileFromMailFromServiceSensor"/>
+
+
     <!-- Services -->
    <bean class="eu.alertproject.iccs.stardom.analyzers.scm.bus.ScmEventHandler"/>
    <bean class="eu.alertproject.iccs.stardom.analyzers.its.bus.ItsEventHandler"/>
@@ -202,12 +206,14 @@
           class="org.apache.activemq.pool.PooledConnectionFactory"
           destroy-method="stop">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="maxConnections" value="1" />
+        <property name="maximumActive" value="1" />
     </bean>
 
     <bean id="jmsConfig"
           class="org.apache.camel.component.jms.JmsConfiguration">
         <property name="connectionFactory" ref="pooledJmsConnectionFactory"/>
-        <property name="transacted" value="false"/>
+        <property name="transacted" value="true"/>
         <property name="concurrentConsumers" value="10"/>
     </bean>
 
@@ -229,6 +235,8 @@
             </bean>
         </property>
         <property name="messageListener" ref="mailNewMailListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
     </bean>
 
         <!-- Spring JMS Template -->

@@ -1,5 +1,6 @@
 package eu.alertproject.iccs.stardom.analyzers.mailing.internal;
 
+import eu.alertproject.iccs.stardom.analyzers.mailing.api.ProfileFromMailFromService;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,7 @@ import java.util.regex.Pattern;
  * Date: 18/07/11
  * Time: 16:43
  */
-@Service("profileFromMailFromService")
-public class ProfileFromMailFromService {
+public class ProfileFromMailFromServiceWs implements ProfileFromMailFromService {
 
     /**
      * <p>The following method generates a mail from header such as "Fotis"&lt; a @ b .com &gt;"
@@ -26,6 +26,7 @@ public class ProfileFromMailFromService {
      * @param mailFrom
      * @return
      */
+    @Override
     public Profile generate(String mailFrom){
 
         /*
@@ -50,7 +51,6 @@ public class ProfileFromMailFromService {
 
 
         profile.setEmail(matcher.group(3).trim());
-
         profile.setName(matcher.group(1).trim());
         profile.setLastname(StringUtils.defaultIfEmpty(StringUtils.trimToEmpty(matcher.group(2)),""));
 

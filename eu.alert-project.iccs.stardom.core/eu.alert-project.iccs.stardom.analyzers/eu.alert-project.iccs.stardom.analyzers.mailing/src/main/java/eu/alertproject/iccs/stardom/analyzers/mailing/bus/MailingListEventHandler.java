@@ -1,7 +1,8 @@
 package eu.alertproject.iccs.stardom.analyzers.mailing.bus;
 
+import eu.alertproject.iccs.stardom.analyzers.mailing.api.ProfileFromMailFromService;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
-import eu.alertproject.iccs.stardom.analyzers.mailing.internal.ProfileFromMailFromService;
+import eu.alertproject.iccs.stardom.analyzers.mailing.constructor.AbstractMailingListAnalyzer;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
@@ -69,12 +70,15 @@ public class MailingListEventHandler {
 
 
         //whatever your do, do it here
-        for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
-            try{
-                a.analyze(identity,context.getAction());
-            }catch (ClassCastException e){
-                //silence
+        try{
+            for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
+                if(a.canHandle(context.getAction())){
+                  a.analyze(identity,context.getAction());
+                }
             }
+        }catch (ClassCastException e){
+            logger.warn("Something happened in the analyzer {} ",e);
         }
+
     }
 }
