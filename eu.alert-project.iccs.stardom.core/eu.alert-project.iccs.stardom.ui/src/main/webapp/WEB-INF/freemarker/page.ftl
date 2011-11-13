@@ -19,7 +19,9 @@ recommend sticking to 'spring' -->
 <script type="text/javascript">
     $(document).ready(function(){
 
-        console.log("Ready")
+        var timer = 5000;
+        var page = 0;
+
 
         $('.page-link').click(function(eventObject){
 
@@ -28,56 +30,56 @@ recommend sticking to 'spring' -->
                 return;
             }
 
+            $('#view').stopTime('view');
+
             ICCS.lockLink(this);
 
             $(this).attr('enable','false');
-            $('#list-loader').fadeIn();
-
             var url = $(this).attr("title");
             console.log('click '+url);
 
             $(".selected").removeClass('selected');
             $(this).parent().toggleClass('selected');
             var link = $(this);
+            ICCS.setView(link,url,"#view","#pages","#list-loader");
 
-            $.get(url,function(data){
-
-                ICCS.unlockLink(link);
-                $('#list-loader').fadeOut();
-                $('#view').html(data);
-
-                $.getJSON("/ui/pagination.json",function(data){
-
-                    var selectedPage = data.selected;
-                    var pages= data.pages;
-
-                    var result = "<ul class=\"pages\">";
-
-                    for(var i=0; i< pages.length; i++){
-
-                        var p =pages[i];
-                        result+="<li class=\"page "+(selectedPage==p ? 'selected':'')+"\">"+p+"</li>";
-                    }
-                    result +="</ul>";
-
-                    $('#pages').html(result);
-                });
-
+            $('#view').everyTime(timer,'view',function(){
+                ICCS.setView(null,"/ui/ui/list/current","#view","#pages","#list-loader");
             });
+
             return false;
 
         });
 
         $('.page-link.previous').trigger('click');
 
-        $('#events-processed').everyTime(10000,'events',function(){
-            $('#events-loader').fadeIn();
 
-            $('#events-processed').oneTime(5000,function(){
+        var url = "/ws/constructor/events/count";
+        $('#events-processed').everyTime(timer,'events',function(){
+
+            $('#events-loader').fadeIn();
+            $.getJSON(url,function(data){
+
+                $("#scm-events").html(data.scm);
+                $("#its-events").html(data.its);
+                $("#ml-events").html(data.ml);
+
                 $('#events-loader').fadeOut();
-            })
+
+            });
+
         });
 
+        $('#log').everyTime(timer,'logs',function(){
+
+            $('#logs-loader').fadeIn();
+            console.log('timer-log');
+            var url = '<@spring.url "/log/dump"/>';
+            $.get(url,function(data){
+                $("#log").html(data);
+                $('#logs-loader').fadeOut();
+            });
+        });
     });
 
 </script>
@@ -85,12 +87,18 @@ recommend sticking to 'spring' -->
 
         <div id="events-processed" >
             <h2>Events Processed <@iccs.loader id="events"/></h2>
-            <label>SCM: </label><span  id="scm-events">0</span><br/>
-            <label>ITS: </label><span id="its-events">0</span><br/>
-            <label>ML : </label><span id="ml-events">0</span><br/>
+            <div style="clear:both"><label>SCM: </label><span  id="scm-events">0</span></div>
+            <div style="clear:both"><label>ITS: </label><span id="its-events">0</span></div>
+            <div style="clear:both"><label>ML : </label><span id="ml-events">0</span></div>
+        </div>
+        <div id="log-container">
+            <h2>Process Output <@iccs.loader id="logs"/></h2>
+            <div id="log" style="">
+            </div>
         </div>
         <div style="clear:both"/>
         <#include "ui/prevnext.ftl"/>
         <div id="view"></div>
+
 </body>
 </html>

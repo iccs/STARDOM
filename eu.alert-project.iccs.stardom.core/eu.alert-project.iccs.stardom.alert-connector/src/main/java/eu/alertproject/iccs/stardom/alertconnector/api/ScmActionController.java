@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * User: fotis
  * Date: 15/07/11
@@ -22,6 +24,9 @@ public class ScmActionController implements ConstructorConnector<ScmConnectorCon
 
     private Logger logger = LoggerFactory.getLogger(ScmActionController.class);
 
+    private AtomicInteger messageCount = new AtomicInteger();
+
+
     @Override
     @RequestMapping(value = "/constructor/action/scm", method = RequestMethod.POST)
     public @ResponseBody void action(@RequestBody ScmConnectorContext context) {
@@ -30,8 +35,16 @@ public class ScmActionController implements ConstructorConnector<ScmConnectorCon
 
         //create the action
         ScmEvent scmEvent = new ScmEvent(this,context);
+        messageCount.incrementAndGet();
+
         Bus.publish(scmEvent);
 
+    }
+
+    @RequestMapping(value = "/constructor/scm/count", method = RequestMethod.GET)
+    public @ResponseBody Integer getMessageCount(){
+
+        return messageCount.get();
 
     }
 }

@@ -17,6 +17,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * User: fotis
@@ -29,8 +30,7 @@ public class MailNewMailListener implements Subscriber {
     private Logger logger = LoggerFactory.getLogger(MailNewMailListener.class);
 
 
-
-    private int messageCount = 0;
+    private AtomicInteger messageCount = new AtomicInteger(0);
 
 
     @PostConstruct
@@ -49,6 +49,8 @@ public class MailNewMailListener implements Subscriber {
             return;
         }
 
+
+        int count = messageCount.incrementAndGet();
 
         try {
             MailingListConnectorContext context = null;
@@ -70,7 +72,7 @@ public class MailNewMailListener implements Subscriber {
 
             Bus.publish(mailEvent);
 
-            logger.debug("Sending message {} ",messageCount++);
+            logger.debug("Sending message {} ",count);
 
         } catch (IOException e) {
             logger.warn("Couldn't handle and translate the message content {}",e);
@@ -79,5 +81,9 @@ public class MailNewMailListener implements Subscriber {
         } finally {
 
         }
+    }
+
+    public Integer getMessageCount() {
+        return messageCount.get();
     }
 }

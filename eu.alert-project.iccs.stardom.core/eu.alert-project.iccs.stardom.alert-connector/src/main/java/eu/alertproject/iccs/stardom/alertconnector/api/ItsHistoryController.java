@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * User: fotis
  * Date: 27/08/11
@@ -24,6 +26,8 @@ public class ItsHistoryController implements ConstructorConnector<ItsHistoryConn
 
     private Logger logger = LoggerFactory.getLogger(ItsCommentConnectorContext.class);
 
+    private AtomicInteger messageCount = new AtomicInteger();
+
     @RequestMapping(value = "/constructor/action/its/history", method = RequestMethod.POST)
     public @ResponseBody
     void action(@RequestBody ItsHistoryConnectorContext context) {
@@ -32,7 +36,16 @@ public class ItsHistoryController implements ConstructorConnector<ItsHistoryConn
 
         //create the action
         ItsHistoryEvent itsEvent= new ItsHistoryEvent(this,context);
+
+        messageCount.incrementAndGet();
         Bus.publish(itsEvent);
+
+    }
+
+    @RequestMapping(value = "/constructor/itshistory/count", method = RequestMethod.GET)
+    public @ResponseBody Integer getMessageCount(){
+
+        return messageCount.get();
 
     }
 }

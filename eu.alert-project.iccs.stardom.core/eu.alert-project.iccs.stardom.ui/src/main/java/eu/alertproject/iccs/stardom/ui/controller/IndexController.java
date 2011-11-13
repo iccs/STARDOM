@@ -80,6 +80,11 @@ public class IndexController {
         return list(current+1);
     }
 
+    @RequestMapping(value="/ui/list/current", method = RequestMethod.GET)
+    public ModelAndView current(){
+        return list(current);
+    }
+
     @RequestMapping(value = "/ui/list/{page}", method = RequestMethod.GET)
     public ModelAndView list(@PathVariable("page") Integer page){
 
