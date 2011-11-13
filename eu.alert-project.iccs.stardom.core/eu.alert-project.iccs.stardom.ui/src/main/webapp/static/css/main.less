@@ -23,6 +23,12 @@ body{
     font-size:10pt;
 }
 
+h2{
+    color:@blue;
+    font-weight:bold;
+    font-size: 130%;
+}
+
 .container{
     display:block;
     overflow:hidden;
@@ -151,6 +157,22 @@ div.metrics-list{
 }
 
 
+#events-processed{
+    float:right;
+    margin: 10px 0px;
+    font-size: 110%;
+    width: 200px;
+
+    label{
+        float:left;
+        font-weight: bold;
+        width:60px;
+    }
+
+}
+
+
+
 div.pagination{
 
     display:block;
@@ -158,11 +180,20 @@ div.pagination{
     margin: 5px 0px;
     text-align:center;
 
-    li.page{
-        display:inline;
-        list-style:none;
+    #button-pages{
+        margin:auto;
 
+        .loader-holder{
+            width:40px;
+            float:left;
+            min-height:20px;
+        }
 
+        #pages{
+            width: 70px;
+            text-align:center;
+            font-weight:bold;
+        }
         a{
 
             font-size: 110%;
@@ -180,12 +211,44 @@ div.pagination{
             }
 
 
-        }&.selected{
-            font-size: 130%;
-            font-weight: bolder;
+        }
+    }
+
+
+    ul.pages{
+        width:200px;
+        display:inline-block;
+        line-height:10px;
+
+        li.page{
+            display:inline;
+            list-style:none;
+
+
+            a{
+
+                font-size: 110%;
+
+                &:link,
+                &:visited{
+                    text-decoration: none;
+                    color: @blue;
+                }
+
+                &:hover,
+                &:active{
+                    color: @blue;
+                    text-decoration: underline overline;
+                }
+
+
+            }&.selected{
+                font-size: 130%;
+                font-weight: bolder;
+
+            }
 
         }
-
     }
 }
 

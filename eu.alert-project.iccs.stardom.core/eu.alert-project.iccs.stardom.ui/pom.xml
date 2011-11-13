@@ -79,6 +79,18 @@
             <version>2.3.18</version>
         </dependency>
 
+
+       <!-- JSON Web Services -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+        </dependency>
+
         <!-- Local -->
         <dependency>
             <version>${project.version}</version>

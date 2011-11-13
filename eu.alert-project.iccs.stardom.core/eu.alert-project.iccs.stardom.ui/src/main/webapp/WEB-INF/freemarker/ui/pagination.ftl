@@ -1,22 +1,32 @@
+<#import "../macro/iccs.ftl" as iccs/>
+
 <div class="pagination clearfix">
+
+    <div class="loader-holder">
+        <@iccs.loader id="list"/>
+    </div>
     <#assign pages = pagination['pages'] />
     <#if pages?has_content>
         <ul>
             <li class="page">
+                <a class="page-link" href="#" title="<@spring.url "/ui/list/previous"/>">&laquo; Previous</a>
+                <a class="page-link" href="#" title="<@spring.url "/ui/list/next"/>">&raquo; Next</a>
+            </li>
+            <li class="page">
             <#if selected != pagination['first']>
-                <a href="<@spring.url "/identities/${pagination['first']}"/>">&laquo; First</a>
-                <a href="<@spring.url "/identities/${selected-1}"/>">Prev</a>
+                <a class="page-link" href="#" title="<@spring.url "/ui/list/${pagination['first']}"/>">&laquo; First</a>
+                <a class="page-link" href="#" title="<@spring.url "/ui/list/${selected-1}"/>">Prev</a>
             </#if>
             </li>
                 <#list pages as page>
                     <li class="page <#if page == selected >selected</#if>" >
-                        <a href="<@spring.url "/identities/${page}"/>">${page}</a>
-                    </li>
+                        <a class="page-link" href="#" title="<@spring.url "/ui/list/${page}"/>">${page}</a>
+                    </li    >
                 </#list>
             <#if selected != pagination['last']>
                 <li class="page">
-                    <a href="<@spring.url "/identities/${selected+1}"/>">Next</a>
-                    <a href="<@spring.url "/identities/${pagination['last']}"/>">Last &raquo;</a>
+                    <a class="page-link" href="#" title="<@spring.url "/ui/list/${selected+1}"/>">Next</a>
+                    <a class="page-link" href="#" title="<@spring.url "/ui/list/${pagination['last']}"/>">Last &raquo;</a>
                 </li>
             </#if>
 

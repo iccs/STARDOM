@@ -8,11 +8,14 @@ import eu.alertproject.iccs.stardom.domain.api.Metric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.*;
 import eu.alertproject.iccs.stardom.ui.beans.IdentityBean;
 import eu.alertproject.iccs.stardom.ui.utils.PaginationBuilderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.PostConstruct;
@@ -25,6 +28,8 @@ import java.util.*;
  */
 @Controller
 public class IndexController {
+
+    private Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
     PaginationBuilderService paginationBuilderService;
@@ -44,6 +49,9 @@ public class IndexController {
     private int max;
     private Integer pagesSize;
 
+    private int current=1;
+    private int numberOfPages;
+
     @PostConstruct
     public void init(){
 
@@ -53,43 +61,31 @@ public class IndexController {
 
     }
 
+    @RequestMapping(value="/ui/list/previous", method = RequestMethod.GET)
+    public ModelAndView previous(){
+        if(current <=1){
+            return list(current);
+        }
 
-    @RequestMapping(value = "/identities", method = RequestMethod.GET)
-    public ModelAndView index(){
-        return getIdentities(1);
+        return list(current-1);
     }
 
+    @RequestMapping(value="/ui/list/next", method = RequestMethod.GET)
+    public ModelAndView next(){
 
-    @RequestMapping(value = "/identities/{page}", method = RequestMethod.GET)
-    public ModelAndView index(@PathVariable("page") Integer page){
-        return getIdentities(page);
+        if(current > numberOfPages - 1 ){
+            return list(current);
+        }
+
+        return list(current+1);
     }
 
-    private Map<String, Object> buildPages(int selectedPage){
+    @RequestMapping(value = "/ui/list/{page}", method = RequestMethod.GET)
+    public ModelAndView list(@PathVariable("page") Integer page){
 
-        int count = identityDao.count();
-        int numberOfPages=(int) Math.ceil(count/max);
-
-
-        Map<String,Object> pagination = paginationBuilderService.buildPages(
-                selectedPage,
-                numberOfPages,
-                pagesSize);
-
-        return pagination;
-    }
-
-    private ModelAndView getIdentities(
-            Integer page
-    ){
         int offest = page - 1;
 
         ModelAndView mv = new ModelAndView();
-
-
-        mv.addObject("pagination", buildPages(page));
-        mv.addObject("selected", page );
-
 
         /*
          * The code bellow should be in an external service
@@ -154,12 +150,43 @@ public class IndexController {
         }
 
         mv.addObject("identities", beans);
+        mv.addObject("current",page);
+        mv.addObject("total",numberOfPages);
+        mv.setViewName(page == 0? null : "ui/list");
 
-
-        mv.setViewName(page == 0? null : "identities");
+        current=page;
         return mv;
+
     }
 
+    private Map<String, Object> buildPages(int selectedPage){
+
+        int count = identityDao.count();
+        numberOfPages =(int) Math.ceil(count/max);
 
 
+        Map<String,Object> pagination = paginationBuilderService.buildPages(
+                selectedPage,
+                numberOfPages,
+                pagesSize);
+
+        return pagination;
+    }
+
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    private ModelAndView index(){
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("pagination", buildPages(1));
+        mv.addObject("selected", 1 );
+        mv.setViewName("page");
+        return mv;
+
+    }
+
+    @RequestMapping(value="/pagination", method = RequestMethod.GET)
+    private @ResponseBody Map<String,Object> getCurrentPagination(){
+        return buildPages(current);
+
+    }
 }

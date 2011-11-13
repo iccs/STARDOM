@@ -42,8 +42,6 @@
               </bean>
             </list>
           </property>
-          <property name="ignoreAcceptHeader" value="true" />
-
     </bean>
     <!-- Keeping this here for reference -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

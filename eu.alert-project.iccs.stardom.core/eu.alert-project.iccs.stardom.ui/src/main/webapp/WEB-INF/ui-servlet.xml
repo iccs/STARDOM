@@ -12,18 +12,18 @@
         default-autowire="byName"
         >
 
-    <context:annotation-config />
+    <context:annotation-config/>
     <tx:annotation-driven/>
 
 
     <!-- Since we are spliting our jars then we need to define each
         separately -->
-    <context:component-scan base-package="eu.alertproject.iccs.stardom" />
+    <context:component-scan base-package="eu.alertproject.iccs.stardom"/>
 
 
     <!-- JSR303 -->
-    <mvc:annotation-driven />
-    
+    <mvc:annotation-driven/>
+
     <!-- Resources -->
     <mvc:default-servlet-handler/>
 
@@ -43,30 +43,53 @@
       different view resolving based on Locale, you have to use the resource bundle resolver.
 
     -->
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <property name="cache" value="true"/>
-        <property name="prefix" value=""/>
-        <property name="suffix" value=".ftl"/>
+
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1"/>
+        <property name="mediaTypes">
+            <map>
+		        <entry key="json" value="application/json" />
+            </map>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" >
+                    <property name="contentType" value="application/json"/>
+                </bean>
+            </list>
+        </property>
+        <property name="ignoreAcceptHeader" value="true"/>
     </bean>
+
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="order" value="2"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="cache" value="false"/>
+        <property name="suffix" value=".ftl"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+    </bean>
+
+
 
 
     <!-- Keeping this here for reference -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jdbc.driverClassName}" />
-        <property name="url" value="${jdbc.url}" />
-        <property name="username" value="${jdbc.username}" />
-        <property name="password" value="${jdbc.password}" />
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter">
             <bean
-                class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="showSql" value="false" />
-                <property name="generateDdl" value="false" />
+                    class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="false"/>
+                <property name="generateDdl" value="false"/>
                 <property name="databasePlatform"
-                          value="org.hibernate.dialect.MySQLDialect" />
+                          value="org.hibernate.dialect.MySQLDialect"/>
             </bean>
         </property>
     </bean>
@@ -76,21 +99,21 @@
             />
 
     <bean id="eventbusInit" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-      <property name="targetClass" value="org.bushe.swing.event.EventServiceLocator" />
-      <property name="targetMethod" value="setEventService" />
-      <property name="arguments">
-          <list>
-              <!-- Be careful here, do not change the name of the service -->
-              <value>EventBus</value>
-              <ref bean="eventservice"/>
-          </list>
-      </property>
+        <property name="targetClass" value="org.bushe.swing.event.EventServiceLocator"/>
+        <property name="targetMethod" value="setEventService"/>
+        <property name="arguments">
+            <list>
+                <!-- Be careful here, do not change the name of the service -->
+                <value>EventBus</value>
+                <ref bean="eventservice"/>
+            </list>
+        </property>
     </bean>
 
 
     <!--  Properties -->
-    <bean id="alertPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
-            <property name="location" value="classpath:system.properties"/>
+    <bean id="alertPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:system.properties"/>
     </bean>
 
     <bean id="systemProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -105,8 +128,8 @@
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-        <property name="dataSource" ref="dataSource" />
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
 
