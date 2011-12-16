@@ -14,6 +14,7 @@ import org.bushe.swing.event.annotation.EventSubscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
@@ -31,6 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Time: 15:52
  */
 @EventHandler
+@Service("scmEventHandler")
 public class ScmEventHandler {
 
     private int events= 0;
@@ -159,16 +161,9 @@ public class ScmEventHandler {
             // is not an instance of ScmAction, it will throw
             // a class cast exception.
 
-            // I don't know how correct this is but for now
-            // I am leaving this as is
-            try{
+            if(a.canHandle(context.getAction())){
                 a.analyze(identity,context.getAction());
-            }catch (ClassCastException e){
-                //silence
-            }catch (Exception e){
-                logger.warn("Error during analyzer action ",e);
             }
-
 
         }
 

@@ -237,6 +237,21 @@
         <property name="cacheLevel" value="3" />
     </bean>
 
+    <bean id="iccsScmNewCommitListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsScmNewIssue"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener" ref="scmNewCommitListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
         <!-- Spring JMS Template -->
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="pooledJmsConnectionFactory" />

@@ -34,6 +34,16 @@ class ScmCommand extends DoctrineCommand{
 
     protected function execute(InputInterface $input, OutputInterface $output) {
 
+        $producer = new \Stomp_Stomp(
+            $this->getContainer()->getParameter("stardom.stomp.url")
+        );
+
+        // connect
+        $producer->connect(
+            $this->getContainer()->getParameter("stardom.stomp.username"),
+            $this->getContainer()->getParameter("stardom.stomp.password")
+        );
+
         /* @var $entityManager \Doctrine\ORM\EntityManager */
         $entityManager= $this->getEntityManager("default");
 
@@ -156,7 +166,7 @@ class ScmCommand extends DoctrineCommand{
             );
 
             if(!$input->getOption("dryrun")){
-                $this->postPayload($payload);
+                $this->postActiveMqPayload($producer,$payload);
             }
             unset($profile);
             unset($action);
@@ -175,30 +185,47 @@ class ScmCommand extends DoctrineCommand{
         foreach($emails as $e){
             $output->writeln($e);
         }
+
+        $producer->disconnect();
+
     }
 
 
-    private function postPayload($payload){
-
+    private function postActiveMqPayload($producer,$payload){
 
         $values = json_encode($payload);
-
         echo $values.PHP_EOL;
 
-        /** @var $app \Symfony\Component\Console\Application */
-        $app = $this->getApplication();
-        $session = curl_init($this->getContainer()->getParameter("stardom.scm_action"));
-        curl_setopt($session, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-        curl_setopt ($session, CURLOPT_POST,1);
-        curl_setopt ($session, CURLOPT_POSTFIELDS, $values);
+        $producer->send(
+            "/topic/".$this->getContainer()->getParameter("stardom.stomp.scm.topic"),
+            $values,
+            array('durable'=>'true'),
+            true
+        );
 
-        // Tell curl not to return headers, but do return the response
-        curl_setopt($session, CURLOPT_HEADER, false);
-        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-
-        $response = curl_exec($session);
-        curl_close($session);
-
-        return $response;
     }
+
+//    private function postPayload($payload){
+//
+//
+//        $values = json_encode($payload);
+//
+//        echo $values.PHP_EOL;
+//
+//        /** @var $app \Symfony\Component\Console\Application */
+//        $app = $this->getApplication();
+//        $session = curl_init($this->getContainer()->getParameter("stardom.scm_action"));
+//        curl_setopt($session, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+//        curl_setopt ($session, CURLOPT_POST,1);
+//        curl_setopt ($session, CURLOPT_POSTFIELDS, $values);
+//
+//        // Tell curl not to return headers, but do return the response
+//        curl_setopt($session, CURLOPT_HEADER, false);
+//        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+//
+//        $response = curl_exec($session);
+//        curl_close($session);
+//
+//        return $response;
+//    }
 }

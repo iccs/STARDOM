@@ -9,6 +9,13 @@
         <parameter key="stardom.its_action">%stardom.base_url%/its</parameter>
         <parameter key="stardom.mail_action">%stardom.base_url%/mail</parameter>
         <parameter key="stardom.scm_action">%stardom.base_url%/scm</parameter>
+
+        <parameter key="stardom.stomp.url">tcp://localhost:61613</parameter>
+        <parameter key="stardom.stomp.username">admin</parameter>
+        <parameter key="stardom.stomp.password">password</parameter>
+        <parameter key="stardom.stomp.scm.topic">ICCS.Scm.NewCommit</parameter>
+
+
     </parameters>
 
     <!--
