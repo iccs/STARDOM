@@ -181,6 +181,7 @@
 
     <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityAnalyzer"/>
     <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmTemporalAnalyzer"/>
+    <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmApiIntroducedAnalyzer"/>
 
 
 
@@ -251,6 +252,54 @@
         <property name="recoveryInterval" value="60000"/>
         <property name="cacheLevel" value="3" />
     </bean>
+
+    <bean id="iccsItsHistoryListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsItsHistory"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener" ref="itsHistoryListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+    <bean id="iccsItsNewCommentListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsItsNewComment"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener" ref="itsNewCommentListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+    <bean id="iccsItsNewIssueListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsItsNewIssue"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener" ref="itsNewIssueListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+
+
 
         <!-- Spring JMS Template -->
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">

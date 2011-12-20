@@ -125,59 +125,12 @@ public class ItsEventHandler {
 
         //whatever your do, do it here
         for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
-            try{
+            if(a.canHandle(context.getAction())){
                 a.analyze(identity,context.getAction());
-            }catch (ClassCastException e){
-                //silence
             }
         }
 
     }
-
-    @EventSubscriber(eventClass = ItsHistoryEvent.class)
-    public void historyEvent(ItsHistoryEvent event){
-        logger.trace("void event() {}",event);
-
-        Object payload = event.getPayload();
-
-        if(payload == null || !(payload instanceof ItsHistoryConnectorContext)){
-            logger.debug("Ignoring Payload {}",payload);
-            return;
-        }
-
-        ItsHistoryConnectorContext context = (ItsHistoryConnectorContext) payload;
-        logger.trace("void event() {}",context.getProfile());
-        logger.trace("void event() {}",context.getAction());
-
-
-        //we need to create or
-
-        /**
-         * The profiles comming in the comments is all messed up and we need to
-         * handle this here before sending it over to the analyzer
-         *
-         *
-         * The name and email of the comments follow this convention
-         * <who name="Random name">cgiboudeaux gmx com</who>
-         *
-         */
-
-        Identity identity = identifier.find(context.getProfile());
-        logger.trace("void event() Identity {}",identity.getUuid());
-
-
-        //whatever your do, do it here
-        for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
-            try{
-                a.analyze(identity,context.getAction());
-            }catch (ClassCastException e){
-                //silence
-            }
-        }
-
-
-    }
-
 
     private void handleDirtyProfile(Profile dirty, DefaultItsAction action ){
         Profile generate = profileFromItsKdeWhoService.generate(dirty.getName(), dirty.getEmail());

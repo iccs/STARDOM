@@ -41,6 +41,7 @@ class MailingListCommand extends DoctrineCommand
     {
 
 
+
         $output->writeln("Getting files from the dump directory");
 
 

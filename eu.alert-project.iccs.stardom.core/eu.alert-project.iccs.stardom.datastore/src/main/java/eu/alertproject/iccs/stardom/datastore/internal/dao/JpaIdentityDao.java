@@ -46,6 +46,7 @@ public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDa
     @SuppressWarnings({"unchecked"})
     @Override
     public List<Identity> findPossibleMatches(Profile profile) {
+        
 
         JPAQuery q = new JPAQuery(getEntityManager());
         QIdentity qi = QIdentity.identity;
@@ -92,7 +93,11 @@ public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDa
 //        query.setParameter("lastname",profile.getLastname().toUpperCase());
 //        query.setParameter("username",profile.getUsername().toUpperCase());
 
-        q.where(BooleanExpression.anyOf(be.toArray(new BooleanExpression[]{})));
+        if(be.size() <=0){
+            return new ArrayList<Identity>();
+        }
+        
+        q.where(BooleanExpression.anyOf(be.toArray(new BooleanExpression[be.size()])));
         q.distinct();
 
         return q.list(qi);

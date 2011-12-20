@@ -1,5 +1,6 @@
 package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
+import eu.alertproject.iccs.stardom.activemqconnector.api.AbstractActiveMQListener;
 import eu.alertproject.iccs.stardom.analyzers.mailing.bus.MailingEvent;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
 import eu.alertproject.iccs.stardom.analyzers.scm.bus.ScmEvent;
@@ -27,64 +28,28 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Time: 19:11
  */
 @Component("scmNewCommitListener")
-public class ScmNewCommitListener implements Subscriber{
+public class ScmNewCommitListener extends AbstractActiveMQListener{
 
     private Logger logger = LoggerFactory.getLogger(ScmNewCommitListener.class);
 
-    private AtomicInteger messageCount = new AtomicInteger(0);
-
-//    @Autowired
-//    private ScmEventHandler scmEventHandler;
-
     @Override
-    public void onMessage(Message message) {
+    public void process(Message message) throws IOException, JMSException {
 
-        logger.trace("void onMessage() {} ",message);
+        ScmConnectorContext context =null;
+        ObjectMapper mapper = new ObjectMapper();
 
-        if(!(message instanceof TextMessage)){
+        String text = ((TextMessage) message).getText();
 
-            logger.warn("I can't handle this message {} ",message);
-            return;
-        }
+        logger.trace("void onMessage() Text to parse {} ",text);
+        context= mapper.readValue(
+                IOUtils.toInputStream(text)
+                ,ScmConnectorContext.class);
 
+        ScmEvent scmEvent = new ScmEvent(this,context);
+        logger.trace("void onMessage() {} ",scmEvent);
 
-        int count = messageCount.incrementAndGet();
+        Bus.publish(scmEvent);
 
-        try {
-
-
-            ScmConnectorContext context =null;
-
-
-            ObjectMapper mapper = new ObjectMapper();
-
-
-            String text = ((TextMessage) message).getText();
-
-            logger.trace("void onMessage() Text to parse {} ",text);
-            context= mapper.readValue(
-                    IOUtils.toInputStream(text)
-                    ,ScmConnectorContext.class);
-
-            ScmEvent scmEvent = new ScmEvent(this,context);
-            logger.trace("void onMessage() {} ",scmEvent);
-
-            Bus.publish(scmEvent);
-//            scmEventHandler.event(scmEvent);
-
-
-            logger.debug("Sending message {} ",count);
-
-        } catch (IOException e) {
-            logger.warn("Couldn't handle and translate the message content {}",e);
-        } catch (JMSException e) {
-            logger.warn("Couldn't retrieve the message content {}", e);
-        } finally {
-
-        }
     }
 
-    public Integer getMessageCount() {
-        return messageCount.get();
-    }
 }

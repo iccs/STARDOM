@@ -9,6 +9,7 @@ import eu.alertproject.iccs.stardom.constructor.api.Analyzers;
 import eu.alertproject.iccs.stardom.datastore.api.dao.ItsMlDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.identifier.api.Identifier;
+import org.apache.commons.lang.StringUtils;
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,10 +77,13 @@ public class MlItsEventHandler {
          * create a copy and save it
          *
          */
-        Identity who = identifier.find(context.getProfile());
+        Identity who = null;
+        if(!StringUtils.isEmpty(context.getProfile().getEmail())){
+            who = identifier.find(context.getProfile());
+        }
 
         try {
-            itsMlService.recordItsHistory(context.getProfile(),context.getAction());
+            itsMlService.recordItsHistory(who,context.getAction());
         } catch (Exception e) {
 
             logger.error("Something is up here ",e);

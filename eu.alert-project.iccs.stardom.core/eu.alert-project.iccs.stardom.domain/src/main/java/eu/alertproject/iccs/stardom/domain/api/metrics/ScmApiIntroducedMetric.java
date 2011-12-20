@@ -15,6 +15,8 @@ import javax.persistence.Table;
 @Table(name="scm_api_introduced_metric")
 public class ScmApiIntroducedMetric extends MetricQuantitative{
 
+
+
     @Override
     public String getLabel() {
         return "SCM Api Introduced";

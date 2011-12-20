@@ -3,6 +3,7 @@ package eu.alertproject.iccs.stardom.analyzers.scm.connector;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,6 +13,16 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public interface ScmAction extends ConnectorAction {
+
+    RepositoryType getType();
+
+    String getUid();
+
+    String getRevission();
+
+    List<ScmFile> getFiles();
+
+    String getComment();
 
     enum RepositoryType{Git,Svn,Cvs}
 

@@ -21,6 +21,7 @@ public class Topics {
 
     public final static String IccsItsNewIssue=PARENT+DOT+ITS+DOT+"NewIssue";
     public final static String IccsItsNewComment=PARENT+DOT+ITS+DOT+"NewComment";
+    public final static String IccsItsHistory=PARENT+DOT+ITS+DOT+"History";
 
     public final static String IccsScmNewIssue=PARENT+DOT+SCM+DOT+"NewCommit";
 

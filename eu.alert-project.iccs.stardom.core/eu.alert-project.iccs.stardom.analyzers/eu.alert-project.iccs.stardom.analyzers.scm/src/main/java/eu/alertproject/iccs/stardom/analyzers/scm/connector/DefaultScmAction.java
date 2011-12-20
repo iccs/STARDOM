@@ -29,6 +29,7 @@ public class DefaultScmAction implements ScmAction {
         this.date = date;
     }
 
+    @Override
     public RepositoryType getType() {
         return type;
     }
@@ -37,6 +38,7 @@ public class DefaultScmAction implements ScmAction {
         this.type = type;
     }
 
+    @Override
     public String getUid() {
         return uid;
     }
@@ -45,6 +47,7 @@ public class DefaultScmAction implements ScmAction {
         this.uid = uid;
     }
 
+    @Override
     public String getRevission() {
         return revission;
     }
@@ -53,6 +56,7 @@ public class DefaultScmAction implements ScmAction {
         this.revission = revission;
     }
 
+    @Override
     public List<ScmFile> getFiles() {
         return files;
     }
@@ -61,6 +65,7 @@ public class DefaultScmAction implements ScmAction {
         this.files = files;
     }
 
+    @Override
     public String getComment() {
         return comment;
     }

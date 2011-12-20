@@ -45,7 +45,7 @@ public class ItsMlService {
     }
 
     @Transactional
-    public void recordItsHistory(Profile profile, DefaultItsHistoryAction action) {
+    public void recordItsHistory(Identity who, DefaultItsHistoryAction action) {
 
         String what = action.getWhat();
         if(StringUtils.equalsIgnoreCase(what, "Status")){
@@ -59,6 +59,7 @@ public class ItsMlService {
                 newBugAction.setUuid(itsMl.getUuid());
             }
 
+            newBugAction.setUuidWho(who == null ? "none"  :who.getUuid());
             newBugAction.setBugId(action.getBugId());
             newBugAction.setStatus(action.getAdded());
             newBugAction.setWhen(action.getDate());
@@ -81,6 +82,8 @@ public class ItsMlService {
                 newBugAction.setStatus(byBugId.getStatus());
             }
 
+
+            newBugAction.setUuidWho(who == null ? "none"  :who.getUuid());
             newBugAction.setUuid(identity.getUuid());
             newBugAction.setBugId(action.getBugId());
             newBugAction.setWhen(action.getDate());
@@ -99,6 +102,8 @@ public class ItsMlService {
             Identity identity = identifier.find(p);
 
             ItsMl newBugAction = new ItsMl();
+
+            newBugAction.setUuidWho(who == null ? "none"  :who.getUuid());
             newBugAction.setStatus("CC");
             newBugAction.setUuid(identity.getUuid());
             newBugAction.setBugId(action.getBugId());

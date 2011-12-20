@@ -29,6 +29,9 @@ public class ItsMl implements SimpleBean{
     @Column(name ="bug_id")
     private Integer bugId;
 
+    @Column(name="uuid_who")
+    private String uuidWho;
+    
     @Column(name = "uuid")
     private String uuid;
 
@@ -62,6 +65,14 @@ public class ItsMl implements SimpleBean{
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getUuidWho() {
+        return uuidWho;
+    }
+
+    public void setUuidWho(String uuidWho) {
+        this.uuidWho = uuidWho;
     }
 
     public Date getWhen() {

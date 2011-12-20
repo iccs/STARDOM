@@ -111,6 +111,7 @@ public class IndexController {
 
         metrics.add(ScmActivityMetric.class);
         metrics.add(ScmTemporalMetric.class);
+        metrics.add(ScmApiIntroducedMetric.class);
         metrics.add(ItsActivityMetric.class);
         metrics.add(ItsTemporalMetric.class);
         metrics.add(MailingListActivityMetric.class);
@@ -130,6 +131,7 @@ public class IndexController {
             int scm = 0;
             int its = 0;
             int mailing =0;
+
             for(Class<? extends Metric> m : metrics){
                 Metric recentMetric = metricDao.getMostRecentMetric(i, m);
 

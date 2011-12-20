@@ -162,12 +162,13 @@ public class ScmEventHandler {
             // a class cast exception.
 
             if(a.canHandle(context.getAction())){
-                a.analyze(identity,context.getAction());
+                try {
+                    a.analyze(identity,context.getAction());
+                } catch (Exception e) {
+                    logger.error("Error analying action ",e);
+                }
             }
-
         }
-
-
 
     }
 

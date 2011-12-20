@@ -3,6 +3,7 @@ package eu.alertproject.iccs.stardom.domain.api;
 import com.existanze.libraries.orm.domain.SimpleBean;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,6 +51,8 @@ public class Identity implements SimpleBean{
     @OneToMany(fetch=FetchType.LAZY, mappedBy = "identity")
     @OrderBy("createdAt")
     private Set<Metric> metrics;
+
+
 
     /**
      * This constructor creates an Identiy having a #uuid of {@System.currentTimeMillis}

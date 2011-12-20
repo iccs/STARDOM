@@ -1,6 +1,7 @@
 #!/bin/bash
 
 php5=`which php`
+total=0
 max_records=5000
 echo "Using $php5"
 

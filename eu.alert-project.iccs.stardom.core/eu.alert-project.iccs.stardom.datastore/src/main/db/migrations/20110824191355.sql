@@ -1,6 +1,7 @@
 create table its_ml(
   id int primary key not null unique,
   bug_id integer,
+  uuid_who varchar(256) null,
   uuid varchar(256) null,
   status_date timestamp null,
   status varchar(100) null

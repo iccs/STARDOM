@@ -1,7 +1,6 @@
 package eu.alertproject.iccs.stardom.alertconnector.api;
 
-import eu.alertproject.iccs.stardom.activemqconnector.internal.MailNewMailListener;
-import eu.alertproject.iccs.stardom.activemqconnector.internal.ScmNewCommitListener;
+import eu.alertproject.iccs.stardom.activemqconnector.internal.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +22,14 @@ public class EventCountController {
     MailNewMailListener mailNewMailListener;
 
     @Autowired
-    ItsActionController itsActionController;
+    ItsNewCommentListener itsNewCommentListener;
 
     @Autowired
-    ItsCommentActionController itsCommentActionController;
+    ItsNewIssueListener itsNewIssueListener;
 
     @Autowired
-    ItsHistoryController itsHistoryController;
+    ItsHistoryListener itsHistoryListener;
+
 
     @Autowired
     ScmNewCommitListener scmNewCommitListener;
@@ -42,7 +42,7 @@ public class EventCountController {
         Map<String,Integer> ret = new HashMap<String, Integer>();
 
         ret.put("ml",mailNewMailListener.getMessageCount());
-        ret.put("its",itsActionController.getMessageCount()+itsCommentActionController.getMessageCount()+itsHistoryController.getMessageCount());
+        ret.put("its",itsNewCommentListener.getMessageCount()+itsNewIssueListener.getMessageCount()+itsHistoryListener.getMessageCount());
         ret.put("scm",scmNewCommitListener.getMessageCount());
 
         return ret;

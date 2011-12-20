@@ -15,6 +15,7 @@ use Iccs\StardomBundle\Entity\People;
 
     
 class ScmCommand extends DoctrineCommand{
+    public $counter;
 
 
     /**
@@ -69,6 +70,7 @@ class ScmCommand extends DoctrineCommand{
         $result = $query->iterate();
 
         $commits = array();
+
         foreach($result AS $row){
 
             array_push($commits,
@@ -181,27 +183,25 @@ class ScmCommand extends DoctrineCommand{
         echo "\t".(memory_get_usage() / 1024).PHP_EOL;
         gc_collect_cycles();
 
-
-        foreach($emails as $e){
-            $output->writeln($e);
-        }
-
         $producer->disconnect();
 
+        echo $this->counter;
     }
 
 
-    private function postActiveMqPayload($producer,$payload){
+    private function postActiveMqPayload(\Stomp_Stomp $producer,$payload){
 
         $values = json_encode($payload);
-        echo $values.PHP_EOL;
+        //echo $values.PHP_EOL;
+        $this->counter++;
+
+        $producer->begin("tx1");
 
         $producer->send(
             "/topic/".$this->getContainer()->getParameter("stardom.stomp.scm.topic"),
-            $values,
-            array('durable'=>'true'),
-            true
-        );
+            $values);
+
+        $producer->commit("tx1");
 
     }
 
