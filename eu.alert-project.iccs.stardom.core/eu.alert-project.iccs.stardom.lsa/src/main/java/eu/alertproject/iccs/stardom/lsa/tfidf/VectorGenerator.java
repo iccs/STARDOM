@@ -114,7 +114,7 @@ public class VectorGenerator {
     recognizerChain.init();
     List<Token> recognizedTokens = recognizerChain.recognize(tokens);
     for (Token recognizedToken : recognizedTokens) {
-      if (!(recognizedToken.getType() == TokenType.WHITESPACE ||          recognizedToken.getType() == TokenType.PUNCTUATION ||      recognizedToken.getType() == TokenType.STOP_WORD)) {
+      if (!(recognizedToken.getType() == TokenType.WHITESPACE ||     recognizedToken.getType() == TokenType.PUNCTUATION ||    recognizedToken.getType() == TokenType.STOP_WORD)) {
 //         lowercase words to treat Human and human as the same word
         wordBag.add(StringUtils.lowerCase(recognizedToken.getValue()));
 
