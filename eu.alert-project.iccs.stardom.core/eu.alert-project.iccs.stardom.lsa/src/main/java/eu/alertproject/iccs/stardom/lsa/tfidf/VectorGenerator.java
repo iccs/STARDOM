@@ -1,7 +1,5 @@
 package eu.alertproject.iccs.stardom.lsa.tfidf;
 
-
-
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,45 +9,35 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.sql.DataSource;
+
+import eu.alertproject.iccs.stardom.lsa.tfidf.recognizers.*;
+import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.*;
+
 
 import org.apache.commons.collections15.Bag;
 import org.apache.commons.collections15.bag.HashBag;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Required;
-
-import Jama.Matrix;
-import eu.alertproject.iccs.stardom.lsa.tfidf.recognizers.*;
-import eu.alertproject.iccs.stardom.lsa.tfidf.recognizers.RecognizerChain;
-import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.Token;
-import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.TokenType;
-import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.WordTokenizer;
-
-
+import org.apache.commons.math.linear.OpenMapRealMatrix;
+import org.apache.commons.math.linear.RealMatrix;
 
 /**
  * Generate the word occurence vector for a document collection.
+ * @author Sujit Pal
+ * @version $Revision: 21 $
  */
 public class VectorGenerator {
 
-  private DataSource dataSource;
   
-  private Map<Integer,String> wordIdValueMap = 
-    new HashMap<Integer,String>();
-  private Map<Integer,String> documentIdNameMap = 
-    new HashMap<Integer,String>();
-  private Matrix matrix;
+  
+  private Map<Integer,String> wordIdValueMap = new HashMap<Integer,String>();
+  private Map<Integer,String> documentIdNameMap = new HashMap<Integer,String>();
+  private RealMatrix matrix;
 
-  @Required
-  public void setDataSource(DataSource dataSource) {
-    this.dataSource = dataSource;
-  }
+  
 
-  public void generateVector(Map<String,Reader> documents) 
-      throws Exception {
-    Map<String,Bag<String>> documentWordFrequencyMap = 
-      new HashMap<String,Bag<String>>();
+  public void generateVector(Map<String,Reader> documents) throws Exception {
+    Map<String,Bag<String>> documentWordFrequencyMap = new HashMap<String,Bag<String>>();
     SortedSet<String> wordSet = new TreeSet<String>();
     Integer docId = 0;
     for (String key : documents.keySet()) {
@@ -70,21 +58,19 @@ public class VectorGenerator {
     // this info
     int numDocs = documents.keySet().size();
     int numWords = wordSet.size();
-    double[][] data = new double[numWords][numDocs];
-    for (int i = 0; i < numWords; i++) {
-      for (int j = 0; j < numDocs; j++) {
+    matrix = new OpenMapRealMatrix(numWords, numDocs);
+    for (int i = 0; i < matrix.getRowDimension(); i++) {
+      for (int j = 0; j < matrix.getColumnDimension(); j++) {
         String docName = documentIdNameMap.get(j);
-        Bag<String> wordFrequencies = 
-          documentWordFrequencyMap.get(docName);
+        Bag<String> wordFrequencies = documentWordFrequencyMap.get(docName);
         String word = wordIdValueMap.get(i);
         int count = wordFrequencies.getCount(word);
-        data[i][j] = count;
+        matrix.setEntry(i, j, count);
       }
     }
-    matrix = new Matrix(data);
   }
 
-  public Matrix getMatrix() {
+  public RealMatrix getMatrix() {
     return matrix;
   }
   
@@ -110,8 +96,7 @@ public class VectorGenerator {
     return words;
   }
 
-  private Bag<String> getWordFrequencies(String text) 
-      throws Exception {
+  private Bag<String> getWordFrequencies(String text) throws Exception {
     Bag<String> wordBag = new HashBag<String>();
     WordTokenizer wordTokenizer = new WordTokenizer();
     wordTokenizer.setText(text);
@@ -123,21 +108,19 @@ public class VectorGenerator {
     RecognizerChain recognizerChain = new RecognizerChain(
         Arrays.asList(new IRecognizer[] {
         new BoundaryRecognizer(),
-        new AbbreviationRecognizer(dataSource),
-        new PhraseRecognizer(dataSource),
         new StopwordRecognizer(),
         new ContentWordRecognizer()
     }));
     recognizerChain.init();
     List<Token> recognizedTokens = recognizerChain.recognize(tokens);
     for (Token recognizedToken : recognizedTokens) {
-      if (recognizedToken.getType() == TokenType.ABBREVIATION ||
-          recognizedToken.getType() == TokenType.PHRASE ||
-          recognizedToken.getType() == TokenType.CONTENT_WORD) {
-        // lowercase words to treat Human and human as the same word
+      if (!(recognizedToken.getType() == TokenType.WHITESPACE ||          recognizedToken.getType() == TokenType.PUNCTUATION ||      recognizedToken.getType() == TokenType.STOP_WORD)) {
+//         lowercase words to treat Human and human as the same word
         wordBag.add(StringUtils.lowerCase(recognizedToken.getValue()));
+
       }
     }
+
     return wordBag;
   }
 

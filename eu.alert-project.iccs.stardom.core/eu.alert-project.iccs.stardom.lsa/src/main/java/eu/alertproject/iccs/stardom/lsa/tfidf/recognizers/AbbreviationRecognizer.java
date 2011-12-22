@@ -45,14 +45,11 @@ public class AbbreviationRecognizer implements IRecognizer {
   
   private Set<String> abbreviations = new HashSet<String>();
 
-  public AbbreviationRecognizer(DataSource dataSource) {
+  public AbbreviationRecognizer() {
     super();
-    setDataSource(dataSource);
   }
 
-  public void setDataSource(DataSource dataSource) {
-    this.jdbcTemplate = new JdbcTemplate(dataSource);
-  }
+
 
   public void init() throws Exception {
     abbrevEmbeddedInWordPattern = Pattern.compile("\\d+(\\.\\d+)*(\\w+)"); // eg 3.3pct
@@ -117,12 +114,11 @@ public class AbbreviationRecognizer implements IRecognizer {
 
   @SuppressWarnings("unchecked")
   private boolean isAbbreviation(String abbrevPart) {
-    List<Map<String,Object>> rows = jdbcTemplate.queryForList(
-      "select enc_name from co_abbrev where enc_type = ? and enc_name = ?", 
-      new String[] {"a", StringUtils.lowerCase(abbrevPart)});
-    for (Map<String,Object> row : rows) {
-      return true;
-    }
-    return false;
+//    List<Map<String,Object>> rows = jdbcTemplate.queryForList(      "select enc_name from co_abbrev where enc_type = ? and enc_name = ?",       new String[] {"a", StringUtils.lowerCase(abbrevPart)});
+//    for (Map<String,Object> row : rows) {
+//      return true;
+//    }
+//    return false;
+      return false;
   }
 }

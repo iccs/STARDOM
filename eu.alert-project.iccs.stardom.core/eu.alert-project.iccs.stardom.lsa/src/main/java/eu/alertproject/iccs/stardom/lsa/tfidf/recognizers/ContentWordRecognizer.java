@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.Token;
-import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.TokenType;
+
 import edu.mit.jwi.Dictionary;
 import edu.mit.jwi.IDictionary;
 import edu.mit.jwi.item.IIndexWord;
 import edu.mit.jwi.item.POS;
+import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.Token;
+import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.TokenType;
 
 /**
  * Recognizes content words (noun, verb, adjective, and adverb) from a
@@ -27,24 +28,24 @@ public class ContentWordRecognizer implements IRecognizer {
     POS.NOUN, POS.VERB, POS.ADJECTIVE, POS.ADVERB});
   
   public void init() throws Exception {
-    this.dictionary = new Dictionary(new URL("file", null, "/opt/wordnet-3.0/dict"));
-    dictionary.open();
+//    this.dictionary = new Dictionary(new URL("file", null, "/opt/wordnet-3.0/dict"));
+//    dictionary.open();
   }
 
   public List<Token> recognize(List<Token> tokens) {
     List<Token> outputTokens = new ArrayList<Token>();
     for (Token token : tokens) {
       Token outputToken = new Token(token.getValue(), token.getType());
-      if (token.getType() == TokenType.WORD) {
-        String word = token.getValue();
-        for (POS allowablePartOfSpeech : allowablePartsOfSpeech) {
-          IIndexWord indexWord = dictionary.getIndexWord(word, allowablePartOfSpeech);
-          if (indexWord != null) {
+//      if (token.getType() == TokenType.WORD) {
+//        String word = token.getValue();
+//        for (POS allowablePartOfSpeech : allowablePartsOfSpeech) {
+////          IIndexWord indexWord = dictionary.getIndexWord(word, allowablePartOfSpeech);
+////          if (indexWord != null) {
             outputToken.setType(TokenType.CONTENT_WORD);
-            break;
-          }
-        }
-      }
+//            break;
+////          }
+//        }
+//      }
       outputTokens.add(outputToken);
     }
     return outputTokens;

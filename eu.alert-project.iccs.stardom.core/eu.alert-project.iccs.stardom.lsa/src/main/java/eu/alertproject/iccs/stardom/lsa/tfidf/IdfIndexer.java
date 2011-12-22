@@ -1,4 +1,3 @@
-// Source: src/main/java/net/sf/jtmt/indexers/IdfIndexer.java
 package eu.alertproject.iccs.stardom.lsa.tfidf;
 
 import org.apache.commons.collections15.Transformer;
@@ -12,6 +11,9 @@ import org.apache.commons.math.linear.RealMatrix;
  * where N = total number of docs in collection
  *       d(m) = number of docs containing word m
  * so where a word is more frequent (ie d(m) is high, f(m) would be low.
+ * 
+ * @author Sujit Pal
+ * @version $Revision: 44 $
  */
 public class IdfIndexer implements Transformer<RealMatrix,RealMatrix> {
 
@@ -32,7 +34,11 @@ public class IdfIndexer implements Transformer<RealMatrix,RealMatrix> {
     for (int j = 0; j < matrix.getColumnDimension(); j++) {
       double sum = sum(matrix.getSubMatrix(0, matrix.getRowDimension() -1, j, j));
       for (int i = 0; i < matrix.getRowDimension(); i++) {
-        matrix.setEntry(i, j, (matrix.getEntry(i, j) / sum));
+        if (sum > 0.0D) {
+          matrix.setEntry(i, j, (matrix.getEntry(i, j) / sum));
+        } else {
+          matrix.setEntry(i, j, 0.0D);
+        }
       }
     }
     return matrix;

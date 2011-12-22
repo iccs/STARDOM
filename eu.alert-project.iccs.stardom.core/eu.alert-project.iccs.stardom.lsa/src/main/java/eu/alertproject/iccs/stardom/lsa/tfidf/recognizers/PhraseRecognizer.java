@@ -24,17 +24,13 @@ public class PhraseRecognizer implements IRecognizer {
 
   private final Log log = LogFactory.getLog(getClass());
   
-  private JdbcTemplate jdbcTemplate;
+
   private Map<String,String> phraseMap;
   
-  public PhraseRecognizer(DataSource dataSource) {
+  public PhraseRecognizer() {
     super();
-    setDataSource(dataSource);
   }
   
-  public void setDataSource(DataSource dataSource) {
-    this.jdbcTemplate = new JdbcTemplate(dataSource);
-  }
   
   public void init() throws Exception { /* :NOOP: */ }
 
@@ -52,23 +48,23 @@ public class PhraseRecognizer implements IRecognizer {
         continue;
       }
       String word = token.getValue();
-      List<Map<String,Object>> rows = jdbcTemplate.queryForList(
-        "select coc_phrase, coc_num_words from my_colloc where coc_lead_word = ?", 
-        new String[] {StringUtils.lowerCase(word)});
-      for (Map<String,Object> row : rows) {
-        String phrase = (String) row.get("COC_PHRASE");
-        int numWords = (Integer) row.get("COC_NUM_WORDS");
-        if (numTokens > i + numWords) {
-          // we don't want to look beyond the actual size of the sentence
-          String inputPhrase = getInputPhrase(tokens, i, numWords);
-          if (phrase.equals(inputPhrase)) {
-            extractedTokens.add(new Token(phrase + "|||" + numWords, TokenType.PHRASE));
-            // move the pointer forward (numWords - 1)
-            i += (numWords - 1);
-            continue TOKEN_LOOP;
-          }
-        }
-      }
+//      List<Map<String,Object>> rows = jdbcTemplate.queryForList(
+//        "select coc_phrase, coc_num_words from my_colloc where coc_lead_word = ?", 
+//        new String[] {StringUtils.lowerCase(word)});
+//      for (Map<String,Object> row : rows) {
+//        String phrase = (String) row.get("COC_PHRASE");
+//        int numWords = (Integer) row.get("COC_NUM_WORDS");
+//        if (numTokens > i + numWords) {
+//          // we don't want to look beyond the actual size of the sentence
+//          String inputPhrase = getInputPhrase(tokens, i, numWords);
+//          if (phrase.equals(inputPhrase)) {
+//            extractedTokens.add(new Token(phrase + "|||" + numWords, TokenType.PHRASE));
+//            // move the pointer forward (numWords - 1)
+//            i += (numWords - 1);
+//            continue TOKEN_LOOP;
+//          }
+//        }
+//      }
       // if we came this far, then there is no phrase starting at
       // this position...pass through
       extractedTokens.add(token);
