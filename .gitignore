@@ -4,3 +4,5 @@ scripts
 target
 partners
 *.dump
+/eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.analyzers/eu.alert-project.iccs.startdom.analyzers.its/.settings/
+/eu.alert-project.iccs.stardom.core/eu.alert-project.iccs.stardom.analyzers/eu.alert-project.iccs.stardom.analyzers.mailing/.settings/

@@ -23,7 +23,7 @@
         <module>eu.alert-project.iccs.stardom.bus</module>
         <module>eu.alert-project.iccs.stardom.analyzers</module>
         <module>eu.alert-project.iccs.stardom.ui</module>
-
+        <module>eu.alert-project.iccs.stardom.lsa</module>
         <!-- Always keep this last -->
         <module>eu.alert-project.iccs.stardom.assemble</module>
     </modules>
