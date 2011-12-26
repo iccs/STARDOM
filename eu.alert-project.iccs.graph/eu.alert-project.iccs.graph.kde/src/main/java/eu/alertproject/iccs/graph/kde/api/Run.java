@@ -1,13 +1,18 @@
 package eu.alertproject.iccs.graph.kde.api;
 
 
+import edu.uci.ics.jung.algorithms.filters.EdgePredicateFilter;
+import edu.uci.ics.jung.algorithms.filters.Filter;
+import edu.uci.ics.jung.algorithms.filters.VertexPredicateFilter;
 import edu.uci.ics.jung.algorithms.layout.KKLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.algorithms.scoring.BetweennessCentrality;
+import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedGraph;
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import edu.uci.ics.jung.visualization.BasicVisualizationServer;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
+import org.apache.commons.collections15.Predicate;
 import org.apache.commons.collections15.TransformerUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -35,7 +40,6 @@ public class Run {
 
         File o = new File(args[0]);
 
-        int count = 0;
         LineIterator it = null;
 
         int max = 106000;
@@ -50,7 +54,8 @@ public class Run {
             Integer previousAuthor = null;
 
             UndirectedGraph<Integer, String> graph = new UndirectedSparseGraph<Integer, String>();
-            Map<String, Number> weights = new HashMap<String, Number>();
+
+            final Map<String, Number> weights = new HashMap<String, Number>();
 
             while (it.hasNext() || max > 0) {
                 String next = String.valueOf(it.next());
@@ -77,7 +82,7 @@ public class Run {
                     previousAuthor = authorId;
 
                 } else {
-                    count++;
+
                     previousAuthor = authorId;
                     previousFile = fileId;
                 }
@@ -88,9 +93,13 @@ public class Run {
             }
 
 
+
+
+            
+
             logger.trace("void main(args) Vertex Count: {} ", graph.getVertexCount());
 
-            BetweennessCentrality<Integer, String> bc = new BetweennessCentrality<Integer, String>(graph, TransformerUtils.mapTransformer(weights));
+            final BetweennessCentrality<Integer, String> bc = new BetweennessCentrality<Integer, String>(graph, TransformerUtils.mapTransformer(weights));
 
             logger.trace("void main(args) Betweeness calculated");
 
@@ -107,28 +116,40 @@ public class Run {
             }
 
 
-            logger.trace("void main(args) File created {}",args[2]);
+            logger.trace("void main(args) File created {}",args[1]);
+            
+            Graph<Integer,String> simpleGraph =
+                    new VertexPredicateFilter<Integer,String>(new Predicate<Integer>() {
+                        @Override
+                        public boolean evaluate(Integer integer) {
+
+                            return bc.getVertexScore(integer) > 5000;
+                        }
+                    }).transform(graph);
+
+
+            int edgeCount = simpleGraph.getEdgeCount();
+            logger.trace("void main(args) Filtered graph edges {} ",edgeCount);
 
 //
-//            Layout<Integer, String> layout = new KKLayout<Integer, String>(graph);
-//            layout.setSize(new Dimension(800, 800)); // sets the initial size of the space
-//            // The BasicVisualizationServer<V,E> is parameterized by the edge types
-//            BasicVisualizationServer<Integer, String> vv =
-//                    new BasicVisualizationServer<Integer, String>(layout);
-//            vv.setPreferredSize(new Dimension(800, 800)); //Sets the viewing area size
-//            vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
-//            vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
-//
-////            DefaultModalGraphMouse gm = new DefaultModalGraphMouse();
-////            gm.setMode(ModalGraphMouse.Mode.TRANSFORMING);
-////            vv.setGraphMouse(gm);
-//
-//            JFrame frame = new JFrame("Simple Graph View");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.getContentPane().add(vv);
-//            frame.pack();
-//            logger.trace("void main(args) count {} ", count);
-//            frame.setVisible(true);
+            Layout<Integer, String> layout = new KKLayout<Integer, String>(simpleGraph);
+            layout.setSize(new Dimension(800, 800)); // sets the initial size of the space
+            // The BasicVisualizationServer<V,E> is parameterized by the edge types
+            BasicVisualizationServer<Integer, String> vv =
+                    new BasicVisualizationServer<Integer, String>(layout);
+            vv.setPreferredSize(new Dimension(800, 800)); //Sets the viewing area size
+            vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+            vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+
+//            DefaultModalGraphMouse gm = new DefaultModalGraphMouse();
+//            gm.setMode(ModalGraphMouse.Mode.TRANSFORMING);
+//            vv.setGraphMouse(gm);
+
+            JFrame frame = new JFrame("Simple Graph View");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.getContentPane().add(vv);
+            frame.pack();
+            frame.setVisible(true);
 
 
         } catch (IOException e) {
