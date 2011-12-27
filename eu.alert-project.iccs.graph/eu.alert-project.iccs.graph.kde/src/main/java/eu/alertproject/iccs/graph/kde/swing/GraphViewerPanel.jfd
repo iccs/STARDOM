@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_29" class="java.beans.XMLDecoder"> 
+ <object class="com.jformdesigner.model.FormModel"> 
+  <void method="setProperty"> 
+   <string>i18n.autoExternalize</string> 
+   <boolean>true</boolean> 
+  </void> 
+  <void method="setProperty"> 
+   <string>i18n.bundleName</string> 
+   <string>Resources</string> 
+  </void> 
+  <void method="setProperty"> 
+   <string>i18n.keyPrefix</string> 
+   <string>GraphViewerPanel</string> 
+  </void> 
+  <void property="contentType"> 
+   <string>form/swing</string> 
+  </void> 
+  <void property="root"> 
+   <object class="com.jformdesigner.model.FormRoot"> 
+    <void method="add"> 
+     <object class="com.jformdesigner.model.FormContainer"> 
+      <string>javax.swing.JPanel</string> 
+      <object class="com.jformdesigner.model.FormLayoutManager"> 
+       <class>org.jdesktop.layout.GroupLayout</class> 
+       <void method="setProperty"> 
+        <string>$horizontalGroup</string> 
+        <string>par l {comp panel6::l:::x, comp splitPane1::l::890:x, comp progressBar::l::890:x}</string> 
+       </void> 
+       <void method="setProperty"> 
+        <string>$verticalGroup</string> 
+        <string>par l {seq t {comp panel6:::p:71:p, space :p::p, comp splitPane1::::449:x, space :p:10:p, comp progressBar:::p::p}}</string> 
+       </void> 
+      </object> 
+      <void method="setProperty"> 
+       <string>border</string> 
+       <object class="javax.swing.border.EmptyBorder"> 
+        <int>5</int> 
+        <int>5</int> 
+        <int>5</int> 
+        <int>5</int> 
+       </object> 
+      </void> 
+      <void property="name"> 
+       <string>this</string> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormContainer"> 
+        <string>javax.swing.JSplitPane</string> 
+        <object class="com.jformdesigner.model.FormLayoutManager"> 
+         <class>javax.swing.JSplitPane</class> 
+        </object> 
+        <void method="setProperty"> 
+         <string>dividerLocation</string> 
+         <int>200</int> 
+        </void> 
+        <void method="setProperty"> 
+         <string>dividerSize</string> 
+         <int>6</int> 
+        </void> 
+        <void property="name"> 
+         <string>splitPane1</string> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormContainer"> 
+          <string>javax.swing.JPanel</string> 
+          <object class="com.jformdesigner.model.FormLayoutManager"> 
+           <class>org.jdesktop.layout.GroupLayout</class> 
+           <void method="setProperty"> 
+            <string>$horizontalGroup</string> 
+            <string>par l {comp panel4::l:::x, comp edgePanel::l:::x:1, comp btPanel::l:::x, comp button3::l::198:x}</string> 
+           </void> 
+           <void method="setProperty"> 
+            <string>$verticalGroup</string> 
+            <string>par l {seq l {comp panel4:::p::p, space :::p, comp edgePanel:::p::p, space :::p, comp btPanel:::p:62:p, space :::p, comp button3:::p::p, space ::154:x}}</string> 
+           </void> 
+          </object> 
+          <void method="setProperty"> 
+           <string>preferredSize</string> 
+           <object class="java.awt.Dimension"> 
+            <int>200</int> 
+            <int>506</int> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>panel2</string> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormContainer"> 
+            <string>javax.swing.JPanel</string> 
+            <object class="com.jformdesigner.model.FormLayoutManager"> 
+             <class>org.jdesktop.layout.GroupLayout</class> 
+             <void method="setProperty"> 
+              <string>$horizontalGroup</string> 
+              <string>par l {seq {space :::p, par l {comp cyclicButton:::p::p, comp frButton::l:p::p, comp kkButton::l:p::p}, space ::99:x}}</string> 
+             </void> 
+             <void method="setProperty"> 
+              <string>$verticalGroup</string> 
+              <string>par l {seq l {space :::p, comp cyclicButton:::p::p, space :::p, comp frButton:::p::p, space :::p, comp kkButton:::p::p, space ::16:x}}</string> 
+             </void> 
+            </object> 
+            <void method="setProperty"> 
+             <string>border</string> 
+             <object class="javax.swing.border.TitledBorder"> 
+              <string>i18nKey=GraphViewerPanel.panel4.border</string> 
+             </object> 
+            </void> 
+            <void property="name"> 
+             <string>panel4</string> 
+            </void> 
+            <void method="add"> 
+             <object class="com.jformdesigner.model.FormComponent"> 
+              <string>javax.swing.JRadioButton</string> 
+              <void method="setProperty"> 
+               <string>text</string> 
+               <object class="com.jformdesigner.model.FormMessage"> 
+                <null/> 
+                <string>GraphViewerPanel.cyclicButton.text</string> 
+               </object> 
+              </void> 
+              <void method="setProperty"> 
+               <string>$buttonGroup</string> 
+               <object class="com.jformdesigner.model.FormReference"> 
+                <string>buttonGroup1</string> 
+               </object> 
+              </void> 
+              <void method="setProperty"> 
+               <string>selected</string> 
+               <boolean>true</boolean> 
+              </void> 
+              <void property="name"> 
+               <string>cyclicButton</string> 
+              </void> 
+             </object> 
+            </void> 
+            <void method="add"> 
+             <object class="com.jformdesigner.model.FormComponent"> 
+              <string>javax.swing.JRadioButton</string> 
+              <void method="setProperty"> 
+               <string>text</string> 
+               <object class="com.jformdesigner.model.FormMessage"> 
+                <null/> 
+                <string>GraphViewerPanel.frButton.text</string> 
+               </object> 
+              </void> 
+              <void method="setProperty"> 
+               <string>$buttonGroup</string> 
+               <object class="com.jformdesigner.model.FormReference"> 
+                <string>buttonGroup1</string> 
+               </object> 
+              </void> 
+              <void property="name"> 
+               <string>frButton</string> 
+              </void> 
+             </object> 
+            </void> 
+            <void method="add"> 
+             <object class="com.jformdesigner.model.FormComponent"> 
+              <string>javax.swing.JRadioButton</string> 
+              <void method="setProperty"> 
+               <string>text</string> 
+               <object class="com.jformdesigner.model.FormMessage"> 
+                <null/> 
+                <string>GraphViewerPanel.kkButton.text</string> 
+               </object> 
+              </void> 
+              <void method="setProperty"> 
+               <string>$buttonGroup</string> 
+               <object class="com.jformdesigner.model.FormReference"> 
+                <string>buttonGroup1</string> 
+               </object> 
+              </void> 
+              <void property="name"> 
+               <string>kkButton</string> 
+              </void> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormContainer"> 
+            <string>javax.swing.JPanel</string> 
+            <object class="com.jformdesigner.model.FormLayoutManager"> 
+             <class>org.jdesktop.layout.GroupLayout</class> 
+             <void method="setProperty"> 
+              <string>$horizontalGroup</string> 
+              <string>par l {comp edgeSlider::t::186:x:1}</string> 
+             </void> 
+             <void method="setProperty"> 
+              <string>$verticalGroup</string> 
+              <string>par l {seq l {comp edgeSlider:::p::p, space ::7:x}}</string> 
+             </void> 
+            </object> 
+            <void method="setProperty"> 
+             <string>border</string> 
+             <object class="javax.swing.border.TitledBorder"> 
+              <string>i18nKey=GraphViewerPanel.edgePanel.border</string> 
+             </object> 
+            </void> 
+            <void property="name"> 
+             <string>edgePanel</string> 
+            </void> 
+            <void method="add"> 
+             <object class="com.jformdesigner.model.FormComponent"> 
+              <string>javax.swing.JSlider</string> 
+              <void method="setProperty"> 
+               <string>maximum</string> 
+               <int>10</int> 
+              </void> 
+              <void method="setProperty"> 
+               <string>minimum</string> 
+               <int>1</int> 
+              </void> 
+              <void method="setProperty"> 
+               <string>value</string> 
+               <int>5</int> 
+              </void> 
+              <void method="setProperty"> 
+               <string>toolTipText</string> 
+               <object class="com.jformdesigner.model.FormMessage"> 
+                <null/> 
+                <string>GraphViewerPanel.edgeSlider.toolTipText</string> 
+               </object> 
+              </void> 
+              <void property="name"> 
+               <string>edgeSlider</string> 
+              </void> 
+              <void method="addEvent"> 
+               <object class="com.jformdesigner.model.FormEvent"> 
+                <string>javax.swing.event.ChangeListener</string> 
+                <string>stateChanged</string> 
+                <string>slider1StateChanged</string> 
+                <boolean>true</boolean> 
+               </object> 
+              </void> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormContainer"> 
+            <string>javax.swing.JPanel</string> 
+            <object class="com.jformdesigner.model.FormLayoutManager"> 
+             <class>org.jdesktop.layout.GroupLayout</class> 
+             <void method="setProperty"> 
+              <string>$horizontalGroup</string> 
+              <string>par l {comp btSlider::l::186:x}</string> 
+             </void> 
+             <void method="setProperty"> 
+              <string>$verticalGroup</string> 
+              <string>par l {seq l {comp btSlider:::p::p, space :::x}}</string> 
+             </void> 
+            </object> 
+            <void method="setProperty"> 
+             <string>border</string> 
+             <object class="javax.swing.border.TitledBorder"> 
+              <string>i18nKey=GraphViewerPanel.btPanel.border</string> 
+             </object> 
+            </void> 
+            <void property="name"> 
+             <string>btPanel</string> 
+            </void> 
+            <void method="add"> 
+             <object class="com.jformdesigner.model.FormComponent"> 
+              <string>javax.swing.JSlider</string> 
+              <void method="setProperty"> 
+               <string>toolTipText</string> 
+               <object class="com.jformdesigner.model.FormMessage"> 
+                <null/> 
+                <string>GraphViewerPanel.btSlider.toolTipText</string> 
+               </object> 
+              </void> 
+              <void method="setProperty"> 
+               <string>maximum</string> 
+               <int>10000</int> 
+              </void> 
+              <void method="setProperty"> 
+               <string>value</string> 
+               <int>5000</int> 
+              </void> 
+              <void property="name"> 
+               <string>btSlider</string> 
+              </void> 
+              <void method="addEvent"> 
+               <object class="com.jformdesigner.model.FormEvent"> 
+                <string>javax.swing.event.ChangeListener</string> 
+                <string>stateChanged</string> 
+                <string>btSliderStateChanged</string> 
+                <boolean>true</boolean> 
+               </object> 
+              </void> 
+             </object> 
+            </void> 
+           </object> 
+          </void> 
+          <void method="add"> 
+           <object class="com.jformdesigner.model.FormComponent"> 
+            <string>javax.swing.JButton</string> 
+            <void method="setProperty"> 
+             <string>text</string> 
+             <object class="com.jformdesigner.model.FormMessage"> 
+              <null/> 
+              <string>GraphViewerPanel.button3.text</string> 
+             </object> 
+            </void> 
+            <void property="name"> 
+             <string>button3</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+         <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+          <class>java.lang.String</class> 
+          <void method="setProperty"> 
+           <string>value</string> 
+           <string>left</string> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormContainer"> 
+          <string>javax.swing.JPanel</string> 
+          <object class="com.jformdesigner.model.FormLayoutManager"> 
+           <class>java.awt.BorderLayout</class> 
+          </object> 
+          <void method="setProperty"> 
+           <string>background</string> 
+           <object class="java.awt.Color"> 
+            <int>255</int> 
+            <int>255</int> 
+            <int>255</int> 
+            <int>255</int> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>panel3</string> 
+          </void> 
+         </object> 
+         <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+          <class>java.lang.String</class> 
+          <void method="setProperty"> 
+           <string>value</string> 
+           <string>right</string> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormContainer"> 
+        <string>javax.swing.JPanel</string> 
+        <object class="com.jformdesigner.model.FormLayoutManager"> 
+         <class>org.jdesktop.layout.GroupLayout</class> 
+         <void method="setProperty"> 
+          <string>$horizontalGroup</string> 
+          <string>par l {seq l {par t:::p {comp button1:1:l:::x:1, comp button2:1:l:::x:1}, space :::p, par l {comp outputFilePath::::767:x, comp inputFileLabel::l::767:x}}}</string> 
+         </void> 
+         <void method="setProperty"> 
+          <string>$verticalGroup</string> 
+          <string>par l {seq l {par b {comp button1::b:p::p, comp inputFileLabel::b:p::p}, space :::p, par b {comp button2::b:p::p, comp outputFilePath::b:p::p}, space :::x}}</string> 
+         </void> 
+        </object> 
+        <void method="setProperty"> 
+         <string>preferredSize</string> 
+         <object class="java.awt.Dimension"> 
+          <int>890</int> 
+          <int>50</int> 
+         </object> 
+        </void> 
+        <void property="name"> 
+         <string>panel6</string> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormComponent"> 
+          <string>javax.swing.JButton</string> 
+          <void method="setProperty"> 
+           <string>text</string> 
+           <object class="com.jformdesigner.model.FormMessage"> 
+            <null/> 
+            <string>GraphViewerPanel.button1.text</string> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>button1</string> 
+          </void> 
+          <void method="addEvent"> 
+           <object class="com.jformdesigner.model.FormEvent"> 
+            <string>java.awt.event.ActionListener</string> 
+            <string>actionPerformed</string> 
+            <string>button1ActionPerformed</string> 
+            <boolean>true</boolean> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormComponent"> 
+          <string>javax.swing.JButton</string> 
+          <void method="setProperty"> 
+           <string>text</string> 
+           <object class="com.jformdesigner.model.FormMessage"> 
+            <null/> 
+            <string>GraphViewerPanel.button2.text</string> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>button2</string> 
+          </void> 
+          <void method="addEvent"> 
+           <object class="com.jformdesigner.model.FormEvent"> 
+            <string>java.awt.event.ActionListener</string> 
+            <string>actionPerformed</string> 
+            <string>button2ActionPerformed</string> 
+            <boolean>true</boolean> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormComponent"> 
+          <string>javax.swing.JLabel</string> 
+          <void method="setProperty"> 
+           <string>text</string> 
+           <object class="com.jformdesigner.model.FormMessage"> 
+            <null/> 
+            <string>GraphViewerPanel.inputFileLabel.text</string> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>inputFileLabel</string> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="com.jformdesigner.model.FormComponent"> 
+          <string>javax.swing.JLabel</string> 
+          <void method="setProperty"> 
+           <string>text</string> 
+           <object class="com.jformdesigner.model.FormMessage"> 
+            <null/> 
+            <string>GraphViewerPanel.outputFilePath.text</string> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>outputFilePath</string> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="add"> 
+       <object class="com.jformdesigner.model.FormComponent"> 
+        <string>javax.swing.JProgressBar</string> 
+        <void property="name"> 
+         <string>progressBar</string> 
+        </void> 
+       </object> 
+      </void> 
+     </object> 
+     <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+      <null/> 
+      <void method="setProperty"> 
+       <string>location</string> 
+       <object class="java.awt.Point"> 
+        <int>0</int> 
+        <int>0</int> 
+       </object> 
+      </void> 
+      <void method="setProperty"> 
+       <string>size</string> 
+       <object class="java.awt.Dimension"> 
+        <int>900</int> 
+        <int>560</int> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="add"> 
+     <object class="com.jformdesigner.model.FormNonVisual"> 
+      <string>javax.swing.ButtonGroup</string> 
+      <void property="name"> 
+       <string>buttonGroup1</string> 
+      </void> 
+     </object> 
+     <object class="com.jformdesigner.model.FormLayoutConstraints"> 
+      <null/> 
+      <void method="setProperty"> 
+       <string>location</string> 
+       <object class="java.awt.Point"> 
+        <int>70</int> 
+        <int>625</int> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java> 
