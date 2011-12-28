@@ -3,8 +3,8 @@ package eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers;
 
 /**
  * Models a word token. Also contains information about the type of entity
- * the token represents.
- * @author Sujit Pal
+ * the token represents. Adapted from JTMT.
+ * @author Kostas Christidis
  * @version $Revision$
  */
 public class Token {

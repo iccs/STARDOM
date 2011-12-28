@@ -6,7 +6,7 @@ package eu.alertproject.iccs.stardom.lsa.bugmodel;
 
 /**
  *
- * @author kostas
+ * @author Kostas Christidis
  */
 public class Cc {
     private String cc;

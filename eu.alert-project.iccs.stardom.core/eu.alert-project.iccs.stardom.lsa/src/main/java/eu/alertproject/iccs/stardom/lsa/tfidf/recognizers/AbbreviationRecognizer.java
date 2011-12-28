@@ -30,8 +30,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * (3) Check for abbreviations without periods, only if the first character
  *     is uppercase, ie US or MD.
  * In all cases, the abbreviation is looked up against the co_abbrev (enc_type=a)
- * table to ensure a correct match.
- * @author Sujit Pal
+ * table to ensure a correct match. Adapted from JTMT.
+ * @author Kostas Christidis
  * @version $Revision$
  */
 public class AbbreviationRecognizer implements IRecognizer {

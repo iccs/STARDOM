@@ -13,8 +13,8 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * A recognizer that recognizes common stop words. Special stopwords may
- * be passed in through the non-default constructor.
- * @author Sujit Pal
+ * be passed in through the non-default constructor.Adapted from JTMT.
+ * @author Kostas Christidis
  * @version $Revision$
  */
 public class StopwordRecognizer implements IRecognizer {

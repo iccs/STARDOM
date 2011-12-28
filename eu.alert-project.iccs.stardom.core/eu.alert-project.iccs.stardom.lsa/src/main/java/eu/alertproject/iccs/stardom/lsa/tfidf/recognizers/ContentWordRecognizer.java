@@ -17,8 +17,8 @@ import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.TokenType;
  * Recognizes content words (noun, verb, adjective, and adverb) from a
  * List of Token objects. Only TokenType.WORD tokens are considered in
  * this recognizer, and are converted to TokenType.CONTENT_WORD. Words
- * are looked up against the WordNet dictionary.
- * @author Sujit Pal
+ * are looked up against the WordNet dictionary. Adapted from JTMT.
+ * @author Kostas Christidis
  * @version $Revision$
  */
 public class ContentWordRecognizer implements IRecognizer {

@@ -5,8 +5,8 @@ import java.util.List;
 import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.Token;
 
 /**
- * Interface definition that all entity recognizers must implement.
- * @author Sujit Pal
+ * Interface definition that all entity recognizers must implement. Adapted from JTMT.
+ * @author Kostas Christidis
  * @version $Revision$
  */
 public interface IRecognizer {

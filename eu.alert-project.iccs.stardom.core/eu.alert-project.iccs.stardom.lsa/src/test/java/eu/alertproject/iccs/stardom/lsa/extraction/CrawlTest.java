@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author kostas
+ * @author Kostas Christidis
  */
 public class CrawlTest {
     

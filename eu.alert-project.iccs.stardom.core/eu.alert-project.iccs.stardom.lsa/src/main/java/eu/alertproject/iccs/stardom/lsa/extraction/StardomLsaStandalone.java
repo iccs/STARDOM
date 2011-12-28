@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author kostas
+ * @author Kostas Christidis
  */
 public class StardomLsaStandalone {
 

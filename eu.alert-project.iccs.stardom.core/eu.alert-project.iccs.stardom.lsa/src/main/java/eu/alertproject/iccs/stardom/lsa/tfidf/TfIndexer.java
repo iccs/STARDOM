@@ -9,8 +9,8 @@ import org.apache.commons.math.linear.RealMatrix;
  * has 2 occurences of a certain word will not be ranked higher than a shorter
  * document with 1 occurence of the word for that word. At the end of this
  * transformation, the values are the frequency of the word in the document.
- * @author Sujit Pal
- * @version $Revision: 44 $
+ * @author Kostas Christidis
+ * @version $Revision $
  */
 public class TfIndexer implements Transformer<RealMatrix,RealMatrix> {
 

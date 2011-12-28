@@ -23,7 +23,7 @@ import org.apache.commons.math.linear.RealMatrix;
 
 /**
  * Generate the word occurence vector for a document collection.
- * @author Sujit Pal
+ * @author Kostas Christidis
  * @version $Revision: 21 $
  */
 public class VectorGenerator {

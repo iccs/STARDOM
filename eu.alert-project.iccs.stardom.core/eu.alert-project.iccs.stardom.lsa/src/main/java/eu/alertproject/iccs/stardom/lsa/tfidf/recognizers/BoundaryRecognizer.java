@@ -11,8 +11,8 @@ import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.TokenType;
 /**
  * Identifies Punctuations in the returned text. A BreakIterator will treat
  * both punctuation and whitespace as word boundaries. This is usually the
- * first extractor in a chain, so it reduces the number of unknowns.
- * @author Sujit Pal
+ * first extractor in a chain, so it reduces the number of unknowns. Adapted from JTMT
+ * @author Kostas Christidis
  * @version $Revision$
  */
 public class BoundaryRecognizer implements IRecognizer {

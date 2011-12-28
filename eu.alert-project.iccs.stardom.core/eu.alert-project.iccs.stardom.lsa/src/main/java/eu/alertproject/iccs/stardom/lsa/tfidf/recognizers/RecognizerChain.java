@@ -10,8 +10,8 @@ import eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers.Token;
  * identify a word as a certain token type. All words returned from the tokenizer
  * start off as token type UNKNOWN. Rules are fired in sequence to identify the
  * type, most specific to least specific. Once a word is identified as a particular
- * entity, we don't process the rule chain any further.
- * @author Sujit Pal
+ * entity, we don't process the rule chain any further. Adapted from JTMT
+ * @author Kostas Christidis
  * @version $Revision$
  */
 public class RecognizerChain implements IRecognizer {

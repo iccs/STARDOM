@@ -11,8 +11,9 @@ import org.apache.commons.math.linear.SingularValueDecompositionImpl;
  * and score them accordingly. We use SVD to accomplish this. We first
  * decompose the word frequency vector into the three parts, then multiply
  * the three components back to get our transformed matrix.
- * @author Sujit Pal
- * @version $Revision: 44 $
+ * Adapted from JTMT
+ * @author Kostas Christidis
+ * @version $Revision$
  */
 public class LsiIndexer implements Transformer<RealMatrix,RealMatrix> {
 

@@ -1,8 +1,8 @@
 package eu.alertproject.iccs.stardom.lsa.tfidf.tokenizers;
 
 /**
- * List of all possible token types. Default is UNKNOWN.
- * @author Sujit Pal
+ * List of all possible token types. Adapted from JTMT.
+ * @author Kostas Christidis
  * @version $Revision$
  */
 public enum TokenType {

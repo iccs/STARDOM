@@ -8,7 +8,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  *
- * @author kostas
+ * @author Kostas Christidis
  */
 
 public class Bugzilla {

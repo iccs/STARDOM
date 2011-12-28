@@ -18,7 +18,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 /**
  * Test class for generating term/document matrices using various methods.
- * @author Sujit Pal
+ * @author Kostas Christidis
  * @version $Revision: 55 $
  */
 public class TfIdfCalculationTest {

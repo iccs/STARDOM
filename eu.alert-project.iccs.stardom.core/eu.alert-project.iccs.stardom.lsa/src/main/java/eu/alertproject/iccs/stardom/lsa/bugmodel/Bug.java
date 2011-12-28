@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author kostas
+ * @author Kostas Christidis
  */
 public class Bug {
 

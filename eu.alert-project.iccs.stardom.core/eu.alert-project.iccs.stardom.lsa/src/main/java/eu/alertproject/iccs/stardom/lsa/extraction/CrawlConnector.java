@@ -4,7 +4,6 @@
  */
 package eu.alertproject.iccs.stardom.lsa.extraction;
 
-import eu.alertproject.iccs.stardom.lsa.tfidf.analyzers.Tfidf;
 import com.thoughtworks.xstream.XStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author kostas
+ * @author Kostas Christidis
  */
 public class CrawlConnector {
 
@@ -69,9 +68,7 @@ public class CrawlConnector {
         }
         bugDescs.add(desc);
         }
-        Tfidf tfidf= new Tfidf();
-        tfidf.setDataset(bugDescs);
-        tfidf.analyse();
+        
 
     }
 }

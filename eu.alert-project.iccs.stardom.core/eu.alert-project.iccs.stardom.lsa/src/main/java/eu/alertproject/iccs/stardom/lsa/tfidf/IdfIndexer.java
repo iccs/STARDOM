@@ -12,8 +12,10 @@ import org.apache.commons.math.linear.RealMatrix;
  *       d(m) = number of docs containing word m
  * so where a word is more frequent (ie d(m) is high, f(m) would be low.
  * 
- * @author Sujit Pal
- * @version $Revision: 44 $
+ * Adapted from JTMT
+ * 
+ * @author Kostas Christidis
+ * @version $Revision $
  */
 public class IdfIndexer implements Transformer<RealMatrix,RealMatrix> {
 

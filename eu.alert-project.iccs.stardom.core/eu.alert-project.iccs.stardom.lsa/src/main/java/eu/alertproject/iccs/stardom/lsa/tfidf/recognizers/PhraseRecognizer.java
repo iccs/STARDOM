@@ -16,8 +16,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Combines co-located words into phrases by looking up a table of
- * common phrases.
- * @author Sujit Pal
+ * common phrases.Adapted from JTMT
+ * @author Kostas Christidis
  * @version $Revision$
  */
 public class PhraseRecognizer implements IRecognizer {
