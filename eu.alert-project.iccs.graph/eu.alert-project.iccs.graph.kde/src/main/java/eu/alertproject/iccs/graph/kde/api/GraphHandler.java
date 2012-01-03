@@ -1,12 +1,9 @@
 package eu.alertproject.iccs.graph.kde.api;
 
-import edu.uci.ics.jung.algorithms.filters.EdgePredicateFilter;
-import edu.uci.ics.jung.algorithms.filters.VertexPredicateFilter;
 import edu.uci.ics.jung.algorithms.scoring.BetweennessCentrality;
 import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.UndirectedGraph;
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
-import org.apache.commons.collections15.Predicate;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections15.TransformerUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -15,9 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,7 +40,6 @@ public class GraphHandler {
         try {
             it = FileUtils.lineIterator(inputFile, "UTF-8");
 
-
             Integer previousFile = null;
             Integer previousAuthor = null;
 
@@ -58,32 +52,26 @@ public class GraphHandler {
 
                 String[] split = next.split(",");
 
-                Integer fileId = Integer.valueOf(split[0]);
                 Integer authorId = Integer.valueOf(split[1]);
 
-                if (previousFile != null && previousFile.equals(fileId)) {
+                if(previousAuthor != null){
 
-
-                    String edge = previousFile + "_" + previousAuthor + "_" + authorId;
+                    logger.trace("Graph<Integer,String> create() {} ",next);
+                    String edge = DigestUtils.md5Hex(String.valueOf(previousAuthor * authorId*37));
 
                     //already added
                     if (!graph.containsEdge(edge)) {
+                        logger.trace("Graph<Integer,String> create(split) Adding edge {} ",edge);
                         graph.addEdge(edge, previousAuthor, authorId);
                         weights.put(edge, 1);
                     } else {
                         weights.put(edge, weights.get(edge).intValue() + 1);
                     }
 
-                    previousAuthor = authorId;
-
-                } else {
-
-                    previousAuthor = authorId;
-                    previousFile = fileId;
                 }
+                previousAuthor = authorId;
 
                 max--;
-
 
             }
 
