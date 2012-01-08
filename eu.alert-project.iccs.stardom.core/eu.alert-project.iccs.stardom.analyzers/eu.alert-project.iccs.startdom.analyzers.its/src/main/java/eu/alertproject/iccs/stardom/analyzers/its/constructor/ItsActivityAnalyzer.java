@@ -4,17 +4,10 @@ import eu.alertproject.iccs.stardom.analyzers.its.connector.DefaultItsAction;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.DefaultItsCommentAction;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsAction;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
-import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ItsActivityMetric;
-import eu.alertproject.iccs.stardom.domain.api.metrics.ItsTemporalMetric;
-import eu.alertproject.iccs.stardom.domain.api.metrics.ScmActivityMetric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * User: fotis
