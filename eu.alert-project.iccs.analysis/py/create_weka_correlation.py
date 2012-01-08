@@ -162,18 +162,16 @@ if __name__ == '__main__':
 
 
     #create the file
-    output_file=config.io_results_file+"/%s.arff" % ("correlation-"+datetime.now().strftime("%Y%m%d%H%S"))
+    output_file=config.io_results_file+"/%s.arff" % ("correlation-"+datetime.now().strftime("%Y%m%d%H%M%S"))
     print "Creating output file %s" % output_file;
 
     bugAWriter = open(output_file, 'wb')
-    bugAWriter.writelines(
+    bugAWriter.writelines((
         """ % 1.  Title: Bug Solution Dataset Numeric
 %
 % 2. Sources:
 %(a) Creator: ALERT Project
-%(b) Date: August, 2011
-%\n\n"""
-    )
+%(b) Date: """+(datetime.now().strftime("%d %b %Y - %H:%M:%S")))+"""\n%\n\n""")
 
     bugAWriter.writelines("@RELATION bug\n")
     bugAWriter.writelines("\n\n\n")
