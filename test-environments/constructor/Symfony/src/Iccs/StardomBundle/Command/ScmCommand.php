@@ -195,13 +195,13 @@ class ScmCommand extends DoctrineCommand{
         //echo $values.PHP_EOL;
         $this->counter++;
 
-        $producer->begin("tx1");
+//        $producer->begin("tx1");
 
         $producer->send(
             "/topic/".$this->getContainer()->getParameter("stardom.stomp.scm.topic"),
             $values);
 
-        $producer->commit("tx1");
+//        $producer->commit("tx1");
 
     }
 

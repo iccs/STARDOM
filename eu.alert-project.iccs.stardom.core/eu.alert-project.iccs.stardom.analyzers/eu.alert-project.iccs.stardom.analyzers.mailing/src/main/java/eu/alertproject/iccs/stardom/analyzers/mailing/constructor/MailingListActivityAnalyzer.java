@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * User: fotis
  * Date: 15/07/11
@@ -27,18 +29,27 @@ public class MailingListActivityAnalyzer extends AbstractMailingListAnalyzer {
             return;
         }
 
-        MailingListActivityMetric sqm = getMetricDao().<MailingListActivityMetric>getMostRecentMetric(identity, MailingListActivityMetric.class);
+        List<MailingListActivityMetric> forIdentity = getMetricDao().<MailingListActivityMetric>getForIdentity(identity, MailingListActivityMetric.class);
 
-        MailingListActivityMetric newMetric = new MailingListActivityMetric();
-        newMetric.setCreatedAt(action.getDate());
-        newMetric.setIdentity(identity);
-        newMetric.setQuantity(sqm == null ? 1 : sqm.getQuantity());
+        MailingListActivityMetric metric = null;
+        if(forIdentity ==null || forIdentity.size() <=0){
 
-        newMetric.increaseQuantity();
+            metric = new MailingListActivityMetric();
+            metric.setQuantity(0);
+            metric.setIdentity(identity);
+            metric = (MailingListActivityMetric) getMetricDao().insert(metric);
 
-        newMetric = (MailingListActivityMetric) getMetricDao().insert(newMetric);
+        }else{
+            metric = forIdentity.get(0);
+        }
 
-        logger.trace("void analyze() {} ", newMetric);
+        metric.setCreatedAt(action.getDate());
+        metric.setCreatedAt(action.getDate());
+        metric.increaseQuantity();
+
+        metric = (MailingListActivityMetric)getMetricDao().update(metric);
+
+        logger.trace("void analyze() {} ", metric);
 
     }
 }

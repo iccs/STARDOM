@@ -1,0 +1,23 @@
+#The connection details of the stardom database
+alert_db_host="localhost"
+alert_db_port=8889
+alert_db_user="alert"
+alert_db_name="alert_dev"
+alert_db_password="1234"
+
+
+#The connection details of the cvsanaly database
+cvsanaly_db_host="localhost"
+cvsanaly_db_port=8889
+cvsanaly_db_user="alert"
+cvsanaly_db_name="cvsanaly_kde_solid"
+cvsanaly_db_password="1234"
+
+
+#The location containing the betweeness values
+io_betweenness_file="~/Betweenness.csv"
+
+#The directory where the results should be stored
+io_results_directory=~/tmp"
+
+#### Do not modify under this line

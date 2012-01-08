@@ -2,11 +2,14 @@ package eu.alertproject.iccs.stardom.analyzers.scm.constructor;
 
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmAction;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
+import eu.alertproject.iccs.stardom.domain.api.metrics.ItsActivityMetric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ScmActivityMetric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * User: fotis
@@ -26,17 +29,26 @@ public class ScmActivityAnalyzer extends AbstractScmAnalyzer {
             return;
         }
 
-        ScmActivityMetric sqm = getMetricDao().<ScmActivityMetric>getMostRecentMetric(identity,ScmActivityMetric.class);
+        List<ScmActivityMetric> forIdentity = getMetricDao().<ScmActivityMetric>getForIdentity(identity, ScmActivityMetric.class);
 
-        logger.trace("void analyze() Handling {} -> {} ",identity.getUuid(),action.getDate());
+        ScmActivityMetric metric = null;
+        if(forIdentity ==null || forIdentity.size() <=0){
 
-        ScmActivityMetric newMetric = new ScmActivityMetric();
-        newMetric.setCreatedAt(action.getDate());
-        newMetric.setIdentity(identity);
-        newMetric.setQuantity(sqm == null ? 1 : sqm.getQuantity() + 1);
-        newMetric = (ScmActivityMetric) getMetricDao().insert(newMetric);
+            metric = new ScmActivityMetric();
+            metric.setQuantity(0);
+            metric.setIdentity(identity);
+            metric = (ScmActivityMetric) getMetricDao().insert(metric);
 
-        logger.trace("void analyze() {} = {} -> {} ",
-                new Object[]{identity.getUuid(),(sqm ==null ?0:sqm.getQuantity()),newMetric.getQuantity()});
+        }else{
+            metric = forIdentity.get(0);
+        }
+
+        metric.setCreatedAt(action.getDate());
+        metric.increaseQuantity();
+
+        metric = (ScmActivityMetric)getMetricDao().update(metric);
+
+        logger.trace("void analyze() {} ",metric);
+
     }
 }

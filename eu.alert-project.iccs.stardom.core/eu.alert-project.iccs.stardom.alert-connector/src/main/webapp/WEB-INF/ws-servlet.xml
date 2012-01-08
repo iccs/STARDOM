@@ -174,20 +174,20 @@
     <!--<bean class="eu.alertproject.iccs.stardom.analyzers.forums.bus.ForumEventHandler>-->
 
    <bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsActivityAnalyzer"/>
-   <bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsTemporalAnalyzer"/>
+   <!--<bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsTemporalAnalyzer"/>-->
 
 
     <!-- Analyzers -->
 
     <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityAnalyzer"/>
-    <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmTemporalAnalyzer"/>
+    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmTemporalAnalyzer"/>-->
     <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmApiIntroducedAnalyzer"/>
 
 
 
     <!--<bean class="eu.alertproject.iccs.stardom.analyzers.forums.constructor.ForumActivityAnalyzer"/>-->
     <bean class="eu.alertproject.iccs.stardom.analyzers.mailing.constructor.MailingListActivityAnalyzer"/>
-    <bean class="eu.alertproject.iccs.stardom.analyzers.mailing.constructor.MailingListTemporalAnalyzer"/>
+    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.mailing.constructor.MailingListTemporalAnalyzer"/>-->
 
 
 

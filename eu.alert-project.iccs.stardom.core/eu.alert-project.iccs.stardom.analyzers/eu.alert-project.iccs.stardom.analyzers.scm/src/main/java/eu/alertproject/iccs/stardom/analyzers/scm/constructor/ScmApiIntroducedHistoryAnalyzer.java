@@ -19,9 +19,9 @@ import java.util.List;
  * Date: 17/07/11
  * Time: 14:07
  */
-public class ScmApiIntroducedAnalyzer extends AbstractScmAnalyzer {
+public class ScmApiIntroducedHistoryAnalyzer extends AbstractScmAnalyzer {
 
-    private Logger logger = LoggerFactory.getLogger(ScmApiIntroducedAnalyzer.class);
+    private Logger logger = LoggerFactory.getLogger(ScmApiIntroducedHistoryAnalyzer.class);
  
     @Autowired
     PathSignatureHistoryDao pathSignatureHistoryDao;
@@ -56,27 +56,19 @@ public class ScmApiIntroducedAnalyzer extends AbstractScmAnalyzer {
                 
                 if(byIdentityPathAndSignature == null ){
                     
-                    List<ScmApiIntroducedMetric> sqmForIdenity = getMetricDao().<ScmApiIntroducedMetric>getForIdentity(identity,ScmApiIntroducedMetric.class);
+                    ScmApiIntroducedMetric sqm = getMetricDao().<ScmApiIntroducedMetric>getMostRecentMetric(identity,ScmApiIntroducedMetric.class);
 
                     logger.trace("void analyze() Handling {} -> {} ",identity.getUuid(),action.getDate());
 
-                    ScmApiIntroducedMetric metric = null;
-                    if(sqmForIdenity ==null || sqmForIdenity.size() <= 0 ){
+                    ScmApiIntroducedMetric newMetric = new ScmApiIntroducedMetric();
+                    newMetric.setCreatedAt(action.getDate());
+                    newMetric.setIdentity(identity);
+                    newMetric.setQuantity(sqm == null ? 1 : sqm.getQuantity() + 1);
+                    newMetric = (ScmApiIntroducedMetric) getMetricDao().insert(newMetric);
 
-                        metric = new ScmApiIntroducedMetric();
-                        metric.setIdentity(identity);
-                        metric.setQuantity(0);
-                        metric = (ScmApiIntroducedMetric) getMetricDao().insert(metric);
-                    }else{
-                        metric = sqmForIdenity.get(0);
-                    }
 
-                    metric.setCreatedAt(action.getDate());
-                    metric.increaseQuantity();
-
-                    metric = (ScmApiIntroducedMetric) getMetricDao().update(metric);
-
-                    logger.trace("void analyze() {} ",metric);
+                    logger.trace("void analyze() {} = {} -> {} ",
+                            new Object[]{identity.getUuid(),(sqm ==null ?0:sqm.getQuantity()),newMetric.getQuantity()});
 
 
                     PathSignatureHistory pathSignatureHistory = new PathSignatureHistory();

@@ -4,26 +4,19 @@ import eu.alertproject.iccs.stardom.analyzers.its.connector.DefaultItsAction;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.DefaultItsCommentAction;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsAction;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
-import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ItsActivityMetric;
-import eu.alertproject.iccs.stardom.domain.api.metrics.ItsTemporalMetric;
-import eu.alertproject.iccs.stardom.domain.api.metrics.ScmActivityMetric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * User: fotis
  * Date: 18/07/11
  * Time: 09:37
  */
-public class ItsActivityAnalyzer extends AbstractItsAnalyzer{
+public class ItsActivityHistoryAnalyzer extends AbstractItsAnalyzer{
 
-    private Logger logger = LoggerFactory.getLogger(ItsActivityAnalyzer.class);
+    private Logger logger = LoggerFactory.getLogger(ItsActivityHistoryAnalyzer.class);
 
 
     //Idenity here is null carefull
@@ -35,24 +28,18 @@ public class ItsActivityAnalyzer extends AbstractItsAnalyzer{
             return;
         }
 
-        ItsActivityMetric metric = getMetricDao().<ItsActivityMetric>getMostRecentMetric(identity, ItsActivityMetric.class);
+        ItsActivityMetric sqm = getMetricDao().<ItsActivityMetric>getMostRecentMetric(identity, ItsActivityMetric.class);
 
-        //check if the metric exists
-        if( metric == null){
-            //create
+        ItsActivityMetric newMetric = new ItsActivityMetric();
+        newMetric.setCreatedAt(action.getDate());
+        newMetric.setIdentity(identity);
+        newMetric.setQuantity(sqm == null ? 1 : sqm.getQuantity());
 
-            metric  = new ItsActivityMetric();
-            metric.setIdentity(identity);
-            metric.setQuantity(0);
-            metric = (ItsActivityMetric) getMetricDao().insert(metric);
+        newMetric.increaseQuantity();
 
-        }
+        newMetric = (ItsActivityMetric) getMetricDao().insert(newMetric);
 
-        metric.increaseQuantity();
-
-        getMetricDao().update(metric);
-
-        logger.trace("void analyze() {} ",metric);
+        logger.trace("void analyze() {} ",newMetric);
 
     }
 

@@ -76,11 +76,16 @@ public class GraphHandler {
             }
 
 
+            //correct authors
+
+
+
 
             logger.trace("void main(args) Vertex Count: {} ", graph.getVertexCount());
 
             bc = new BetweennessCentrality<Integer, String>(graph, TransformerUtils.mapTransformer(weights));
             logger.trace("void main(args) Betweeness calculated");
+
 
 
             fos = new FileOutputStream(outputFile);
