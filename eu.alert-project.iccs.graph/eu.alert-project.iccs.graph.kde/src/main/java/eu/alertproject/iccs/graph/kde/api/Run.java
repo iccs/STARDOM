@@ -101,6 +101,7 @@ public class Run {
 
             final BetweennessCentrality<Integer, String> bc = new BetweennessCentrality<Integer, String>(graph, TransformerUtils.mapTransformer(weights));
 
+
             logger.trace("void main(args) Betweeness calculated");
 
 

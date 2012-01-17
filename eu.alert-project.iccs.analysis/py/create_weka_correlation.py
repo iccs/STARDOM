@@ -1,30 +1,10 @@
 #!/usr/bin/env python
-from datetime import date, datetime
+from datetime import  datetime
 
-import MySQLdb
 import csv
-import re
-import time
 import config
-
-
-QRY_DROP_TABLE="DROP TABLE IF EXISTS `identity_csvid` ; " \
-               "CREATE TABLE `identity_csvid` (  " \
-                "`identity_id` INT  NOT NULL,  " \
-                "`user_id` INT  NOT NULL,  " \
-                "`name` TEXT  NOT NULL,  " \
-                "`email` TEXT  NOT NULL) ENGINE = InnoDB;"
-
-QRY_SELECT_ALL_PEOPLE = "select id,name, email from people"
-
-QRY_SELECT_IDENTITY = """select distinct identity_id
-                        from profile p
-                        join identity_is_profile i on p.id=i.profile_id
-                        where email=%s;"""
-
-QRY_INSERT_CSVID = """insert into identity_csvid VALUES(%s,%s,%s,%s) ;"""
-
-
+import db
+import identity
 
 
 def date_distance(date1):
@@ -33,72 +13,7 @@ def date_distance(date1):
     d2 = datetime.strptime(date1, fmt)
     return (d2-d1).days
 
-def get_alert_connection():
-    return MySQLdb.connect (
-                            host = config.alert_db_host,
-                            port = config.alert_db_port,
-                            user = config.alert_db_user,
-                            passwd = config.alert_db_password,
-                            db  = config.alert_db_name)
 
-
-
-
-def people_mapping_init():
-
-
-    user_to_identity_dict={}
-
-    alert_conn = get_alert_connection()
-
-    cvsanaly_conn = MySQLdb.connect (
-                        host = config.cvsanaly_db_host,
-                        port = config.cvsanaly_db_port,
-                        user = config.cvsanaly_db_user,
-                        passwd = config.cvsanaly_db_password,
-                        db = config.cvsanaly_db_name)
-
-
-    # Apparently this is a compound statement and
-    # we should close and reopen the cursor
-    alert_cursor=alert_conn.cursor ()
-    alert_cursor.execute (QRY_DROP_TABLE)
-    alert_cursor.close()
-
-    csv_cursor = cvsanaly_conn.cursor ()
-    all_cvsanaly_people = csv_cursor.execute (QRY_SELECT_ALL_PEOPLE)
-
-    counter = 0
-    for x in range(all_cvsanaly_people):
-        row=csv_cursor.fetchone ()
-        user_id=row[0]
-        name=row[1]
-        email = row[2]
-        repl=' '
-        email = re.sub(r"[-_\+\.@]", repl, email)
-        name = re.sub(r"[\']", repl, name)
-
-        print "Processing %s => %s " % (user_id,email,)
-
-        alert_cursor=alert_conn.cursor ()
-        alert_cursor.execute (QRY_SELECT_IDENTITY, (email,))
-        alert_row=alert_cursor.fetchone ()
-
-        if alert_row is None:
-            print '%s NOT FOUND!!! ' % email
-            continue
-        identity_id=alert_row[0]
-        print "Identity id %s found for %s " % (identity_id,email,)
-        alert_cursor.execute (QRY_INSERT_CSVID, (identity_id,user_id,name,email,))
-
-        user_to_identity_dict[user_id]=identity_id
-        alert_cursor.close ()
-
-    csv_cursor.close()
-    alert_conn.close()
-    cvsanaly_conn.close()
-
-    return user_to_identity_dict
 
 
 def get_metric(connection, query, identity_id):
@@ -191,9 +106,9 @@ if __name__ == '__main__':
 
 
     people_map_dict={}
-    people_map_dict = people_mapping_init()
+    people_map_dict = identity.people_mapping_init()
 
-    alert_conn = get_alert_connection()
+    alert_conn = db.get_alert_connection()
     spamReader = csv.reader(open(config.io_betweenness_file, 'rb'),delimiter='\t', quotechar='|')
 
     for row in spamReader:
@@ -218,7 +133,6 @@ if __name__ == '__main__':
 
         result.append(btness)
         bugAWriter.writelines(', '.join(str(x) for x in result)+"\n")
-
 
     bugAWriter.close()
     alert_conn.close ()

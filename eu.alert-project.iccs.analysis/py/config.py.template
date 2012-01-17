@@ -19,5 +19,6 @@ io_betweenness_file="~/Betweenness.csv"
 
 #The directory where the results should be stored
 io_results_directory=~/tmp"
+io_betweeness_output=
 
 #### Do not modify under this line
