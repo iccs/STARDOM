@@ -149,9 +149,9 @@ if __name__ == '__main__':
         "scm_api_introduced_metric"     :[1, "q"],
         "scm_api_usage_count_metric"    :[1, "q"],
 
-        "scm_temporal_metric"           :[0, "t"],
-        "its_temporal_metric"           :[0, "t"],
-        "mailing_list_temporal_metric"  :[0, "t"],
+        "scm_temporal_metric"           :[1, "t"],
+        "its_temporal_metric"           :[1, "t"],
+        "mailing_list_temporal_metric"  :[1, "t"],
     }
 
     # You propably shouldnt bother with what is under this line
