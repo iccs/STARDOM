@@ -1,1 +1,1 @@
-alter table profile add column source text not null ;
+alter table profile add column source varchar(100) not null default 'none';
