@@ -119,7 +119,7 @@ public class ItsEventHandler {
         context.setProfile(generate);
 
 
-        Identity identity = identifier.find(context.getProfile());
+        Identity identity = identifier.find(context.getProfile(),"its");
         logger.trace("void event() Identity {}",identity.getUuid());
 
 
@@ -135,7 +135,7 @@ public class ItsEventHandler {
     private void handleDirtyProfile(Profile dirty, DefaultItsAction action ){
         Profile generate = profileFromItsKdeWhoService.generate(dirty.getName(), dirty.getEmail());
 
-        Identity identity = identifier.find(generate);
+        Identity identity = identifier.find(generate,"its");
 
         CleanItsAction cia = new CleanItsAction();
         cia.setDate(action.getDate());

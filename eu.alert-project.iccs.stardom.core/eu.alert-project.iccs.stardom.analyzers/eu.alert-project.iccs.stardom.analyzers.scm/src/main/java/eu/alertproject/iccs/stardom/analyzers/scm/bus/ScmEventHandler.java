@@ -81,7 +81,7 @@ public class ScmEventHandler {
                                 ScmConnectorContext context = iterator.next();
 
                                 //do your magic
-                                Identity identity = identifier.find(context.getProfile());
+                                Identity identity = identifier.find(context.getProfile(),"scm");
                                 logger.trace("void event() Identity {}",identity.getUuid());
 
 
@@ -149,7 +149,7 @@ public class ScmEventHandler {
 //        logger.trace("Processed {} queue size ",queue.size());
 
         //do your magic
-        Identity identity = identifier.find(context.getProfile());
+        Identity identity = identifier.find(context.getProfile(),"scm");
         logger.trace("void event() Identity {}",identity.getUuid());
 
 

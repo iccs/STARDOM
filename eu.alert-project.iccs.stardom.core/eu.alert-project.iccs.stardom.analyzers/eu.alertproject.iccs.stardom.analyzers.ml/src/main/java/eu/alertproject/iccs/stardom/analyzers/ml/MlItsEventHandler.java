@@ -79,7 +79,7 @@ public class MlItsEventHandler {
          */
         Identity who = null;
         if(!StringUtils.isEmpty(context.getProfile().getEmail())){
-            who = identifier.find(context.getProfile());
+            who = identifier.find(context.getProfile(),"ml");
         }
 
         try {

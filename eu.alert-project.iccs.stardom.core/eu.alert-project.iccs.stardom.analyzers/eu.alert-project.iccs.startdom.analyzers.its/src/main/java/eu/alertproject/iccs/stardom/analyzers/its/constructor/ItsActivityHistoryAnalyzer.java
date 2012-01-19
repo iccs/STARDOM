@@ -19,7 +19,6 @@ public class ItsActivityHistoryAnalyzer extends AbstractItsAnalyzer{
     private Logger logger = LoggerFactory.getLogger(ItsActivityHistoryAnalyzer.class);
 
 
-    //Idenity here is null carefull
     @Override
     @Transactional
     public void analyze(Identity identity, ItsAction action) {
