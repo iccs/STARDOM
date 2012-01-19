@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CrawlConnector {
 
+    private final String kdeSiteUrl = "http://bugs.kde.org/show_bug.cgi?ctype=xml&id=";
     private Logger logger = LoggerFactory.getLogger(CrawlConnector.class);
     private ArrayList<String> bugDescs = new ArrayList<String>();
     private ArrayList bugIds;
@@ -52,7 +53,7 @@ public class CrawlConnector {
         
         ListIterator bugIdItr= bugIds.listIterator();
         while (bugIdItr.hasNext()){
-        URL url = new URL("http://bugs.kde.org/show_bug.cgi?ctype=xml&id=" + bugIdItr.next());
+        URL url = new URL(kdeSiteUrl + bugIdItr.next());
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(
                 url.openStream()));
