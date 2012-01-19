@@ -29,7 +29,16 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
 
     @Override
     public List<Metric> getForIdentity(Identity identity) {
-        return null;
+        if(identity == null){
+            return null;
+        }
+        Query query = getEntityManager().createQuery(
+                "SELECT m FROM Metric m " +
+                "WHERE m.identity.id = :id");
+        query.setParameter("id",identity.getId());
+
+
+        return query.getResultList();
     }
 
     /**

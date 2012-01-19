@@ -22,6 +22,8 @@
                     <warName>ui</warName>
                 </configuration>
             </plugin>
+
+
         </plugins>
     </build>
 

@@ -71,7 +71,7 @@ public class ItsMlService {
             //get the identity
             Profile p = new Profile();
             p.setEmail(action.getAdded());
-            Identity identity = identifier.find(p);
+            Identity identity = identifier.find(p,"ml-assigned-to");
 
 
             //find the bug
@@ -99,7 +99,7 @@ public class ItsMlService {
             //this person was added as cc
             Profile p = new Profile();
             p.setEmail(action.getAdded());
-            Identity identity = identifier.find(p);
+            Identity identity = identifier.find(p,"ml-cc");
 
             ItsMl newBugAction = new ItsMl();
 

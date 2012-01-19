@@ -26,7 +26,6 @@ recommend sticking to 'spring' -->
         $('.page-link').click(function(eventObject){
 
             if(ICCS.isLocked(this)){
-                console.log('Disabled or is selected');
                 return;
             }
 
@@ -36,7 +35,6 @@ recommend sticking to 'spring' -->
 
             $(this).attr('enable','false');
             var url = $(this).attr("title");
-            console.log('click '+url);
 
             $(".selected").removeClass('selected');
             $(this).parent().toggleClass('selected');
@@ -54,47 +52,48 @@ recommend sticking to 'spring' -->
         $('.page-link.previous').trigger('click');
 
 
-        var url = "/ws/constructor/events/count";
+
         $('#events-processed').everyTime(timer,'events',function(){
-
-            $('#events-loader').fadeIn();
-            $.getJSON(url,function(data){
-
-                $("#scm-events").html(data.scm);
-                $("#its-events").html(data.its);
-                $("#ml-events").html(data.ml);
-
-                $('#events-loader').fadeOut();
-
-            });
-
+            getEvents();
         });
 
-        $('#log').everyTime(timer,'logs',function(){
+        <#--$('#log').everyTime(timer,'logs',function(){-->
 
-            $('#logs-loader').fadeIn();
-            console.log('timer-log');
-            var url = '<@spring.url "/log/dump"/>';
-            $.get(url,function(data){
-                $("#log").html(data);
-                $('#logs-loader').fadeOut();
-            });
-        });
+            <#--$('#logs-loader').fadeIn();-->
+            <#--var url = '<@spring.url "/log/dump"/>';-->
+            <#--$.get(url,function(data){-->
+                <#--$("#log").html(data);-->
+                <#--$('#logs-loader').fadeOut();-->
+            <#--});-->
+        <#--});-->
+
+        getEvents();
     });
+
+    function getEvents(){
+        var url = "/ws/constructor/events/count";
+        $('#events-loader').fadeIn();
+        $.getJSON(url,function(data){
+
+            var ul = "<ul>"
+            $.each(data,function(x,obj){
+                ul+='<li><label>'+x+'</label><span>'+obj+'</span></li>';
+            });
+
+            ul += "</ul>";
+
+            $("#events-counter").html(ul);
+            $('#events-loader').fadeOut();
+
+        });
+    }
 
 </script>
     <div class="container">
 
         <div id="events-processed" >
             <h2>Events Processed <@iccs.loader id="events"/></h2>
-            <div style="clear:both"><label>SCM: </label><span  id="scm-events">0</span></div>
-            <div style="clear:both"><label>ITS: </label><span id="its-events">0</span></div>
-            <div style="clear:both"><label>ML : </label><span id="ml-events">0</span></div>
-        </div>
-        <div id="log-container">
-            <h2>Process Output <@iccs.loader id="logs"/></h2>
-            <div id="log" style="">
-            </div>
+            <div style="clear:both;" id="events-counter"></div>
         </div>
         <div style="clear:both"/>
         <#include "ui/prevnext.ftl"/>

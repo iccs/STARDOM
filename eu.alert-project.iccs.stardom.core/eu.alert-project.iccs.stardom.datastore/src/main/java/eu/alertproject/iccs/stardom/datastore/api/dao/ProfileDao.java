@@ -3,6 +3,8 @@ package eu.alertproject.iccs.stardom.datastore.api.dao;
 import com.existanze.libraries.orm.dao.CommonDao;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: fotis
@@ -11,4 +13,7 @@ import eu.alertproject.iccs.stardom.domain.api.Profile;
  * To change this template use File | Settings | File Templates.
  */
 public interface ProfileDao extends CommonDao<Profile> {
+
+    List<Profile> findByAny(String query);
+
 }

@@ -45,6 +45,7 @@ public class Identity implements SimpleBean{
             joinColumns = @JoinColumn(name = "identity_id"),
             inverseJoinColumns = @JoinColumn(name="profile_id")
     )
+
     private Set<Profile> notProfiles;
 
 

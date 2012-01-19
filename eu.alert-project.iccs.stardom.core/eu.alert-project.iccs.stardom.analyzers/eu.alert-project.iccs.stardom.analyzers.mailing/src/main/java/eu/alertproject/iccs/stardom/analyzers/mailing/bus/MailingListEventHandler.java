@@ -64,7 +64,7 @@ public class MailingListEventHandler {
         context.setProfile(profile);
 
 //        //do your magic
-        Identity identity = identifier.find(profile);
+        Identity identity = identifier.find(profile,"mailing");
         logger.trace("void event() Identity {}",identity.getUuid());
 //
 

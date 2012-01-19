@@ -11,6 +11,8 @@ import org.bushe.swing.event.EventServiceLocator;
  */
 public class Bus {
 
+
+
     /**
      * @see org.bushe.swing.event.EventService#publish(Object)
      */

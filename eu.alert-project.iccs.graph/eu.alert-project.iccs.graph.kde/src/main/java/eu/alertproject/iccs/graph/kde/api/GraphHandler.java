@@ -84,6 +84,8 @@ public class GraphHandler {
             logger.trace("void main(args) Vertex Count: {} ", graph.getVertexCount());
 
             bc = new BetweennessCentrality<Integer, String>(graph, TransformerUtils.mapTransformer(weights));
+            final BetweennessCentrality<Integer, String> noWeightsBc = new BetweennessCentrality<Integer, String>(graph);
+
             logger.trace("void main(args) Betweeness calculated");
 
 
@@ -93,9 +95,8 @@ public class GraphHandler {
             fw = new BufferedWriter(osw);
 
             for (Integer vertex : graph.getVertices()) {
-                fw.write(vertex + "\t" + bc.getVertexScore(vertex) + "\n");
+                fw.write(vertex + "\t" + bc.getVertexScore(vertex) + "\t" + vertex + "\t" + noWeightsBc.getVertexScore(vertex) + "\n");
             }
-
 
             logger.trace("void main(args) File created {}",outputFile);
 

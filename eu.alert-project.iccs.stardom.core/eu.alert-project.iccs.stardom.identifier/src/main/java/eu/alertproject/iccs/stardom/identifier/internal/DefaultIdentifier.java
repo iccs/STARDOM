@@ -221,11 +221,18 @@ public class DefaultIdentifier implements Identifier{
 
 
     @Override
-    @Transactional
     public Identity find(Profile profile) {
+        return find(profile,"none");
+    }
+
+    @Override
+    @Transactional
+    public Identity find(Profile profile, String source) {
+        
 
         //sluggify profile email
         profile.setEmail(sluggifierService.sluggify(profile.getEmail()));
+        profile.setSource(source);
 
         List<Identity> possibleMatches = identityDao.findPossibleMatches(profile);
         Map<Identity, List<Profile>> matches = new HashMap<Identity, List<Profile>>();

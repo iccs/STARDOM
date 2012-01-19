@@ -39,6 +39,9 @@ public class Profile implements SimpleBean{
     @Column
     private String email;
 
+    @Column
+    private String source;
+    
 
     public Profile() {
     }
@@ -89,6 +92,14 @@ public class Profile implements SimpleBean{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     @Override

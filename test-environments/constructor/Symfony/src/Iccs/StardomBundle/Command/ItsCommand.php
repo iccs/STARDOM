@@ -43,9 +43,57 @@ class ItsCommand extends ContainerAwareCommand{
         $output->writeln("Simulating ITS events");
 
 
+//        //get the ids
+//        //parametize this !
+//        $csv_url="https://bugs.kde.org/buglist.cgi?field-1-0-0=product&product=solid&query_format=advanced&remaction=&type-1-0-0=anyexact&value-1-0-0=solid&ctype=csv";
+//        $csv_url_contents = file_get_contents($csv_url);
+//        //get the ids
+//
+//        echo $csv_url_contents;
+//
+//        //http://stackoverflow.com/questions/8353203/str-getcsv-into-a-multidimensional-array-in-php
+//        $lines = explode("\n", $csv_url_contents);
+//
+//        //remove head
+//        array_shift($lines);
+//
+//        $id = array();
+//        foreach ($lines as $line) {
+//            $parts = str_getcsv($line);
+//            $id[] = array(
+//                'id'=>$parts[0]
+//            );
+//        }
+//
+//
+//        print_r($id);
+//
+//        $id[]=array("ctype"=>"xml");
+//        $id[]=array("excludefield"=>"attachmentdata");
+//
+//        $post = http_build_query($id);
+//        echo $post;
+//
+//        echo "Size of ids ".sizeof($id);
+//        $session = curl_init("https://bugs.kde.org/show_bug.cgi");
+//
+//        curl_setopt ($session, CURLOPT_POST,1);
+//        curl_setopt ($session, CURLOPT_POSTFIELDS, $post);
+//
+//        // Tell curl not to return headers, but do return the response
+//        curl_setopt($session, CURLOPT_HEADER, false);
+//        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+//
+//        $response = curl_exec($session);
+//        curl_close($session);
+
+
         $xml_file = $input->getArgument("xml_file");
         $output->writeln("Correcint Malformed XML".$xml_file);
 
+//        echo $response;
+
+        //get the xml file
         // Specify configuration
         $config = array(
                    'input-encoding'=>'utf8',
@@ -60,7 +108,7 @@ class ItsCommand extends ContainerAwareCommand{
         $tidy->cleanRepair();
 
         /** @var $doc DOMDocument */
-        $doc = new DOMDocument(null,"utf8");
+        $doc = new DOMDocument("1.0","utf8");
         $doc->loadXML($tidy);
 
         /** @var $nodeList DOMNodeList */
@@ -309,6 +357,9 @@ class ItsCommand extends ContainerAwareCommand{
             }
 
         }
+
+        //wait for a bit so that we don't get banned
+        sleep(4);
 
     }
 

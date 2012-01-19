@@ -144,4 +144,26 @@ public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDa
 
         return q.list(qi);
     }
+
+    @Override
+    public Identity findByProfileId(Integer profileId) {
+
+        Query query = getEntityManager().createQuery(
+                "SELECT i FROM Identity  i " +
+                        " JOIN i.profiles p " +
+                        " WHERE p.id = :id"
+        );
+
+        query.setParameter("id",profileId);
+        Identity i = null;
+
+        try {
+            i = (Identity) query.getSingleResult();
+        } catch (NoResultException e) {
+            logger.warn("Couldn't find identity for profile_id={}",profileId);
+        }
+        
+        return i;
+
+    }
 }
