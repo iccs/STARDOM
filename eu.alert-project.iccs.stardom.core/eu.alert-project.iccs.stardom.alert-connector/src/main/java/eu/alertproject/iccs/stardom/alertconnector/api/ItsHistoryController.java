@@ -1,9 +1,8 @@
 package eu.alertproject.iccs.stardom.alertconnector.api;
 
-import eu.alertproject.iccs.stardom.analyzers.its.bus.ItsCommentEvent;
-import eu.alertproject.iccs.stardom.analyzers.its.bus.ItsHistoryEvent;
+import eu.alertproject.iccs.stardom.analyzers.its.bus.ItsChangeEvent;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsCommentConnectorContext;
-import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsHistoryConnectorContext;
+import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsChangeConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.connector.api.ConstructorConnector;
 import org.slf4j.Logger;
@@ -22,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Time: 18:57
  */
 @Controller
-public class ItsHistoryController implements ConstructorConnector<ItsHistoryConnectorContext> {
+public class ItsHistoryController implements ConstructorConnector<ItsChangeConnectorContext> {
 
     private Logger logger = LoggerFactory.getLogger(ItsCommentConnectorContext.class);
 
@@ -30,12 +29,12 @@ public class ItsHistoryController implements ConstructorConnector<ItsHistoryConn
 
     @RequestMapping(value = "/constructor/action/its/history", method = RequestMethod.POST)
     public @ResponseBody
-    void action(@RequestBody ItsHistoryConnectorContext context) {
+    void action(@RequestBody ItsChangeConnectorContext context) {
 
         logger.trace("void istAction() {} {}",context.getAction());
 
         //create the action
-        ItsHistoryEvent itsEvent= new ItsHistoryEvent(this,context);
+        ItsChangeEvent itsEvent= new ItsChangeEvent(this,context);
 
         messageCount.incrementAndGet();
         Bus.publish(itsEvent);

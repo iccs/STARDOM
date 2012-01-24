@@ -3,6 +3,8 @@ package eu.alertproject.iccs.stardom.datastore.api.dao;
 import com.existanze.libraries.orm.dao.CommonDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Metric;
+import eu.alertproject.iccs.stardom.domain.api.MetricQuantitative;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,4 +20,7 @@ public interface MetricDao extends CommonDao<Metric>{
     public <T extends Metric> T getMostRecentMetric(Identity identity, Class<T> aClass);
 
 
+    @SuppressWarnings({"unchecked"})
+    @Transactional(readOnly = true)
+    <T extends MetricQuantitative> List<T> findByQuantity(int quantity, Class<T> aClass);
 }

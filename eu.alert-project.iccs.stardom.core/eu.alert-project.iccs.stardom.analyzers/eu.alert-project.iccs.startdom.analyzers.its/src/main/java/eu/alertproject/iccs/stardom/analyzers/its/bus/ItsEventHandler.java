@@ -73,12 +73,10 @@ public class ItsEventHandler {
          *
          *
          */
+
         handleDirtyProfile(action.getAssigned(),action);
         handleDirtyProfile(action.getReporter(), action);
 
-        for(Profile dirty : action.getCc()){
-            handleDirtyProfile(dirty,action);
-        }
 
     }
 
@@ -112,14 +110,11 @@ public class ItsEventHandler {
 
         DefaultItsCommentAction action = context.getAction();
 
-        String email = action.getEmail();
-        String name = action.getName();
+        Profile generate = profileFromItsKdeWhoService.generate(context.getProfile());
 
-        Profile generate = profileFromItsKdeWhoService.generate(name, email);
         context.setProfile(generate);
 
-
-        Identity identity = identifier.find(context.getProfile(),"its");
+        Identity identity = identifier.find(context.getProfile(),"its-comment");
         logger.trace("void event() Identity {}",identity.getUuid());
 
 
@@ -133,7 +128,7 @@ public class ItsEventHandler {
     }
 
     private void handleDirtyProfile(Profile dirty, DefaultItsAction action ){
-        Profile generate = profileFromItsKdeWhoService.generate(dirty.getName(), dirty.getEmail());
+        Profile generate = profileFromItsKdeWhoService.generate(dirty);
 
         Identity identity = identifier.find(generate,"its");
 
@@ -142,7 +137,9 @@ public class ItsEventHandler {
 
         //whatever your do, do it here
         for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
-            a.analyze(identity,cia);
+            if(a.canHandle(cia)){
+                a.analyze(identity,cia);
+            }
         }
     }
 

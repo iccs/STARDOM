@@ -1,0 +1,154 @@
+Iccs\BichoDbBundle\Entity\IssuesExtBugzilla:
+  type: entity
+  table: issues_ext_bugzilla
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    alias:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    deltaTs:
+      type: datetime
+      nullable: false
+      column: delta_ts
+    reporterAccessible:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: reporter_accessible
+    cclistAccessible:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: cclist_accessible
+    classificationId:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: classification_id
+    classification:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    product:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    component:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    version:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    repPlatform:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: rep_platform
+    opSys:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: op_sys
+    dupId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: dup_id
+    bugFileLoc:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: bug_file_loc
+    statusWhiteboard:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: status_whiteboard
+    targetMilestone:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: target_milestone
+    votes:
+      type: integer
+      unsigned: false
+      nullable: true
+    everconfirmed:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    qaContact:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: qa_contact
+    estimatedTime:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: estimated_time
+    remainingTime:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: remaining_time
+    actualTime:
+      type: datetime
+      nullable: true
+      column: actual_time
+    deadline:
+      type: datetime
+      nullable: true
+    keywords:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    flag:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    cc:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    groupBugzilla:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+      column: group_bugzilla
+    issueId:
+      type: integer
+      unsigned: false
+      nullable: false
+      column: issue_id
+  lifecycleCallbacks: {  }

@@ -1,0 +1,23 @@
+Iccs\CvsanalyDbBundle\Entity\Files:
+  type: entity
+  table: files
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    fileName:
+      type: string
+      length: 255
+      fixed: false
+      nullable: true
+      column: file_name
+    repositoryId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: repository_id
+  lifecycleCallbacks: {  }

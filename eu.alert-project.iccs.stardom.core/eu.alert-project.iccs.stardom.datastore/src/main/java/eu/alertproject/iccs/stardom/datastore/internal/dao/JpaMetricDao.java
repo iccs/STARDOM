@@ -4,6 +4,7 @@ import com.existanze.libraries.orm.dao.JpaCommonDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Metric;
+import eu.alertproject.iccs.stardom.domain.api.MetricQuantitative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -91,6 +92,28 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
         }
 
         return ret;
+
+    }
+
+    /**
+     * The method returns a metrics for the specified {@link Metric} subclass
+     *
+     * @param quantity The amount the metric has to match or be greater than in order to be eligible
+     * @param aClass A subclass of metric
+     * @return The metric if it exists, null otherwise
+     */
+    @SuppressWarnings({"unchecked"})
+    @Override
+    @Transactional(readOnly = true)
+    public <T extends MetricQuantitative> List<T> findByQuantity(int quantity, Class<T> aClass) {
+
+
+        Query query = getEntityManager().createQuery(
+                "SELECT m FROM " + aClass.getName() + " m " +
+                "WHERE m.quantity >= :quantity");
+        query.setParameter("quantity",quantity);
+
+        return query.getResultList();
 
     }
 }

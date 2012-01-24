@@ -84,6 +84,11 @@
             <property name="location" value="classpath:system.properties"/>
     </bean>
 
+    <bean id="systemProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean" >
+            <property name="location" value="classpath:system.properties"/>
+    </bean>
+
+
 
 
 
@@ -168,7 +173,7 @@
     <!-- Services -->
    <bean class="eu.alertproject.iccs.stardom.analyzers.scm.bus.ScmEventHandler"/>
    <bean class="eu.alertproject.iccs.stardom.analyzers.its.bus.ItsEventHandler"/>
-   <bean class="eu.alertproject.iccs.stardom.analyzers.ml.MlItsEventHandler"/>
+   <bean class="eu.alertproject.iccs.stardom.analyzers.its.bus.ItsChangeEventHandler"/>
    <bean class="eu.alertproject.iccs.stardom.analyzers.mailing.bus.MailingListEventHandler"/>
 
     <!--<bean class="eu.alertproject.iccs.stardom.analyzers.forums.bus.ForumEventHandler>-->

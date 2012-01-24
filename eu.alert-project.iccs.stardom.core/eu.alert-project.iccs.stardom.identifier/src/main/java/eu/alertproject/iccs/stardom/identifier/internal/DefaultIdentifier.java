@@ -98,7 +98,7 @@ public class DefaultIdentifier implements Identifier{
 
         if(
                 (!StringUtils.isEmpty(a.getName()) && !StringUtils.isEmpty(b.getName()))
-            &&  StringUtils.endsWithIgnoreCase(a.getName(),b.getName())){
+            &&  StringUtils.equalsIgnoreCase(a.getName(),b.getName())){
 
             double v = calculateIf(this.weightConfiguration.getFirstName());
             logger.trace("boolean getIf() Found a first name match {}",v);
@@ -108,7 +108,7 @@ public class DefaultIdentifier implements Identifier{
 
         if(
             (!StringUtils.isEmpty(a.getLastname()) && !StringUtils.isEmpty(b.getLastname()))
-            && StringUtils.endsWithIgnoreCase(a.getLastname(), b.getLastname())){
+            && StringUtils.equalsIgnoreCase(a.getLastname(), b.getLastname())){
             double v = calculateIf(this.weightConfiguration.getLastName());
             logger.trace("boolean getIf() Found a last name match {}",v);
 
@@ -117,7 +117,7 @@ public class DefaultIdentifier implements Identifier{
 
         if(
             (!StringUtils.isEmpty(a.getEmail()) && !StringUtils.isEmpty(b.getEmail()))
-            && StringUtils.endsWithIgnoreCase(a.getEmail(), b.getEmail())){
+            && StringUtils.equalsIgnoreCase(a.getEmail(), b.getEmail())){
 
             double v = calculateIf(this.weightConfiguration.getEmail());
             logger.trace("boolean getIf() Found an email match {}",v);
@@ -345,13 +345,26 @@ public class DefaultIdentifier implements Identifier{
 
 
             boolean profileExists = false;
+
+            String incomingName = StringUtils.trimToEmpty(profile.getName());
+            String incomingLastname = StringUtils.trimToEmpty(profile.getLastname());
+            String incomingUsername = StringUtils.trimToEmpty(profile.getUsername());
+            String incomingEmail = StringUtils.trimToEmpty(profile.getEmail());
+
+
+
             for(Profile existing : profiles){
 
+                String existingName = StringUtils.trimToEmpty(existing.getName());
+                String existingLastname = StringUtils.trimToEmpty(existing.getLastname());
+                String existingUsername = StringUtils.trimToEmpty(existing.getUsername());
+                String existingEmail = StringUtils.trimToEmpty(existing.getEmail());
+
                 if(
-                    StringUtils.equals(existing.getName(),profile.getName())
-                    && StringUtils.equals(existing.getLastname(),profile.getLastname())
-                    && StringUtils.equals(existing.getUsername(),profile.getUsername())
-                    && StringUtils.equals(existing.getEmail(),profile.getEmail())){
+                    existingName.toLowerCase().equals(incomingName.toLowerCase())
+                    && existingLastname.toLowerCase().equals(incomingLastname.toLowerCase())
+                    && existingUsername.toLowerCase().equals(incomingUsername.toLowerCase())
+                    && existingEmail.toLowerCase().equals(incomingEmail.toLowerCase())){
 
                     profileExists = true;
                     break;
@@ -528,7 +541,12 @@ public class DefaultIdentifier implements Identifier{
              */
             for(Field f: fields){
 
-                if(StringUtils.equalsIgnoreCase(f.getName(), "id")){
+                if(
+                        StringUtils.equalsIgnoreCase(f.getName(), "id") ||
+                        StringUtils.equalsIgnoreCase(f.getName(), "source") ||
+                        StringUtils.equalsIgnoreCase(f.getName(), "sourceId")
+
+                ){
                     continue;
                 }
 

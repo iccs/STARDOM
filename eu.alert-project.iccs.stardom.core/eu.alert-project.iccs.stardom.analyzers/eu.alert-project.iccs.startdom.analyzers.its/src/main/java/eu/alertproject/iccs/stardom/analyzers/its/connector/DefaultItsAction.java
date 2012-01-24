@@ -20,9 +20,6 @@ public class DefaultItsAction implements ItsAction{
     private Profile assigned;
     private Profile reporter;
 
-    private List<Profile> cc;
-
-
     @Override
     public Date getDate() {
         return date;
@@ -81,11 +78,4 @@ public class DefaultItsAction implements ItsAction{
         this.reporter = reporter;
     }
 
-    public List<Profile> getCc() {
-        return cc;
-    }
-
-    public void setCc(List<Profile> cc) {
-        this.cc = cc;
-    }
 }

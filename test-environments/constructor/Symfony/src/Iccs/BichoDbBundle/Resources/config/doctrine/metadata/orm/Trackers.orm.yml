@@ -1,0 +1,25 @@
+Trackers:
+  type: entity
+  table: trackers
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    url:
+      type: string
+      length: 255
+      fixed: false
+      nullable: false
+    type:
+      type: integer
+      unsigned: false
+      nullable: false
+    retrievedOn:
+      type: datetime
+      nullable: false
+      column: retrieved_on
+  lifecycleCallbacks: {  }

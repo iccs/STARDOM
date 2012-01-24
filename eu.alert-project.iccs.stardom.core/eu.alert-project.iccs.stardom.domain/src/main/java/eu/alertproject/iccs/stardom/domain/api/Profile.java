@@ -26,6 +26,9 @@ public class Profile implements SimpleBean{
     @Id
     @GeneratedValue(strategy= GenerationType.TABLE, generator="tseq")
     private Integer id;
+    
+    @Column(name="source_id")
+    private String sourceId = "none";
 
     @Column
     private String name;
@@ -40,17 +43,19 @@ public class Profile implements SimpleBean{
     private String email;
 
     @Column
-    private String source;
+    private String source = "none";
     
 
     public Profile() {
     }
 
     public Profile(String name, String lastname, String username, String email) {
+
         this.name = name;
         this.lastname = lastname;
         this.username = username;
         this.email = email;
+
     }
 
 
@@ -60,6 +65,14 @@ public class Profile implements SimpleBean{
 
     public void setId(Integer id){
         this.id = id;
+    }
+
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
     }
 
     public String getName() {

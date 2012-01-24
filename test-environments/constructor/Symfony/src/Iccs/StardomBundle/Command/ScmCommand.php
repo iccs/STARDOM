@@ -10,8 +10,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Bundle\DoctrineBundle\Command\DoctrineCommand;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputArgument;
-use Iccs\StardomBundle\Entity\Scmlog;
-use Iccs\StardomBundle\Entity\People;
+use Iccs\CvsanalyDbBundle\Entity\Scmlog;
+use Iccs\CvsanalyDbBundle\Entity\People;
 
     
 class ScmCommand extends DoctrineCommand{
@@ -45,8 +45,10 @@ class ScmCommand extends DoctrineCommand{
             $this->getContainer()->getParameter("stardom.stomp.password")
         );
 
+
+
         /* @var $entityManager \Doctrine\ORM\EntityManager */
-        $entityManager= $this->getEntityManager("default");
+        $entityManager= $this->getEntityManager("csvanaly");
 
         /*
          * Using the following method for optimization reasons
@@ -63,7 +65,7 @@ class ScmCommand extends DoctrineCommand{
 
 
         /** @var $query \Doctrine\ORM\Query */
-        $query = $entityManager->createQuery("SELECT l FROM StardomBundle:Scmlog l ORDER BY l.id");
+        $query = $entityManager->createQuery("SELECT l FROM CvsanalyDbBundle:Scmlog l ORDER BY l.id");
         $query->setFirstResult($input->getArgument("from"));
         $query->setMaxResults($input->getArgument("max"));
 
@@ -93,12 +95,12 @@ class ScmCommand extends DoctrineCommand{
 //
 //
             /** @var $person \Iccs\StardomBundle\Entity\People */
-            $person = $entityManager->find('StardomBundle:People', $commit['authorId']);
+            $person = $entityManager->find('CvsanalyDbBundle:People', $commit['authorId']);
 
             $matches=array();
             preg_match("/(\\w+)([ \\w]+)/",$person->getName(),$matches);
             $profile=array(
-                "id"=>"",
+                "sourceId"=>$commit['authorId'],
                 "name"=>$matches[1],
                 "lastname"=>(sizeof($matches) >=3 ? trim($matches[2]) :""),
                 "username"=>"",
@@ -112,7 +114,7 @@ class ScmCommand extends DoctrineCommand{
             unset($person);
 
             $action_query = $entityManager->createQuery(
-                                        "SELECT a FROM StardomBundle:Actions a  WHERE a.commitId=:id");
+                                        "SELECT a FROM CvsanalyDbBundle:Actions a  WHERE a.commitId=:id");
 
             $action_query->setParameter("id",$commit['commitId']);
 
@@ -126,7 +128,7 @@ class ScmCommand extends DoctrineCommand{
                 $entityManager->detach($action_row[0]);
 
                 //get the functions
-                $functions_query = $entityManager->createQuery("SELECT m FROM StardomBundle:FunctionsSrc m WHERE m.fileId=:file_id AND m.commitId=:commit_id");
+                $functions_query = $entityManager->createQuery("SELECT m FROM CvsanalyDbBundle:FunctionsSrc m WHERE m.fileId=:file_id AND m.commitId=:commit_id");
                 $functions_query->setParameter("file_id",$fileId);
                 $functions_query->setParameter("commit_id",$commit['commitId']);
 
@@ -141,7 +143,7 @@ class ScmCommand extends DoctrineCommand{
                 }
 
                 /** @var $file \Iccs\StardomBundle\Entity\Files */
-                $file = $entityManager->find("StardomBundle:Files",$fileId);
+                $file = $entityManager->find("CvsanalyDbBundle:Files",$fileId);
                 array_push($files,array(
                                        "name"=>$file->getFileName(),
                                        "functions"=>$func

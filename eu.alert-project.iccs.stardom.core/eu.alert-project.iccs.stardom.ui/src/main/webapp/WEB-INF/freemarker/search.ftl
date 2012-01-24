@@ -35,87 +35,163 @@ recommend sticking to 'spring' -->
         $(a).parent().remove();
     }
 
+    function searchQuantity(){
+        doSearch("#search-quantity-button","<@spring.url "/search/quantitative"/>/"+getSearchString());
+    }
 
-    function find(){
+    function searchName(){
+        doSearch("#search-name-button","<@spring.url "/search"/>/"+getSearchString());
+    }
 
-        if(ICCS.isLocked("#search-button")){
+
+    function toggleSelected(id){
+
+        if($("#merge-ids").has("#ck-"+id).size() > 0){
+            console.log("It has the id!!!");
+            $("#ck-"+id).remove();
+        }else{
+
+            $('<input>').attr({
+                type: 'hidden',
+                id: 'ck-'+id,
+                name: "ids",
+                value: id
+            }).appendTo('#merge-ids');
+        }
+
+        var visible = $("#merge-ids").has("#ck-"+id).size() > 0;
+
+        $("#merge-button").toggle(visible);
+
+    }
+
+
+    function doSearch(link,url){
+
+        if(ICCS.isLocked(link)){
             return;
         }
-        $("#search-loader").fadeIn();
 
-        var text = $("#search-text").val();
+        $("#merge-ids").html("");
+
+
+        lockLinks();
 
         $.getJSON(
-                "<@spring.url "/search"/>/"+text,
-                function(data){
+            url,
+            function(data){
 
-                    if(data.results == undefined){
-                        ICCS.unlockLink("#search-button","Search");
-                        return;
-                    }
-
-                    var ul = "";
-                    var counter =0;
-                    $.each(data.results,function(key,val){
-
-
-                        ul+='<div class="result ">' +
-                                "<label style='float: left'>"+key+"</label> " +
-                                "<a class='delete-link' style='float: right;clear:right;' href='#' onclick='remove(this);return false;'>Delete</a>" +
-                                '<div class="profiles">';
-                                
-                        ul+="<table class='profiles'>";
-
-                        $.each(val.profiles,function(pkey,pval){
-                            ul+="<tr> " +
-                                    "<td>"+pval.id+"</td>" +
-                                    "<td>"+pval.name+"</td>" +
-                                    "<td>"+pval.lastname+"</td>" +
-                                    "<td>"+pval.username+"</td>" +
-                                    "<td>"+pval.email+"</td>" +
-                                    "<td>"+pval.source+"</td>" +
-                                "</tr>";
-                            
-                        });
-                        ul+="</table>";
-
-                        ul+="<table class='metrics'>";
-
-                        $.each(val.metrics,function(pkey,pval){
-                            ul+="<tr> " +
-                                    "<td>"+pval.name+"</td>" +
-                                    "<td>"+pval.value+"</td>" +
-                                "</tr>";
-
-                        });
-
-                        ul+="</table>";
-
-                        ul+=    "</div>" +
-                            "</div>"
-
-
-                        counter++;
-                        if(counter % 2 == 0){
-//                            ul +='<div style="clear:both"></div>'
-                        }
-
-                    });
-                    
-                    $("#search-results").html(ul);
-
-
-
-                    $("#search-loader").fadeOut(function(){
-                        ICCS.unlockLink("#search-button","Search");
-                    });
+                if(data.results == undefined){
+                    unlockLinks();
+                    return;
                 }
+
+                var ul = "";
+                var counter =0;
+                $.each(data.results,function(key,val){
+
+                    ul+='<div class="result ">' +
+                            "<label style='float: left'>"+key+" ("+val.identity+")</label> " +
+                            "<a class='delete-link' style='float: right;clear:right;' href='#' onclick='remove(this);return false;'>Delete</a>" +
+                            "<input type='checkbox' onclick=\"toggleSelected('"+val.identity+"')\" />"+
+                            '<div class="profiles">';
+
+                    ul+="<table class='profiles'>";
+                    ul+="<thead><tr> " +
+                            "<th>Id</td>" +
+                            "<th>Name</td>" +
+                            "<th>Lastname</td>" +
+                            "<th>Username</td>" +
+                            "<th>Email</td>" +
+                            "<th>Source</td>" +
+                        "</tr></thead><tbody>";
+
+                    $.each(val.profiles,function(pkey,pval){
+                        ul+="<tr> " +
+                                "<td>"+pval.id+"</td>" +
+                                "<td>"+pval.name+"</td>" +
+                                "<td>"+pval.lastname+"</td>" +
+                                "<td>"+pval.username+"</td>" +
+                                "<td>"+pval.email+"</td>" +
+                                "<td>"+pval.source+"</td>" +
+                            "</tr>";
+
+                    });
+                    ul+="</tbody></table>";
+
+                    ul+="<table class='metrics'>";
+
+                    $.each(val.metrics,function(pkey,pval){
+                        ul+="<tr> " +
+                                "<td>"+pval.name+"</td>" +
+                                "<td>"+pval.value+"</td>" +
+                            "</tr>";
+
+                    });
+
+                    ul+="</table>" +
+                            "</div>" +
+                        "</div>";
+
+
+                    counter++;
+
+                });
+
+                $("#search-results").html(ul);
+
+                unlockLinks();
+            }
         );
 
+    }
+
+    function getSearchString(){
+        return $("#search-text").val();
+    }
+
+    function lockLinks(){
+
+        $("#search-loader").fadeIn();
+        ICCS.lockLink("#search-name-button","");
+        ICCS.lockLink("#search-quantity-button","");
+
+    }
+
+    function unlockLinks(){
+
+        $("#search-loader").fadeOut(function(){
+            ICCS.unlockLink("#search-name-button","Search By Name");
+            ICCS.unlockLink("#search-quantity-button","Search By Amount");
+
+        });
+
+    }
+
+    function mergeSelected(){
+
+        if(ICCS.isLocked("#merge-button")){
+            return;
+        }
+
+        ICCS.lockButton("#merge-button");
+        $("#search-loader").fadeIn();
 
 
-        ICCS.lockLink("#search-button","");
 
+        var formData = $("#merge-form").serialize();
+        console.log("Form data  "+formData);
+
+        $.post("<@spring.url "/search/merge"/>",
+                formData,
+                function(data){
+                    console.log("Done "+data);
+                    searchName();
+                }).complete(function() {
+                    $("#search-loader").fadeOut(function(){
+                        ICCS.unlockButton("#merge-button");
+                    });
+                });;
 
     }
 
@@ -125,9 +201,20 @@ recommend sticking to 'spring' -->
         <h1> Type your search query </h1>
         <div id="search-control">
             <input type="text" id="search-text">
-            <a id="search-button" href="#" onclick="find();return false;">Search</a>
+            <a id="search-name-button" class="search-button" href="#" onclick="searchName();return false;">Search By Name</a>
+            <a id="search-quantity-button" class="search-button" href="#" onclick="searchQuantity();return false;">Search By Amount</a>
             <@iccs.loader id="search"/>
         </div>
+        <div id="merge-control">
+            <form id="merge-form">
+                <p id="merge-ids">
+
+                </p>
+                <input style="display:none" id="merge-button" type="button" value="Merge" onclick="mergeSelected();"/>
+            </form>
+
+        </div>
+        <div style="clear:both"/>
         <div id="search-results">
             <h3>Type a search term and press ENTER</h3>
         </div>

@@ -1,0 +1,40 @@
+Iccs\CvsanalyDbBundle\Entity\Scmlog:
+  type: entity
+  table: scmlog
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    rev:
+      type: text
+      nullable: true
+    committerId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: committer_id
+    authorId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: author_id
+    date:
+      type: datetime
+      nullable: true
+    message:
+      type: text
+      nullable: true
+    composedRev:
+      type: boolean
+      nullable: true
+      column: composed_rev
+    repositoryId:
+      type: integer
+      unsigned: false
+      nullable: true
+      column: repository_id
+  lifecycleCallbacks: {  }

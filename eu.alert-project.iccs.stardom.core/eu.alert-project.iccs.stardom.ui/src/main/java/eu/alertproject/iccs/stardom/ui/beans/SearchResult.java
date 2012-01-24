@@ -16,22 +16,22 @@ import java.util.Set;
 public class SearchResult {
 
 
-    private String identity;
+    private Integer identity;
     private List<MetricResult> metrics;
     private Collection<Profile> profiles;
 
 
-    public SearchResult(String identity, List<MetricResult> metrics, Collection<Profile> profiles) {
+    public SearchResult(Integer identity, List<MetricResult> metrics, Collection<Profile> profiles) {
         this.identity = identity;
         this.metrics = metrics;
         this.profiles = profiles;
     }
 
-    public String getIdentity() {
+    public Integer getIdentity() {
         return identity;
     }
 
-    public void setIdentity(String identity) {
+    public void setIdentity(Integer identity) {
         this.identity = identity;
     }
 

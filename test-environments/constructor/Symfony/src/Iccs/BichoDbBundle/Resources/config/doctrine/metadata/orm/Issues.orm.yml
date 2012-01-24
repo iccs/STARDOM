@@ -1,0 +1,64 @@
+Issues:
+  type: entity
+  table: issues
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    trackerId:
+      type: integer
+      unsigned: false
+      nullable: false
+      column: tracker_id
+    issue:
+      type: string
+      length: 255
+      fixed: false
+      nullable: false
+    type:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    summary:
+      type: string
+      length: 255
+      fixed: false
+      nullable: false
+    description:
+      type: text
+      nullable: false
+    status:
+      type: string
+      length: 32
+      fixed: false
+      nullable: false
+    resolution:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    priority:
+      type: string
+      length: 32
+      fixed: false
+      nullable: true
+    submittedBy:
+      type: integer
+      unsigned: false
+      nullable: false
+      column: submitted_by
+    submittedOn:
+      type: datetime
+      nullable: false
+      column: submitted_on
+    assignedTo:
+      type: integer
+      unsigned: false
+      nullable: false
+      column: assigned_to
+  lifecycleCallbacks: {  }

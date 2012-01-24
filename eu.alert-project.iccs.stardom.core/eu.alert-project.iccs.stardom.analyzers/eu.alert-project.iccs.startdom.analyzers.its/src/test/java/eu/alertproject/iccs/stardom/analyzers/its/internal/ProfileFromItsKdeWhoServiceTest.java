@@ -27,17 +27,39 @@ public class ProfileFromItsKdeWhoServiceTest {
     @Test
     public void testSimpleName(){
 
-        Profile generate = service.generate("Fotis Paras", "fotisp mail ntua gr");
+        Profile p  = new Profile();
+        p.setName("Fotis Paras");
+        p.setEmail("fotisp mail ntua gr");
+        Profile generate = service.generate(p);
 
         Assert.assertNotNull(generate);
         Assert.assertEquals("Fotis",generate.getName());
         Assert.assertEquals("Paras",generate.getLastname());
         Assert.assertEquals("fotisp mail ntua gr",generate.getEmail());
 
-
-
     }
 
 
+    @Test
+    public void testNone(){
+
+        Profile p = new Profile();
+        p.setName("None");
+        p.setLastname("None");
+        p.setUsername("None");
+        p.setEmail("None");
+        p.setSource("None");
+        p.setSourceId("None");
+
+        Profile generate = service.generate(p);
+
+        Assert.assertNull(generate.getName());
+        Assert.assertNull(generate.getLastname());
+        Assert.assertNull(generate.getUsername());
+        Assert.assertNull(generate.getEmail());
+
+
+
+    }
 
 }

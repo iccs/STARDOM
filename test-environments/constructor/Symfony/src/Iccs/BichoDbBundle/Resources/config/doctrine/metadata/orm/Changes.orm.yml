@@ -1,0 +1,43 @@
+Changes:
+  type: entity
+  table: changes
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    issueId:
+      type: integer
+      unsigned: false
+      nullable: false
+      column: issue_id
+    field:
+      type: string
+      length: 64
+      fixed: false
+      nullable: false
+    oldValue:
+      type: string
+      length: 255
+      fixed: false
+      nullable: false
+      column: old_value
+    newValue:
+      type: string
+      length: 255
+      fixed: false
+      nullable: false
+      column: new_value
+    changedBy:
+      type: integer
+      unsigned: false
+      nullable: false
+      column: changed_by
+    changedOn:
+      type: datetime
+      nullable: false
+      column: changed_on
+  lifecycleCallbacks: {  }

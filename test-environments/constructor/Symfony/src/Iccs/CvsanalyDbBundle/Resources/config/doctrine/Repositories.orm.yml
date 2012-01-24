@@ -1,0 +1,27 @@
+Iccs\CvsanalyDbBundle\Entity\Repositories:
+  type: entity
+  table: repositories
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    uri:
+      type: string
+      length: 255
+      fixed: false
+      nullable: true
+    name:
+      type: string
+      length: 255
+      fixed: false
+      nullable: true
+    type:
+      type: string
+      length: 30
+      fixed: false
+      nullable: true
+  lifecycleCallbacks: {  }

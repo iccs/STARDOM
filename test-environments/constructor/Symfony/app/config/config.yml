@@ -34,17 +34,33 @@ assetic:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   %database_driver%
-        host:     %database_host%
-        dbname:   %database_name%
-        user:     %database_user%
-        password: %database_password%
-        charset:  UTF8
-
+        default_connection:       csvanaly
+        connections:
+            csvanaly:
+                driver:   %database_driver%
+                host:     %database_host%
+                dbname:   %database_name%
+                user:     %database_user%
+                password: %database_password%
+                charset:  UTF8
+            bicho:
+                driver:   %bicho_database_driver%
+                host:     %bicho_database_host%
+                dbname:   %bicho_database_name%
+                user:     %bicho_database_user%
+                password: %bicho_database_password%
+                charset:  UTF8
     orm:
-        auto_generate_proxy_classes: %kernel.debug%
-        auto_mapping: true
-
+        default_entity_manager:   csvanaly
+        entity_managers:
+            csvanaly:
+                connection:       csvanaly
+                mappings:
+                    CvsanalyDbBundle: ~
+            bicho:
+                connection:       bicho
+                mappings:
+                    BichoDbBundle: ~
 # Swiftmailer Configuration
 swiftmailer:
     transport: %mailer_transport%

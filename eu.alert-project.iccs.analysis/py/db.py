@@ -18,3 +18,5 @@ def get_cvsanaly_connection():
                             user = config.cvsanaly_db_user,
                             passwd = config.cvsanaly_db_password,
                             db = config.cvsanaly_db_name)
+
+

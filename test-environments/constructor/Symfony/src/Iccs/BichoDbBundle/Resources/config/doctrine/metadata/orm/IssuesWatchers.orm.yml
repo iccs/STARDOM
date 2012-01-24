@@ -1,0 +1,22 @@
+IssuesWatchers:
+  type: entity
+  table: issues_watchers
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    issueId:
+      type: integer
+      unsigned: false
+      nullable: false
+      column: issue_id
+    personId:
+      type: integer
+      unsigned: false
+      nullable: false
+      column: person_id
+  lifecycleCallbacks: {  }
