@@ -63,6 +63,7 @@ public class MailNewMailListener extends AbstractActiveMQListener{
             when = DateUtils.parseDate(filterDate, new String[]{"yyyy-MM-dd"});
         } catch (ParseException e) {
             //nothing
+            logger.error("void process() Couldn't parse filterDate = ({}) ",filterDate);
         }
 
 
