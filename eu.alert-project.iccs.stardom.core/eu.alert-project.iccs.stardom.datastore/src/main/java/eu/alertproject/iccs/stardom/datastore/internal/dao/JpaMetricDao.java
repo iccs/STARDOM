@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,8 +61,27 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
 
         Query query = getEntityManager().createQuery(
                 "SELECT m FROM " + aClass.getName() + " m " +
-                "WHERE m.identity.id = :id");
+                "WHERE m.identity.id = :id " +
+                "ORDER BY m.createdAt DESC");
         query.setParameter("id",identity.getId());
+
+        return query.getResultList();
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public <T extends Metric> List<T> getForIdentityAfer(Identity identity, Date date, Class<T> aClass) {
+        
+        Query query = getEntityManager().createQuery(
+                "SELECT m FROM " + aClass.getName() + " m " +
+                "WHERE m.identity.id = :id " +
+                "AND m.createdAt > :date " +
+                "ORDER BY m.createdAt ASC");
+
+        query.setParameter("id",identity.getId());
+        query.setParameter("date",date);
+
 
         return query.getResultList();
 

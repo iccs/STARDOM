@@ -13,7 +13,7 @@ def get_connection():
                                 port = 8889,
                                 user = 'alert',
                                 passwd = '1234',
-                                db  = 'alert_work_after_2010')
+                                db  = 'alert_work_after_2003')
     return conn
 
 

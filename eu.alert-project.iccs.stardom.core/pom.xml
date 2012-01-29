@@ -39,7 +39,7 @@
             </activation>
             <properties>
                 <db.port>8889</db.port>
-                <filterDate>2010-01-01</filterDate>
+                <filterDate>1970-01-01</filterDate>
             </properties>
         </profile>
 

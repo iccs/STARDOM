@@ -2,8 +2,11 @@ package eu.alertproject.iccs.stardom.datastore.api.dao;
 
 import eu.alertproject.iccs.stardom.domain.api.metrics.MailingListActivityMetric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.MailingListTemporalMetric;
+import eu.alertproject.iccs.stardom.domain.api.metrics.ScmActivityMetric;
 import org.joda.time.MutableDateTime;
 import org.junit.Test;
+
+import java.text.ParseException;
 
 /**
  * User: fotis
@@ -89,6 +92,11 @@ public class MailingListMetricDaoTest extends MetricDaoTest{
                 MailingListTemporalMetric.class,
                 mdt.toDate()
         );
+    }
+
+    @Test
+    public void findAfterDate() throws ParseException {
+        this.assertAfterDate(1, MailingListActivityMetric.class);
     }
 
 }

@@ -1,6 +1,8 @@
 package eu.alertproject.iccs.stardom.analyzers.mailing.constructor;
 
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListAction;
+import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
+import eu.alertproject.iccs.stardom.constructor.api.AbstractQuantitativeHistoryAnalyzer;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.metrics.MailingListActivityMetric;
 import org.slf4j.Logger;
@@ -13,30 +15,19 @@ import org.springframework.transaction.annotation.Transactional;
  * Time: 22:57
  */
 
-public class MailingListActivityHistoryAnalyzer extends AbstractMailingListAnalyzer {
+public class MailingListActivityHistoryAnalyzer extends AbstractQuantitativeHistoryAnalyzer<MailingListAction,MailingListActivityMetric> {
 
     private Logger logger = LoggerFactory.getLogger(MailingListActivityHistoryAnalyzer.class);
 
-    @Override
-    @Transactional
-    public void analyze(Identity identity, MailingListAction action) {
-
-        if(identity == null ){
-            return;
-        }
-
-        MailingListActivityMetric sqm = getMetricDao().<MailingListActivityMetric>getMostRecentMetric(identity, MailingListActivityMetric.class);
-
-        MailingListActivityMetric newMetric = new MailingListActivityMetric();
-        newMetric.setCreatedAt(action.getDate());
-        newMetric.setIdentity(identity);
-        newMetric.setQuantity(sqm == null ? 1 : sqm.getQuantity());
-
-        newMetric.increaseQuantity();
-
-        newMetric = (MailingListActivityMetric) getMetricDao().insert(newMetric);
-
-        logger.trace("void analyze() {} ", newMetric);
-
+    public MailingListActivityHistoryAnalyzer() {
+        super(MailingListActivityMetric.class);
     }
+
+    @Override
+    public boolean canHandle(ConnectorAction action) {
+        return action instanceof MailingListAction;
+    }
+
+
+
 }

@@ -26,7 +26,4 @@ public interface ScmAction extends ConnectorAction {
 
     enum RepositoryType{Git,Svn,Cvs}
 
-
-    public Date getDate();
-
 }

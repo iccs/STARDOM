@@ -12,6 +12,4 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public interface MailingListAction extends ConnectorAction {
-
-    public Date getDate();
 }
