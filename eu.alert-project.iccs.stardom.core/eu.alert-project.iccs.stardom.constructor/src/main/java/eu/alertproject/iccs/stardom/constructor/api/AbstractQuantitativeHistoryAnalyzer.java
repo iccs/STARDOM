@@ -9,9 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PreDestroy;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * User: fotis
@@ -25,13 +27,23 @@ public abstract class AbstractQuantitativeHistoryAnalyzer<T extends ConnectorAct
     @Autowired
     private MetricDao metricDao;
     private final Class<E> clazz;
+    private ReentrantLock lock;
 
     protected AbstractQuantitativeHistoryAnalyzer(Class<E> clazz) {
         this.clazz = clazz;
+        this.lock = new ReentrantLock();
     }
 
     public MetricDao getMetricDao() {
         return metricDao;
+    }
+
+    @PreDestroy
+    public void lock(){
+        if(lock != null){
+            lock.unlock();
+            lock =null;
+        }
     }
 
     @Override
@@ -41,6 +53,9 @@ public abstract class AbstractQuantitativeHistoryAnalyzer<T extends ConnectorAct
         if(identity == null ){
             return;
         }
+
+        lock.lock();
+
         try{
 
             List<E> forIdentity = getMetricDao().getForIdentityAfer(identity, action.getDate(), getMetricClass());
@@ -92,8 +107,11 @@ public abstract class AbstractQuantitativeHistoryAnalyzer<T extends ConnectorAct
             logger.warn("Couldn't work with reflection {}",e);
         } catch (IllegalAccessException e) {
             logger.warn("Couldn't work with reflection {}",e);
-        }
+        }finally {
 
+            lock.unlock();
+
+        }
 
     }
 

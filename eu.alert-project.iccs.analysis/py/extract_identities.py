@@ -13,7 +13,7 @@ def get_connection():
                                 port = 8889,
                                 user = 'alert',
                                 passwd = '1234',
-                                db  = 'alert_work')
+                                db  = 'alert_historical')
     return conn
 
 
@@ -32,17 +32,41 @@ def create_queries():
     cursor = conn.cursor()
 
     identities = [
-        1,
-        74,
+        66,
+        3015,
+        2580,
+        835,
+        218 ,
+        638,
+        143,
+        3358,
+        884,
+        2491,
+        241,
+        2999,
+        3360,
+        2528,
         87,
-        124,
-        532,
-        2893
+        2727,
+        68,
+        65,
+        385,
+        339,
+        363,
+        1265,
+        100,
+        2355,
+        97,
+        200,
+        1421,
+        3245,
+        2073
+
     ]
 
 
-    identity_id=1
-    profile_id=1
+    identity_id=7
+    profile_id=40
 
     for value in identities:
 

@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * User: fotis
@@ -28,12 +30,14 @@ public class ScmApiIntroducedHistoryAnalyzer extends AbstractQuantitativeHistory
  
     @Autowired
     PathSignatureHistoryDao pathSignatureHistoryDao;
+    private ReentrantLock reentrantLock;
 
 
     public ScmApiIntroducedHistoryAnalyzer() {
+ 
         super(ScmApiIntroducedMetric.class);
-    }
 
+    }
 
     /**
      * The reason we are overriding this is because there is extra logic to the
@@ -45,6 +49,7 @@ public class ScmApiIntroducedHistoryAnalyzer extends AbstractQuantitativeHistory
     @Override
     @Transactional
     public void analyze(Identity identity, ScmAction action) {
+
 
         if(identity ==null){
             return;
