@@ -13,7 +13,7 @@ def get_connection():
                                 port = 8889,
                                 user = 'alert',
                                 passwd = '1234',
-                                db  = 'alert_dev')
+                                db  = 'alert_historical')
     return conn
 
 
@@ -62,7 +62,8 @@ def get_name_and_lastname(id):
     conn.close()
 
     print "Found %s = %s " % (ret,str(id))
-    return ret
+    return "%s (%s)" % (ret,str(id))
+
 
 
 #
@@ -74,14 +75,6 @@ def create_rankings(file):
     conn = get_connection()
     cursor = conn.cursor()
 
-#    identities = [
-#        1,
-#        2,
-#        3,
-#        4,
-#        5,
-#        6
-#    ]
     identities = []
 
     for i in range(1,32):
@@ -104,25 +97,27 @@ def create_rankings(file):
     titles = ["Activity"]
     events = {}
 
-    for value in tables:
+    for metric_name in tables:
 
-        print "Looking for metric %s " % value
+        print "Looking for metric %s " % metric_name
 
         current_date = start_date
+
+
 
         while current_date <= end_date:
             if not current_date in titles:
                 titles.extend([current_date])
 
-            query = "select COUNT(*) from %s join metric using(id) where DATE(created_at) >= '%s-01-01' " % (value, current_date)
+            query = "select COUNT(*) from %s join metric using(id) where DATE(created_at) >= '%s-01-01' " % (metric_name, current_date)
 
             cursor.execute(query)
             result=cursor.fetchone()
 
-            if not events.has_key(value) :
-                events[value] = []
+            if not events.has_key(metric_name) :
+                events[metric_name] = []
 
-            events[value].extend([str(result[0])])
+            events[metric_name].extend([str(result[0])])
 
 
 
@@ -130,30 +125,32 @@ def create_rankings(file):
             ranknigs_query = """
             select identity_id, count(id) as activity
             from %s join metric using(id)
-            WHERE DATE(created_at) >='%s-01-01' group by identity_id order by activity DESC;""" % (value,current_date)
+            WHERE DATE(created_at) >='%s-01-01' group by identity_id order by activity DESC;""" % (metric_name,current_date)
 
 
             cursor.execute(ranknigs_query)
-            results = cursor.fetchall()
+            metrics_values = cursor.fetchall()
 
             ranking = 1
-            for row in results:
+            for metric in metrics_values:
 
-                identity_id = row[0]
-                metric_value = row[1]
+                identity_id = metric[0]
+                activity = metric[1]
 
+                #look for the developer ranking
                 if identity_id in identities:
-                    if not rankings.has_key(value):
-                        rankings[value] = {}
+                    if not rankings.has_key(metric_name):
+                        rankings[metric_name] = {}
 
-                    if not rankings[value].has_key(identity_id):
-                        rankings[value][identity_id] = []
+                    if not rankings[metric_name].has_key(identity_id):
+                        rankings[metric_name][identity_id] = []
 
-                    rankings[value][identity_id].extend([ranking])
+                    rankings[metric_name][identity_id].extend([ranking])
 
                 ranking += 1
 
             current_date +=1
+
 
 
     ## write to resulting string
@@ -162,8 +159,8 @@ def create_rankings(file):
 
     spamWriter.writerow(titles)
 
-    for key,value in events.iteritems():
-        spamWriter.writerow([key]+value)
+    for key,metric_name in events.iteritems():
+        spamWriter.writerow([key]+metric_name)
 
     for i in range(1,5):
         spamWriter.writerow([])
