@@ -29,6 +29,9 @@
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+        </property>
         <property name="jpaVendorAdapter">
     		<bean
                 class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
@@ -111,8 +114,6 @@
 <!--  The documentation specified that this will inject the the persistence unit into the class -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
-
-
 
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

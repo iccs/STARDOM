@@ -147,6 +147,7 @@ def create_rankings(file):
 
                     rankings[metric_name][identity_id].extend([ranking])
 
+
                 ranking += 1
 
             current_date +=1

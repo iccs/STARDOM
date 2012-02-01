@@ -7,4 +7,5 @@
         >
 
     <bean id="scmActivityHistoryAnalyzer" class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityHistoryAnalyzer"/>
+
 </beans>

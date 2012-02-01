@@ -66,14 +66,10 @@ def create_rankings(file):
     conn = get_connection()
     cursor = conn.cursor()
 
-    identities = [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-    ]
+    identities = []
+
+    for i in range(1,32):
+        identities.append(i);
 
     tables = [
         "scm_activity_metric",

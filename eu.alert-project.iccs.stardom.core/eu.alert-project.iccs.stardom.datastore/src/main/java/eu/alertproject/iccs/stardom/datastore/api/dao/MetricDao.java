@@ -22,8 +22,6 @@ public interface MetricDao extends CommonDao<Metric>{
 
 
     @SuppressWarnings({"unchecked"})
-    @Transactional(readOnly = true)
     <T extends MetricQuantitative> List<T> findByQuantity(int quantity, Class<T> aClass);
-    @Transactional(readOnly = true)
     <T extends Metric> List<T> getForIdentityAfer(Identity identity, Date date, Class<T> aClass);
 }
