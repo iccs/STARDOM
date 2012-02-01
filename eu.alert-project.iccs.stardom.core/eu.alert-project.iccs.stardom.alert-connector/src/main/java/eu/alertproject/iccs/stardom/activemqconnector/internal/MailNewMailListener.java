@@ -57,7 +57,7 @@ public class MailNewMailListener extends AbstractActiveMQListener{
 
 
         String filterDate = systemProperties.getProperty("analyzers.filterDate");
-
+	logger.trace("System property filter date = ({})",filterDate);
         Date when = null;
         try {
             when = DateUtils.parseDate(filterDate, new String[]{"yyyy-MM-dd"});
@@ -66,6 +66,7 @@ public class MailNewMailListener extends AbstractActiveMQListener{
             logger.error("void process() Couldn't parse filterDate = ({}) ",filterDate);
         }
 
+	logger.trace("Testing against date = ({})",when);
 
         if (when == null || ( context.getAction().getDate() != null && context.getAction().getDate().before(when) ) ) {
             logger.trace("void action() Ignoring action because date {} is before {}", context.getAction().getDate(), when);

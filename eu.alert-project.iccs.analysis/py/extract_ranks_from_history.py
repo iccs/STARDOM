@@ -13,7 +13,7 @@ def get_connection():
                                 port = 8889,
                                 user = 'alert',
                                 passwd = '1234',
-                                db  = 'alert_historical')
+                                db  = 'alert_dev')
     return conn
 
 
@@ -25,11 +25,17 @@ def get_connection():
 #
 def get_name_and_lastname(id):
 
+    print "Looking for name by id = %s " % str(id)
     conn = get_connection()
 
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM identity_profile_view WHERE id=%s",id)
+    name_query = "SELECT * FROM identity_profile_view WHERE id=%s" % id
+
+    cursor.execute(name_query)
+
+    print name_query
+
     results= cursor.fetchall()
 
     ret = ''
@@ -54,6 +60,8 @@ def get_name_and_lastname(id):
             ret = email
 
     conn.close()
+
+    print "Found %s = %s " % (ret,str(id))
     return ret
 
 
@@ -66,14 +74,18 @@ def create_rankings(file):
     conn = get_connection()
     cursor = conn.cursor()
 
-    identities = [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-    ]
+#    identities = [
+#        1,
+#        2,
+#        3,
+#        4,
+#        5,
+#        6
+#    ]
+    identities = []
+
+    for i in range(1,32):
+        identities.append(i);
 
     tables = [
         "scm_activity_metric",
@@ -160,6 +172,7 @@ def create_rankings(file):
     for metric_label, metric_per_identity in rankings.iteritems():
         spamWriter.writerow([metric_label])
         for id, ranks in metric_per_identity.iteritems():
+
             spamWriter.writerow([get_name_and_lastname(id)]+ranks)
 
         for i in range(1,5):
