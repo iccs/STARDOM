@@ -32,6 +32,13 @@
             <artifactId>connector</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <version>${project.version}</version>
+            <artifactId>testdata</artifactId>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 

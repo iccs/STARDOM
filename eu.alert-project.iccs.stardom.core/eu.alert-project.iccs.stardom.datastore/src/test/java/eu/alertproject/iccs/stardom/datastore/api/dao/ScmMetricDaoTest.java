@@ -7,6 +7,8 @@ import eu.alertproject.iccs.stardom.domain.api.metrics.ScmTemporalMetric;
 import org.joda.time.MutableDateTime;
 import org.junit.Test;
 
+import java.text.ParseException;
+
 /**
  * User: fotis
  * Date: 17/07/11
@@ -43,7 +45,7 @@ public class ScmMetricDaoTest extends MetricDaoTest {
 
         this.<ScmActivityMetric>assertUpdateQuantitativeMetric(3,
                 ScmActivityMetric.class,
-                10
+                15
         );
 
     }
@@ -95,16 +97,16 @@ public class ScmMetricDaoTest extends MetricDaoTest {
     @Test
     public void findScmApiIntroducedMetric(){
        this.<ScmApiIntroducedMetric>assertQuantitativeMetric(
-               2,
+               3,
                ScmApiIntroducedMetric.class,
-               22,
-               "2002-06-17");
+               10,
+               "2002-06-20");
     }
 
     @Test
     public void noFindScmApiIntroducedMetric(){
         this.<ScmApiIntroducedMetric>noFindMetric(
-                4,
+                2,
                 ScmApiIntroducedMetric.class);
     }
 
@@ -170,5 +172,12 @@ public class ScmMetricDaoTest extends MetricDaoTest {
 
     }
 
+
+    @Test
+    public void findAfterDate() throws ParseException {
+
+        this.assertAfterDate(1, ScmActivityMetric.class);
+
+    }
 
 }

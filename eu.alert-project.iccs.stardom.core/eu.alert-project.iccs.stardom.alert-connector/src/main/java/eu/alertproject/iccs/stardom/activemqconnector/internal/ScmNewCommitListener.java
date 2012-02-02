@@ -10,6 +10,7 @@ import eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityAnalyze
 import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.connector.api.Subscriber;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,9 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -30,10 +34,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component("scmNewCommitListener")
 public class ScmNewCommitListener extends AbstractActiveMQListener{
 
+    @Autowired
+    Properties systemProperties;
+
     private Logger logger = LoggerFactory.getLogger(ScmNewCommitListener.class);
 
     @Override
     public void process(Message message) throws IOException, JMSException {
+
+
 
         ScmConnectorContext context =null;
         ObjectMapper mapper = new ObjectMapper();
@@ -45,8 +54,32 @@ public class ScmNewCommitListener extends AbstractActiveMQListener{
                 IOUtils.toInputStream(text)
                 ,ScmConnectorContext.class);
 
+
+        String filterDate = systemProperties.getProperty("analyzers.filterDate");
+
+
+        Date when = null;
+        try {
+            when = DateUtils.parseDate(filterDate, new String[]{"yyyy-MM-dd"});
+        } catch (ParseException e) {
+            //nothing
+        }
+
+
+        if (when != null && context.getAction().getDate().before(when)) {
+            logger.trace("void action() Ignoring action because date {} is before {}", context.getAction().getDate(), when);
+            return;
+        }
+
+        //fix profile
+
+
+
+        fixProfile(context);
         ScmEvent scmEvent = new ScmEvent(this,context);
         logger.trace("void onMessage() {} ",scmEvent);
+
+
 
         Bus.publish(scmEvent);
 

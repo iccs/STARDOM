@@ -5,13 +5,18 @@ import eu.alertproject.iccs.stardom.domain.api.Metric;
 import eu.alertproject.iccs.stardom.domain.api.MetricQuantitative;
 import eu.alertproject.iccs.stardom.domain.api.MetricTemporal;
 import eu.alertproject.iccs.stardom.testdata.api.SpringDbUnitJpaTest;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.util.*;
 
 /**
  * User: fotis
@@ -19,6 +24,8 @@ import java.util.Date;
  * Time: 14:21
  */
 public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
+
+    private Logger logger = LoggerFactory.getLogger(MetricDaoTest.class);
 
     @Autowired
     MetricDao metricDao;
@@ -194,5 +201,68 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
         T forIdentity = metricDao.getMostRecentMetric(identity, metricClass);
         Assert.assertNull(forIdentity);
     }
+
+
+    protected final <T extends MetricQuantitative> void assertAfterDate(Integer identityId, Class<T> metricClass) throws ParseException {
+
+
+        Identity byId = identityDao.findById(identityId);
+        
+        String[] dates = new String[]{
+                "2028-01-01",
+                "2028-01-02",
+                "2028-01-03",
+                "2028-01-04"};
+        
+        int quantity = 1;
+        for(String date : dates){
+            metricDao.insert(this.createMetric(metricClass,byId,date,quantity));
+            quantity++;
+        }
+
+        List<T> forIdentityAfer = metricDao.getForIdentityAfer(byId, DateUtils.parseDate("2028-01-02", new String[]{"yyyy-MM-dd"}), metricClass);
+        Assert.assertNotNull(forIdentityAfer);
+        Assert.assertEquals(2, forIdentityAfer.size(),0);
+
+        Iterator<T> iterator = forIdentityAfer.iterator();
+        quantity = 3;
+        for(int i =2; i < dates.length ; i++){
+
+            T next = metricClass.cast(iterator.next());
+            Assert.assertEquals(DateUtils.parseDate(dates[i], new String[]{"yyyy-MM-dd"}), next.getCreatedAt());
+            Assert.assertEquals(quantity, next.getQuantity(),0);
+            quantity++;
+        }
+
+    }
+    
+    
+    private <T extends MetricQuantitative>  T createMetric(Class<T> metricClass, Identity identity, String date,Integer quantity){
+        //insert a couple of metrics
+        T ret = null;
+        try {
+
+            Constructor<T> constructor = metricClass.getConstructor();
+            ret = constructor.newInstance();
+            ret.setCreatedAt(DateUtils.parseDate(date, new String[]{"yyyy-MM-dd"}));
+            ret.setIdentity(identity);
+            ret.setQuantity(quantity);
+
+        } catch (NoSuchMethodException e) {
+            logger.trace("T createMetric() ", e);
+        } catch (InvocationTargetException e) {
+            logger.trace("T createMetric() ",e);
+        } catch (InstantiationException e) {
+            logger.trace("T createMetric() ", e);
+        } catch (IllegalAccessException e) {
+            logger.trace("T createMetric() ", e);
+        } catch (ParseException e) {
+            logger.trace("T createMetric() ", e);
+        }
+        
+        return ret;
+        
+    }
+
 
 }

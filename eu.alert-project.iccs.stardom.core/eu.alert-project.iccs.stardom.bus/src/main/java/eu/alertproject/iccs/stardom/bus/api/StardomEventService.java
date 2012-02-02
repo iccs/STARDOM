@@ -35,7 +35,12 @@ public class StardomEventService extends ThreadSafeEventService implements Smart
    protected void publish(final Object event, final String topic, final Object eventObj,
            final List subscribers, final List vetoSubscribers, final StackTraceElement[] callingStack) {
 
-       StardomEventService.super.publish(event, topic, eventObj, subscribers, vetoSubscribers, callingStack);
+       try{
+           StardomEventService.super.publish(event, topic, eventObj, subscribers, vetoSubscribers, callingStack);
+       }catch (Exception e){
+           logger.warn("A exception occured on your event handle ",e);
+       }
+
 //       threadPool.submit(new Runnable() {
 //           @Override
 //           public void run() {

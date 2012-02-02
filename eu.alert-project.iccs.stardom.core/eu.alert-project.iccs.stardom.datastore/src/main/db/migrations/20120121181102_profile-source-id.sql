@@ -1,0 +1,1 @@
+alter table profile add column source_id varchar(100) not null default 'none';

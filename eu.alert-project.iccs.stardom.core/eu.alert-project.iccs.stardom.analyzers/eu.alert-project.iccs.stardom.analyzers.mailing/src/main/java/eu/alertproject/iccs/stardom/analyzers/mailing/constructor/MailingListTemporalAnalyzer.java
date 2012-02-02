@@ -1,40 +1,23 @@
 package eu.alertproject.iccs.stardom.analyzers.mailing.constructor;
 
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListAction;
-import eu.alertproject.iccs.stardom.domain.api.Identity;
+import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
+import eu.alertproject.iccs.stardom.constructor.api.AbstractTemporalAnalyzer;
 import eu.alertproject.iccs.stardom.domain.api.metrics.MailingListTemporalMetric;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
 
 /**
  * User: fotis
  * Date: 18/07/11
  * Time: 09:37
  */
-public class MailingListTemporalAnalyzer extends AbstractMailingListAnalyzer{
-    private Logger logger = LoggerFactory.getLogger(MailingListTemporalAnalyzer.class);
+public class MailingListTemporalAnalyzer extends AbstractTemporalAnalyzer<MailingListAction,MailingListTemporalMetric> {
+
+    public MailingListTemporalAnalyzer() {
+        super(MailingListTemporalMetric.class);
+    }
 
     @Override
-    @Transactional
-    public void analyze(Identity identity, MailingListAction action) {
-
-        if(identity == null){
-            return;
-        }
-
-
-        MailingListTemporalMetric newMetrics  = new MailingListTemporalMetric();
-        newMetrics.setIdentity(identity);
-        newMetrics.setCreatedAt(new Date());
-        newMetrics.setTemporal(action.getDate());
-
-
-        MailingListTemporalMetric metric = (MailingListTemporalMetric) getMetricDao().insert(newMetrics);
-
-        logger.trace("void analyze() {} ", metric);
-
+    public boolean canHandle(ConnectorAction action) {
+        return action instanceof MailingListAction;
     }
 }

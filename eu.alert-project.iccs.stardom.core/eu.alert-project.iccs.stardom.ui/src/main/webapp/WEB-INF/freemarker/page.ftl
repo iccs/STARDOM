@@ -14,6 +14,8 @@ recommend sticking to 'spring' -->
     <script src="<@spring.url "/static/js/stardom.js" />" type="text/javascript"></script>
     <script src="<@spring.url "/static/js/jquery-1.6.1-min.js"/>" type="text/javascript"></script>
     <script src="<@spring.url "/static/js/jquery.timers-1.2.js"/>" type="text/javascript"></script>
+    <script src="<@spring.url "/static/js/jquery-ui-1.8.17.custom.min.js"/>" type="text/javascript"></script>
+    <script src="<@spring.url "/static/js/slimScroll.min.js"/>" type="text/javascript"></script>
 </head>
 <body>
 <script type="text/javascript">
@@ -57,15 +59,12 @@ recommend sticking to 'spring' -->
             getEvents();
         });
 
-        <#--$('#log').everyTime(timer,'logs',function(){-->
 
-            <#--$('#logs-loader').fadeIn();-->
-            <#--var url = '<@spring.url "/log/dump"/>';-->
-            <#--$.get(url,function(data){-->
-                <#--$("#log").html(data);-->
-                <#--$('#logs-loader').fadeOut();-->
-            <#--});-->
-        <#--});-->
+        $('#events-content').slimScroll({
+            position: 'left',
+            height: '150px',
+            railVisible: true
+        });
 
         getEvents();
     });
@@ -82,7 +81,7 @@ recommend sticking to 'spring' -->
 
             ul += "</ul>";
 
-            $("#events-counter").html(ul);
+            $("#events-content").html(ul);
             $('#events-loader').fadeOut();
 
         });
@@ -93,9 +92,11 @@ recommend sticking to 'spring' -->
 
         <div id="events-processed" >
             <h2>Events Processed <@iccs.loader id="events"/></h2>
-            <div style="clear:both;" id="events-counter"></div>
+            <div style="clear:both;" id="events-counter">
+                <div id="events-content"></div>
+            </div>
         </div>
-        <div style="clear:both"/>
+        <div style="clear:both"></div>
         <#include "ui/prevnext.ftl"/>
         <div id="view"></div>
 

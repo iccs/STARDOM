@@ -4,6 +4,7 @@ import com.existanze.libraries.orm.dao.JpaCommonDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Metric;
+import eu.alertproject.iccs.stardom.domain.api.MetricQuantitative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,8 +61,27 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
 
         Query query = getEntityManager().createQuery(
                 "SELECT m FROM " + aClass.getName() + " m " +
-                "WHERE m.identity.id = :id");
+                "WHERE m.identity.id = :id " +
+                "ORDER BY m.createdAt DESC");
         query.setParameter("id",identity.getId());
+
+        return query.getResultList();
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public <T extends Metric> List<T> getForIdentityAfer(Identity identity, Date date, Class<T> aClass) {
+        
+        Query query = getEntityManager().createQuery(
+                "SELECT m FROM " + aClass.getName() + " m " +
+                "WHERE m.identity.id = :id " +
+                "AND m.createdAt > :date " +
+                "ORDER BY m.createdAt ASC");
+
+        query.setParameter("id",identity.getId());
+        query.setParameter("date",date);
+
 
         return query.getResultList();
 
@@ -91,6 +112,28 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
         }
 
         return ret;
+
+    }
+
+    /**
+     * The method returns a metrics for the specified {@link Metric} subclass
+     *
+     * @param quantity The amount the metric has to match or be greater than in order to be eligible
+     * @param aClass A subclass of metric
+     * @return The metric if it exists, null otherwise
+     */
+    @SuppressWarnings({"unchecked"})
+    @Override
+    @Transactional(readOnly = true)
+    public <T extends MetricQuantitative> List<T> findByQuantity(int quantity, Class<T> aClass) {
+
+
+        Query query = getEntityManager().createQuery(
+                "SELECT m FROM " + aClass.getName() + " m " +
+                "WHERE m.quantity >= :quantity");
+        query.setParameter("quantity",quantity);
+
+        return query.getResultList();
 
     }
 }

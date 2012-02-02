@@ -1,0 +1,26 @@
+RelatedTo:
+  type: entity
+  table: related_to
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    issueId:
+      type: integer
+      unsigned: false
+      nullable: false
+      column: issue_id
+    relatedTo:
+      type: integer
+      unsigned: false
+      nullable: false
+      column: related_to
+    type:
+      type: integer
+      unsigned: false
+      nullable: false
+  lifecycleCallbacks: {  }

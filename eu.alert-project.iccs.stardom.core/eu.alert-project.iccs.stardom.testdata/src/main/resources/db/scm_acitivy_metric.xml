@@ -32,7 +32,7 @@
 
     <metric_quantitative
         id="3"
-        quantity="0"/>
+        quantity="10"/>
 
     <scm_activity_metric
         id="3"/>

@@ -1,5 +1,7 @@
 package eu.alertproject.iccs.stardom.connector.api;
 
+import java.util.Date;
+
 /**
  * Created by IntelliJ IDEA.
  * User: fotis
@@ -8,4 +10,5 @@ package eu.alertproject.iccs.stardom.connector.api;
  * To change this template use File | Settings | File Templates.
  */
 public interface ConnectorAction {
+    Date getDate();
 }

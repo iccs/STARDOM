@@ -1,6 +1,8 @@
 package eu.alertproject.iccs.stardom.analyzers.its.constructor;
 
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsAction;
+import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
+import eu.alertproject.iccs.stardom.constructor.api.AbstractTemporalAnalyzer;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ItsTemporalMetric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ScmTemporalMetric;
@@ -15,27 +17,14 @@ import java.util.Date;
  * Date: 18/07/11
  * Time: 09:37
  */
-public class ItsTemporalAnalyzer extends AbstractItsAnalyzer{
+public class ItsTemporalAnalyzer extends AbstractTemporalAnalyzer<ItsAction,ItsTemporalMetric>{
 
-    private Logger logger = LoggerFactory.getLogger(ItsTemporalAnalyzer.class);
+    public ItsTemporalAnalyzer() {
+        super(ItsTemporalMetric.class);
+    }
 
     @Override
-    @Transactional
-    public void analyze(Identity identity, ItsAction action) {
-
-        if(identity == null){
-            return;
-        }
-
-
-        ItsTemporalMetric newMetrics  = new ItsTemporalMetric();
-        newMetrics.setIdentity(identity);
-        newMetrics.setCreatedAt(new Date());
-        newMetrics.setTemporal(action.getDate());
-
-        ItsTemporalMetric metric = (ItsTemporalMetric) getMetricDao().insert(newMetrics);
-
-        logger.trace("void analyze() {} ", metric);
-
+    public boolean canHandle(ConnectorAction action) {
+        return action instanceof ItsAction;
     }
 }

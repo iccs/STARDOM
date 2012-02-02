@@ -1,0 +1,22 @@
+SupportedTrackers:
+  type: entity
+  table: supported_trackers
+  fields:
+    id:
+      id: true
+      type: integer
+      unsigned: false
+      nullable: false
+      generator:
+        strategy: IDENTITY
+    name:
+      type: string
+      length: 64
+      fixed: false
+      nullable: false
+    version:
+      type: string
+      length: 64
+      fixed: false
+      nullable: false
+  lifecycleCallbacks: {  }

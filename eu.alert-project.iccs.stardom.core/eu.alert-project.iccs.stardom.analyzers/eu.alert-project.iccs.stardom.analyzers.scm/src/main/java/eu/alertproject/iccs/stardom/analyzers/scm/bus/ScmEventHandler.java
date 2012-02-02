@@ -40,9 +40,6 @@ public class ScmEventHandler {
     private Logger logger = LoggerFactory.getLogger(ScmEventHandler.class);
 
 
-    private LinkedBlockingDeque<ScmConnectorContext> queue;
-    private AtomicBoolean run = new AtomicBoolean(Boolean.TRUE);
-
 
     @Autowired
     Identifier identifier;
@@ -55,77 +52,6 @@ public class ScmEventHandler {
 
     @Autowired
     Analyzers analyzers;
-
-    @PostConstruct
-    protected void start(){
-
-        queue=new LinkedBlockingDeque<ScmConnectorContext>();
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                while(run.get()){
-
-                    try {
-                        Thread.sleep(500);
-
-                        List<ScmConnectorContext> events  = new ArrayList<ScmConnectorContext>();
-                        int i = queue.drainTo(events, 10);
-                        if(i >0){
-
-                            logger.trace("void run() ************ Flushing {} events ************",i);
-                            Iterator<ScmConnectorContext> iterator = events.iterator();
-                            while(iterator.hasNext()){
-
-                                ScmConnectorContext context = iterator.next();
-
-                                //do your magic
-                                Identity identity = identifier.find(context.getProfile(),"scm");
-                                logger.trace("void event() Identity {}",identity.getUuid());
-
-
-                                logger.debug("Memory {}/{} ",Runtime.getRuntime().freeMemory(),Runtime.getRuntime().totalMemory());
-                                //whatever your do, do it here
-                                for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
-                                    //if you are wondering how on earth this
-                                    //is not breaking, it is because if context.getAction()
-                                    // is not an instance of ScmAction, it will throw
-                                    // a class cast exception.
-
-                                    // I don't know how correct this is but for now
-                                    // I am leaving this as is
-                                    a.analyze(identity,context.getAction());
-                                }
-
-
-                            }
-
-                        }
-                    } catch (InterruptedException e) {
-                        logger.error("ScmEventHandler Interrupted ",e);
-                    } catch (Exception e){
-                        logger.error("Your event handler thread is broken",e);
-                    }
-
-                }
-
-
-            }
-        },"scm-handler-event");
-
-        /*
-        Once we get around our threading issues handle this and start the thread
-         */
-//        t.start();
-    }
-
-    @PreDestroy
-    protected void stop(){
-        logger.trace("void stop()");
-        run.set(Boolean.FALSE);
-    }
-
 
 
 

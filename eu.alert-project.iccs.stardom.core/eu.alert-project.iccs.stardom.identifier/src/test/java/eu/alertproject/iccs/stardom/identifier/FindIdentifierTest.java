@@ -8,6 +8,8 @@ import eu.alertproject.iccs.stardom.identifier.api.Identifier;
 import eu.alertproject.iccs.stardom.testdata.api.SpringDbUnitJpaTest;
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -18,6 +20,8 @@ import java.util.List;
  * Time: 08:50
  */
 public class FindIdentifierTest extends SpringDbUnitJpaTest {
+
+    private Logger logger = LoggerFactory.getLogger(FindIdentifierTest.class);
 
     @Autowired
     Identifier identifier;
@@ -43,16 +47,50 @@ public class FindIdentifierTest extends SpringDbUnitJpaTest {
 
         Profile pA = new Profile("John","Smith","jsmith","jsmith@gmail.com");
 
-        Identity identity = identifier.find(pA);
+        Identity identity = identifier.find(pA,"source-a");
         Assert.assertNotNull(identity);
 
         Profile pB = new Profile("Juan","Smith","jsmith","jsmith@hotmail.com");
-        Identity identity1 = identifier.find(pB);
+        Identity identity1 = identifier.find(pB,"source-b");
 
         Assert.assertEquals(identity.getUuid(),identity1.getUuid());
 
         List<Identity> all = identityDao.findAll();
         Assert.assertEquals(1,all.size(),0);
+        
+
+        Profile pC = new Profile(null,null,null,"ervin kde org");
+        identifier.find(pC,"its");
+
+        all = identityDao.findAll();
+        Assert.assertEquals(2,all.size(),0);
+
+
+        Profile pD = new Profile(null,null,null,"ervin kde org");
+        identifier.find(pD,"its-source");
+
+        all = identityDao.findAll();
+        Assert.assertEquals(2,all.size(),0);
+
+        Assert.assertEquals(1,all.get(1).getProfiles().size(),0);
+
+
+        Profile pE = new Profile(null,null,"ervin kde org",null);
+        identifier.find(pE,"its");
+
+        all = identityDao.findAll();
+        Assert.assertEquals(3,all.size(),0);
+
+
+        Profile pF = new Profile(null,null,"ervin kde org",null);
+        identifier.find(pF,"its-source");
+
+        all = identityDao.findAll();
+        Assert.assertEquals(3,all.size(),0);
+
+        Assert.assertEquals(1,all.get(2).getProfiles().size(),0);
+
+
 
     }
 
