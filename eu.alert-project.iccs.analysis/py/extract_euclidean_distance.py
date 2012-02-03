@@ -40,24 +40,21 @@ def calculate_distances(file):
 
 
     metrics={}
-
     ranks = {}
 
-
-
-
-    mean=[1363.27272727,
-          1062.18181818,
-          248.54545455,
-          52.24940191]
-
+    max_values={
+        "scm_activity_metric":0,
+        "scm_api_introduced_metric":0,
+        "its_activity_metric":0,
+        "mailing_list_activity_metric":0
+    }
 
     #get the values of all the identities
     cursor.execute("SELECT id FROM identity")
     identity_ids = cursor.fetchall()
     for ids in identity_ids:
         identity_id = ids[0]
-        metrics[identity_id] = []
+        metrics[identity_id] = {}
 
         #for each id get all of the possible metrics
         for metric_name in tables:
@@ -68,13 +65,28 @@ def calculate_distances(file):
             result=cursor.fetchone()
 
             if result is None:
-                metrics[identity_id].append(0)
+                metrics[identity_id][metric_name]=0
             else:
-                metrics[identity_id].append(result[0])
+                metrics[identity_id][metric_name]=result[0]
+
+
+            max_values[metric_name] = max(result[0],max_values[metric_name])
 
 #            print "%s => %s "% (query,metrics[identity_id])
-        ranks[identity_id] = calculate_euclidean_distance(mean, metrics[identity_id])
 
+
+    mean={
+        "scm_activity_metric":1363.27272727 / max_values['scm_activity_metric'],
+        "scm_api_introduced_metric":1062.18181818 / max_values['scm_api_introduced_metric'],
+        "its_activity_metric":248.54545455 / max_values['its_activity_metric'],
+        "mailing_list_activity_metric": 37.90909091 / max_values['mailing_list_activity_metric']
+    }
+
+    for id in metrics.keys():
+        for metric_name in tables:
+            metrics[id][metric_name] = float(metrics[id][metric_name]) / max_values[metric_name]
+
+        ranks[id] = calculate_euclidean_distance(mean,metrics[id],tables)
 
     sorted_ranks = sorted(ranks.items(), key=operator.itemgetter(1))
 
@@ -93,20 +105,21 @@ def calculate_distances(file):
 
 
 
-def calculate_euclidean_distance(array1,  array2):
+def calculate_euclidean_distance(dict1,  dict2, keys):
 
-    if len(array1) != len(array2) or len(array1)< 2 :
+    if len(dict1) != len(dict2) or len(dict1)< 2 :
         return -1
 
+    print dict1
+    print dict2
 
     dist = 0
-    for i in range(0,len(array1)):
+    for k in keys:
+        print k
 
-        dist += pow(array1[i]-array2[i],2)
+        dist += pow(dict1[k]-dict2[k],2)
 
-#    dist = sqrt(dist)
-
-    print " %s vs %s = %s" % (array1,array2,dist)
+    print " %s vs %s = %s" % (dict1,dict2,dist)
     return sqrt(dist)
 
 
