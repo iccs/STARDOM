@@ -1,9 +1,7 @@
+import time
 from datetime import datetime
 import sys
 import MySQLdb
-import config
-
-__author__ = 'fotis'
 
 
 
@@ -68,8 +66,8 @@ def create_rankings(file):
 
     identities = []
 
-    for i in range(1,32):
-        identities.append(i);
+    for i in range(1,7):
+        identities.append(i)
 
     tables = [
         "scm_activity_metric",
@@ -87,8 +85,7 @@ def create_rankings(file):
 
         rankings_query = """
         select identity_id, count(id) as activity
-        from %s join metric using(id) group by identity_id order by activity DESC
-        limit %s;""" % (value,config.extract_max_search_results)
+        from %s join metric using(id) group by identity_id order by activity DESC""" % value
 
 
         cursor.execute(rankings_query)
@@ -106,14 +103,39 @@ def create_rankings(file):
             if not result[identity_id].has_key(value):
                 result[identity_id][value] = []
 
-            result[identity_id][value].extend([metric_value])
+            result[identity_id][value].append(metric_value)
 
+
+        time_query = """
+                select identity_id, max(UNIX_TIMESTAMP(created_at)) max_date from %s
+                join metric using(id)
+                group by identity_id
+                order by max_date asc """ % value
+
+        cursor.execute(time_query)
+        results= cursor.fetchall()
+        for row in results:
+
+            identity_id = row[0]
+
+            datetime_value = datetime.fromtimestamp(row[1])
+            time_value = float(1) / (datetime.now()-datetime_value).days
+
+            print "%s - %s = %s" %(datetime.now(),datetime_value,time_value)
+
+            if not result.has_key(identity_id):
+                result[identity_id]={}
+
+            if not result[identity_id].has_key(value):
+                result[identity_id][value] = []
+
+            result[identity_id][value].append(time_value)
 
 
 
         #create the file
     output_file="%s/%s.arff" % (file,"rankings-"+datetime.now().strftime("%Y%m%d%H%M%S"))
-    print "Creating output file %s" % output_file;
+    print "Creating output file %s" % output_file
 
     bugAWriter = open(output_file, 'wb')
     bugAWriter.writelines((
@@ -131,6 +153,8 @@ def create_rankings(file):
     # Go over the enabled metrics and create the heading
     for value in tables:
         bugAWriter.writelines("@ATTRIBUTE %s NUMERIC\n" % value)
+        bugAWriter.writelines("@ATTRIBUTE %s_time NUMERIC\n" % value)
+
 
 
     bugAWriter.writelines("@ATTRIBUTE relevant {TRUE,FALSE}\n")
@@ -144,7 +168,7 @@ def create_rankings(file):
 
         for value in tables:
 
-            value = metrics[value] if metrics.has_key(value) else [0]
+            value = metrics[value] if metrics.has_key(value) else [0,0]
             row.extend(value)
 
 
@@ -158,6 +182,9 @@ def create_rankings(file):
     conn.close()
 
 if __name__ == '__main__':
+
+
+
 
     if len(sys.argv) != 2:
         print """
