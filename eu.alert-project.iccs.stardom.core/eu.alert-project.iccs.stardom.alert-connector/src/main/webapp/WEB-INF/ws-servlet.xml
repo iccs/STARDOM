@@ -170,6 +170,8 @@
    <bean id="profileFromMailFromService" class="eu.alertproject.iccs.stardom.analyzers.mailing.internal.ProfileFromMailFromServiceSensor"/>
 
 
+
+
     <!-- Services -->
    <bean class="eu.alertproject.iccs.stardom.analyzers.scm.bus.ScmEventHandler"/>
    <bean class="eu.alertproject.iccs.stardom.analyzers.its.bus.ItsEventHandler"/>
@@ -180,10 +182,12 @@
 
    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsActivityAnalyzer"/>-->
    <bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsActivityHistoryAnalyzer"/>
+   <bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsIssueCountAnalyzer"/>
    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsTemporalAnalyzer"/>-->
 
-
     <!-- Analyzers -->
+
+    <bean id="resolutionAdapter" class="${analyzers.its.resolutionAdapter}"/>
 
     <!--<bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityAnalyzer"/>-->
     <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityHistoryAnalyzer"/>

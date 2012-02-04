@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Date: 18/07/11
  * Time: 09:37
  */
-public class    ItsActivityHistoryAnalyzer extends AbstractQuantitativeHistoryAnalyzer<ItsAction,ItsActivityMetric>{
+public class ItsActivityHistoryAnalyzer extends AbstractQuantitativeHistoryAnalyzer<ItsAction,ItsActivityMetric>{
 
     private Logger logger = LoggerFactory.getLogger(ItsActivityHistoryAnalyzer.class);
 

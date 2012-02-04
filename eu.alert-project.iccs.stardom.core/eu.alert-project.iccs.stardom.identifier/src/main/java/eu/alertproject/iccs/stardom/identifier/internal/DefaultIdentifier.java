@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
@@ -28,6 +29,8 @@ import java.util.*;
 public class DefaultIdentifier implements Identifier{
 
     private Logger logger = LoggerFactory.getLogger(DefaultIdentifier.class);
+
+    ReentrantLock lock;
 
     @Autowired
     SluggifierService sluggifierService;
@@ -66,7 +69,9 @@ public class DefaultIdentifier implements Identifier{
     }
 
     public DefaultIdentifier(IdentifierWeightConfiguration weightConfiguration) {
+
         this.weightConfiguration = weightConfiguration;
+        lock = new ReentrantLock();
 
     }
 
@@ -228,7 +233,8 @@ public class DefaultIdentifier implements Identifier{
     @Override
     @Transactional
     public Identity find(Profile profile, String source) {
-        
+
+        lock.lock();
 
         //sluggify profile email
         profile.setEmail(sluggifierService.sluggify(profile.getEmail()));
@@ -249,6 +255,7 @@ public class DefaultIdentifier implements Identifier{
                 newIdentity.addToProfiles(profile);
 
                 Identity insert = identityDao.insert(i);
+                lock.unlock();
                 return insert;
 
             }else{
@@ -321,6 +328,7 @@ public class DefaultIdentifier implements Identifier{
             newIdentity.addToProfiles(profile);
             Identity insert = identityDao.insert(newIdentity);
 
+            lock.unlock();
             return insert;
 
         }else{
@@ -377,6 +385,9 @@ public class DefaultIdentifier implements Identifier{
                 byId.addToProfiles(profile);
             }
 
+
+
+            lock.unlock();
             return identityDao.update(byId);
 
         }

@@ -27,8 +27,8 @@ public class JpaItsMlDao extends JpaCommonDao<ItsMl> implements ItsMlDao {
     @Override
     public ItsMl findByBugId(Integer bugId) {
 
-        Query query = getEntityManager().createQuery("SELECT i FROM ItsMl i WHERE i.bugId =:bugId");
-
+        Query query = getEntityManager().createQuery("SELECT i FROM ItsMl i WHERE i.bugId =:bugId ORDER BY i.when DESC");
+        query.setMaxResults(1);
         query.setParameter("bugId",bugId);
 
 

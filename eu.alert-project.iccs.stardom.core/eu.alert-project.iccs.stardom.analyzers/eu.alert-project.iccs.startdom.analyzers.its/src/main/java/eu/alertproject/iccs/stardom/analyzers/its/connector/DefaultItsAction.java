@@ -78,4 +78,16 @@ public class DefaultItsAction implements ItsAction{
         this.reporter = reporter;
     }
 
+    @Override
+    public String toString() {
+        return "DefaultItsAction{" +
+                "bugId=" + bugId +
+                ", bugStatus='" + bugStatus + '\'' +
+                ", severity='" + severity + '\'' +
+                ", resolution='" + resolution + '\'' +
+                ", date=" + date +
+                ", assigned=" + assigned +
+                ", reporter=" + reporter +
+                '}';
+    }
 }

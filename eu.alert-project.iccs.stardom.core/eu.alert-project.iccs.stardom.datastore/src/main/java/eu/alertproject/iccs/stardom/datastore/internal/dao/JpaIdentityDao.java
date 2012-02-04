@@ -18,6 +18,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * User: fotis
@@ -38,7 +39,7 @@ public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDa
     @Transactional
     public Identity insert(Identity bean) {
         Identity insert = super.insert(bean);//To change body of overridden methods use File | Settings | File Templates.
-        insert.setUuid(org.apache.commons.codec.digest.DigestUtils.md5Hex(String.valueOf(insert.getId())));
+        insert.setUuid(UUID.randomUUID().toString());
         return insert;
     }
 
@@ -163,6 +164,27 @@ public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDa
             logger.warn("Couldn't find identity for profile_id={}",profileId);
         }
         
+        return i;
+
+    }
+
+    @Override
+    public Identity findByProfileUuid(String uuid) {
+
+        Query query = getEntityManager().createQuery(
+                "SELECT i FROM Identity  i  WHERE i.uuid = :uuid"
+        );
+
+        query.setParameter("uuid",uuid);
+
+        Identity i = null;
+
+        try {
+            i = (Identity) query.getSingleResult();
+        } catch (NoResultException e) {
+            logger.warn("Couldn't find identity for uuid={}",uuid);
+        }
+
         return i;
 
     }

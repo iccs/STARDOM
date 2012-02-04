@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PreDestroy;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
@@ -79,5 +80,6 @@ public abstract class AbstractActiveMQListener implements Subscriber{
             context.getProfile().setEmail(null);
         }
 
-    } 
+    }
+
 }
