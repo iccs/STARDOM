@@ -178,10 +178,9 @@ if __name__ == '__main__':
 
     if len(sys.argv) != 2:
         print """
-            You need to specify a file as an argument
+            You need to specify a directory as an argument
         """
         exit(1)
-
 
     print  "Extracting information to %s " % sys.argv[1]
 
