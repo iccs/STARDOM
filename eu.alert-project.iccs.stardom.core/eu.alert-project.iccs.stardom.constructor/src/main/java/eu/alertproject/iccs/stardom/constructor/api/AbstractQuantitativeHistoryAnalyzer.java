@@ -55,10 +55,11 @@ public abstract class AbstractQuantitativeHistoryAnalyzer<T extends ConnectorAct
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void transactionalAnalyze(Identity identity, T action) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
-        List<E> forIdentity = getMetricDao().getForIdentityAfer(identity, action.getDate(), getMetricClass());
+
+        Integer numberForIdentityAfer = getMetricDao().getNumberForIdentityAfer(identity, action.getDate(), getMetricClass());
 
         //introduce a new metric and increase the quantity of the rest of the metrics
-        if(forIdentity.size() <= 0 ){
+        if(numberForIdentityAfer <= 0 ){
 
             logger.trace("void analyze() The date is after the most recent one");
             E sqm = getMetricDao().<E>getMostRecentMetric(identity, getMetricClass());
@@ -76,7 +77,10 @@ public abstract class AbstractQuantitativeHistoryAnalyzer<T extends ConnectorAct
 
         }else{
             logger.trace("void analyze() The date is between and we need to correct the metrics");
-            E metric = (E) forIdentity.get(0);
+
+            List<E> forIdentityAfer = getMetricDao().getForIdentityAfer(identity, action.getDate(), getMetricClass());
+
+            E metric = (E) forIdentityAfer.get(0);
             Integer quantity = metric.getQuantity();
 
             Constructor<E> constructor = getMetricClass().getConstructor();
@@ -87,7 +91,7 @@ public abstract class AbstractQuantitativeHistoryAnalyzer<T extends ConnectorAct
             newMetric = (E) getMetricDao().insert(newMetric);
 
             quantity++;
-            for(E m : forIdentity){
+            for(E m : forIdentityAfer){
 
                 m.setQuantity(quantity);
                 quantity++;
