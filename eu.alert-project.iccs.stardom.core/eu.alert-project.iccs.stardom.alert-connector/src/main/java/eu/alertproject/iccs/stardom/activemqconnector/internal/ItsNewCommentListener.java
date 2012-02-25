@@ -1,6 +1,6 @@
 package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
-import eu.alertproject.iccs.stardom.activemqconnector.api.AbstractActiveMQListener;
+import eu.alertproject.iccs.stardom.activemqconnector.api.ALERTActiveMQListener;
 import eu.alertproject.iccs.stardom.analyzers.its.bus.ItsCommentEvent;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsCommentConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
@@ -26,7 +26,7 @@ import java.util.Properties;
  * Time: 19:11
  */
 @Service("itsNewCommentListener")
-public class ItsNewCommentListener extends AbstractActiveMQListener{
+public class ItsNewCommentListener extends ALERTActiveMQListener {
 
     private Logger logger = LoggerFactory.getLogger(ItsNewCommentListener.class);
 

@@ -1,22 +1,18 @@
 package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
-import eu.alertproject.iccs.stardom.activemqconnector.api.AbstractActiveMQListener;
+import eu.alertproject.iccs.stardom.activemqconnector.api.ALERTActiveMQListener;
 import eu.alertproject.iccs.stardom.analyzers.mailing.bus.MailingEvent;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
-import eu.alertproject.iccs.stardom.connector.api.Subscriber;
-import org.apache.activemq.command.ActiveMQMessage;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
-import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
@@ -24,7 +20,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * User: fotis
@@ -32,7 +27,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Time: 19:12
  */
 @Component("mailNewMailListener")
-public class MailNewMailListener extends AbstractActiveMQListener{
+public class MailNewMailListener extends ALERTActiveMQListener {
 
     private Logger logger = LoggerFactory.getLogger(MailNewMailListener.class);
 

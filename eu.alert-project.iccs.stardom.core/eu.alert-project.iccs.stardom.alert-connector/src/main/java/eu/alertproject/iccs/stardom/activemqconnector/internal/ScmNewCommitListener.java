@@ -1,14 +1,9 @@
 package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
-import eu.alertproject.iccs.stardom.activemqconnector.api.AbstractActiveMQListener;
-import eu.alertproject.iccs.stardom.analyzers.mailing.bus.MailingEvent;
-import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
+import eu.alertproject.iccs.stardom.activemqconnector.api.ALERTActiveMQListener;
 import eu.alertproject.iccs.stardom.analyzers.scm.bus.ScmEvent;
-import eu.alertproject.iccs.stardom.analyzers.scm.bus.ScmEventHandler;
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmConnectorContext;
-import eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityAnalyzer;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
-import eu.alertproject.iccs.stardom.connector.api.Subscriber;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -24,7 +19,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * User: fotis
@@ -32,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Time: 19:11
  */
 @Component("scmNewCommitListener")
-public class ScmNewCommitListener extends AbstractActiveMQListener{
+public class ScmNewCommitListener extends ALERTActiveMQListener {
 
     @Autowired
     Properties systemProperties;

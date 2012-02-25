@@ -241,7 +241,7 @@
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsMlNewMail"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsMlNewMail"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -256,7 +256,7 @@
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsScmNewIssue"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsScmNewIssue"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -271,7 +271,7 @@
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsItsHistory"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsHistory"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -286,7 +286,7 @@
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsItsNewComment"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsNewComment"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -301,7 +301,7 @@
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsItsNewIssue"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsNewIssue"/>
                 </constructor-arg>
             </bean>
         </property>
