@@ -104,8 +104,6 @@ public class ScmApiIntroducedHistoryAnalyzer extends AbstractScmAnalyzer {
             scmApiIntroducedMetric.setAmount(amount);
 
             Metric insert = metricDao.insert(scmApiIntroducedMetric);
-
-
             logger.trace("void analyze() Created ScmApiIntroducedMetric {} ",insert);
 
 

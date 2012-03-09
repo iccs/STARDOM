@@ -11,6 +11,5 @@
 
 
     <bean id="scmTemporalAnalyzer" class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmTemporalAnalyzer"/>
-    <bean id="scmActivityHistoryAnalyzer" class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityHistoryAnalyzer"/>
 
 </beans>

@@ -71,9 +71,7 @@ public class ScmNewCommitListener extends ALERTActiveMQListener {
 
         fixProfile(context);
         ScmEvent scmEvent = new ScmEvent(this,context);
-        logger.trace("void onMessage() {} ",scmEvent);
-
-
+        logger.trace("void onMessage() {}/{} {} ",new Object[]{getMessageSentCount(),getMessageCount(),scmEvent});
 
         Bus.publish(scmEvent);
 

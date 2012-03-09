@@ -3,6 +3,7 @@ package eu.alertproject.iccs.stardom.constructor.api;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
+import eu.alertproject.iccs.stardom.domain.api.Metric;
 import eu.alertproject.iccs.stardom.domain.api.MetricTemporal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,9 @@ public abstract class AbstractTemporalAnalyzer<T extends ConnectorAction,E exten
             newMetrics.setIdentity(identity);
             newMetrics.setCreatedAt(new Date());
             newMetrics.setTemporal(action.getDate());
-            metricDao.insert(newMetrics);
+            Metric insert = metricDao.insert(newMetrics);
+
+            logger.trace("void analyze() Created Metric {} ",insert);
 
         } catch (NoSuchMethodException e) {
             logger.warn("Couldn't work with reflection {}",e);

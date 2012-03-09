@@ -30,6 +30,15 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
     }
 
     @Override
+    public <T extends Metric> List<T> findAll(Class<T> aClass) {
+
+        Query query = getEntityManager().createQuery("SELECT m FROM " + aClass.getName() + " m ");
+        return query.getResultList();
+
+    }
+
+
+    @Override
     public List<Metric> getForIdentity(Identity identity) {
         if(identity == null){
             return null;
