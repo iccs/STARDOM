@@ -25,7 +25,6 @@
         <module>eu.alert-project.iccs.stardom.ui</module>
 
         <!-- Always keep this last -->
-        <module>eu.alert-project.iccs.stardom.assemble</module>
         <module>eu.alert-project.iccs.stardom.spring</module>
     </modules>
 

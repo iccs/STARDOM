@@ -9,13 +9,12 @@ import eu.alertproject.iccs.stardom.domain.api.metrics.*;
 import eu.alertproject.iccs.stardom.identifier.api.IdentityMergeService;
 import eu.alertproject.iccs.stardom.testdata.api.SpringDbUnitJpaTest;
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.text.ParseException;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * User: fotis
@@ -489,7 +488,6 @@ public class IdentityMergeServiceTest extends SpringDbUnitJpaTest{
         this.<ScmActivityMetric>assertQuantitativeMetric(identity, ScmActivityMetric.class, 2, 25);
         this.<ItsActivityMetric>assertQuantitativeMetric(identity, ItsActivityMetric.class, 14, 50);
         this.<MailingListActivityMetric>assertQuantitativeMetric(identity, MailingListActivityMetric.class, 26, 125);
-        this.<ScmApiIntroducedMetric>assertQuantitativeMetric(identity, ScmApiIntroducedMetric.class, 24, 10);
 
 
         this.<ScmTemporalMetric>assertTemporalMetric(identity, ScmTemporalMetric.class, 5, "2010-07-17");
