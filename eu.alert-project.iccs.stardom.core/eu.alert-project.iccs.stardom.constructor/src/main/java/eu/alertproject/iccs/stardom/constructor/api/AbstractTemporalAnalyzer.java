@@ -37,6 +37,7 @@ public abstract class AbstractTemporalAnalyzer<T extends ConnectorAction,E exten
         try{
 
             if(identity == null){
+                logger.warn("void analyze() Can't work with a null identity {}");
                 return;
             }
 
@@ -45,7 +46,6 @@ public abstract class AbstractTemporalAnalyzer<T extends ConnectorAction,E exten
             newMetrics.setIdentity(identity);
             newMetrics.setCreatedAt(new Date());
             newMetrics.setTemporal(action.getDate());
-
             metricDao.insert(newMetrics);
 
         } catch (NoSuchMethodException e) {
