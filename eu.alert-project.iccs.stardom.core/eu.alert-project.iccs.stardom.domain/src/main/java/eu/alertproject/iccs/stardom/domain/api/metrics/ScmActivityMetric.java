@@ -20,4 +20,5 @@ public class ScmActivityMetric extends MetricQuantitative{
     public String getLabel() {
         return "SCM Activity";
     }
+
 }

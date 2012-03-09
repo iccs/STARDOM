@@ -8,6 +8,7 @@ import eu.alertproject.iccs.stardom.domain.api.MetricTemporal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Constructor;
@@ -32,7 +33,7 @@ public abstract class AbstractTemporalAnalyzer<T extends ConnectorAction,E exten
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void analyze(Identity identity, T action) {
 
         try{

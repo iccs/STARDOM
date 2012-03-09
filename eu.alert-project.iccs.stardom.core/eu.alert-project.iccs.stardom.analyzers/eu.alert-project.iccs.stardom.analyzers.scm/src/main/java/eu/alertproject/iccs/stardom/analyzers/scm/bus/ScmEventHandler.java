@@ -32,14 +32,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Time: 15:52
  */
 @EventHandler
-@Service("scmEventHandler")
 public class ScmEventHandler {
 
     private int events= 0;
 
     private Logger logger = LoggerFactory.getLogger(ScmEventHandler.class);
-
-
 
     @Autowired
     Identifier identifier;
