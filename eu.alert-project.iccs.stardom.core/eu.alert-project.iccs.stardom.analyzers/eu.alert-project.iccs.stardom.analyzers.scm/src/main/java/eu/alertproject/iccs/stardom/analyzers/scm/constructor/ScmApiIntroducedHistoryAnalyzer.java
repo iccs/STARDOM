@@ -4,8 +4,10 @@ import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmAction;
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmFile;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.constructor.api.AbstractQuantitativeHistoryAnalyzer;
+import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.PathSignatureHistoryDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
+import eu.alertproject.iccs.stardom.domain.api.Metric;
 import eu.alertproject.iccs.stardom.domain.api.PathSignatureHistory;
 import eu.alertproject.iccs.stardom.domain.api.metrics.ScmApiIntroducedMetric;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PreDestroy;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -24,20 +27,17 @@ import java.util.concurrent.locks.ReentrantLock;
  * Date: 17/07/11
  * Time: 14:07
  */
-public class ScmApiIntroducedHistoryAnalyzer extends AbstractQuantitativeHistoryAnalyzer<ScmAction, ScmApiIntroducedMetric> {
+public class ScmApiIntroducedHistoryAnalyzer extends AbstractScmAnalyzer {
 
     private Logger logger = LoggerFactory.getLogger(ScmApiIntroducedHistoryAnalyzer.class);
  
     @Autowired
     PathSignatureHistoryDao pathSignatureHistoryDao;
-    private ReentrantLock reentrantLock;
 
 
-    public ScmApiIntroducedHistoryAnalyzer() {
- 
-        super(ScmApiIntroducedMetric.class);
+    @Autowired
+    private MetricDao metricDao;
 
-    }
 
     /**
      * The reason we are overriding this is because there is extra logic to the
@@ -59,7 +59,7 @@ public class ScmApiIntroducedHistoryAnalyzer extends AbstractQuantitativeHistory
         
         //check if the api has been introduced before
         List<ScmFile> files = action.getFiles();
-        
+        int amount =0;
         for(ScmFile sf: files){
 
             String path = sf.getName();
@@ -89,13 +89,25 @@ public class ScmApiIntroducedHistoryAnalyzer extends AbstractQuantitativeHistory
 
                     pathSignatureHistoryDao.insert(pathSignatureHistory);
 
-                    /*
-                    Follow the normal logic
-                     */
-                    super.analyze(identity,action);
+                    amount++;
 
                 }
             }
+        }
+
+        if(amount > 0 ){
+            ScmApiIntroducedMetric scmApiIntroducedMetric = new ScmApiIntroducedMetric();
+            
+            scmApiIntroducedMetric.setIdentity(identity);
+            scmApiIntroducedMetric.setTemporal(action.getDate());
+            scmApiIntroducedMetric.setCreatedAt(new Date());
+            scmApiIntroducedMetric.setAmount(amount);
+
+            Metric insert = metricDao.insert(scmApiIntroducedMetric);
+
+
+            logger.trace("void analyze() Created ScmApiIntroducedMetric {} ",insert);
+
 
         }
 
