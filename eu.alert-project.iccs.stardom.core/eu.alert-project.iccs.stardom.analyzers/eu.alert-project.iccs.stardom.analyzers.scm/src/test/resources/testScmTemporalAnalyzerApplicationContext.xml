@@ -6,10 +6,11 @@
         default-autowire="byName"
         >
 
+    <bean class="eu.alertproject.iccs.stardom.analyzers.scm.bus.ScmEventHandler"/>
+    <bean id="scmTemporalAnalyzer" class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmTemporalAnalyzer"/>
+
+
     <bean class="eu.alertproject.iccs.stardom.bus.api.annotation.EventHandlersBeanPostProcessor"/>
     <bean class="eu.alertproject.iccs.stardom.constructor.api.spring.AnalyzerBeanPostProcessor"/>
-
-
-    <bean id="scmTemporalAnalyzer" class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmTemporalAnalyzer"/>
 
 </beans>
