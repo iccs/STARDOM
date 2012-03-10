@@ -81,7 +81,7 @@ def create_rankings(file):
         identities.append(i);
 
     tables = [
-        "scm_activity_metric",
+        "scm_temporal_metric",
         "scm_api_introduced_metric",
         "its_activity_metric",
         "mailing_list_activity_metric"

@@ -51,7 +51,7 @@ public class ScmActivityHistoryAnalyzerTest extends SpringDbUnitJpaTest{
     private final int min=10;
     private final int max=1000000;
     private final int number_of_threads=5;
-    private final int number_of_events = 100;
+    private final int number_of_events = 20;
     
 
     @Test
