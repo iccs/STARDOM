@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+    <s:Header></s:Header>
+    <s:Body>
+        <wsnt:Notify>
+            <wsnt:NotificationMessage>
+                <wsnt:Topic></wsnt:Topic>
+                <wsnt:ProducerReference>
+                    <wsa:Address>http://www.alert-project.eu/keui</wsa:Address>
+                </wsnt:ProducerReference>
+				<wsnt:Message>
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/"
+                               xmlns:s="http://www.alert-project.eu/strevents-kesi"
+                               xmlns:s1="http://www.alert-project.eu/strevents-keui"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		                <ns1:head>
+		                    <ns1:sender>KEUI</ns1:sender>
+		                    <ns1:timestamp>123456789</ns1:timestamp>
+		                    <ns1:sequencenumber>1</ns1:sequencenumber>
+						</ns1:head>
+						<ns1:payload>
+			                <ns1:meta>
+			                    <ns1:startTime>654312</ns1:startTime>
+								<ns1:endTime>789456</ns1:endTime>
+								<!-- name of event -->
+								<ns1:eventName>ALERT.KEUI.TextToAnnotate.Annotated</ns1:eventName>
+								<ns1:eventId>9999</ns1:eventId>
+								<ns1:eventType>Reply</ns1:eventType>
+			                </ns1:meta>
+			                <ns1:eventData>
+			                    <s1:generalText>
+			                        <!-- source -->
+			                        <s1:source>stardom</s1:source>
+			                        <!-- text to annotate -->
+			                        <s1:text>qt amarok annotate me</s1:text>
+								</s1:generalText>
+							
+								<s1:keui>
+									<s1:textAnnotated><![CDATA[<concept id="http://ailab.ijs.si/alert/resource/r18285">qt</concept> amarok annotate me]]></s1:textAnnotated>
+									<s1:textConcepts>
+                                        <s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18285</s1:uri><s1:weight>1</s1:weight></s1:concept>
+                                        <s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18288</s1:uri><s1:weight>3</s1:weight></s1:concept>
+                                    </s1:textConcepts>
+								</s1:keui>
+							</ns1:eventData>
+						</ns1:payload>
+					</ns1:event>
+				</wsnt:Message>
+			</wsnt:NotificationMessage>
+		</wsnt:Notify>
+    </s:Body>
+</s:Envelope>

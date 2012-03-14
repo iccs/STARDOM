@@ -119,6 +119,11 @@
             <artifactId>identifier</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>eu.alert-project.iccs.events</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+
 
     </dependencies>
 </project>

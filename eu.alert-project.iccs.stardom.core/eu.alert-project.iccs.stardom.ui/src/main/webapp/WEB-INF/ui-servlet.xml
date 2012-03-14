@@ -70,6 +70,9 @@
         <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean>
 
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:uimessages"/>
+    </bean>
 
 
 
@@ -131,6 +134,78 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+
+    <!-- ActiveMQ -->
+    <bean   id="jmsConnectionFactory"
+            class="org.apache.activemq.ActiveMQConnectionFactory" >
+        <property name="brokerURL" value="${activemq.url}" />
+        <property name="userName" value="" />
+        <property name="password" value="" />
+    </bean>
+
+    <bean id="pooledJmsConnectionFactory"
+          class="org.apache.activemq.pool.PooledConnectionFactory"
+          destroy-method="stop">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+    </bean>
+
+    <bean id="jmsConfig"
+          class="org.apache.camel.component.jms.JmsConfiguration">
+        <property name="connectionFactory" ref="pooledJmsConnectionFactory"/>
+        <property name="transacted" value="false"/>
+        <property name="concurrentConsumers" value="10"/>
+    </bean>
+
+    <bean id="activemq"
+          class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="configuration" ref="jmsConfig"/>
+    </bean>
+
+    <!-- Spring JMS Template -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="pooledJmsConnectionFactory" />
+        <property name="pubSubDomain" value="true"/>
+    </bean>
+
+
+
+    <!-- ActiveMQ Listeners -->
+    <bean id="annotationService" class="eu.alertproject.iccs.stardom.ui.service.KEUIAnnotationService" />
+    <bean id="textAnnotatedListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_KEUI_TextToAnnotate_Annotated"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener"  ref="annotationService"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+
+    <bean id="mockupAnnotation" class="eu.alertproject.iccs.stardom.ui.service.MockupAnnotationListener" />
+    <bean id="mockupAnnotationListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_STARDOM_TextToAnnotate"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener"  ref="mockupAnnotation"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+
+
 
     <bean id="tailer"
           class="eu.alertproject.iccs.stardom.ui.beans.LogTailer"
