@@ -71,7 +71,7 @@ public class KEUIAnnotationService implements AnnotationService,MessageListener 
                 int i= 0;
                 try {
                     //wait for the event
-                    while(i < 30 && StringUtils.isEmpty(event.get())){
+                    while(i < 60 && StringUtils.isEmpty(event.get())){
                         i++;
                         logger.trace("void run() {} ",i);
                         Thread.sleep(1000);
@@ -95,25 +95,31 @@ public class KEUIAnnotationService implements AnnotationService,MessageListener 
         t.start();
 
         try {
-            countDownLatch.await(30L, TimeUnit.SECONDS);
+            countDownLatch.await(60L, TimeUnit.SECONDS);
 
         } catch (InterruptedException e) {
             logger.error("Count down latch interrupted ",e);
         }
 
 
-        Iterator<TextToAnnotateReplyPayload.EventData.Keui.Concept> iterator = eventData.getKeui().getTextConcepts().iterator();
-        
-        
-        List<Concept> concepts = new ArrayList<Concept>();
+        if(eventData !=null){
 
-        while (iterator.hasNext()){
+            Iterator<TextToAnnotateReplyPayload.EventData.Keui.Concept> iterator = eventData.getKeui().getTextConcepts().iterator();
 
-            TextToAnnotateReplyPayload.EventData.Keui.Concept next = iterator.next();
-            concepts.add(new Concept(next.getUri(),next.getWeight()));
+
+            List<Concept> concepts = new ArrayList<Concept>();
+
+            while (iterator.hasNext()){
+
+                TextToAnnotateReplyPayload.EventData.Keui.Concept next = iterator.next();
+                concepts.add(new Concept(next.getUri(),next.getWeight()));
+            }
+
+            return concepts;
         }
 
-        return concepts;
+
+        return null;
     }
 
 
