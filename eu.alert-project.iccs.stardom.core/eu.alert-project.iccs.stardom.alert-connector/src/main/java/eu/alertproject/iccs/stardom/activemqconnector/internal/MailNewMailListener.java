@@ -1,9 +1,16 @@
 package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
+import eu.alertproject.iccs.events.alert.Keui;
+import eu.alertproject.iccs.events.alert.MailingList;
+import eu.alertproject.iccs.events.alert.MailingListAnnotatedEnvelope;
+import eu.alertproject.iccs.events.alert.MailingListAnnotatedPayload;
+import eu.alertproject.iccs.events.api.EventFactory;
 import eu.alertproject.iccs.stardom.activemqconnector.api.ALERTActiveMQListener;
 import eu.alertproject.iccs.stardom.analyzers.mailing.bus.MailingEvent;
+import eu.alertproject.iccs.stardom.analyzers.mailing.connector.DefaultMailingListAction;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
+import eu.alertproject.iccs.stardom.domain.api.Profile;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -37,22 +44,42 @@ public class MailNewMailListener extends ALERTActiveMQListener {
     @Override
     public void process(Message message) throws IOException, JMSException {
 
-        MailingListConnectorContext context = null;
-
-        ObjectMapper mapper = new ObjectMapper();
-
         String text = ((TextMessage) message).getText();
-        if(StringUtils.isEmpty(text)){
-            logger.warn("A message received doesn't contain no information so I am ignoring");
-            return;
-        }
+        MailingListAnnotatedEnvelope envelope = EventFactory.<MailingListAnnotatedEnvelope>fromXml(
+                text,
+                MailingListAnnotatedEnvelope.class);
 
-        logger.trace("void onMessage() Text to parse {} ",text);
-        context= mapper.readValue(IOUtils.toInputStream(text),MailingListConnectorContext.class);
+        MailingListAnnotatedPayload.EventData eventData = envelope
+                .getBody()
+                .getNotify()
+                .getNotificationMessage()
+                .getMessage()
+                .getEvent()
+                .getPayload()
+                .getEventData();
+
+        MailingList mailingList = eventData.getMailingList();
+        Keui keui = eventData.getKeui();
+
+
+
+        DefaultMailingListAction defaultMailingListAction = new DefaultMailingListAction();
+        defaultMailingListAction.setDate(mailingList.getDate());
+        defaultMailingListAction.setFrom(mailingList.getFrom());
+        defaultMailingListAction.setSubject(mailingList.getSubject());
+        defaultMailingListAction.setText(mailingList.getContent());
+
+
+        MailingListConnectorContext context  = new MailingListConnectorContext();
+        context.setAction(defaultMailingListAction);
+        context.setProfile(new Profile());
+
+        //TODO store annotations
+        //TODO store uris
 
 
         String filterDate = systemProperties.getProperty("analyzers.filterDate");
-	logger.trace("System property filter date = ({})",filterDate);
+	    logger.trace("System property filter date = ({})",filterDate);
         Date when = null;
         try {
             when = DateUtils.parseDate(filterDate, new String[]{"yyyy-MM-dd"});
@@ -61,7 +88,7 @@ public class MailNewMailListener extends ALERTActiveMQListener {
             logger.error("void process() Couldn't parse filterDate = ({}) ",filterDate);
         }
 
-	logger.trace("Testing against date = ({})",when);
+	    logger.trace("Testing against date = ({})",when);
 
         if (when == null || ( context.getAction().getDate() != null && context.getAction().getDate().before(when) ) ) {
             logger.trace("void action() Ignoring action because date {} is before {}", context.getAction().getDate(), when);

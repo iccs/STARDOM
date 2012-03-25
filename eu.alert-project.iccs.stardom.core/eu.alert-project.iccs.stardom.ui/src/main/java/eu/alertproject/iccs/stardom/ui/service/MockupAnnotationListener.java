@@ -1,19 +1,15 @@
 package eu.alertproject.iccs.stardom.ui.service;
 
-import com.thoughtworks.xstream.XStream;
 import eu.alertproject.iccs.events.activemq.TextMessageCreator;
 import eu.alertproject.iccs.events.api.Topics;
-import eu.alertproject.iccs.events.jsi.TextToAnnotateRequestEnvelope;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 
-import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import javax.jms.TextMessage;
 import java.io.IOException;
 
 /**
