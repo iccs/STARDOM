@@ -3,10 +3,12 @@ package eu.alertproject.iccs.stardom.constructor.api;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
+import eu.alertproject.iccs.stardom.domain.api.Metric;
 import eu.alertproject.iccs.stardom.domain.api.MetricTemporal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Constructor;
@@ -31,12 +33,13 @@ public abstract class AbstractTemporalAnalyzer<T extends ConnectorAction,E exten
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void analyze(Identity identity, T action) {
 
         try{
 
             if(identity == null){
+                logger.warn("void analyze() Can't work with a null identity {}");
                 return;
             }
 
@@ -45,8 +48,9 @@ public abstract class AbstractTemporalAnalyzer<T extends ConnectorAction,E exten
             newMetrics.setIdentity(identity);
             newMetrics.setCreatedAt(new Date());
             newMetrics.setTemporal(action.getDate());
+            Metric insert = metricDao.insert(newMetrics);
 
-            metricDao.insert(newMetrics);
+            logger.trace("void analyze() Created Metric {} ",insert);
 
         } catch (NoSuchMethodException e) {
             logger.warn("Couldn't work with reflection {}",e);

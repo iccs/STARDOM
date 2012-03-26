@@ -14,9 +14,10 @@ import java.util.List;
  * Time: 09:41
  * To change this template use File | Settings | File Templates.
  */
-public interface    IdentityDao extends CommonDao<Identity> {
+public interface IdentityDao extends CommonDao<Identity> {
 
     List<Identity> findPossibleMatches(Profile profile);
     List<Identity> findAllPaginableOrderByLastName(int page, int pageSize);
     Identity findByProfileId(Integer profileId);
+    Identity findByProfileUuid(String uuid);
 }

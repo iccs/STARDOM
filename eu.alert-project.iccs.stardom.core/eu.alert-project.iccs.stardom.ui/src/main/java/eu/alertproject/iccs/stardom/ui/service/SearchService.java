@@ -73,7 +73,6 @@ public class SearchService {
 
 
         metrics.add(ScmActivityMetric.class);
-        metrics.add(ScmApiIntroducedMetric.class);
         metrics.add(ItsActivityMetric.class);
         metrics.add(MailingListActivityMetric.class);
 

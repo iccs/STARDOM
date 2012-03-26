@@ -13,7 +13,7 @@ def get_connection():
                                 port = 8889,
                                 user = 'alert',
                                 passwd = '1234',
-                                db  = 'alert_historical')
+                                db  = 'alert_dev')
     return conn
 
 
@@ -81,7 +81,7 @@ def create_rankings(file):
         identities.append(i);
 
     tables = [
-        "scm_activity_metric",
+        "scm_temporal_metric",
         "scm_api_introduced_metric",
         "its_activity_metric",
         "mailing_list_activity_metric"
@@ -89,6 +89,7 @@ def create_rankings(file):
 
 
     rankings={}
+    overall={}
 
     start_date = 1997
     end_date = 2011
@@ -117,7 +118,7 @@ def create_rankings(file):
             if not events.has_key(metric_name) :
                 events[metric_name] = []
 
-            events[metric_name].extend([str(result[0])])
+            events[metric_name].append(str(result[0]))
 
 
 
@@ -135,7 +136,8 @@ def create_rankings(file):
             for metric in metrics_values:
 
                 identity_id = metric[0]
-                activity = metric[1]
+                activity_metric = metric[1]
+
 
                 #look for the developer ranking
                 if identity_id in identities:
@@ -145,11 +147,32 @@ def create_rankings(file):
                     if not rankings[metric_name].has_key(identity_id):
                         rankings[metric_name][identity_id] = []
 
-                    rankings[metric_name][identity_id].extend([ranking])
+                    rankings[metric_name][identity_id].extend([activity_metric])
 
                 ranking += 1
 
             current_date +=1
+
+
+        overall_query = """
+                    select identity_id, count(id) as activity
+                    from %s join metric using(id)
+                    group by identity_id order by activity DESC ;""" % (metric_name)
+
+
+        cursor.execute(overall_query)
+        top30 = cursor.fetchall()
+
+        if not overall.has_key(metric_name):
+            overall[metric_name] = []
+
+        for row in top30:
+
+            if row[0] in identities :
+                overall[metric_name].append({'id':row[0],'metric':row[1]})
+
+
+
 
 
 
@@ -173,7 +196,19 @@ def create_rankings(file):
             spamWriter.writerow([get_name_and_lastname(id)]+ranks)
 
         for i in range(1,5):
-                        spamWriter.writerow([])
+            spamWriter.writerow([])
+
+    for i in range(1,5):
+        spamWriter.writerow([])
+
+    for name, values in overall.iteritems():
+        spamWriter.writerow([name])
+        spamWriter.writerow([])
+        for v in values:
+            spamWriter.writerow([get_name_and_lastname(v['id']),v['metric']])
+        spamWriter.writerow([])
+        spamWriter.writerow([])
+
 
 
 if __name__ == '__main__':

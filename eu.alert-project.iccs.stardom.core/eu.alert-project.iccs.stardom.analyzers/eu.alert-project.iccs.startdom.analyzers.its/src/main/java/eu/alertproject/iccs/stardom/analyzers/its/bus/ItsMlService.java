@@ -1,9 +1,16 @@
 package eu.alertproject.iccs.stardom.analyzers.its.bus;
 
+import eu.alertproject.iccs.stardom.analyzers.its.api.ResolutionAdapter;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.DefaultItsChangeAction;
+import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
+import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
+import eu.alertproject.iccs.stardom.constructor.api.Analyzers;
+import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.ItsMlDao;
+import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
+import eu.alertproject.iccs.stardom.domain.api.metrics.ItsIssuesResolvedMetric;
 import eu.alertproject.iccs.stardom.domain.api.ml.ItsMl;
 import eu.alertproject.iccs.stardom.identifier.api.Identifier;
 import org.apache.commons.lang.StringUtils;
@@ -12,6 +19,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * User: fotis
@@ -25,24 +37,20 @@ public class ItsMlService {
 
 
     @Autowired
+    ResolutionAdapter resolutionAdapter;
+
+    @Autowired
+    IdentityDao identityDao;
+    
+    @Autowired
+    MetricDao metricDao;
+
+    @Autowired
     ItsMlDao itsMlDao;
 
     @Autowired
     Identifier identifier;
 
-    @Transactional
-    public ItsMl findOrCreate(Integer bugId){
-
-        ItsMl lastestForBugId = itsMlDao.findLastestForBugId(bugId);
-        if(lastestForBugId != null){
-            return lastestForBugId;
-        }
-
-        ItsMl newBug = new ItsMl();
-
-        return  itsMlDao.insert(newBug);
-
-    }
 
     @Transactional
     public void recordItsHistory(Identity who, DefaultItsChangeAction action) {
@@ -66,6 +74,7 @@ public class ItsMlService {
             newBugAction.setWhen(action.getDate());
             ItsMl insert = itsMlDao.insert(newBugAction);
             logger.trace("void event() Status Change {} ",insert);
+
 
         }else if(StringUtils.endsWithIgnoreCase(what,"AssignedTo")){
 

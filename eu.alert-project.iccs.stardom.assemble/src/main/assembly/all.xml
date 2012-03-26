@@ -10,7 +10,6 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <moduleSets>
         <moduleSet>
-            <useAllReactorProjects>true</useAllReactorProjects>
             <includes>
                 <include>${project.groupId}:ui</include>
                 <include>${project.groupId}:alert-connector</include>

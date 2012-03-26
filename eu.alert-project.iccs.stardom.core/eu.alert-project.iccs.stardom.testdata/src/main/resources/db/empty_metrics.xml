@@ -1,0 +1,11 @@
+<dataset>
+    <metric/>
+
+    <metric_quantitative/>
+    <metric_temporal/>
+
+    <sequence
+        sequence_name="metric_sequence"
+        sequence_index="1"/>
+
+</dataset>

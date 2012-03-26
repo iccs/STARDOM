@@ -6,7 +6,7 @@ max_records=5000
 echo "Using $php5"
 
 
-for l in {0..21};
+for l in {0..110};
 do
   from=$(($l * $max_records))
   echo "Geting 5000 records from the database starting at $from"

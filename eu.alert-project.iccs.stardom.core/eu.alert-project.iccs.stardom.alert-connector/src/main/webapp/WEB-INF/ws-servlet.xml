@@ -169,35 +169,7 @@
    <!-- ProfileParser-->
    <bean id="profileFromMailFromService" class="eu.alertproject.iccs.stardom.analyzers.mailing.internal.ProfileFromMailFromServiceSensor"/>
 
-
-    <!-- Services -->
-   <bean class="eu.alertproject.iccs.stardom.analyzers.scm.bus.ScmEventHandler"/>
-   <bean class="eu.alertproject.iccs.stardom.analyzers.its.bus.ItsEventHandler"/>
-   <bean class="eu.alertproject.iccs.stardom.analyzers.its.bus.ItsChangeEventHandler"/>
-   <bean class="eu.alertproject.iccs.stardom.analyzers.mailing.bus.MailingListEventHandler"/>
-
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.forums.bus.ForumEventHandler>-->
-
-   <!--<bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsActivityAnalyzer"/>-->
-   <bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsActivityHistoryAnalyzer"/>
-   <!--<bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsTemporalAnalyzer"/>-->
-
-
-    <!-- Analyzers -->
-
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityAnalyzer"/>-->
-    <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityHistoryAnalyzer"/>
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmTemporalAnalyzer"/>-->
-    <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmApiIntroducedHistoryAnalyzer"/>
-
-
-
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.forums.constructor.ForumActivityAnalyzer"/>-->
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.mailing.constructor.MailingListActivityAnalyzer"/>-->
-    <bean class="eu.alertproject.iccs.stardom.analyzers.mailing.constructor.MailingListActivityHistoryAnalyzer"/>
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.mailing.constructor.MailingListTemporalAnalyzer"/>-->
-
-
+    <bean id="resolutionAdapter" class="${analyzers.its.resolutionAdapter}"/>
 
 
     <!-- Active MQ -->
@@ -237,7 +209,7 @@
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsMlNewMail"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsMlNewMail"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -252,7 +224,7 @@
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsScmNewIssue"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsScmNewIssue"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -267,7 +239,7 @@
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsItsHistory"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsHistory"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -282,7 +254,7 @@
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsItsNewComment"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsNewComment"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -297,7 +269,7 @@
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.stardom.connector.api.Topics.IccsItsNewIssue"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsNewIssue"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -306,11 +278,11 @@
         <property name="cacheLevel" value="3" />
     </bean>
 
-
-
-
         <!-- Spring JMS Template -->
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <property name="connectionFactory" ref="pooledJmsConnectionFactory" />
     </bean>
+
+    <import resource="spring-analyzers.xml" />
+
 </beans>

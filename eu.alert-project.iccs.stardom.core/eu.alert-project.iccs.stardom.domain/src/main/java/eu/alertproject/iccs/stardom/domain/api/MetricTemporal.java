@@ -29,4 +29,12 @@ public abstract class MetricTemporal extends Metric{
     public Object getValue() {
         return getTemporal();
     }
+
+    @Override
+    public String toString() {
+        return "MetricTemporal{" +
+                "metric=" + super.toString() +
+                "temporal=" + temporal +
+                '}';
+    }
 }

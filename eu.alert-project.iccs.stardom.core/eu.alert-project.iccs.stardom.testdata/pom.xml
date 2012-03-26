@@ -51,5 +51,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <version>${project.version}</version>
+            <artifactId>spring</artifactId>
+        </dependency>
+
     </dependencies>
 </project>

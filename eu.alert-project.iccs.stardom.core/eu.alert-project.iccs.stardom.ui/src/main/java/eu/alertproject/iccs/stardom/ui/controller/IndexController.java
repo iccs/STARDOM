@@ -142,6 +142,8 @@ public class IndexController {
                         its = ((Number)recentMetric.getValue()).intValue();
                     }else if(m == MailingListActivityMetric.class){
                         mailing=((Number)recentMetric.getValue()).intValue();
+                    }else if(m == ItsIssuesResolvedMetric.class){
+                        mailing=((Number)recentMetric.getValue()).intValue();
                     }
 
                     beanMetrics.add(recentMetric);

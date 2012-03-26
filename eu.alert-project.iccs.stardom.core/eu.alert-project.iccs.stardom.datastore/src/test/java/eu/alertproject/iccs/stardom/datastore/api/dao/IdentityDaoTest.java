@@ -50,7 +50,6 @@ public class IdentityDaoTest extends SpringDbUnitJpaTest{
         Assert.assertNotNull(insert);
         Assert.assertEquals(ORIGINAL_NUMBER_OF_ROWS + 1, insert.getId(), 0);
         Assert.assertNotNull(insert.getUuid());
-        Assert.assertEquals(DigestUtils.md5Hex(String.valueOf(ORIGINAL_NUMBER_OF_ROWS+1)),insert.getUuid());
     }
 
     @Test

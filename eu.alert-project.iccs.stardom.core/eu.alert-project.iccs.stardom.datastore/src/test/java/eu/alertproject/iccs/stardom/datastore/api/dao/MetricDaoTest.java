@@ -222,11 +222,11 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
 
         List<T> forIdentityAfer = metricDao.getForIdentityAfer(byId, DateUtils.parseDate("2028-01-02", new String[]{"yyyy-MM-dd"}), metricClass);
         Assert.assertNotNull(forIdentityAfer);
-        Assert.assertEquals(2, forIdentityAfer.size(),0);
+        Assert.assertEquals(3, forIdentityAfer.size(),0);
 
         Iterator<T> iterator = forIdentityAfer.iterator();
-        quantity = 3;
-        for(int i =2; i < dates.length ; i++){
+        quantity = 2;
+        for(int i =1; i < dates.length ; i++){
 
             T next = metricClass.cast(iterator.next());
             Assert.assertEquals(DateUtils.parseDate(dates[i], new String[]{"yyyy-MM-dd"}), next.getCreatedAt());

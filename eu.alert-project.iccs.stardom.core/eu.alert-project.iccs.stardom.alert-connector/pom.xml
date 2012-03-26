@@ -197,6 +197,12 @@
             <artifactId>ml</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>eu.alert-project.iccs.events</groupId>
+            <artifactId>core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
 
     </dependencies>
 </project>

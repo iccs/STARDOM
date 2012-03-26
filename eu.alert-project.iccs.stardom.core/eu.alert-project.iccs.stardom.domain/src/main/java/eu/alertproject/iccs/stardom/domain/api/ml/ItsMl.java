@@ -116,4 +116,16 @@ public class ItsMl implements SimpleBean{
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "ItsMl{" +
+                "id=" + id +
+                ", bugId=" + bugId +
+                ", uuidWho='" + uuidWho + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", when=" + when +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

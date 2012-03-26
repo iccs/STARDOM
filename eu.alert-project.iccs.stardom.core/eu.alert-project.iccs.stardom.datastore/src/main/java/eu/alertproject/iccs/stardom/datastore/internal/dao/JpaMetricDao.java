@@ -30,6 +30,15 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
     }
 
     @Override
+    public <T extends Metric> List<T> findAll(Class<T> aClass) {
+
+        Query query = getEntityManager().createQuery("SELECT m FROM " + aClass.getName() + " m ");
+        return query.getResultList();
+
+    }
+
+
+    @Override
     public List<Metric> getForIdentity(Identity identity) {
         if(identity == null){
             return null;
@@ -52,7 +61,6 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
      */
     @SuppressWarnings({"unchecked"})
     @Override
-    @Transactional(readOnly = true)
     public <T extends Metric> List<T> getForIdentity(Identity identity, Class<T> aClass) {
 
         if(identity == null){
@@ -70,14 +78,13 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
     }
 
     @Override
-    @Transactional(readOnly = true)
     public <T extends Metric> List<T> getForIdentityAfer(Identity identity, Date date, Class<T> aClass) {
         
         Query query = getEntityManager().createQuery(
                 "SELECT m FROM " + aClass.getName() + " m " +
                 "WHERE m.identity.id = :id " +
-                "AND m.createdAt > :date " +
-                "ORDER BY m.createdAt ASC");
+                "AND m.createdAt >= :date " +
+                "ORDER BY m.createdAt,m.id DESC");
 
         query.setParameter("id",identity.getId());
         query.setParameter("date",date);
@@ -88,7 +95,24 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
     }
 
     @Override
-    @Transactional(readOnly = true)
+    public <T extends Metric> Integer getNumberForIdentityAfer(Identity identity, Date date, Class<T> aClass) {
+
+        Query query = getEntityManager().createQuery(
+                "SELECT COUNT(m) FROM " + aClass.getName() + " m " +
+                "WHERE m.identity.id = :id " +
+                "AND m.createdAt >= :date " +
+                "ORDER BY m.createdAt,m.id DESC");
+
+        query.setParameter("id",identity.getId());
+        query.setParameter("date",date);
+
+        return ((Number)query.getSingleResult()).intValue();
+
+    }
+
+
+
+    @Override
     public <T extends Metric> T getMostRecentMetric(Identity identity, Class<T> aClass) {
 
         if(identity == null){
@@ -124,7 +148,6 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
      */
     @SuppressWarnings({"unchecked"})
     @Override
-    @Transactional(readOnly = true)
     public <T extends MetricQuantitative> List<T> findByQuantity(int quantity, Class<T> aClass) {
 
 

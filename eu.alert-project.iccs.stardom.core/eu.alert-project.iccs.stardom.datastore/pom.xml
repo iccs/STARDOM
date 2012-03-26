@@ -71,19 +71,19 @@
                     <plugin>
                         <groupId>com.carbonfive.db-support</groupId>
                         <artifactId>db-migration-maven-plugin</artifactId>
-                        <version>0.9.9-m5</version>
+                        <version>RELEASE</version>
                         <configuration>
-                            <url>jdbc:mysql://${db.migration.host}:${db.port}/${db.migration.db}?allowMultiQueries=true</url>
+                            <url>jdbc:mysql://${db.migration.host}:${db.port}/alert_test?allowMultiQueries=true</url>
                             <username>${db.migration.username}</username>
                             <password>${db.migration.password}</password>
                         </configuration>
                         <executions>
-                            <execution>
-                                <goals>
-                                    <goal>reset</goal>
-                                </goals>
-                                <phase>test-compile</phase>
-                            </execution>
+                          <execution>
+                            <phase>clean</phase>
+                            <goals>
+                              <goal>reset</goal>
+                            </goals>
+                          </execution>
                         </executions>
                         <dependencies>
                             <dependency>
@@ -98,7 +98,6 @@
         </profile>
     </profiles>
     <build>
-
         <plugins>
             <plugin>
                 <groupId>com.carbonfive.db-support</groupId>

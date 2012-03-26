@@ -8,6 +8,7 @@ import org.joda.time.MutableDateTime;
 import org.junit.Test;
 
 import java.text.ParseException;
+import java.util.Date;
 
 /**
  * User: fotis
@@ -96,11 +97,11 @@ public class ScmMetricDaoTest extends MetricDaoTest {
 
     @Test
     public void findScmApiIntroducedMetric(){
-       this.<ScmApiIntroducedMetric>assertQuantitativeMetric(
+       this.<ScmApiIntroducedMetric>assertTemporalMetric(
                3,
                ScmApiIntroducedMetric.class,
-               10,
-               "2002-06-20");
+               "2002-06-20",
+               "1998-06-16");
     }
 
     @Test
@@ -114,13 +115,15 @@ public class ScmMetricDaoTest extends MetricDaoTest {
     public void insertScmApiIntroducedMetric() {
 
         ScmApiIntroducedMetric sim = new ScmApiIntroducedMetric();
-        sim.setQuantity(11);
-        this.<ScmApiIntroducedMetric>assertInsertQuantitativeMetric(
+        sim.setAmount(11);
+        Date temporal = new Date();
+        sim.setTemporal(temporal);
+        this.<ScmApiIntroducedMetric>assertInsertTemporalMetric(
                 4,
                 sim,
                 ScmApiIntroducedMetric.class,
-                11
-        );
+                temporal
+                );
     }
 
     @Test

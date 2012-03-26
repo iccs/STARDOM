@@ -4,6 +4,8 @@ import eu.alertproject.iccs.stardom.analyzers.its.connector.DefaultItsChangeActi
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsChangeConnectorContext;
 import eu.alertproject.iccs.stardom.analyzers.its.internal.ProfileFromItsKdeWhoService;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
+import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
+import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzers;
 import eu.alertproject.iccs.stardom.datastore.api.dao.ItsMlDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
@@ -81,7 +83,21 @@ public class ItsChangeEventHandler {
 
                 who = identifier.find(context.getProfile(),"its-change");
             }
+
             itsMlService.recordItsHistory(who,context.getAction());
+
+
+
+            //whatever your do, do it here
+            for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
+                if(a.canHandle(context.getAction())){
+                    try{
+                        a.analyze(who,context.getAction());
+                    }catch (Exception e){
+                        logger.error("Something is up in the analyzer",e);
+                    }
+                }
+            }
         } catch (Exception e) {
             logger.error("Something is up here ",e);
         }
