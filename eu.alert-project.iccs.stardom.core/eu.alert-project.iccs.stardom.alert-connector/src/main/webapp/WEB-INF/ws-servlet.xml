@@ -172,36 +172,38 @@
     <bean id="resolutionAdapter" class="${analyzers.its.resolutionAdapter}"/>
 
 
-    <!-- Active MQ -->
-    <!-- ActiveMQ -->
+  <!-- ActiveMQ -->
     <bean   id="jmsConnectionFactory"
             class="org.apache.activemq.ActiveMQConnectionFactory" >
-        <property name="brokerURL" value="${activemq.brokerURL}" />
-        <property name="userName" value="${activemq.userName}" />
-        <property name="password" value="${activemq.password}" />
+      <property name="brokerURL" value="tcp://www.cimcollege.rs:61616" />
+      <property name="userName" value="" />
+      <property name="password" value="" />
     </bean>
 
     <bean id="pooledJmsConnectionFactory"
           class="org.apache.activemq.pool.PooledConnectionFactory"
           destroy-method="stop">
-        <property name="connectionFactory" ref="jmsConnectionFactory"/>
-        <property name="maxConnections" value="1" />
-        <property name="maximumActive" value="1" />
+      <property name="connectionFactory" ref="jmsConnectionFactory"/>
     </bean>
 
     <bean id="jmsConfig"
           class="org.apache.camel.component.jms.JmsConfiguration">
-        <property name="connectionFactory" ref="pooledJmsConnectionFactory"/>
-        <property name="transacted" value="true"/>
-        <property name="concurrentConsumers" value="10"/>
+      <property name="connectionFactory" ref="pooledJmsConnectionFactory"/>
+      <property name="transacted" value="false"/>
+      <property name="concurrentConsumers" value="10"/>
     </bean>
 
     <bean id="activemq"
           class="org.apache.activemq.camel.component.ActiveMQComponent">
-        <property name="configuration" ref="jmsConfig"/>
+      <property name="configuration" ref="jmsConfig"/>
     </bean>
 
-    <!--<bean id="mailNewMailListener" class="eu.alertproject.iccs.stardom.activemqconnector.internal.MailNewMailListener"/>-->
+    <!-- Spring JMS Template -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+      <property name="connectionFactory" ref="pooledJmsConnectionFactory" />
+      <property name="pubSubDomain" value="true"/>
+    </bean>
+
 
     <bean id="iccsMlNewMailConsumer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
@@ -278,9 +280,18 @@
         <property name="cacheLevel" value="3" />
     </bean>
 
-        <!-- Spring JMS Template -->
-    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-        <property name="connectionFactory" ref="pooledJmsConnectionFactory" />
+
+    <bean id="iccsLoginVerifyListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg value="ALERT.ActionService.LoginVerifyRequest" />
+            </bean>
+        </property>
+        <property name="messageListener" ref="loginVerifyListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
     </bean>
 
     <import resource="spring-analyzers.xml" />

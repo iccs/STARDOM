@@ -2,6 +2,7 @@ package eu.alertproject.iccs.stardom.ui.service;
 
 import com.thoughtworks.xstream.XStream;
 import eu.alertproject.iccs.events.activemq.TextMessageCreator;
+import eu.alertproject.iccs.events.alert.Keui;
 import eu.alertproject.iccs.events.api.EventFactory;
 import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.events.alert.TextToAnnotateReplyEnvelope;
@@ -104,14 +105,14 @@ public class KEUIAnnotationService implements AnnotationService,MessageListener 
 
         if(eventData !=null){
 
-            Iterator<TextToAnnotateReplyPayload.EventData.Keui.Concept> iterator = eventData.getKeui().getTextConcepts().iterator();
+            Iterator<Keui.Concept> iterator = eventData.getKeui().getTextConcepts().iterator();
 
 
             List<Concept> concepts = new ArrayList<Concept>();
 
             while (iterator.hasNext()){
 
-                TextToAnnotateReplyPayload.EventData.Keui.Concept next = iterator.next();
+                Keui.Concept next = iterator.next();
                 concepts.add(new Concept(next.getUri(),next.getWeight()));
             }
 
