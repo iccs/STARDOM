@@ -26,6 +26,7 @@
 
         <!-- Always keep this last -->
         <module>eu.alert-project.iccs.stardom.spring</module>
+        <module>eu.alert-project.iccs.stardom.classification</module>
     </modules>
 
     <profiles>
