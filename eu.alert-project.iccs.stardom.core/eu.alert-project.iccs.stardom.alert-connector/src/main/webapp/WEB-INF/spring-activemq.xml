@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+        default-autowire="byName"
+        >
+<!-- ActiveMQ -->
+    <bean   id="jmsConnectionFactory"
+            class="org.apache.activemq.ActiveMQConnectionFactory" >
+      <property name="brokerURL" value="tcp://www.cimcollege.rs:61616" />
+      <property name="userName" value="" />
+      <property name="password" value="" />
+    </bean>
+
+    <bean id="pooledJmsConnectionFactory"
+          class="org.apache.activemq.pool.PooledConnectionFactory"
+          destroy-method="stop">
+      <property name="connectionFactory" ref="jmsConnectionFactory"/>
+    </bean>
+
+    <bean id="jmsConfig"
+          class="org.apache.camel.component.jms.JmsConfiguration">
+      <property name="connectionFactory" ref="pooledJmsConnectionFactory"/>
+      <property name="transacted" value="false"/>
+      <property name="concurrentConsumers" value="10"/>
+    </bean>
+
+    <bean id="activemq"
+          class="org.apache.activemq.camel.component.ActiveMQComponent">
+      <property name="configuration" ref="jmsConfig"/>
+    </bean>
+
+    <!-- Spring JMS Template -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+      <property name="connectionFactory" ref="pooledJmsConnectionFactory" />
+      <property name="pubSubDomain" value="true"/>
+    </bean>
+
+
+    <bean id="iccsMlNewMailConsumer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsMlNewMail"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener" ref="mailNewMailListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+    <bean id="iccsScmNewCommitListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsScmNewIssue"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener" ref="scmNewCommitListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+    <bean id="iccsItsHistoryListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsHistory"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener" ref="itsHistoryListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+    <bean id="iccsItsNewCommentListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsNewComment"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener" ref="itsNewCommentListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+    <bean id="iccsItsNewIssueListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsNewIssue"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener" ref="itsNewIssueListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+
+    <bean id="iccsLoginVerifyListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg value="ALERT.ActionService.LoginVerifyRequest" />
+            </bean>
+        </property>
+        <property name="messageListener" ref="loginVerifyListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+</beans>

@@ -10,6 +10,7 @@ import eu.alertproject.iccs.stardom.analyzers.mailing.bus.MailingEvent;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.DefaultMailingListAction;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
+import eu.alertproject.iccs.stardom.constructor.api.Analyzers;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -59,6 +60,9 @@ public class MailNewMailListener extends ALERTActiveMQListener {
                 .getEventData();
 
         MailingList mailingList = eventData.getMailingList();
+
+
+        String fromUri = eventData.getMdService().getFromUri();
         Keui keui = eventData.getKeui();
 
 

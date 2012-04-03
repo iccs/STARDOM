@@ -18,6 +18,7 @@ public class IssueNewAnnotated extends ALERTActiveMQListener{
 
         //process the issue here
 
+
     }
 
 
