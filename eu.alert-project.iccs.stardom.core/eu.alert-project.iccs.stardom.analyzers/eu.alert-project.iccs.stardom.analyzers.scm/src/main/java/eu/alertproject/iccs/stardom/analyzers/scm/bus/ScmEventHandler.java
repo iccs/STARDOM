@@ -2,6 +2,8 @@ package eu.alertproject.iccs.stardom.analyzers.scm.bus;
 
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
+import eu.alertproject.iccs.stardom.bus.api.Event;
+import eu.alertproject.iccs.stardom.bus.api.STARDOMTopics;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
@@ -78,19 +80,20 @@ public class ScmEventHandler {
 
         logger.debug("Memory {}/{} ",Runtime.getRuntime().freeMemory(),Runtime.getRuntime().totalMemory());
         //whatever your do, do it here
-        for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
-            //if you are wondering how on earth this
-            //is not breaking, it is because if context.getAction()
-            // is not an instance of ScmAction, it will throw
-            // a class cast exception.
+        try {
+            for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
+                //if you are wondering how on earth this
+                //is not breaking, it is because if context.getAction()
+                // is not an instance of ScmAction, it will throw
+                // a class cast exception.
 
-            if(a.canHandle(context.getAction())){
-                try {
-                    a.analyze(identity,context.getAction());
-                } catch (Exception e) {
-                    logger.error("Error analying action ",e);
+                if(a.canHandle(context.getAction())){
+                        a.analyze(identity,context.getAction());
                 }
             }
+            Bus.publish(STARDOMTopics.IdentityUpdated, new Event(this,identity));
+        } catch (Exception e) {
+            logger.error("Error analying action ", e);
         }
 
     }

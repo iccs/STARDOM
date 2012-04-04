@@ -3,6 +3,9 @@ package eu.alertproject.iccs.stardom.analyzers.its.bus;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.DefaultItsChangeAction;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsChangeConnectorContext;
 import eu.alertproject.iccs.stardom.analyzers.its.internal.ProfileFromItsKdeWhoService;
+import eu.alertproject.iccs.stardom.bus.api.Bus;
+import eu.alertproject.iccs.stardom.bus.api.Event;
+import eu.alertproject.iccs.stardom.bus.api.STARDOMTopics;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
@@ -84,7 +87,9 @@ public class ItsChangeEventHandler {
                 who = identifier.find(context.getProfile(),"its-change");
             }
 
-            itsMlService.recordItsHistory(who,context.getAction());
+            itsMlService.recordItsHistory(who, context.getAction());
+            Bus.publish(STARDOMTopics.IdentityUpdated,new Event(this,who));
+
 
 
 
@@ -100,6 +105,8 @@ public class ItsChangeEventHandler {
             }
         } catch (Exception e) {
             logger.error("Something is up here ",e);
+        }finally{
+            Bus.publish(STARDOMTopics.IssueUpdated,new Event(this,context.getAction().getBugId()));
         }
 
     }

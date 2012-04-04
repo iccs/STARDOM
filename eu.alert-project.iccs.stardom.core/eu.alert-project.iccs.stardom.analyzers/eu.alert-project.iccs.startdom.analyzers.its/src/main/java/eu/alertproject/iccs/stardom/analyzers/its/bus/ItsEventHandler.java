@@ -3,6 +3,8 @@ package eu.alertproject.iccs.stardom.analyzers.its.bus;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.*;
 import eu.alertproject.iccs.stardom.analyzers.its.internal.ProfileFromItsKdeWhoService;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
+import eu.alertproject.iccs.stardom.bus.api.Event;
+import eu.alertproject.iccs.stardom.bus.api.STARDOMTopics;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
@@ -118,12 +120,21 @@ public class ItsEventHandler {
         logger.trace("void event() Identity {}",identity.getUuid());
 
 
-        //whatever your do, do it here
-        for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
-            if(a.canHandle(context.getAction())){
-                a.analyze(identity,context.getAction());
+        try {
+            //whatever your do, do it here
+            for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
+                if(a.canHandle(context.getAction())){
+                    a.analyze(identity,context.getAction());
+                }
             }
+        } catch (Exception e) {
+            logger.error("Error in handler ",e);
+        } finally {
+
+            Bus.publish(STARDOMTopics.IdentityUpdated,new Event(this,identity));
+            Bus.publish(STARDOMTopics.IssueUpdated,new Event(this,identity));
         }
+
 
     }
 
