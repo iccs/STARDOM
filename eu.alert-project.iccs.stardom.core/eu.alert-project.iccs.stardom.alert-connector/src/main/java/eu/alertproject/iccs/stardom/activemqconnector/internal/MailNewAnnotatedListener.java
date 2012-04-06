@@ -10,23 +10,16 @@ import eu.alertproject.iccs.stardom.analyzers.mailing.bus.MailingEvent;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.DefaultMailingListAction;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
-import eu.alertproject.iccs.stardom.constructor.api.Analyzers;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.TextMessage;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -34,18 +27,14 @@ import java.util.Properties;
  * Date: 05/11/11
  * Time: 19:12
  */
-@Component("mailNewMailListener")
-public class MailNewMailListener extends ALERTActiveMQListener {
+@Component("mailNewAnnotatedListener")
+public class MailNewAnnotatedListener extends ALERTActiveMQListener {
 
-    private Logger logger = LoggerFactory.getLogger(MailNewMailListener.class);
-
-    @Autowired
-    Properties systemProperties;
+    private Logger logger = LoggerFactory.getLogger(MailNewAnnotatedListener.class);
 
     @Override
-    public void process(Message message) throws IOException, JMSException {
+    public void processXml(String text) {
 
-        String text = ((TextMessage) message).getText();
         MailingListAnnotatedEnvelope envelope = EventFactory.<MailingListAnnotatedEnvelope>fromXml(
                 text,
                 MailingListAnnotatedEnvelope.class);
@@ -64,42 +53,26 @@ public class MailNewMailListener extends ALERTActiveMQListener {
 
         String fromUri = eventData.getMdService().getFromUri();
         Keui keui = eventData.getKeui();
-
+        List<Keui.Concept> contentConcepts = keui.getContentConcepts();
+        contentConcepts.addAll(keui.getSubjectConcepts());
 
 
         DefaultMailingListAction defaultMailingListAction = new DefaultMailingListAction();
         defaultMailingListAction.setDate(mailingList.getDate());
         defaultMailingListAction.setFrom(mailingList.getFrom());
+        defaultMailingListAction.setFromUri(fromUri);
         defaultMailingListAction.setSubject(mailingList.getSubject());
         defaultMailingListAction.setText(mailingList.getContent());
-
+        defaultMailingListAction.setConcepts(contentConcepts);
 
         MailingListConnectorContext context  = new MailingListConnectorContext();
         context.setAction(defaultMailingListAction);
         context.setProfile(new Profile());
 
-        //TODO store annotations
-        //TODO store uris
-
-
-        String filterDate = systemProperties.getProperty("analyzers.filterDate");
-	    logger.trace("System property filter date = ({})",filterDate);
-        Date when = null;
-        try {
-            when = DateUtils.parseDate(filterDate, new String[]{"yyyy-MM-dd"});
-        } catch (ParseException e) {
-            //nothing
-            logger.error("void process() Couldn't parse filterDate = ({}) ",filterDate);
-        }
-
-	    logger.trace("Testing against date = ({})",when);
-
-        if (when == null || ( context.getAction().getDate() != null && context.getAction().getDate().before(when) ) ) {
-            logger.trace("void action() Ignoring action because date {} is before {}", context.getAction().getDate(), when);
-            return;
-        }
-
+        if(isIgnoredBasedOnDate(context.getAction().getDate())){return;}
         fixProfile(context);
+
+
         MailingEvent mailEvent = new MailingEvent(this,context);
         logger.trace("void onMessage() {} ",mailEvent);
 

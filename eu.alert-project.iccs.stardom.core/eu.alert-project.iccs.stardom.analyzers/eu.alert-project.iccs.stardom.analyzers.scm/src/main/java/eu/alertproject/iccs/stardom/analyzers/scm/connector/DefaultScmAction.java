@@ -1,5 +1,7 @@
 package eu.alertproject.iccs.stardom.analyzers.scm.connector;
 
+import eu.alertproject.iccs.events.alert.Keui;
+
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +21,8 @@ public class DefaultScmAction implements ScmAction {
     private List<ScmFile> files;
     private String comment;
 
-
+    private List<Keui.Concept> concepts;
+    
     @Override
     public Date getDate() {
         return date;
@@ -72,6 +75,14 @@ public class DefaultScmAction implements ScmAction {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public List<Keui.Concept> getConcepts() {
+        return concepts;
+    }
+
+    public void setConcepts(List<Keui.Concept> concepts) {
+        this.concepts = concepts;
     }
 
     @Override

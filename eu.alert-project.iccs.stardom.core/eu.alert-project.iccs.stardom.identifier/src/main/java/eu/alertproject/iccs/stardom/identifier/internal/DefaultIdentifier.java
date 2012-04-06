@@ -554,6 +554,7 @@ public class DefaultIdentifier implements Identifier{
 
                 if(
                         StringUtils.equalsIgnoreCase(f.getName(), "id") ||
+                        StringUtils.equalsIgnoreCase(f.getName(), "uri") ||
                         StringUtils.equalsIgnoreCase(f.getName(), "source") ||
                         StringUtils.equalsIgnoreCase(f.getName(), "sourceId")
 

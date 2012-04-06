@@ -52,12 +52,18 @@ public class Profile implements SimpleBean{
     public Profile() {
     }
 
-    public Profile(String name, String lastname, String username, String email, String uri) {
+    public Profile(String name, String lastname, String username, String email) {
+        this(name,lastname,username,email,"","none");
+    }
+
+    public Profile(String name, String lastname, String username, String email, String uri,String source) {
 
         this.name = name;
         this.lastname = lastname;
         this.username = username;
         this.email = email;
+        this.uri = uri;
+        this.source =source;
 
     }
 

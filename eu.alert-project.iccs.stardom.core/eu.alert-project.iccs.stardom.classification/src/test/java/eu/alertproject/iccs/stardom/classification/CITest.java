@@ -18,9 +18,8 @@ public class CITest {
     @Test
     public void deserialize() throws IOException {
 
-        XStream x = new XStream();
-        x.processAnnotations(CI.class);
-        CI o = (CI) x.fromXML(IOUtils.toString(CITest.class.getResourceAsStream("/description.xml")));
+        CI o =  CIUtils.loadFromDefaultLocation();
+
         Assert.assertNotNull(o);
         Assert.assertEquals(3, o.getClassifiers().size(),0);
 

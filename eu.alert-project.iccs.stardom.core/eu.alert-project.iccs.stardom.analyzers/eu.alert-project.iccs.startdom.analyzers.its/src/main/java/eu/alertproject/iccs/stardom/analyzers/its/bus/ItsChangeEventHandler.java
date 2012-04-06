@@ -3,6 +3,7 @@ package eu.alertproject.iccs.stardom.analyzers.its.bus;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.DefaultItsChangeAction;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsChangeConnectorContext;
 import eu.alertproject.iccs.stardom.analyzers.its.internal.ProfileFromItsKdeWhoService;
+import eu.alertproject.iccs.stardom.bus.api.AnnotatedUpdateEvent;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.bus.api.Event;
 import eu.alertproject.iccs.stardom.bus.api.STARDOMTopics;
@@ -75,8 +76,8 @@ public class ItsChangeEventHandler {
          *
          */
 
+        Identity who = null;
         try {
-            Identity who = null;
             if(!StringUtils.isEmpty(context.getProfile().getEmail())){
 
                 if(context.getProfile().getName() !=null && context.getProfile().getName().trim().toLowerCase().equals("none")){
@@ -88,10 +89,6 @@ public class ItsChangeEventHandler {
             }
 
             itsMlService.recordItsHistory(who, context.getAction());
-            Bus.publish(STARDOMTopics.IdentityUpdated,new Event(this,who));
-
-
-
 
             //whatever your do, do it here
             for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
@@ -105,10 +102,11 @@ public class ItsChangeEventHandler {
             }
         } catch (Exception e) {
             logger.error("Something is up here ",e);
-        }finally{
-            Bus.publish(STARDOMTopics.IssueUpdated,new Event(this,context.getAction().getBugId()));
+        }finally {
+            if(who !=null){
+                Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,who,null));
+            }
         }
-
     }
 
 }

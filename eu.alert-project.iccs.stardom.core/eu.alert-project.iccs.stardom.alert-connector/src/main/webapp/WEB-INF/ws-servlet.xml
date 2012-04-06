@@ -173,7 +173,7 @@
 
 
 
-    <import resource="spring-analyzers.xml" />
-    <import resource="spring-activemq.xml" />
+    <import resource="classpath:spring-analyzers.xml" />
+    <import resource="classpath:spring-activemq.xml" />
 
 </beans>

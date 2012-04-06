@@ -29,7 +29,7 @@ public class Bus {
     /**
      * @see org.bushe.swing.event.EventService#publish(String, Object)
      */
-    public static void publish(STARDOMTopics topic, Event o) {
+    public static void publish(String topic, Event o) {
 
         if (topic == null) {
             throw new IllegalArgumentException("Can't publish to null topic.");

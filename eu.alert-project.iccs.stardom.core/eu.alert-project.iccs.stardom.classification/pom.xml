@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>eu.alert-project.iccs.stardom.classification</artifactId>
+    <artifactId>classification</artifactId>
     <name>${project.groupId}.${project.artifactId}</name>
 
     <dependencies>

@@ -60,20 +60,20 @@ public class ItsMlService {
         if(StringUtils.equalsIgnoreCase(what, "Status")){
 
 
-            ItsMl itsMl = itsMlDao.findLastestForBugId(action.getBugId());
+//            ItsMl itsMl = itsMlDao.findLastestForBugId(action.getBugId());
 
             ItsMl newBugAction = new ItsMl();
 
-            if(itsMl != null){
-                newBugAction.setUuid(itsMl.getUuid());
-            }
+//            if(itsMl != null){
+//                newBugAction.setUuid(itsMl.getUuid());
+//            }
 
             newBugAction.setUuidWho(who == null ? "none"  :who.getUuid());
             newBugAction.setBugId(action.getBugId());
             newBugAction.setStatus(action.getAdded());
             newBugAction.setWhen(action.getDate());
-            ItsMl insert = itsMlDao.insert(newBugAction);
-            logger.trace("void event() Status Change {} ",insert);
+//            ItsMl insert = itsMlDao.insert(newBugAction);
+//            logger.trace("void event() Status Change {} ",insert);
 
 
         }else if(StringUtils.endsWithIgnoreCase(what,"AssignedTo")){

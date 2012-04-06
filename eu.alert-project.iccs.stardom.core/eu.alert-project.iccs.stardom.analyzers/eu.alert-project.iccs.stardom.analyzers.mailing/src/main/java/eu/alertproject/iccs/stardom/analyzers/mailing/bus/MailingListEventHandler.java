@@ -3,6 +3,7 @@ package eu.alertproject.iccs.stardom.analyzers.mailing.bus;
 import eu.alertproject.iccs.stardom.analyzers.mailing.api.ProfileFromMailFromService;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
 import eu.alertproject.iccs.stardom.analyzers.mailing.constructor.AbstractMailingListAnalyzer;
+import eu.alertproject.iccs.stardom.bus.api.AnnotatedUpdateEvent;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.bus.api.Event;
 import eu.alertproject.iccs.stardom.bus.api.STARDOMTopics;
@@ -58,6 +59,7 @@ public class MailingListEventHandler {
 
         //try to generate a profile from the e-mail
         Profile profile = profileFromMailFromService.generate(context.getAction().getFrom());
+        profile.setUri(context.getAction().getFromUri());
 
         if(profile == null){
             logger.warn("Couldn' generate profile from {} - ignoring context",context.getAction().getFrom());
@@ -82,7 +84,8 @@ public class MailingListEventHandler {
 
 
             //update !!!
-            Bus.publish(STARDOMTopics.IdentityUpdated, new Event(this,identity));
+            Bus.publish(STARDOMTopics.IdentityUpdated, new AnnotatedUpdateEvent(this,identity,context.getAction().getConcepts()));
+
         }catch (ClassCastException e){
             logger.warn("Something happened in the analyzer {} ",e);
         }

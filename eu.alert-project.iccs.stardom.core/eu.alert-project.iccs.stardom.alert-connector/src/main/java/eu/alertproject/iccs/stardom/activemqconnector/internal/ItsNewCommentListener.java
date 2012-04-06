@@ -35,14 +35,12 @@ public class ItsNewCommentListener extends ALERTActiveMQListener {
 
 
     @Override
-    public void process(Message message) throws IOException, JMSException {
+    public void processXml(String text){
 
         ItsCommentConnectorContext  context =null;
-        ObjectMapper mapper = new ObjectMapper();
-        String text = ((TextMessage) message).getText();
 
         logger.trace("void onMessage() Text to parse {} ",text);
-        context= mapper.readValue(IOUtils.toInputStream(text),ItsCommentConnectorContext .class);
+//        context= mapper.readValue(IOUtils.toInputStream(text),ItsCommentConnectorContext .class);
 
         String filterDate = systemProperties.getProperty("analyzers.filterDate");
 

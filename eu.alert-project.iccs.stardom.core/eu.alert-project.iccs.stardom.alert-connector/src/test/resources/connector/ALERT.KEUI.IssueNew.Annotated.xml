@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope  xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+            xmlns:wsa="http://www.w3.org/2005/08/addressing">
+    <soap:Header ></soap:Header >
+    <soap:Body >
+        <wsnt:Notify>
+            <wsnt:NotificationMessage>
+                <wsnt:Topic></wsnt:Topic>
+                <wsnt:ProducerReference>
+                    <wsa:Address>http://www.alert-project.eu/metadata</wsa:Address>
+                </wsnt:ProducerReference>
+                <wsnt:Message>
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/"
+                               xmlns:o="http://www.alert-project.eu/ontoevents-mdservice"
+                               xmlns:s="http://www.alert-project.eu/strevents-kesi"
+                               xmlns:s1="http://www.alert-project.eu/strevents-keui"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            >
+                        <ns1:head>
+                            <ns1:sender>METADATASERVICE</ns1:sender>
+                            <ns1:timestamp>10003</ns1:timestamp>
+                            <ns1:sequencenumber>1</ns1:sequencenumber>
+                        </ns1:head>
+                        <ns1:payload>
+                            <ns1:meta>
+                                <ns1:startTime>10010</ns1:startTime>
+                                <ns1:endTime>10020</ns1:endTime>
+                                <ns1:eventName>ALERT.Metadata.IssueNew.Stored</ns1:eventName>
+                                <ns1:eventId>5748</ns1:eventId>
+                                <ns1:eventType>reply</ns1:eventType>
+                            </ns1:meta>
+                            <ns1:eventData>
+                                <s:kesi>
+                                    <s:issueId>184671</s:issueId>
+                                    <s:issueAuthor>
+                                        <s:name>Alex Fiestas</s:name>
+                                        <s:id >afiestas@kde.org</s:id >
+                                        <s:email >afiestas@kde.org</s:email >
+                                    </s:issueAuthor >
+                                    <s:issueStatus >Assigned</s:issueStatus >
+                                    <s:issueDescription >Notify user on hardware changes 2</s:issueDescription >
+                                    <s:issueKeyword >keyword</s:issueKeyword >
+                                    <s:issueProduct >
+                                        <s:productId >solid</s:productId >
+                                        <s:productComponentId >general</s:productComponentId >
+                                        <s:productVersion >unspecified</s:productVersion >
+                                    </s:issueProduct >
+                                    <s:issueComputerSystem >
+                                        <s:computerSystemPlatform >Ubuntu Packages</s:computerSystemPlatform >
+                                        <s:computerSystemOS >Linux</s:computerSystemOS >
+                                    </s:issueComputerSystem >
+                                    <s:issuePriority >4</s:issuePriority >
+                                    <s:issueSeverity >Blocker</s:issueSeverity >
+                                    <s:issueAssignedTo >
+                                        <s:name >Sander Pientka</s:name >
+                                        <s:id >cumulus0007@gmail.com</s:id >
+                                        <s:email >cumulus0007@gmail.com</s:email >
+                                    </s:issueAssignedTo >
+                                    <s:issueCCPerson >
+                                        <s:name >Angel Blue</s:name >
+                                        <s:id >angel_blue_co2004@yahoo.com</s:id >
+                                        <s:email >angel_blue_co2004@yahoo.com</s:email >
+                                    </s:issueCCPerson >
+                                    <s:issueUrl >https://bugs.kde.org/show_bug.cgi?id=184671</s:issueUrl >
+                                    <s:issueDependsOnId >10001</s:issueDependsOnId >
+                                    <s:issueBlocksId >20001</s:issueBlocksId >
+                                    <s:issueDateOpened >2009-02-17 16:31</s:issueDateOpened >
+                                    <s:issueComment >
+                                        <s:commentNumber >0</s:commentNumber >
+                                        <s:commentText >Version: (using KDE 4.2.0) OS: Linux Installed from: Ubuntu
+                                            Packages It would be awesome if KDE notifies te user of newly installed
+                                            hardware, missing drivers, programs to use the connected device, etc.
+                                        </s:commentText >
+                                        <s:commentPerson >
+                                            <s:name >Alex Fiestas</s:name >
+                                            <s:id >afiestas@kde.org</s:id >
+                                            <s:email >afiestas@kde.org</s:email >
+                                        </s:commentPerson >
+                                        <s:commentDate >2009-02-17 16:31:37</s:commentDate >
+                                    </s:issueComment >
+                                    <s:issueAttachment >
+                                        <s:attachmentId >3532</s:attachmentId >
+                                        <s:attachmentFilename >name</s:attachmentFilename >
+                                        <s:attachmentType >doc</s:attachmentType >
+                                        <s:attachmentCreator >
+                                            <s:name >Alex Fiestas</s:name >
+                                            <s:id >afiestas@kde.org</s:id >
+                                            <s:email >afiestas@kde.org</s:email >
+                                        </s:attachmentCreator >
+                                    </s:issueAttachment >
+                                    <s:issueTracker >
+                                        <s:issueTrackerId >241</s:issueTrackerId >
+                                        <s:issueTrackerType >bugzilla</s:issueTrackerType >
+                                        <s:issueTrackerURL >https://bugs.kde.org/</s:issueTrackerURL >
+                                    </s:issueTracker >
+                                </s:kesi >
+                                <o:mdservice>
+                                    <o:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</o:issueUri>
+                                    <o:issueAuthorUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1
+                                    </o:issueAuthorUri>
+                                    <o:issueProduct>
+                                        <o:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1
+                                        </o:productUri>
+                                        <o:productComponentUri>
+                                            http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Component1
+                                        </o:productComponentUri>
+                                    </o:issueProduct>
+                                    <o:issueComputerSystem>
+                                        <o:computerSystemUri>
+                                            http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#ComputerSystem1
+                                        </o:computerSystemUri>
+                                    </o:issueComputerSystem>
+                                    <o:issueAssignedToUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2
+                                    </o:issueAssignedToUri>
+                                    <o:issueCCPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3
+                                    </o:issueCCPersonUri>
+                                    <o:issueDependsOnUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug2
+                                    </o:issueDependsOnUri>
+                                    <o:issueBlocksUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug3
+                                    </o:issueBlocksUri>
+                                    <o:issueComment>
+                                        <o:commentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment1
+                                        </o:commentUri>
+                                        <o:commentPersonUri>
+                                            http://www.alert-project.eu/ontologies/alert_scm.owl#Person1
+                                        </o:commentPersonUri>
+                                    </o:issueComment>
+                                    <o:issueAttachment>
+                                        <o:attachmentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Attachment1
+                                        </o:attachmentUri>
+                                    </o:issueAttachment>
+                                    <o:issueTracker>
+                                        <o:issueTrackerUri>
+                                            http://www.alert-project.eu/ontologies/alert_its.owl#IssueTracker1
+                                        </o:issueTrackerUri>
+                                    </o:issueTracker>
+                                </o:mdservice>
+
+                                <s1:keui>
+                                    <s1:issueDescriptionAnnotated>
+                                        <![CDATA[Notify <concept id="KDE/user">user</concept> on <concept id="http://ailab.ijs.si/alert/resource/r364">hardware</concept> changes <concept id="http://ailab.ijs.si/alert/resource/r17814">2</concept>]]></s1:issueDescriptionAnnotated>
+                                    <s1:issueDescriptionConcepts>
+                                        <s1:concept>
+                                            <s1:uri>KDE/user</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r364</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r17814</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                    </s1:issueDescriptionConcepts>
+                                    <s1:commentTextAnnotated>
+                                        <![CDATA[<concept id="http://ailab.ijs.si/alert/resource/r18520">Version</concept>: (using <concept id="KDE/KDE_4">KDE 4</concept>.<concept id="http://ailab.ijs.si/alert/resource/r17814">2</concept>.0) OS: <concept id="http://ailab.ijs.si/alert/resource/r14937">Linux</concept> <concept id="http://ailab.ijs.si/alert/resource/r18126">Installed</concept> from: <concept id="http://ailab.ijs.si/alert/resource/r18117">Ubuntu</concept> <concept id="http://ailab.ijs.si/alert/resource/r17650">Packages</concept> It would be awesome if <concept id="KDE/KDE">KDE</concept> notifies te <concept id="KDE/user">user</concept> of newly <concept id="http://ailab.ijs.si/alert/resource/r18126">installed</concept> <concept id="http://ailab.ijs.si/alert/resource/r364">hardware</concept>, missing <concept id="http://ailab.ijs.si/alert/resource/r17629">drivers</concept>, <concept id="KDE/programming">programs</concept> to use the connected <concept id="KDE/devices">device</concept>, etc.]]></s1:commentTextAnnotated>
+                                    <s1:commentTextConcepts>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r18520</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>KDE/KDE_4</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r17814</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r14937</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r18126</s1:uri>
+                                            <s1:weight>2</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r18117</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r17650</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>KDE/KDE</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>KDE/user</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r364</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r17629</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>KDE/programming</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>KDE/devices</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                    </s1:commentTextConcepts>
+                                    <s1:itemId>7805</s1:itemId>
+                                    <s1:threadId>12</s1:threadId>
+                                </s1:keui>
+                            </ns1:eventData>
+                        </ns1:payload>
+                    </ns1:event>
+                </wsnt:Message>
+            </wsnt:NotificationMessage>
+        </wsnt:Notify>
+    </soap:Body >
+</soap:Envelope >

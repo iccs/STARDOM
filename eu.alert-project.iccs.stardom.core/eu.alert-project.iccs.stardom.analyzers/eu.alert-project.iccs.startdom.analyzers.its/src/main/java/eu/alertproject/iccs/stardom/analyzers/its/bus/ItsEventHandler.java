@@ -2,6 +2,7 @@ package eu.alertproject.iccs.stardom.analyzers.its.bus;
 
 import eu.alertproject.iccs.stardom.analyzers.its.connector.*;
 import eu.alertproject.iccs.stardom.analyzers.its.internal.ProfileFromItsKdeWhoService;
+import eu.alertproject.iccs.stardom.bus.api.AnnotatedUpdateEvent;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.bus.api.Event;
 import eu.alertproject.iccs.stardom.bus.api.STARDOMTopics;
@@ -111,11 +112,6 @@ public class ItsEventHandler {
          */
 
         DefaultItsCommentAction action = context.getAction();
-
-        Profile generate = profileFromItsKdeWhoService.generate(context.getProfile());
-
-        context.setProfile(generate);
-
         Identity identity = identifier.find(context.getProfile(),"its-comment");
         logger.trace("void event() Identity {}",identity.getUuid());
 
@@ -131,26 +127,33 @@ public class ItsEventHandler {
             logger.error("Error in handler ",e);
         } finally {
 
-            Bus.publish(STARDOMTopics.IdentityUpdated,new Event(this,identity));
-            Bus.publish(STARDOMTopics.IssueUpdated,new Event(this,identity));
+            Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,identity,action.getConcepts()));
+            Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,action.getBugId(),action.getConcepts()));
         }
 
 
     }
 
     private void handleDirtyProfile(Profile dirty, DefaultItsAction action ){
-        Profile generate = profileFromItsKdeWhoService.generate(dirty);
 
-        Identity identity = identifier.find(generate,"its");
+        Identity identity = identifier.find(dirty,"its");
 
-        CleanItsAction cia = new CleanItsAction();
-        cia.setDate(action.getDate());
+//        CleanItsAction cia = new CleanItsAction();
+//        cia.setDate(action.getDate());
 
         //whatever your do, do it here
-        for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
-            if(a.canHandle(cia)){
-                a.analyze(identity,cia);
+        try {
+            for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
+                if(a.canHandle(action)){
+                    a.analyze(identity,action);
+                }
             }
+        } catch (Exception e) {
+            logger.error("Error in handler ",e);
+        } finally {
+
+            Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,identity,action.getConcepts()));
+            Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,action.getBugId(),action.getConcepts()));
         }
     }
 

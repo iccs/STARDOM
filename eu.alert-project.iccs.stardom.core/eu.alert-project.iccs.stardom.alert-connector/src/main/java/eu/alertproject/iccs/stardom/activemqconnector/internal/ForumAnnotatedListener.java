@@ -1,20 +1,18 @@
 package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
 import eu.alertproject.iccs.stardom.activemqconnector.api.ALERTActiveMQListener;
-
-import javax.jms.JMSException;
-import javax.jms.Message;
-import java.io.IOException;
+import org.springframework.stereotype.Component;
 
 /**
  * User: fotis
  * Date: 25/02/12
  * Time: 15:09
  */
-public class IssueNewAnnotated extends ALERTActiveMQListener{
+@Component("forumAnnotatedListener")
+public class ForumAnnotatedListener extends ALERTActiveMQListener{
 
     @Override
-    public void process(Message message) throws IOException, JMSException {
+    public void processXml(String xml){
 
         //process the issue here
 

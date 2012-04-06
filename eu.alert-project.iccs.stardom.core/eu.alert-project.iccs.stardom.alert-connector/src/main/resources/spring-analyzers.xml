@@ -4,9 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-
-
     <!-- Services -->
+   <bean class="eu.alertproject.iccs.stardom.activemqconnector.internal.ArtefactUpdateEventHandler"/>
    <bean class="eu.alertproject.iccs.stardom.analyzers.scm.bus.ScmEventHandler"/>
    <bean class="eu.alertproject.iccs.stardom.analyzers.its.bus.ItsEventHandler"/>
    <bean class="eu.alertproject.iccs.stardom.analyzers.its.bus.ItsChangeEventHandler"/>

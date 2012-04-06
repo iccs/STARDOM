@@ -91,10 +91,11 @@ public class ItsMl implements SimpleBean{
         this.status = status;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof ItsMl)) return false;
 
         ItsMl itsMl = (ItsMl) o;
 
@@ -102,6 +103,7 @@ public class ItsMl implements SimpleBean{
         if (id != null ? !id.equals(itsMl.id) : itsMl.id != null) return false;
         if (status != null ? !status.equals(itsMl.status) : itsMl.status != null) return false;
         if (uuid != null ? !uuid.equals(itsMl.uuid) : itsMl.uuid != null) return false;
+        if (uuidWho != null ? !uuidWho.equals(itsMl.uuidWho) : itsMl.uuidWho != null) return false;
         if (when != null ? !when.equals(itsMl.when) : itsMl.when != null) return false;
 
         return true;
@@ -111,21 +113,10 @@ public class ItsMl implements SimpleBean{
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (bugId != null ? bugId.hashCode() : 0);
+        result = 31 * result + (uuidWho != null ? uuidWho.hashCode() : 0);
         result = 31 * result + (uuid != null ? uuid.hashCode() : 0);
         result = 31 * result + (when != null ? when.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "ItsMl{" +
-                "id=" + id +
-                ", bugId=" + bugId +
-                ", uuidWho='" + uuidWho + '\'' +
-                ", uuid='" + uuid + '\'' +
-                ", when=" + when +
-                ", status='" + status + '\'' +
-                '}';
     }
 }
