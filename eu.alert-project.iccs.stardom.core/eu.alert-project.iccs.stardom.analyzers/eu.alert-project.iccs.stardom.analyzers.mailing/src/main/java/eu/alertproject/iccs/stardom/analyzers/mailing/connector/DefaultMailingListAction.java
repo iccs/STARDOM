@@ -1,6 +1,9 @@
 package eu.alertproject.iccs.stardom.analyzers.mailing.connector;
 
+import eu.alertproject.iccs.events.alert.Keui;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * User: fotis
@@ -11,9 +14,10 @@ public class DefaultMailingListAction implements MailingListAction{
 
     private Date date;
     private String from;
+    private String fromUri;
     private String subject;
     private String text;
-
+    private List<Keui.Concept> concepts;
 
     public Date getDate() {
         return date;
@@ -45,6 +49,22 @@ public class DefaultMailingListAction implements MailingListAction{
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getFromUri() {
+        return fromUri;
+    }
+
+    public void setFromUri(String fromUri) {
+        this.fromUri = fromUri;
+    }
+
+    public List<Keui.Concept> getConcepts() {
+        return concepts;
+    }
+
+    public void setConcepts(List<Keui.Concept> concepts) {
+        this.concepts = concepts;
     }
 
     @Override

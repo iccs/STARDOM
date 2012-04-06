@@ -4,6 +4,7 @@ import com.existanze.libraries.orm.dao.CommonDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Metric;
 import eu.alertproject.iccs.stardom.domain.api.MetricQuantitative;
+import eu.alertproject.iccs.stardom.domain.api.metrics.ScmTemporalMetric;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -27,4 +28,5 @@ public interface MetricDao extends CommonDao<Metric>{
     <T extends Metric> List<T> getForIdentityAfer(Identity identity, Date date, Class<T> aClass);
 
     <T extends Metric> Integer getNumberForIdentityAfer(Identity identity, Date date, Class<T> aClass);
+    <T extends Metric> Integer getNumberForIdentity(Identity payload, Class<T> aClass);
 }

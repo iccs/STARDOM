@@ -1,5 +1,6 @@
 package eu.alertproject.iccs.stardom.analyzers.its.connector;
 
+import eu.alertproject.iccs.events.alert.Keui;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
 
 import java.util.Date;
@@ -19,6 +20,7 @@ public class DefaultItsAction implements ItsAction{
     private Date date;
     private Profile assigned;
     private Profile reporter;
+    private List<Keui.Concept> concepts;
 
     @Override
     public Date getDate() {
@@ -76,6 +78,14 @@ public class DefaultItsAction implements ItsAction{
 
     public void setReporter(Profile reporter) {
         this.reporter = reporter;
+    }
+
+    public List<Keui.Concept> getConcepts() {
+        return concepts;
+    }
+
+    public void setConcepts(List<Keui.Concept> concepts) {
+        this.concepts = concepts;
     }
 
     @Override

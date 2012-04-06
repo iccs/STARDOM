@@ -113,6 +113,19 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
 
 
     @Override
+    public <T extends Metric> Integer getNumberForIdentity(Identity identity, Class<T> aClass) {
+
+        Query query = getEntityManager().createQuery(
+                "SELECT COUNT(m) FROM " + aClass.getName() + " m " +
+                "WHERE m.identity.id = :id");
+
+        query.setParameter("id",identity.getId());
+        return ((Number)query.getSingleResult()).intValue();
+    }
+
+
+
+    @Override
     public <T extends Metric> T getMostRecentMetric(Identity identity, Class<T> aClass) {
 
         if(identity == null){

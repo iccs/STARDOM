@@ -2,6 +2,7 @@ package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
 import eu.alertproject.iccs.stardom.activemqconnector.api.ALERTActiveMQListener;
 import eu.alertproject.iccs.stardom.analyzers.scm.bus.ScmEvent;
+import eu.alertproject.iccs.stardom.analyzers.scm.connector.DefaultScmAction;
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
 import org.apache.commons.io.IOUtils;
@@ -27,43 +28,20 @@ import java.util.Properties;
  */
 @Component("scmNewCommitListener")
 public class ScmNewCommitListener extends ALERTActiveMQListener {
-
-    @Autowired
-    Properties systemProperties;
+;
 
     private Logger logger = LoggerFactory.getLogger(ScmNewCommitListener.class);
 
     @Override
-    public void process(Message message) throws IOException, JMSException {
-
-
+    public void processXml(String xml) {
 
         ScmConnectorContext context =null;
-        ObjectMapper mapper = new ObjectMapper();
 
-        String text = ((TextMessage) message).getText();
+        logger.trace("void onMessage() Text to parse {} ",xml);
+//        context= mapper.readValue(
+//                IOUtils.toInputStream(text)
+//                ,ScmConnectorContext.class);
 
-        logger.trace("void onMessage() Text to parse {} ",text);
-        context= mapper.readValue(
-                IOUtils.toInputStream(text)
-                ,ScmConnectorContext.class);
-
-
-        String filterDate = systemProperties.getProperty("analyzers.filterDate");
-
-
-        Date when = null;
-        try {
-            when = DateUtils.parseDate(filterDate, new String[]{"yyyy-MM-dd"});
-        } catch (ParseException e) {
-            //nothing
-        }
-
-
-        if (when != null && context.getAction().getDate().before(when)) {
-            logger.trace("void action() Ignoring action because date {} is before {}", context.getAction().getDate(), when);
-            return;
-        }
 
         //fix profile
 

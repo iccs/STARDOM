@@ -5,9 +5,9 @@ package eu.alertproject.iccs.stardom.bus.api;
  * Date: 01/04/12
  * Time: 21:19
  */
-public enum STARDOMTopics {
+public class STARDOMTopics {
 
-    IdentityUpdated,
-    IssueUpdated;
+    public static final String IdentityUpdated="STARDOM.IdentityUpdated";
+    public static final String IssueUpdated="STARDOM.IssueUpdated";
 
 }

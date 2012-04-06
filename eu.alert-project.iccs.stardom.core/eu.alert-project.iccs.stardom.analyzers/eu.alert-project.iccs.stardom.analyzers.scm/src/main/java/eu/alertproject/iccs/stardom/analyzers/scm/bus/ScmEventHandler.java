@@ -1,6 +1,7 @@
 package eu.alertproject.iccs.stardom.analyzers.scm.bus;
 
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmConnectorContext;
+import eu.alertproject.iccs.stardom.bus.api.AnnotatedUpdateEvent;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.bus.api.Event;
 import eu.alertproject.iccs.stardom.bus.api.STARDOMTopics;
@@ -91,7 +92,8 @@ public class ScmEventHandler {
                         a.analyze(identity,context.getAction());
                 }
             }
-            Bus.publish(STARDOMTopics.IdentityUpdated, new Event(this,identity));
+            Bus.publish(STARDOMTopics.IdentityUpdated, new AnnotatedUpdateEvent(this,identity,context.getAction().getConcepts()));
+
         } catch (Exception e) {
             logger.error("Error analying action ", e);
         }

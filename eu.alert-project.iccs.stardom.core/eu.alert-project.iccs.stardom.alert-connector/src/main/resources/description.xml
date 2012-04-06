@@ -1,0 +1,105 @@
+<ci>
+    <classifier name="core developers">
+            <metric name="ItsActivityMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ItsIssuesResolvedMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ItsTemporalMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="CommunicationActivityMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="CommunicationTemporalMetric">
+                <s>0.1234</s>
+                <c>0.0002</c>
+            </metric>
+            <metric name="ScmActivityMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ScmApiIntroducedMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ScmTemporalMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+    </classifier>
+    <classifier name="testers">
+            <metric name="ItsActivityMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ItsIssuesResolvedMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ItsTemporalMetric">
+                <s>0.5683</s>
+                <c>0.0004</c>
+            </metric>
+            <metric name="CommunicationActivityMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="CommunicationTemporalMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ScmActivityMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ScmApiIntroducedMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ScmTemporalMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+    </classifier>
+
+    <classifier name="bug triagers">
+            <metric name="ItsActivityMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ItsIssuesResolvedMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ItsTemporalMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="CommunicationActivityMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="CommunicationTemporalMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ScmActivityMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ScmApiUsageCountMetric">
+                <s>0.0</s>
+                <c>0.0</c>
+            </metric>
+            <metric name="ScmTemporalMetric">
+                <s>0.0005895</s>
+                <c>0.2547890</c>
+            </metric>
+    </classifier>
+</ci>

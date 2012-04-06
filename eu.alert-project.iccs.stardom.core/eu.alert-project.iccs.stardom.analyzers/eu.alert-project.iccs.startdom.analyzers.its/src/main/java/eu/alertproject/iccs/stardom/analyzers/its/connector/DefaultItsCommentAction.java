@@ -1,6 +1,9 @@
 package eu.alertproject.iccs.stardom.analyzers.its.connector;
 
+import eu.alertproject.iccs.events.alert.Keui;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * User: fotis
@@ -9,11 +12,19 @@ import java.util.Date;
  */
 public class DefaultItsCommentAction implements ItsAction{
 
-    private String name;
-    private String email;
+    private Integer bugId;
     private Date date;
     private String text;
+    private List<Keui.Concept> concepts;
 
+
+    public Integer getBugId() {
+        return bugId;
+    }
+
+    public void setBugId(Integer bugId) {
+        this.bugId = bugId;
+    }
 
     public void setDate(Date date) {
         this.date = date;
@@ -24,21 +35,6 @@ public class DefaultItsCommentAction implements ItsAction{
         return date;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getText() {
         return text;
@@ -46,5 +42,13 @@ public class DefaultItsCommentAction implements ItsAction{
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public List<Keui.Concept> getConcepts() {
+        return concepts;
+    }
+
+    public void setConcepts(List<Keui.Concept> concepts) {
+        this.concepts = concepts;
     }
 }

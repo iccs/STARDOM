@@ -50,7 +50,7 @@ public class CI {
             this.metrics = metrics;
         }
 
-        class Metric{
+        public static class Metric{
 
             @XStreamAsAttribute
             private String name;

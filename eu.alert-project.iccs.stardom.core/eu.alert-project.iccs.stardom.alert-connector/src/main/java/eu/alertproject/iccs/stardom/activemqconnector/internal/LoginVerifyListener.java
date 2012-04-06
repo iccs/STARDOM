@@ -55,10 +55,7 @@ public class LoginVerifyListener extends ALERTActiveMQListener{
 
 
     @Override
-    public void process(Message message) throws IOException, JMSException {
-
-
-        String text = ((TextMessage) message).getText();
+    public void processXml(String text){
 
         logger.trace("void process() Received {} ",text);
         LoginVerifyEnvelope verifyEnvelope = EventFactory.fromXml(

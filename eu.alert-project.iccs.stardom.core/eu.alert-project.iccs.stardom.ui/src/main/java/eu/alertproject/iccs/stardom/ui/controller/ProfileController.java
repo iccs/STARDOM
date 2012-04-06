@@ -1,6 +1,6 @@
 package eu.alertproject.iccs.stardom.ui.controller;
 
-import eu.alertproject.iccs.events.IdentityPersons;
+import eu.alertproject.iccs.events.stardom.IdentityPersons;
 import eu.alertproject.iccs.events.activemq.TextMessageCreator;
 import eu.alertproject.iccs.events.api.EventFactory;
 import eu.alertproject.iccs.events.api.Topics;
@@ -19,7 +19,6 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

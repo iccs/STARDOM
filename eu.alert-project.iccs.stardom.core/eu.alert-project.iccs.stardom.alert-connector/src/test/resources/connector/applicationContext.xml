@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+        default-autowire="byName"
+        >
+
+
+    <!--  Properties -->
+	<bean id="testPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
+        <property name="locations">
+            <list>
+                <value>classpath:/test/system.properties</value>
+                <value>classpath:/connector/system.properties</value>
+            </list>
+        </property>
+	</bean>
+
+    <bean id="eventservice" class="eu.alertproject.iccs.stardom.bus.api.StardomEventService"/>
+
+    <bean id="eventbusInit" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+      <property name="targetClass" value="org.bushe.swing.event.EventServiceLocator" />
+      <property name="targetMethod" value="setEventService" />
+      <property name="arguments">
+          <list>
+              <!-- Be careful here, do not change the name of the service -->
+              <value>EventBus</value>
+              <ref bean="eventservice"/>
+          </list>
+      </property>
+    </bean>
+
+
+    <bean class="eu.alertproject.iccs.stardom.bus.api.annotation.EventHandlersBeanPostProcessor"/>
+    <bean class="eu.alertproject.iccs.stardom.constructor.api.spring.AnalyzerBeanPostProcessor"/>
+
+    <!-- ProfileParser-->
+    <bean id="profileFromMailFromService"
+          class="eu.alertproject.iccs.stardom.analyzers.mailing.internal.ProfileFromMailFromServiceSensor"/>
+
+    <bean id="resolutionAdapter" class="${analyzers.its.resolutionAdapter}"/>
+
+    <bean id="broker" class="org.apache.activemq.xbean.BrokerFactoryBean">
+        <property name="config" value="classpath:org/apache/activemq/xbean/activemq.xml" />
+        <property name="start" value="true" />
+      </bean>
+
+    <import resource="classpath:spring-activemq.xml" />
+    <import resource="classpath:spring-analyzers.xml"/>
+
+
+</beans>

@@ -45,16 +45,25 @@ public class Profile implements SimpleBean{
     @Column
     private String source = "none";
     
+    @Column
+    private String uri;
+    
 
     public Profile() {
     }
 
     public Profile(String name, String lastname, String username, String email) {
+        this(name,lastname,username,email,"","none");
+    }
+
+    public Profile(String name, String lastname, String username, String email, String uri,String source) {
 
         this.name = name;
         this.lastname = lastname;
         this.username = username;
         this.email = email;
+        this.uri = uri;
+        this.source =source;
 
     }
 
@@ -115,6 +124,14 @@ public class Profile implements SimpleBean{
         this.source = source;
     }
 
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -126,6 +143,9 @@ public class Profile implements SimpleBean{
         if (id != null ? !id.equals(profile.id) : profile.id != null) return false;
         if (lastname != null ? !lastname.equals(profile.lastname) : profile.lastname != null) return false;
         if (name != null ? !name.equals(profile.name) : profile.name != null) return false;
+        if (source != null ? !source.equals(profile.source) : profile.source != null) return false;
+        if (sourceId != null ? !sourceId.equals(profile.sourceId) : profile.sourceId != null) return false;
+        if (uri != null ? !uri.equals(profile.uri) : profile.uri != null) return false;
         if (username != null ? !username.equals(profile.username) : profile.username != null) return false;
 
         return true;
@@ -134,10 +154,13 @@ public class Profile implements SimpleBean{
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (sourceId != null ? sourceId.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (source != null ? source.hashCode() : 0);
+        result = 31 * result + (uri != null ? uri.hashCode() : 0);
         return result;
     }
 
@@ -145,10 +168,13 @@ public class Profile implements SimpleBean{
     public String toString() {
         return "Profile{" +
                 "id=" + id +
+                ", sourceId='" + sourceId + '\'' +
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
+                ", source='" + source + '\'' +
+                ", uri='" + uri + '\'' +
                 '}';
     }
 }

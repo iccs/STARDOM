@@ -29,7 +29,7 @@ import java.sql.SQLException;
  * To change this template use File | Settings | File Templates.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:/test/testApplicationContext.xml"})
 public abstract class SpringDbUnitJpaTest implements ApplicationContextAware {
 
     private Logger logger = LoggerFactory.getLogger(SpringDbUnitJpaTest.class);

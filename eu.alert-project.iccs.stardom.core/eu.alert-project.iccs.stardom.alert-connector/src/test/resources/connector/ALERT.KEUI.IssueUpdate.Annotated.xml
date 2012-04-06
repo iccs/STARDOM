@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope  xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
+            xmlns:wsa="http://www.w3.org/2005/08/addressing">
+    <soap:Header ></soap:Header >
+    <soap:Body >
+        <wsnt:Notify>
+            <wsnt:NotificationMessage>
+                <wsnt:Topic></wsnt:Topic>
+                <wsnt:ProducerReference>
+                    <wsa:Address>http://www.alert-project.eu/metadata</wsa:Address>
+                </wsnt:ProducerReference>
+                <wsnt:Message>
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/"
+                               xmlns:o="http://www.alert-project.eu/ontoevents-mdservice"
+                               xmlns:s="http://www.alert-project.eu/strevents-kesi"
+                               xmlns:s1="http://www.alert-project.eu/strevents-keui"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            >
+                        <ns1:head>
+                            <ns1:sender>METADATASERVICE</ns1:sender>
+                            <ns1:timestamp>10003</ns1:timestamp>
+                            <ns1:sequencenumber>1</ns1:sequencenumber>
+                        </ns1:head>
+                        <ns1:payload>
+                            <ns1:meta>
+                                <ns1:startTime>10010</ns1:startTime>
+                                <ns1:endTime>10020</ns1:endTime>
+                                <!-- name of event -->
+                                <ns1:eventName>ALERT.Metadata.IssueUpdate.Stored</ns1:eventName>
+                                <ns1:eventId>5748</ns1:eventId>
+                                <ns1:eventType>reply</ns1:eventType>
+                            </ns1:meta>
+                            <ns1:eventData>
+                                <s:kesi>
+                                    <s:issueId>184671</s:issueId>
+                                    <s:issueStatus>Resolved</s:issueStatus>
+                                    <s:issueResolution>Fixed</s:issueResolution>
+                                    <s:issueLastModified>2011-04-15 10:55:57</s:issueLastModified>
+                                    <s:issueComment>
+                                        <s:commentId></s:commentId>
+                                        <s:commentNumber>1</s:commentNumber>
+                                        <s:commentText>If a driver is missing, clicking on the notification should open
+                                            the package manager (by default) so the user can find a driver
+                                        </s:commentText>
+                                        <s:commentPerson>
+                                            <s:name>Sander Pientka</s:name>
+                                            <s:id>cumulus0007@gmail.com</s:id>
+                                            <s:email>cumulus0007@gmail.com</s:email>
+                                        </s:commentPerson>
+                                        <s:commentDate>2009-03-04 18:11:19</s:commentDate>
+                                    </s:issueComment>
+                                    <s:issueActivity>
+                                        <s:activityId>4125</s:activityId>
+                                        <s:activityWho>cumulus0007@gmail.com</s:activityWho>
+                                        <s:activityWhen>2009-03-04 18:11:19</s:activityWhen>
+                                        <s:activityWRA>
+                                            <s:activityWhat>Status</s:activityWhat>
+                                            <s:activityRemoved>Assigned</s:activityRemoved>
+                                            <s:activityAdded>Resolved</s:activityAdded>
+                                        </s:activityWRA>
+                                        <s:activityWRA>
+                                            <s:activityWhat>Resolution</s:activityWhat>
+                                            <s:activityRemoved>---</s:activityRemoved>
+                                            <s:activityAdded>Fixed</s:activityAdded>
+                                        </s:activityWRA>
+                                    </s:issueActivity>
+                                </s:kesi>
+                                <o:mdservice>
+                                    <o:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</o:issueUri>
+                                    <o:issueComment>
+                                        <o:commentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment2
+                                        </o:commentUri>
+                                        <o:commentPersonUri>
+                                            http://www.alert-project.eu/ontologies/alert_scm.owl#Person2
+                                        </o:commentPersonUri>
+                                    </o:issueComment>
+                                    <o:issueActivity>
+                                        <o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity1
+                                        </o:activityUri>
+                                        <o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2
+                                        </o:activityWhoUri>
+                                    </o:issueActivity>
+                                    <o:issueActivity>
+                                        <o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity2
+                                        </o:activityUri>
+                                        <o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2
+                                        </o:activityWhoUri>
+                                    </o:issueActivity>
+                                </o:mdservice>
+
+                                <s1:keui>
+                                    <s1:commentTextAnnotated>
+                                        <![CDATA[If a <concept id="http://ailab.ijs.si/alert/resource/r17629">driver</concept> is missing, <concept id="http://ailab.ijs.si/alert/resource/r3772">clicking</concept> on the <concept id="http://ailab.ijs.si/alert/resource/r17717">notification</concept> should <concept id="http://ailab.ijs.si/alert/resource/r3964">open</concept> the <concept id="http://ailab.ijs.si/alert/resource/r16296">package manager</concept> (by default) so the <concept id="KDE/user">user</concept> can <concept id="KDE/find">find</concept> a <concept id="http://ailab.ijs.si/alert/resource/r17629">driver</concept>]]></s1:commentTextAnnotated>
+                                    <s1:commentTextConcepts>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r17629</s1:uri>
+                                            <s1:weight>2</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r3772</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r17717</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r3964</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>http://ailab.ijs.si/alert/resource/r16296</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>KDE/user</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                        <s1:concept>
+                                            <s1:uri>KDE/find</s1:uri>
+                                            <s1:weight>1</s1:weight>
+                                        </s1:concept>
+                                    </s1:commentTextConcepts>
+                                    <s1:itemId>7805</s1:itemId>
+                                    <s1:threadId>12</s1:threadId>
+                                </s1:keui>
+                            </ns1:eventData>
+                        </ns1:payload>
+                    </ns1:event>
+                </wsnt:Message>
+            </wsnt:NotificationMessage>
+        </wsnt:Notify>
+    </soap:Body >
+</soap:Envelope >

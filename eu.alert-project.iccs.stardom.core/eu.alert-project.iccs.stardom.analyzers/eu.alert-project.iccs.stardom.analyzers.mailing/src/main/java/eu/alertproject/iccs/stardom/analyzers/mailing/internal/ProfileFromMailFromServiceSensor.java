@@ -31,11 +31,11 @@ public class ProfileFromMailFromServiceSensor implements ProfileFromMailFromServ
         /*
         We are making the following assumptions that we have
             1.) Email format Name Lastname <email>
-            2.) Names are composed of a single work, the rest is the last name
+            2.) Names are composed of a single word, the rest is the last name
 
             Alex Fiestas <afiestas@kde.org>
          */
-        Pattern p = Pattern.compile("([\\w\\?-]+) at ([\\w\\?\\.\\d=\\-]+) (\\((.*( .*)?)\\))?");
+        Pattern p = Pattern.compile("([\\w\\.\\?-]+) at ([\\w\\?\\.\\d=\\-]+) (\\((.*( .*)?)\\))?");
 
         Matcher matcher = p.matcher(mailFrom);
 

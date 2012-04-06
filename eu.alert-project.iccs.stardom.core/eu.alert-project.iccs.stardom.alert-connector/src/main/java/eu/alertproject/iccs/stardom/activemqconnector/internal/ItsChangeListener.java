@@ -34,15 +34,9 @@ public class ItsChangeListener extends ALERTActiveMQListener {
     Properties systemProperties;
 
     @Override
-    public void process(Message message) throws IOException, JMSException {
+    public void processXml(String xml) {
 
         ItsChangeConnectorContext context =null;
-        ObjectMapper mapper = new ObjectMapper();
-
-        String text = ((TextMessage) message).getText();
-
-        logger.trace("void onMessage() Text to parse {} ",text);
-        context= mapper.readValue(IOUtils.toInputStream(text),ItsChangeConnectorContext.class);
 
         String filterDate = systemProperties.getProperty("analyzers.filterDate");
 
