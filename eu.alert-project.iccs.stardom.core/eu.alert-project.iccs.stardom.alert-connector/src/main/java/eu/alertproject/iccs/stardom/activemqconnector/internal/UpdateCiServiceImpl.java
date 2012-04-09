@@ -86,7 +86,7 @@ public class UpdateCiServiceImpl implements UpdateCiService{
 
             List<CI.Classifier.Metric> classifierMetrics = classifier.getMetrics();
 
-            Double prob = classifier.getProb();
+            Double prob = classifier.getPrior();
 
             for(CI.Classifier.Metric cim: classifierMetrics){
 

@@ -31,7 +31,7 @@ public class CI {
         private String name;
 
         @XStreamAsAttribute
-        private Double prob = 0.0;
+        private Double prior = 0.0;
 
         @XStreamImplicit(itemFieldName = "metric")
         List<Metric> metrics;
@@ -44,12 +44,12 @@ public class CI {
             this.name = name;
         }
 
-        public Double getProb() {
-            return prob;
+        public Double getPrior() {
+            return prior;
         }
 
-        public void setProb(Double prob) {
-            this.prob = prob;
+        public void setPrior(Double prior) {
+            this.prior = prior;
         }
 
         public List<Metric> getMetrics() {
