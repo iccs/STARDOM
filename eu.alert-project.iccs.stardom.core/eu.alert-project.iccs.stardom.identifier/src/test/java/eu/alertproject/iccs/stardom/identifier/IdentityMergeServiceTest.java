@@ -216,11 +216,11 @@ public class IdentityMergeServiceTest extends SpringDbUnitJpaTest{
 
         Iterator<Profile> iterator = identity.getProfiles().iterator();
 
-        assertProfile(iterator.next(), 4, "Fotis", "Paraskevopoulos", "fotisp", "fotisp@superemail.ex");
-        assertProfile(iterator.next(), 7, "Fotis", "Petroul", "fpetroul", "petroulf@hotmail.com");
-        assertProfile(iterator.next(), 8, "Fotis", "Petroul", "petroulf", "petroulf@gmail.com");
-        assertProfile(iterator.next(), 3, "John", "Steward", "jsmiths", "jsmith@gmail.com");
         assertProfile(iterator.next(), 5, "Fotis", "Paraskevopoulos", "fotakis", "fotisp@superemail.ex");
+        assertProfile(iterator.next(), 8, "Fotis", "Petroul", "petroulf", "petroulf@gmail.com");
+        assertProfile(iterator.next(), 4, "Fotis", "Paraskevopoulos", "fotisp", "fotisp@superemail.ex");
+        assertProfile(iterator.next(), 3, "John", "Steward", "jsmiths", "jsmith@gmail.com");
+        assertProfile(iterator.next(), 7, "Fotis", "Petroul", "fpetroul", "petroulf@hotmail.com");
 
 
         
@@ -428,11 +428,11 @@ public class IdentityMergeServiceTest extends SpringDbUnitJpaTest{
 
         Iterator<Profile> iterator = identity.getProfiles().iterator();
 
-        assertProfile(iterator.next(), 4, "Fotis", "Paraskevopoulos", "fotisp", "fotisp@superemail.ex");
-        assertProfile(iterator.next(), 7, "Fotis", "Petroul", "fpetroul", "petroulf@hotmail.com");
-        assertProfile(iterator.next(), 8, "Fotis", "Petroul", "petroulf", "petroulf@gmail.com");
-        assertProfile(iterator.next(), 3, "John", "Steward", "jsmiths", "jsmith@gmail.com");
         assertProfile(iterator.next(), 5, "Fotis", "Paraskevopoulos", "fotakis", "fotisp@superemail.ex");
+        assertProfile(iterator.next(), 8, "Fotis", "Petroul", "petroulf", "petroulf@gmail.com");
+        assertProfile(iterator.next(), 4, "Fotis", "Paraskevopoulos", "fotisp", "fotisp@superemail.ex");
+        assertProfile(iterator.next(), 3, "John", "Steward", "jsmiths", "jsmith@gmail.com");
+        assertProfile(iterator.next(), 7, "Fotis", "Petroul", "fpetroul", "petroulf@hotmail.com");
 
 
 

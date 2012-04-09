@@ -5,7 +5,7 @@
     <parent>
         <artifactId>core</artifactId>
         <groupId>eu.alert-project.iccs.stardom</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>assemble</artifactId>
@@ -14,7 +14,29 @@
 
     <build>
         <plugins>
-            <plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>rename</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <target name="db-file">
+                <concat destfile="${project.build.directory}/${project.artifactId}-${project.version}-all/db-init.sql">
+                  <fileset dir="${project.basedir}/../eu.alert-project.iccs.stardom.datastore/src/main/db" includes="init-deploy-db.sql"/>
+                  <fileset dir="${project.basedir}/../eu.alert-project.iccs.stardom.datastore/src/main/db/migrations" includes="*.sql"/>
+                </concat>
+              </target>
+            </configuration>
+          </plugin>
+          <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.2</version>
                 <executions>
@@ -32,30 +54,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.6</version>
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>rename</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>run</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <configuration>
-                    <target name="rename-to-owr">
-                        <move
-                                file="${project.build.directory}/${project.artifactId}-${project.version}-all/ui-${project.version}.war"
-                                toFile="${project.build.directory}/${project.artifactId}-${project.version}-all/ui.war"/>
-                        <move
-                                file="${project.build.directory}/${project.artifactId}-${project.version}-all/alert-connector-${project.version}.war"
-                                toFile="${project.build.directory}/${project.artifactId}-${project.version}-all/stardom.war"/>
-                    </target>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -63,11 +61,13 @@
             <groupId>${project.groupId}</groupId>
             <version>${project.version}</version>
             <artifactId>ui</artifactId>
+            <type>war</type>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <version>${project.version}</version>
             <artifactId>alert-connector</artifactId>
+            <type>war</type>
         </dependency>
     </dependencies>
 </project>
