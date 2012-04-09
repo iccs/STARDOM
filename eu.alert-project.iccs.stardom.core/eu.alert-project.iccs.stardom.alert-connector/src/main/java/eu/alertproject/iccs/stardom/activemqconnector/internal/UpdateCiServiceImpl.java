@@ -90,10 +90,16 @@ public class UpdateCiServiceImpl implements UpdateCiService{
 
             for(CI.Classifier.Metric cim: classifierMetrics){
 
-                if(metrics.containsKey(cim.getName())){
-                    Integer value = metrics.get(cim.getName()).getValue(metricDao, (Identity) event.getPayload());
-                    NormalDistribution d = new NormalDistributionImpl(cim.getMean(),cim.getStandardDeviation());
-                    prob *= d.density(Double.valueOf(value));
+                try {
+                    if(metrics.containsKey(cim.getName())){
+                        Integer value = metrics.get(cim.getName()).getValue(metricDao, (Identity) event.getPayload());
+                        NormalDistribution d = new NormalDistributionImpl(cim.getMean(),cim.getStandardDeviation());
+                        prob *= d.density(Double.valueOf(value));
+                    }
+                } catch (RuntimeException e) {
+                    logger.warn("The metric standard deviation is incorrect");
+                    prob=0.0;
+                } finally {
                 }
             }
 

@@ -18,6 +18,15 @@
   </dependencySets>
     <fileSets>
         <fileSet>
+          <directory>${basedir}/target/</directory>
+          <outputDirectory>/</outputDirectory>
+          <includes>
+            <include>
+              db-init.sql
+            </include>
+          </includes>
+        </fileSet>
+        <fileSet>
             <directory>${basedir}/../../</directory>
             <outputDirectory>sources</outputDirectory>
             <includes>

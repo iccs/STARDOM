@@ -1,121 +1,99 @@
 <ci>
-  <classifier name="core developers">
+  <classifier name="core developers" prior="1.0">
+
     <metric name="ForumActivityMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ForumTemporalMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ItsActivityMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ItsIssuesResolvedMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ItsTemporalMetric">
-
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="MailingListActivityMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="MailingListTemporalMetric">
-      <p>1.0</p>
       <s>0.1234</s>
       <c>0.0002</c>
     </metric>
     <metric name="ScmActivityMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ScmApiIntroducedMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ScmApiUsageCountMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ScmTemporalMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
   </classifier>
-  <classifier name="testers">
+  <classifier name="testers" prior="2.0">
     <metric name="ForumActivityMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ForumTemporalMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ItsActivityMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ItsIssuesResolvedMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ItsTemporalMetric">
-      <p>1.0</p>
       <s>0.5683</s>
       <c>0.0004</c>
     </metric>
     <metric name="MailingListActivityMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="MailingListTemporalMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ScmActivityMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ScmApiIntroducedMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ScmApiUsageCountMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
     <metric name="ScmTemporalMetric">
-      <p>1.0</p>
       <s>0.0</s>
       <c>0.0</c>
     </metric>
   </classifier>
 
-  <classifier name="bug triagers">
+  <classifier name="bug triagers" prior="3.0">
     <metric name="ForumActivityMetric">
       <s>0.0</s>
       <c>0.0</c>

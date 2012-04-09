@@ -29,7 +29,7 @@
             </executions>
             <configuration>
               <target name="db-file">
-                <concat destfile="${project.build.directory}/${project.artifactId}-${project.version}-all/db-init.sql">
+                <concat destfile="${project.build.directory}/db-init.sql">
                   <fileset dir="${project.basedir}/../eu.alert-project.iccs.stardom.datastore/src/main/db" includes="init-deploy-db.sql"/>
                   <fileset dir="${project.basedir}/../eu.alert-project.iccs.stardom.datastore/src/main/db/migrations" includes="*.sql"/>
                 </concat>
