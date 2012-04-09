@@ -395,8 +395,14 @@
                 <version>2.1</version>
             </dependency>
 
+            <dependency>
+              <groupId>org.apache.commons</groupId>
+              <artifactId>commons-math</artifactId>
+              <version>2.2</version>
+            </dependency>
 
-            <!-- Metrics -->
+
+          <!-- Metrics -->
             <dependency>
                 <groupId>org.tmatesoft.svnkit</groupId>
                 <artifactId>svnkit</artifactId>

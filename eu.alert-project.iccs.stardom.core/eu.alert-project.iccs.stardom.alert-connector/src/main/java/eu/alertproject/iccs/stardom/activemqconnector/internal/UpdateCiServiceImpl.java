@@ -17,6 +17,8 @@ import eu.alertproject.iccs.stardom.datastore.api.metrics.TemporalMetricValueStr
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Metric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.*;
+import org.apache.commons.math.distribution.NormalDistribution;
+import org.apache.commons.math.distribution.NormalDistributionImpl;
 import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
@@ -84,17 +86,20 @@ public class UpdateCiServiceImpl implements UpdateCiService{
 
             List<CI.Classifier.Metric> classifierMetrics = classifier.getMetrics();
 
-            Map<String, Integer> metricValues = new HashMap<String, Integer>();
+            Double prob = 1.0;
 
             for(CI.Classifier.Metric cim: classifierMetrics){
 
                 if(metrics.containsKey(cim.getName())){
-                    metricValues.put(cim.getName(), metrics.get(cim.getName()).getValue(metricDao, (Identity) event.getPayload()));
+                    Integer value = metrics.get(cim.getName()).getValue(metricDao, (Identity) event.getPayload());
+                    NormalDistribution d = new NormalDistributionImpl(cim.getMean(),cim.getStandardDeviation());
+                    prob *= d.density(Double.valueOf(value));
                 }
             }
-            ciForClass.put(classifier.getName(),calculateCi(metricValues));
 
+            ciForClass.put(classifier.getName(),prob);
         }
+
 
         //create the JSON event
         IdentityUpdated id = new IdentityUpdated();
@@ -151,14 +156,5 @@ public class UpdateCiServiceImpl implements UpdateCiService{
             logger.trace("void identityUpdated() It took {} millis to complete {}",start-System.currentTimeMillis(),updateEvent);
         }
     }
-
-    private Double calculateCi(Map<String, Integer> metricValues) {
-        //TODO Kostas here
-        return 0.0;
-    }
-
-
-
-
 
 }
