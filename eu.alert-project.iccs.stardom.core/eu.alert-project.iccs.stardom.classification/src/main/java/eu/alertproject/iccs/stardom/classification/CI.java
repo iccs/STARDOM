@@ -30,6 +30,8 @@ public class CI {
         @XStreamAsAttribute
         private String name;
 
+        @XStreamAsAttribute
+        private Double prob = 0.0;
 
         @XStreamImplicit(itemFieldName = "metric")
         List<Metric> metrics;
@@ -40,6 +42,14 @@ public class CI {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public Double getProb() {
+            return prob;
+        }
+
+        public void setProb(Double prob) {
+            this.prob = prob;
         }
 
         public List<Metric> getMetrics() {
@@ -55,6 +65,8 @@ public class CI {
             @XStreamAsAttribute
             private String name;
 
+
+
             @XStreamAlias("s")
             private Double standardDeviation;
 
@@ -68,6 +80,7 @@ public class CI {
             public void setName(String name) {
                 this.name = name;
             }
+
 
             public Double getStandardDeviation() {
                 return standardDeviation;

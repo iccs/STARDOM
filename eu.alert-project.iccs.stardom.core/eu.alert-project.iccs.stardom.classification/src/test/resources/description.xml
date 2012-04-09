@@ -1,5 +1,6 @@
 <ci>
-    <classifier name="core developers">
+    <classifier name="core developers" prob="1.0">
+
             <metric name="ForumActivityMetric">
                 <s>0.0</s>
                 <c>0.0</c>
@@ -45,7 +46,7 @@
                 <c>0.0</c>
             </metric>
     </classifier>
-    <classifier name="testers">
+    <classifier name="testers" prob="2.0">
             <metric name="ForumActivityMetric">
                 <s>0.0</s>
                 <c>0.0</c>
@@ -92,7 +93,7 @@
             </metric>
     </classifier>
 
-    <classifier name="bug triagers">
+    <classifier name="bug triagers" prob="3.0">
             <metric name="ForumActivityMetric">
                 <s>0.0</s>
                 <c>0.0</c>

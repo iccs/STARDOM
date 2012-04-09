@@ -42,6 +42,7 @@ public class CITest {
 
         CI.Classifier cd = iterator.next();
         Assert.assertEquals("core developers", cd.getName());
+        Assert.assertEquals(1.0, cd.getProb(),0.0);
         Assert.assertEquals(11,cd.getMetrics().size(),0);
         assertNames(mls,cd.getMetrics().iterator());
         Assert.assertEquals(0.1234,cd.getMetrics().get(6).getStandardDeviation(),0.0);
@@ -50,6 +51,7 @@ public class CITest {
 
         CI.Classifier tr = iterator.next();
         Assert.assertEquals("testers", tr.getName());
+        Assert.assertEquals(2.0, tr.getProb(),0.0);
         Assert.assertEquals(11,tr.getMetrics().size(),0);
         assertNames(mls,tr.getMetrics().iterator());
         Assert.assertEquals(0.5683,tr.getMetrics().get(4).getStandardDeviation(),0.0);
@@ -58,6 +60,7 @@ public class CITest {
 
         CI.Classifier bt = iterator.next();
         Assert.assertEquals("bug triagers", bt.getName());
+        Assert.assertEquals(3.0, bt.getProb(),0.0);
         Assert.assertEquals(11,bt.getMetrics().size(),0);
         assertNames(mls,bt.getMetrics().iterator());
         Assert.assertEquals(0.0005895,bt.getMetrics().get(10).getStandardDeviation(),0.0);
