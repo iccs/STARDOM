@@ -8,7 +8,7 @@
 
     <groupId>eu.alert-project.iccs.stardom</groupId>
     <artifactId>core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>Alert - STARDOM Core</name>
 
     <modules>
@@ -23,6 +23,7 @@
         <module>eu.alert-project.iccs.stardom.bus</module>
         <module>eu.alert-project.iccs.stardom.analyzers</module>
         <module>eu.alert-project.iccs.stardom.ui</module>
+        <module>eu.alert-project.iccs.stardom.assemble</module>
 
         <!-- Always keep this last -->
         <module>eu.alert-project.iccs.stardom.spring</module>
@@ -394,8 +395,14 @@
                 <version>2.1</version>
             </dependency>
 
+            <dependency>
+              <groupId>org.apache.commons</groupId>
+              <artifactId>commons-math</artifactId>
+              <version>2.2</version>
+            </dependency>
 
-            <!-- Metrics -->
+
+          <!-- Metrics -->
             <dependency>
                 <groupId>org.tmatesoft.svnkit</groupId>
                 <artifactId>svnkit</artifactId>
