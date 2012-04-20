@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<soap:Envelope  xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"
-            xmlns:wsa="http://www.w3.org/2005/08/addressing">
-    <soap:Header ></soap:Header >
-    <soap:Body >
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2">
+    <soap:Header></soap:Header>
+    <soap:Body>
         <wsnt:Notify>
             <wsnt:NotificationMessage>
                 <wsnt:Topic></wsnt:Topic>
@@ -10,12 +8,7 @@
                     <wsa:Address>http://www.alert-project.eu/metadata</wsa:Address>
                 </wsnt:ProducerReference>
                 <wsnt:Message>
-                    <ns1:event xmlns:ns1="http://www.alert-project.eu/"
-                               xmlns:o="http://www.alert-project.eu/ontoevents-mdservice"
-                               xmlns:s="http://www.alert-project.eu/strevents-kesi"
-                               xmlns:s1="http://www.alert-project.eu/strevents-keui"
-                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                            >
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:sm="http://www.alert-project.eu/stardom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
                         <ns1:head>
                             <ns1:sender>METADATASERVICE</ns1:sender>
                             <ns1:timestamp>10003</ns1:timestamp>
@@ -25,110 +18,255 @@
                             <ns1:meta>
                                 <ns1:startTime>10010</ns1:startTime>
                                 <ns1:endTime>10020</ns1:endTime>
-                                <!-- name of event -->
-                                <ns1:eventName>ALERT.Metadata.IssueUpdate.Stored</ns1:eventName>
+                                <ns1:eventName>ALERT.KEUI.IssueUpdate.Annotated</ns1:eventName>
                                 <ns1:eventId>5748</ns1:eventId>
                                 <ns1:eventType>reply</ns1:eventType>
                             </ns1:meta>
                             <ns1:eventData>
                                 <s:kesi>
-                                    <s:issueId>184671</s:issueId>
-                                    <s:issueStatus>Resolved</s:issueStatus>
-                                    <s:issueResolution>Fixed</s:issueResolution>
-                                    <s:issueLastModified>2011-04-15 10:55:57</s:issueLastModified>
-                                    <s:issueComment>
-                                        <s:commentId></s:commentId>
-                                        <s:commentNumber>1</s:commentNumber>
-                                        <s:commentText>If a driver is missing, clicking on the notification should open
-                                            the package manager (by default) so the user can find a driver
-                                        </s:commentText>
-                                        <s:commentPerson>
-                                            <s:name>Sander Pientka</s:name>
-                                            <s:id>cumulus0007@gmail.com</s:id>
-                                            <s:email>cumulus0007@gmail.com</s:email>
-                                        </s:commentPerson>
-                                        <s:commentDate>2009-03-04 18:11:19</s:commentDate>
-                                    </s:issueComment>
-                                    <s:issueActivity>
-                                        <s:activityId>4125</s:activityId>
-                                        <s:activityWho>cumulus0007@gmail.com</s:activityWho>
-                                        <s:activityWhen>2009-03-04 18:11:19</s:activityWhen>
-                                        <s:activityWRA>
-                                            <s:activityWhat>Status</s:activityWhat>
-                                            <s:activityRemoved>Assigned</s:activityRemoved>
-                                            <s:activityAdded>Resolved</s:activityAdded>
-                                        </s:activityWRA>
-                                        <s:activityWRA>
-                                            <s:activityWhat>Resolution</s:activityWhat>
-                                            <s:activityRemoved>---</s:activityRemoved>
-                                            <s:activityAdded>Fixed</s:activityAdded>
-                                        </s:activityWRA>
-                                    </s:issueActivity>
-                                </s:kesi>
+    <s:issueActivity>
+        <s:activityAdded>powerdevil-daemon</s:activityAdded>
+        <s:activityRemoved>general</s:activityRemoved>
+        <s:activityWhat>Component</s:activityWhat>
+        <s:activityWhen>2008-11-26 13:49:36.0</s:activityWhen>
+        <s:activityWho>mumismo</s:activityWho>
+    </s:issueActivity>
+    <s:issueActivity>
+        <s:activityAdded>solid</s:activityAdded>
+        <s:activityRemoved>kde</s:activityRemoved>
+        <s:activityWhat>Product</s:activityWhat>
+        <s:activityWhen>2008-11-26 13:49:36.0</s:activityWhen>
+        <s:activityWho>mumismo</s:activityWho>
+    </s:issueActivity>
+    <s:issueActivity>
+        <s:activityAdded>drf54321</s:activityAdded>
+        <s:activityRemoved></s:activityRemoved>
+        <s:activityWhat>CC</s:activityWhat>
+        <s:activityWhen>2008-12-04 00:18:06.0</s:activityWhen>
+        <s:activityWho>drf</s:activityWho>
+    </s:issueActivity>
+    <s:issueActivity>
+        <s:activityAdded>RESOLVED</s:activityAdded>
+        <s:activityRemoved>UNCONFIRMED</s:activityRemoved>
+        <s:activityWhat>status</s:activityWhat>
+        <s:activityWhen>2008-12-04 00:20:47.0</s:activityWhen>
+        <s:activityWho>drf</s:activityWho>
+    </s:issueActivity>
+    <s:issueActivity>
+        <s:activityAdded>DUPLICATE</s:activityAdded>
+        <s:activityRemoved>---</s:activityRemoved>
+        <s:activityWhat>resolution</s:activityWhat>
+        <s:activityWhen>2008-12-04 00:20:47.0</s:activityWhen>
+        <s:activityWho>drf</s:activityWho>
+    </s:issueActivity>
+    <s:issueActivity>
+        <s:activityAdded>powermanagement-daemon</s:activityAdded>
+        <s:activityRemoved>powerdevil-daemon</s:activityRemoved>
+        <s:activityWhat>Component</s:activityWhat>
+        <s:activityWhen>2010-10-02 12:49:18.0</s:activityWhen>
+        <s:activityWho>ervin</s:activityWho>
+    </s:issueActivity>
+    <s:issueActivity>
+        <s:activityAdded>drf</s:activityAdded>
+        <s:activityRemoved>coolo</s:activityRemoved>
+        <s:activityWhat>Assignee</s:activityWhat>
+        <s:activityWhen>2010-10-02 12:49:18.0</s:activityWhen>
+        <s:activityWho>ervin</s:activityWho>
+    </s:issueActivity>
+    <s:issueAssignedTo>
+        <s:email>drf</s:email>
+        <s:name>Dario Freddi</s:name>
+        <s:id>drf</s:id>
+    </s:issueAssignedTo>
+    <s:issueCCPerson>
+        <s:email>drf</s:email>
+        <s:name>Dario Freddi</s:name>
+        <s:id>drf</s:id>
+    </s:issueCCPerson>
+    <s:issueComment>
+        <s:commentText>Version:            (using KDE Devel)
+ Installed from:    Compiled sources
+ OS:                Linux
+
+ There are many settings that depend on your computer ' s performance. The user should not have to bother adapting the default settings to the hardware, e.g. for kwin+composite, eye-candy in general (plasma). Further even less obviously related applications will have serious usability-bugs if there is no possibility to adapt default settings.
+
+ An example: Dolphin uses a default setting for creating previews that restricts that functionality to files smaller than 1MB. As a result by default no file that is larger than 1MB will be displayed as image-thumbnail when the user clicks on  " preview " .
+
+ The most useful preview concerns pictures, i.e. photos. Today digital-cameras provide at least a resolution of 4 Megapixel or more. This means that the user will not be able to use the preview functionality with its default settings for photos. Which is pretty bad from a usability point of view.
+
+ Of course this setting does make sense for old hardware (very old indeed). So it becomes obvious that a lot of default-settings depend on the computer ' s hardware. In order to avoid these kind of issues there should be a central point that applications can query in order to adjust their settings accordingly.
+
+ Minimal implementation: Provide a place where the user can manually set the hardware ' s performance-level. At least one would not have to modify each and every application on its own.
+
+ PERFORMANCE
+ Graphics: low/medium/high
+ CPU: low/medium/high
+ RAM:  &lt; 512/ &lt; 1024/ &gt; 1024MB
+
+ Optimal implementation: Check hardware automatically and provide a button to re-check. Rate graphics/(-driver), RAM and CPU and assign a number to each. An overall value would not be enough since some applications might only need a lot of RAM but no graphics-performance.
+
+ As a result Dolphin would use e.g. 5MB as default setting for preview on recent hardware but lower the setting automatically on older hardware. Kwin as well as plasma would adjust the effects used, openGL screensavers would be excluded/included etc.</s:commentText>
+        <s:commentPerson>
+            <s:email>sven.burmeister</s:email>
+            <s:name>S. Burmeister</s:name>
+            <s:id>sven.burmeister</s:id>
+        </s:commentPerson>
+        <s:commentDate>2007-07-16T00:00:00+02:00</s:commentDate>
+    </s:issueComment>
+    <s:issueComment>
+        <s:commentText>There is already such a possibility, though we need to investigate that further. The best move would be writing in kde-devel mailing list I suppose</s:commentText>
+        <s:commentPerson>
+            <s:email>drf</s:email>
+            <s:name>Dario Freddi</s:name>
+            <s:id>drf</s:id>
+        </s:commentPerson>
+        <s:commentDate>2008-12-04T00:00:00+01:00</s:commentDate>
+    </s:issueComment>
+    <s:issueComment>
+        <s:commentText>Ah, that ' s a duplicate
+
+ *** This bug has been marked as a duplicate of bug 20627 ***</s:commentText>
+        <s:commentPerson>
+            <s:email>drf</s:email>
+            <s:name>Dario Freddi</s:name>
+            <s:id>drf</s:id>
+        </s:commentPerson>
+        <s:commentDate>2008-12-04T00:00:00+01:00</s:commentDate>
+    </s:issueComment>
+    <s:issueComputerSystem>
+        <s:computerSystemOS>Linux</s:computerSystemOS>
+        <s:computerSystemPlatform>Compiled Sources</s:computerSystemPlatform>
+    </s:issueComputerSystem>
+    <s:issueDateOpened>2007-07-16T00:00:00+02:00</s:issueDateOpened>
+    <s:issueDescription>KDE4 needs central performance center that enables applications to adapt their default-settings</s:issueDescription>
+    <s:issueId>147934</s:issueId>
+    <s:issueTracker>
+        <type>bugzilla</type>
+        <URI>https://bugs.kde.org/</URI>
+        <s:issueTrackerType>bugzilla</s:issueTrackerType>
+        <s:issueTrackerURL>https://bugs.kde.org/</s:issueTrackerURL>
+    </s:issueTracker>
+    <s:issueUrl>https://bugs.kde.org/show_bug.cgi?id=147934</s:issueUrl>
+    <s:issueLastModified>2010-10-02T00:00:00+02:00</s:issueLastModified>
+    <s:issueMilestone>
+        <s:milestoneId>---</s:milestoneId>
+    </s:issueMilestone>
+    <s:issuePriority></s:issuePriority>
+    <s:issueProduct>
+        <s:productComponentId>powermanagement-daemon</s:productComponentId>
+        <s:productId>solid</s:productId>
+        <s:productVersion>unspecified</s:productVersion>
+    </s:issueProduct>
+    <s:issueAuthor>
+        <s:email>sven.burmeister</s:email>
+        <s:name>S. Burmeister</s:name>
+        <s:id>sven.burmeister</s:id>
+    </s:issueAuthor>
+    <s:issueResolution>DUPLICATE</s:issueResolution>
+    <s:issueSeverity></s:issueSeverity>
+    <s:issueStatus>Resolved</s:issueStatus>
+</s:kesi>
                                 <o:mdservice>
                                     <o:issueUri>http://www.alert-project.eu/ontologies/alert_its.owl#Bug1</o:issueUri>
+                                    <o:issueActivity>
+                                        <o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity1</o:activityUri>
+                                        <o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:activityWhoUri>
+                                    </o:issueActivity>
+                                    <o:issueActivity>
+                                        <o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity2</o:activityUri>
+                                        <o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person3</o:activityWhoUri>
+                                    </o:issueActivity>
+                                    <o:issueActivity>
+                                        <o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity3</o:activityUri>
+                                        <o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:activityWhoUri>
+                                    </o:issueActivity>
+                                    <o:issueActivity>
+                                        <o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity4</o:activityUri>
+                                        <o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:activityWhoUri>
+                                    </o:issueActivity>
+                                    <o:issueActivity>
+                                        <o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity5</o:activityUri>
+                                        <o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:activityWhoUri>
+                                    </o:issueActivity>
+                                    <o:issueActivity>
+                                        <o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity6</o:activityUri>
+                                        <o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person4</o:activityWhoUri>
+                                    </o:issueActivity>
+                                    <o:issueActivity>
+                                        <o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity7</o:activityUri>
+                                        <o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person4</o:activityWhoUri>
+                                    </o:issueActivity>
+                                    <o:issueCCPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:issueCCPersonUri>
                                     <o:issueComment>
-                                        <o:commentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment2
-                                        </o:commentUri>
-                                        <o:commentPersonUri>
-                                            http://www.alert-project.eu/ontologies/alert_scm.owl#Person2
-                                        </o:commentPersonUri>
+                                        <o:commentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment1</o:commentUri>
+                                        <o:commentPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:commentPersonUri>
                                     </o:issueComment>
-                                    <o:issueActivity>
-                                        <o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity1
-                                        </o:activityUri>
-                                        <o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2
-                                        </o:activityWhoUri>
-                                    </o:issueActivity>
-                                    <o:issueActivity>
-                                        <o:activityUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Activity2
-                                        </o:activityUri>
-                                        <o:activityWhoUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2
-                                        </o:activityWhoUri>
-                                    </o:issueActivity>
+                                    <o:issueComment>
+                                        <o:commentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment2</o:commentUri>
+                                        <o:commentPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:commentPersonUri>
+                                    </o:issueComment>
+                                    <o:issueComment>
+                                        <o:commentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Comment3</o:commentUri>
+                                        <o:commentPersonUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:commentPersonUri>
+                                    </o:issueComment>
+                                    <o:issueComputerSystem>
+                                        <o:issueComputerSystemUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#ComputerSystem1</o:issueComputerSystemUri>
+                                    </o:issueComputerSystem>
+                                    <o:issueMilestone>
+                                        <o:issueMilestoneUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Milestone1</o:issueMilestoneUri>
+                                    </o:issueMilestone>
+                                    <o:issueAuthorUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1</o:issueAuthorUri>
+                                    <o:issueAssignedToUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2</o:issueAssignedToUri>
+                                    <o:issueProduct>
+                                        <o:productComponentUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Component1</o:productComponentUri>
+                                        <o:productUri>http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#Product1</o:productUri>
+                                    </o:issueProduct>
                                 </o:mdservice>
 
-                                <s1:keui>
-                                    <s1:commentTextAnnotated>
-                                        <![CDATA[If a <concept id="http://ailab.ijs.si/alert/resource/r17629">driver</concept> is missing, <concept id="http://ailab.ijs.si/alert/resource/r3772">clicking</concept> on the <concept id="http://ailab.ijs.si/alert/resource/r17717">notification</concept> should <concept id="http://ailab.ijs.si/alert/resource/r3964">open</concept> the <concept id="http://ailab.ijs.si/alert/resource/r16296">package manager</concept> (by default) so the <concept id="KDE/user">user</concept> can <concept id="KDE/find">find</concept> a <concept id="http://ailab.ijs.si/alert/resource/r17629">driver</concept>]]></s1:commentTextAnnotated>
-                                    <s1:commentTextConcepts>
-                                        <s1:concept>
-                                            <s1:uri>http://ailab.ijs.si/alert/resource/r17629</s1:uri>
-                                            <s1:weight>2</s1:weight>
-                                        </s1:concept>
-                                        <s1:concept>
-                                            <s1:uri>http://ailab.ijs.si/alert/resource/r3772</s1:uri>
-                                            <s1:weight>1</s1:weight>
-                                        </s1:concept>
-                                        <s1:concept>
-                                            <s1:uri>http://ailab.ijs.si/alert/resource/r17717</s1:uri>
-                                            <s1:weight>1</s1:weight>
-                                        </s1:concept>
-                                        <s1:concept>
-                                            <s1:uri>http://ailab.ijs.si/alert/resource/r3964</s1:uri>
-                                            <s1:weight>1</s1:weight>
-                                        </s1:concept>
-                                        <s1:concept>
-                                            <s1:uri>http://ailab.ijs.si/alert/resource/r16296</s1:uri>
-                                            <s1:weight>1</s1:weight>
-                                        </s1:concept>
-                                        <s1:concept>
-                                            <s1:uri>KDE/user</s1:uri>
-                                            <s1:weight>1</s1:weight>
-                                        </s1:concept>
-                                        <s1:concept>
-                                            <s1:uri>KDE/find</s1:uri>
-                                            <s1:weight>1</s1:weight>
-                                        </s1:concept>
-                                    </s1:commentTextConcepts>
-                                    <s1:itemId>7805</s1:itemId>
-                                    <s1:threadId>12</s1:threadId>
-                                </s1:keui>
-                            </ns1:eventData>
+								<s1:keui>
+									<s1:issueDescriptionAnnotated><![CDATA[KDE4 needs central <concept id="http://ailab.ijs.si/alert/resource/r18444">performance</concept> center that enables <concept id="http://ailab.ijs.si/alert/resource/r2004">applications</concept> to adapt their default-settings]]></s1:issueDescriptionAnnotated>
+									<s1:issueDescriptionConcepts><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18444</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r2004</s1:uri><s1:weight>1</s1:weight></s1:concept></s1:issueDescriptionConcepts>
+									<s1:issueComment>
+										<s1:commentTextAnnotated><![CDATA[<concept id="http://ailab.ijs.si/alert/resource/r18520">Version</concept>:            (using <concept id="http://ailab.ijs.si/alert/resource/r14859">KDE</concept> Devel)
+ <concept id="http://ailab.ijs.si/alert/resource/installed">Installed</concept> from:    <concept id="http://ailab.ijs.si/alert/resource/r17256">Compiled</concept> <concept id="http://ailab.ijs.si/alert/resource/r17290">sources</concept>
+ OS:                <concept id="http://ailab.ijs.si/alert/resource/r14937">Linux</concept>
+
+ There are many settings that depend on your <concept id="http://ailab.ijs.si/alert/resource/r16273">computer</concept> ' <concept id="http://ailab.ijs.si/alert/resource/r16797">s</concept> <concept id="http://ailab.ijs.si/alert/resource/r18444">performance</concept>. The <concept id="http://ailab.ijs.si/alert/resource/r12142">user</concept> should not have to bother adapting the default settings to the <concept id="http://ailab.ijs.si/alert/resource/r364">hardware</concept>, e.<concept id="http://ailab.ijs.si/alert/resource/r18431">g</concept>. for kwin+composite, <concept id="http://ailab.ijs.si/alert/resource/r15163">eye-candy</concept> in general (<concept id="http://ailab.ijs.si/alert/resource/r7859">plasma</concept>). Further even less obviously <concept id="http://ailab.ijs.si/alert/resource/r7566">related</concept> <concept id="http://ailab.ijs.si/alert/resource/r2004">applications</concept> will have serious <concept id="http://ailab.ijs.si/alert/resource/r16372">usability</concept>-bugs if there is no possibility to adapt default settings.
+
+ An example: Dolphin uses a default <concept id="http://ailab.ijs.si/alert/resource/r14650">setting</concept> for creating <concept id="http://ailab.ijs.si/alert/resource/r9178">previews</concept> that restricts that <concept id="http://ailab.ijs.si/alert/resource/r14957">functionality</concept> to <concept id="http://ailab.ijs.si/alert/resource/r309">files</concept> smaller than 1MB. As a result by default no <concept id="http://ailab.ijs.si/alert/resource/r309">file</concept> that is larger than 1MB will be <concept id="http://ailab.ijs.si/alert/resource/r17072">displayed</concept> as <concept id="http://ailab.ijs.si/alert/resource/r17559">image</concept>-<concept id="http://ailab.ijs.si/alert/resource/r18382">thumbnail</concept> when the <concept id="http://ailab.ijs.si/alert/resource/r12142">user</concept> <concept id="http://ailab.ijs.si/alert/resource/r3772">clicks</concept> on  " <concept id="http://ailab.ijs.si/alert/resource/r9178">preview</concept> " .
+
+ The most useful <concept id="http://ailab.ijs.si/alert/resource/r9178">preview</concept> concerns pictures, i.e. photos. Today <concept id="http://ailab.ijs.si/alert/resource/r15655">digital-cameras</concept> provide at least a <concept id="http://ailab.ijs.si/alert/resource/r1184">resolution</concept> of 4 <concept id="http://ailab.ijs.si/alert/resource/r3985">Megapixel</concept> or more. This means that the <concept id="http://ailab.ijs.si/alert/resource/r12142">user</concept> will not be able to use the <concept id="http://ailab.ijs.si/alert/resource/r9178">preview</concept> <concept id="http://ailab.ijs.si/alert/resource/r14957">functionality</concept> with its default settings for photos. Which is pretty bad from a <concept id="http://ailab.ijs.si/alert/resource/r16372">usability</concept> point of <concept id="http://ailab.ijs.si/alert/resource/r17533">view</concept>.
+
+ Of course this <concept id="http://ailab.ijs.si/alert/resource/r14650">setting</concept> <concept id="http://ailab.ijs.si/alert/resource/r6204">does</concept> <concept id="http://ailab.ijs.si/alert/resource/r1458">make</concept> sense for old <concept id="http://ailab.ijs.si/alert/resource/r364">hardware</concept> (very old indeed). So it becomes obvious that a lot of default-settings depend on the <concept id="http://ailab.ijs.si/alert/resource/r16273">computer</concept> ' <concept id="http://ailab.ijs.si/alert/resource/r16797">s</concept> <concept id="http://ailab.ijs.si/alert/resource/r364">hardware</concept>. In order to avoid these kind of issues there should be a central point that <concept id="http://ailab.ijs.si/alert/resource/r2004">applications</concept> can <concept id="http://ailab.ijs.si/alert/resource/r4586">query</concept> in order to adjust their settings accordingly.
+
+ Minimal <concept id="http://ailab.ijs.si/alert/resource/r3541">implementation</concept>: Provide a place where the <concept id="http://ailab.ijs.si/alert/resource/r12142">user</concept> can manually <concept id="http://ailab.ijs.si/alert/resource/r14650">set</concept> the <concept id="http://ailab.ijs.si/alert/resource/r364">hardware</concept> ' <concept id="http://ailab.ijs.si/alert/resource/r16797">s</concept> <concept id="http://ailab.ijs.si/alert/resource/r18444">performance</concept>-level. At least one would not have to modify each and every <concept id="http://ailab.ijs.si/alert/resource/r2004">application</concept> on its own.
+
+ <concept id="http://ailab.ijs.si/alert/resource/r18444">PERFORMANCE</concept>
+ <concept id="http://ailab.ijs.si/alert/resource/r17367">Graphics</concept>: low/medium/high
+ <concept id="http://ailab.ijs.si/alert/resource/r18328">CPU</concept>: low/medium/high
+ <concept id="http://ailab.ijs.si/alert/resource/r15637">RAM</concept>:  < 512/ < 1024/ > 1024MB
+
+ Optimal <concept id="http://ailab.ijs.si/alert/resource/r3541">implementation</concept>: Check <concept id="http://ailab.ijs.si/alert/resource/r364">hardware</concept> automatically and provide a <concept id="http://ailab.ijs.si/alert/resource/r18252">button</concept> to re-check. Rate <concept id="http://ailab.ijs.si/alert/resource/r17367">graphics</concept>/(-<concept id="http://ailab.ijs.si/alert/resource/r17629">driver</concept>), <concept id="http://ailab.ijs.si/alert/resource/r15637">RAM</concept> and <concept id="http://ailab.ijs.si/alert/resource/r18328">CPU</concept> and <concept id="http://ailab.ijs.si/alert/resource/r6680">assign</concept> a <concept id="http://ailab.ijs.si/alert/resource/r17525">number</concept> to each. An overall value would not be enough since some <concept id="http://ailab.ijs.si/alert/resource/r2004">applications</concept> might only need a lot of <concept id="http://ailab.ijs.si/alert/resource/r15637">RAM</concept> but no <concept id="http://ailab.ijs.si/alert/resource/r17367">graphics</concept>-<concept id="http://ailab.ijs.si/alert/resource/r18444">performance</concept>.
+
+ As a result Dolphin would use e.<concept id="http://ailab.ijs.si/alert/resource/r18431">g</concept>. 5MB as default <concept id="http://ailab.ijs.si/alert/resource/r14650">setting</concept> for <concept id="http://ailab.ijs.si/alert/resource/r9178">preview</concept> on recent <concept id="http://ailab.ijs.si/alert/resource/r364">hardware</concept> but lower the <concept id="http://ailab.ijs.si/alert/resource/r14650">setting</concept> automatically on older <concept id="http://ailab.ijs.si/alert/resource/r364">hardware</concept>. Kwin as well as <concept id="http://ailab.ijs.si/alert/resource/r7859">plasma</concept> would adjust the effects used, <concept id="http://ailab.ijs.si/alert/resource/r15156">openGL</concept> <concept id="http://ailab.ijs.si/alert/resource/r6651">screensavers</concept> would be excluded/<concept id="http://ailab.ijs.si/alert/resource/r18129">included</concept> etc.]]></s1:commentTextAnnotated>
+										<s1:commentTextConcepts><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18520</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r14859</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/installed</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17256</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17290</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r14937</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r16273</s1:uri><s1:weight>2</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r16797</s1:uri><s1:weight>3</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18444</s1:uri><s1:weight>4</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r12142</s1:uri><s1:weight>4</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r364</s1:uri><s1:weight>7</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18431</s1:uri><s1:weight>2</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r15163</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r7859</s1:uri><s1:weight>2</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r7566</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r2004</s1:uri><s1:weight>4</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r16372</s1:uri><s1:weight>2</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r14650</s1:uri><s1:weight>5</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r9178</s1:uri><s1:weight>5</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r14957</s1:uri><s1:weight>2</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r309</s1:uri><s1:weight>2</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17072</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17559</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18382</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r3772</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r15655</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r1184</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r3985</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17533</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r6204</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r1458</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r4586</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r3541</s1:uri><s1:weight>2</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17367</s1:uri><s1:weight>3</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18328</s1:uri><s1:weight>2</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r15637</s1:uri><s1:weight>3</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18252</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17629</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r6680</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r17525</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r15156</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r6651</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18129</s1:uri><s1:weight>1</s1:weight></s1:concept></s1:commentTextConcepts>
+										<s1:itemId>5413</s1:itemId></s1:issueComment>
+									<s1:issueComment>
+										<s1:commentTextAnnotated><![CDATA[There is already such a possibility, though we need to investigate that further. The best move would be <concept id="http://ailab.ijs.si/alert/resource/r18515">writing</concept> in <concept id="http://ailab.ijs.si/alert/resource/r14859">kde</concept>-devel <concept id="http://ailab.ijs.si/alert/resource/r16979">mailing list</concept> I suppose]]></s1:commentTextAnnotated>
+										<s1:commentTextConcepts><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r18515</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r14859</s1:uri><s1:weight>1</s1:weight></s1:concept><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r16979</s1:uri><s1:weight>1</s1:weight></s1:concept></s1:commentTextConcepts>
+										<s1:itemId>5414</s1:itemId></s1:issueComment>
+									<s1:issueComment>
+										<s1:commentTextAnnotated><![CDATA[Ah, that ' <concept id="http://ailab.ijs.si/alert/resource/r16797">s</concept> a duplicate
+
+ *** This bug has been marked as a duplicate of <reference bugUri="20627">bug 20627</reference> ***]]></s1:commentTextAnnotated>
+										<s1:commentTextConcepts><s1:concept><s1:uri>http://ailab.ijs.si/alert/resource/r16797</s1:uri><s1:weight>1</s1:weight></s1:concept></s1:commentTextConcepts>
+										<s1:itemId>5415</s1:itemId></s1:issueComment><s1:threadId>0</s1:threadId>
+								</s1:keui>
+							</ns1:eventData>
                         </ns1:payload>
                     </ns1:event>
                 </wsnt:Message>
             </wsnt:NotificationMessage>
         </wsnt:Notify>
-    </soap:Body >
-</soap:Envelope >
+    </soap:Body>
+</soap:Envelope>

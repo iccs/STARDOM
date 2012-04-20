@@ -106,9 +106,9 @@
                                         </o:productComponentUri>
                                     </o:issueProduct>
                                     <o:issueComputerSystem>
-                                        <o:computerSystemUri>
+                                        <o:issueComputerSystemUri>
                                             http://www.ifi.uzh.ch/ddis/evoont/2008/11/bom#ComputerSystem1
-                                        </o:computerSystemUri>
+                                        </o:issueComputerSystemUri>
                                     </o:issueComputerSystem>
                                     <o:issueAssignedToUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person2
                                     </o:issueAssignedToUri>

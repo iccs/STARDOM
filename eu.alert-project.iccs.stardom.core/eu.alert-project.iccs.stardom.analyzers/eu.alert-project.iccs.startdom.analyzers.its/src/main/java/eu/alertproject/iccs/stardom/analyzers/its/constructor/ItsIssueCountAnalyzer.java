@@ -89,10 +89,21 @@ public class ItsIssueCountAnalyzer implements Analyzer<DefaultItsChangeAction> {
                         If a NullPointerException is thrown here, we are doing something very wrong!!!
                      */
                     ItsMl byBugId = itsMlDao.findByBugId(action.getBugId());
+                    if(byBugId == null){
+                        logger.warn("void analyze() ItsML = {} was never opened", action.getBugId());
+                        return;
+                    }
                     logger.trace("void analyze() ItsML = {} ",byBugId);
 
 
+
+
                     Identity byProfileUuid = identityDao.findByProfileUuid(byBugId.getUuidWho());
+                    if(byProfileUuid==null){
+                        logger.trace("void analyze() ItsML= {} is orphan skipping",byBugId.getUuidWho());
+                        return;
+                    }
+
                     logger.trace("void analyze() Profile = {} ",byProfileUuid);
 
                     ItsIssuesResolvedMetric metric = metricDao.getMostRecentMetric(byProfileUuid, ItsIssuesResolvedMetric.class);

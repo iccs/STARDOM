@@ -36,7 +36,6 @@ public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDa
     }
 
     @Override
-    @Transactional
     public Identity insert(Identity bean) {
         Identity insert = super.insert(bean);//To change body of overridden methods use File | Settings | File Templates.
         insert.setUuid(UUID.randomUUID().toString());

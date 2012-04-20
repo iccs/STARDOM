@@ -39,8 +39,9 @@ public abstract class AbstractTemporalAnalyzer<T extends ConnectorAction,E exten
         try{
 
             if(identity == null){
-                logger.warn("void analyze() Can't work with a null identity {}");
+                logger.warn("Can't work with a null identity");
                 return;
+//                throw new NullPointerException("Can't work with a null identity");
             }
 
             Constructor<E> constructor = getMetricClass().getConstructor();

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -61,30 +62,53 @@ public class IssueUpdatedAnnotatedListener extends ALERTActiveMQListener{
 
         if(isIgnoredBasedOnDate(kesi.getDateOpened())){return;}
 
-        Profile p= new Profile();
-        p.setEmail(kesi.getActivity().getWho());
-        p.setUri(mdService.getActivity().iterator().next().getWhoUri());
+        List<KesiITS.Activity> activity = kesi.getActivity();
 
-        //process the issue here
-        List<KesiITS.Activity.ActivityWRA> activityWRAs = kesi.getActivity().getActivityWRAs();
+        if(activity == null ){
 
-        for(KesiITS.Activity.ActivityWRA activityWRA: activityWRAs){
+            return;
+        }
+
+        Iterator<MdServiceITS.Activity> mdIterator = null;
+
+        if(mdService !=null){
+            mdIterator = mdService.getActivity().iterator();
+        }
+
+        for(KesiITS.Activity a :activity){
+
+
+            String whoUri = "owl#none";
+            if(mdIterator !=null){
+                whoUri = mdIterator.next().getWhoUri();
+            }
+
+            Profile p= new Profile();
+            p.setUsername(a.getWho());
+            p.setEmail(a.getWho());
+            p.setUri(whoUri);
 
             ItsChangeConnectorContext context = new ItsChangeConnectorContext();
             context.setProfile(p);
 
+
             DefaultItsChangeAction defaultItsChangeAction = new DefaultItsChangeAction();
-            defaultItsChangeAction.setWhat(activityWRA.getWhat());
-            defaultItsChangeAction.setRemoved(activityWRA.getRemoved());
-            defaultItsChangeAction.setAdded(activityWRA.getAdded());
-            defaultItsChangeAction.setDate(kesi.getActivity().getDate());
+            defaultItsChangeAction.setWhat(a.getActivityWhat());
+            defaultItsChangeAction.setRemoved(a.getActivityRemoved());
+            defaultItsChangeAction.setAdded(a.getActivityAdded());
+            defaultItsChangeAction.setDate(a.getDate());
             defaultItsChangeAction.setBugId(kesi.getId());
+
+
             fixProfile(context);
 
             context.setAction(defaultItsChangeAction);
             Bus.publish(new ItsChangeEvent(this,context));
 
+
+
         }
+            
 
     }
 
@@ -95,10 +119,17 @@ public class IssueUpdatedAnnotatedListener extends ALERTActiveMQListener{
             return;
         }
 
-        MdServiceITS.Comment mdServiceComment = mdService.getComment();
 
+        Iterator<MdServiceITS.Comment> commentIterator = null;
+        if(mdService !=null){
+            commentIterator = mdService.getComment().iterator();
+        }
+
+
+        Iterator<Keui.Comment> keuiCommentIterator = keui.getIssueComment().iterator();
 
         for(KesiITS.Comment comment : comments){
+
 
             if(isIgnoredBasedOnDate(comment.getDate())){
                 continue;
@@ -107,16 +138,25 @@ public class IssueUpdatedAnnotatedListener extends ALERTActiveMQListener{
             ItsCommentConnectorContext context =new ItsCommentConnectorContext();
 
             DefaultItsCommentAction commentAction = new DefaultItsCommentAction();
+            
+            String personUri =
+                    (commentIterator == null ?
+                            "owl#none":
+                            commentIterator.next().getPersonUri());
+
 
             context.setProfile(ALERTUtils.extractProfile(
                     comment.getPerson(),
-                    mdServiceComment.getPersonUri(),
+                    personUri,
                     "its"));
 
             logger.trace("void handleIssue() Commenter {} ",context.getProfile());
             commentAction.setDate(comment.getDate());
             commentAction.setText(comment.getText());
-            commentAction.setConcepts(keui.getCommentTextConcepts());
+            commentAction.setBugId(kesi.getId());
+            
+            Keui.Comment keuiComment = keuiCommentIterator.next();
+            commentAction.setConcepts(keuiComment.getConcepts());
 
             context.setAction(commentAction);
             Bus.publish(new ItsCommentEvent(this,context));

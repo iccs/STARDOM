@@ -30,6 +30,13 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
     }
 
     @Override
+    public Metric insert(Metric bean) {
+
+
+        return super.insert(bean);    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
+    @Override
     public <T extends Metric> List<T> findAll(Class<T> aClass) {
 
         Query query = getEntityManager().createQuery("SELECT m FROM " + aClass.getName() + " m ");

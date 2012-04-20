@@ -1,6 +1,9 @@
 package eu.alertproject.iccs.stardom.analyzers.its.connector;
 
+import eu.alertproject.iccs.events.alert.Keui;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * User: fotis

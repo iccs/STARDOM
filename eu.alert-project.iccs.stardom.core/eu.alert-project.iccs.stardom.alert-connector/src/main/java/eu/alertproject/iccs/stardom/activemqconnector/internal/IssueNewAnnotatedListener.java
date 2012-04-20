@@ -20,6 +20,7 @@ import javax.jms.Message;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -119,7 +120,8 @@ public class IssueNewAnnotatedListener extends ALERTActiveMQListener{
             return;
         }
 
-        MdServiceITS.Comment mdServiceComment = mdService.getComment();
+        List<MdServiceITS.Comment> comment1 = mdService.getComment();
+        Iterator<MdServiceITS.Comment> commentIterator = comment1.iterator();
 
 
         for(KesiITS.Comment comment : comments){
@@ -131,10 +133,13 @@ public class IssueNewAnnotatedListener extends ALERTActiveMQListener{
             ItsCommentConnectorContext context =new ItsCommentConnectorContext();
 
             DefaultItsCommentAction commentAction = new DefaultItsCommentAction();
-            
+
+
+            MdServiceITS.Comment next = commentIterator.next();
+
             context.setProfile(ALERTUtils.extractProfile(
                     comment.getPerson(),
-                    mdServiceComment.getPersonUri(),
+                    next.getPersonUri(),
                     "its"));
 
             logger.trace("void handleIssue() Commenter {} ",context.getProfile());

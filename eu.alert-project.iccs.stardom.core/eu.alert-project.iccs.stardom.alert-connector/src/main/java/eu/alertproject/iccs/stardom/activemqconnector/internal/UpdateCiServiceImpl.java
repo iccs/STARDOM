@@ -93,11 +93,15 @@ public class UpdateCiServiceImpl implements UpdateCiService{
                 try {
                     if(metrics.containsKey(cim.getName())){
                         Integer value = metrics.get(cim.getName()).getValue(metricDao, (Identity) event.getPayload());
-                        NormalDistribution d = new NormalDistributionImpl(cim.getMean(),cim.getStandardDeviation());
-                        prob *= d.density(Double.valueOf(value));
+                        if(cim.getStandardDeviation() > 0.0){
+                            NormalDistribution d = new NormalDistributionImpl(cim.getMean(),cim.getStandardDeviation());
+                            prob *= d.density(Double.valueOf(value));
+                        }else{
+                            prob *=1;
+                        }
                     }
                 } catch (RuntimeException e) {
-                    logger.warn("The metric standard deviation is incorrect");
+                    logger.warn("The metric standard deviation is incorrect",e);
                     prob=0.0;
                 } finally {
                 }

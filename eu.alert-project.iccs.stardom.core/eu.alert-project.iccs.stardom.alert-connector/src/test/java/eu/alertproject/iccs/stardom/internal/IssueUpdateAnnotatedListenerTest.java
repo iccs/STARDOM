@@ -96,27 +96,27 @@ public class IssueUpdateAnnotatedListenerTest extends SpringDbUnitJpaTest {
 
         List<Profile> all = profileDao.findAll();
         Assert.assertNotNull(all);
-        Assert.assertEquals(2, all.size(), 0);
+        Assert.assertEquals(6, all.size(), 0);
 
 
         Iterator<Profile> profileIterator = all.iterator();
         Profile profile1 = profileIterator.next();
 
-        Assert.assertEquals("Sander",profile1.getName());
-        Assert.assertEquals("Pientka",profile1.getLastname());
-        Assert.assertEquals("cumulus0007 gmail com",profile1.getEmail());
-        Assert.assertEquals("http://www.alert-project.eu/ontologies/alert_scm.owl#Person2",profile1.getUri());
+        Assert.assertEquals("S.",profile1.getName());
+        Assert.assertEquals("Burmeister",profile1.getLastname());
+        Assert.assertEquals("sven burmeister",profile1.getEmail());
+        Assert.assertEquals("http://www.alert-project.eu/ontologies/alert_scm.owl#Person1",profile1.getUri());
         Assert.assertEquals("its-comment",profile1.getSource());
 
 
         List<Identity> all1 = identityDao.findAll();
 
-        Assert.assertEquals(1,all1.size(),0);
+        Assert.assertEquals(5,all1.size(),0);
 
-        Iterator<Identity> iterator = all1.iterator();
-        List<ItsTemporalMetric> idenity1Metric = metricDao.getForIdentity(iterator.next(), ItsTemporalMetric.class);
+        Identity identity = all1.get(1);//drf;
+        List<ItsTemporalMetric> idenity1Metric = metricDao.getForIdentity(identity, ItsTemporalMetric.class);
         Assert.assertNotNull(idenity1Metric);
-        Assert.assertEquals(3,idenity1Metric.size(),0);
+        Assert.assertEquals(5,idenity1Metric.size(),0);
 
 
     }

@@ -1,5 +1,6 @@
 package eu.alertproject.iccs.stardom.analyzers.its.bus;
 
+import eu.alertproject.iccs.events.alert.Keui;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.DefaultItsChangeAction;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsChangeConnectorContext;
 import eu.alertproject.iccs.stardom.analyzers.its.internal.ProfileFromItsKdeWhoService;
@@ -19,6 +20,8 @@ import org.bushe.swing.event.annotation.EventSubscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
 
 /**
  * User: fotis
@@ -87,8 +90,13 @@ public class ItsChangeEventHandler {
 
                 who = identifier.find(context.getProfile(),"its-change");
             }
+            
+            if(who == null){
+                logger.warn("We can't process the metrics of a Ghost");
+                return;
+            }
 
-            itsMlService.recordItsHistory(who, context.getAction());
+//            itsMlService.recordItsHistory(who, context.getAction());
 
             //whatever your do, do it here
             for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
@@ -104,7 +112,7 @@ public class ItsChangeEventHandler {
             logger.error("Something is up here ",e);
         }finally {
             if(who !=null){
-                Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,who,null));
+                Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,who,new ArrayList<Keui.Concept>()));
             }
         }
     }

@@ -4,6 +4,10 @@
     <metric_quantitative/>
     <metric_temporal/>
 
+    <its_ml/>
+    <sequence
+        sequence_name="its_ml_sequence"
+        sequence_index="1"/>
     <sequence
         sequence_name="metric_sequence"
         sequence_index="1"/>

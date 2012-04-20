@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
@@ -231,10 +232,11 @@ public class DefaultIdentifier implements Identifier{
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public Identity find(Profile profile, String source) {
 
         lock.lock();
+        try{
 
         //sluggify profile email
         profile.setEmail(sluggifierService.sluggify(profile.getEmail()));
@@ -255,7 +257,6 @@ public class DefaultIdentifier implements Identifier{
                 newIdentity.addToProfiles(profile);
 
                 Identity insert = identityDao.insert(i);
-                lock.unlock();
                 return insert;
 
             }else{
@@ -328,7 +329,6 @@ public class DefaultIdentifier implements Identifier{
             newIdentity.addToProfiles(profile);
             Identity insert = identityDao.insert(newIdentity);
 
-            lock.unlock();
             return insert;
 
         }else{
@@ -386,10 +386,11 @@ public class DefaultIdentifier implements Identifier{
             }
 
 
-
-            lock.unlock();
             return identityDao.update(byId);
 
+        }
+        }finally {
+            lock.unlock();
         }
     }
 
