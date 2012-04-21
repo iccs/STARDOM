@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -26,7 +27,7 @@ import java.util.Properties;
  * Date: 05/11/11
  * Time: 19:11
  */
-@Component("scmNewCommitListener")
+@Service("scmNewCommitListener")
 public class ScmNewCommitListener extends ALERTActiveMQListener {
 ;
 
@@ -37,21 +38,24 @@ public class ScmNewCommitListener extends ALERTActiveMQListener {
 
         ScmConnectorContext context =null;
 
+        ObjectMapper mapper = new ObjectMapper();
+
         logger.trace("void onMessage() Text to parse {} ",xml);
-//        context= mapper.readValue(
-//                IOUtils.toInputStream(text)
-//                ,ScmConnectorContext.class);
+        try {
+            context= mapper.readValue(
+                    IOUtils.toInputStream(xml)
+                    ,ScmConnectorContext.class);
 
+            //fix profile
+            fixProfile(context);
+            ScmEvent scmEvent = new ScmEvent(this,context);
+            logger.trace("void onMessage() {}/{} {} ",new Object[]{getMessageSentCount(),getMessageCount(),scmEvent});
 
-        //fix profile
+            Bus.publish(scmEvent);
 
-
-
-        fixProfile(context);
-        ScmEvent scmEvent = new ScmEvent(this,context);
-        logger.trace("void onMessage() {}/{} {} ",new Object[]{getMessageSentCount(),getMessageCount(),scmEvent});
-
-        Bus.publish(scmEvent);
+        } catch (IOException e) {
+            logger.warn("Couldn't work with commit ",e);
+        }
 
     }
 

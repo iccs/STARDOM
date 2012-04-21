@@ -131,20 +131,21 @@
         <property name="cacheLevel" value="3" />
     </bean>
 
-    <!--<bean id="iccsScmNewCommitListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
-        <!--<property name="connectionFactory" ref="jmsConnectionFactory"/>-->
-        <!--<property name="destination">-->
-            <!--<bean-->
-                <!--class="org.apache.activemq.command.ActiveMQTopic">-->
-                <!--<constructor-arg>-->
-                    <!--<util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsScmNewIssue"/>-->
-                <!--</constructor-arg>-->
-            <!--</bean>-->
-        <!--</property>-->
-        <!--<property name="messageListener" ref="scmNewCommitListener"/>-->
-        <!--<property name="recoveryInterval" value="60000"/>-->
-        <!--<property name="cacheLevel" value="3" />-->
-    <!--</bean>-->
+    
+    <bean id="ICCS_Scm_NewCommit" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <value>ICCS.Scm.NewCommit</value>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener" ref="scmNewCommitListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
 
     <!--<bean id="iccsItsHistoryListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
         <!--<property name="connectionFactory" ref="jmsConnectionFactory"/>-->
