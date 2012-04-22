@@ -46,6 +46,19 @@
                 <filterDate>1970-01-01</filterDate>
             </properties>
         </profile>
+        <profile>
+            <id>deploy</id>
+            <activation>
+                <property>
+                    <name>build</name>
+                    <value>deploy</value>
+                </property>
+            </activation>
+            <properties>
+                <db.port>3306</db.port>
+                <filterDate>1970-01-01</filterDate>
+            </properties>
+        </profile>
 
     </profiles>
 
@@ -492,6 +505,7 @@
             <version>${commons-codec.commons-codec.version}</version>
             <scope>test</scope>
         </dependency>
+
 
     </dependencies>
 

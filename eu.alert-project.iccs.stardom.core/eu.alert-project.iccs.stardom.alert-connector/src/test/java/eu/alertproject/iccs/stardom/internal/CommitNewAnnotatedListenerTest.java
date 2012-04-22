@@ -79,7 +79,7 @@ public class CommitNewAnnotatedListenerTest extends SpringDbUnitJpaTest {
     public void testSendEvent() throws IOException {
 
         jmsTemplate.send(
-                Topics.ALERT_KEUI_CommitNew_Annotated,
+                Topics.ALERT_METADATA_CommitNew_Updated,
                 new TextMessageCreator(
                         IOUtils.toString(this.getClass().getResourceAsStream("/connector/ALERT.KEUI.CommitNew.Annotated.xml"))
                 )

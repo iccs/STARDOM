@@ -75,7 +75,7 @@ public class IssueUpdateAnnotatedListenerTest extends SpringDbUnitJpaTest {
     public void testSendEvent() throws IOException {
 
         jmsTemplate.send(
-                Topics.ALERT_KEUI_IssueUpdate_Annotated,
+                Topics.ALERT_METADATA_IssueUpdate_Updated,
                 new TextMessageCreator(
                         IOUtils.toString(this.getClass().getResourceAsStream("/connector/ALERT.KEUI.IssueUpdate.Annotated.xml"))
                 )
@@ -96,7 +96,7 @@ public class IssueUpdateAnnotatedListenerTest extends SpringDbUnitJpaTest {
 
         List<Profile> all = profileDao.findAll();
         Assert.assertNotNull(all);
-        Assert.assertEquals(6, all.size(), 0);
+        Assert.assertEquals(5, all.size(), 0);
 
 
         Iterator<Profile> profileIterator = all.iterator();
@@ -111,7 +111,7 @@ public class IssueUpdateAnnotatedListenerTest extends SpringDbUnitJpaTest {
 
         List<Identity> all1 = identityDao.findAll();
 
-        Assert.assertEquals(5,all1.size(),0);
+        Assert.assertEquals(4,all1.size(),0);
 
         Identity identity = all1.get(1);//drf;
         List<ItsTemporalMetric> idenity1Metric = metricDao.getForIdentity(identity, ItsTemporalMetric.class);

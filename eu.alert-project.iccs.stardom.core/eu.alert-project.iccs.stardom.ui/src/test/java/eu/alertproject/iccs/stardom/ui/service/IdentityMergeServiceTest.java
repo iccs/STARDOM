@@ -1,4 +1,4 @@
-package eu.alertproject.iccs.stardom.identifier;
+package eu.alertproject.iccs.stardom.ui.service;
 
 import com.existanze.libraries.orm.test.JpaTestUtils;
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
@@ -6,7 +6,6 @@ import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.ProfileDao;
 import eu.alertproject.iccs.stardom.domain.api.*;
 import eu.alertproject.iccs.stardom.domain.api.metrics.*;
-import eu.alertproject.iccs.stardom.identifier.api.IdentityMergeService;
 import eu.alertproject.iccs.stardom.testdata.api.SpringDbUnitJpaTest;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.junit.Assert;
@@ -34,7 +33,7 @@ public class IdentityMergeServiceTest extends SpringDbUnitJpaTest{
 
 
     @Autowired
-    IdentityMergeService identityMergeService;
+    DefaultIdentityMergeService identityMergeService;
 
 
     @Override

@@ -88,57 +88,67 @@ recommend sticking to 'spring' -->
 
                 var ul = "";
                 var counter =0;
-                $.each(data.results,function(key,val){
 
-                    ul+='<div class="result ">' +
-                            "<label style='float: left'>"+key+" ("+val.identity+")</label> " +
-                            "<a class='delete-link' style='float: right;clear:right;' href='#' onclick='remove(this);return false;'>Delete</a>" +
-                            "<input type='checkbox' onclick=\"toggleSelected('"+val.identity+"')\" />"+
-                            '<div class="profiles">';
-
-                    ul+="<table class='profiles'>";
-                    ul+="<thead><tr> " +
-                            "<th>Id</td>" +
-                            "<th>Name</td>" +
-                            "<th>Lastname</td>" +
-                            "<th>Username</td>" +
-                            "<th>Email</td>" +
-                            "<th>Source</td>" +
-                        "</tr></thead><tbody>";
-
-                    $.each(val.profiles,function(pkey,pval){
-                        ul+="<tr> " +
-                                "<td>"+pval.id+"</td>" +
-                                "<td>"+pval.name+"</td>" +
-                                "<td>"+pval.lastname+"</td>" +
-                                "<td>"+pval.username+"</td>" +
-                                "<td>"+pval.email+"</td>" +
-                                "<td>"+pval.source+"</td>" +
-                            "</tr>";
-
+                var empty = $.isEmptyObject(data.results);
+                console.log("Empty "+empty)
+                if(!empty){
+                    
+                    $.each(data.results,function(key,val){
+    
+                        ul+='<div class="result ">' +
+                                "<label style='float: left'>"+key+" ("+val.identity+")</label> " +
+                                "<a class='delete-link' style='float: right;clear:right;' href='#' onclick='remove(this);return false;'>Delete</a>" +
+                                "<input type='checkbox' onclick=\"toggleSelected('"+val.identity+"')\" />"+
+                                '<div class="profiles">';
+    
+                        ul+="<table class='profiles'>";
+                        ul+="<thead><tr> " +
+                                "<th>Id</td>" +
+                                "<th>Name</td>" +
+                                "<th>Lastname</td>" +
+                                "<th>Username</td>" +
+                                "<th>Email</td>" +
+                                "<th>Source</td>" +
+                            "</tr></thead><tbody>";
+    
+                        $.each(val.profiles,function(pkey,pval){
+                            ul+="<tr> " +
+                                    "<td>"+pval.id+"</td>" +
+                                    "<td>"+pval.name+"</td>" +
+                                    "<td>"+pval.lastname+"</td>" +
+                                    "<td>"+pval.username+"</td>" +
+                                    "<td>"+pval.email+"</td>" +
+                                    "<td>"+pval.source+"</td>" +
+                                "</tr>";
+    
+                        });
+                        ul+="</tbody></table>";
+    
+                        ul+="<table class='metrics'>";
+    
+                        $.each(val.metrics,function(pkey,pval){
+                            ul+="<tr> " +
+                                    "<td>"+pval.name+"</td>" +
+                                    "<td>"+pval.value+"</td>" +
+                                "</tr>";
+    
+                        });
+    
+                        ul+="</table>" +
+                                "</div>" +
+                            "</div>";
+    
+    
+                        counter++;
+    
                     });
-                    ul+="</tbody></table>";
+    
+                    $("#search-results").html(ul);
+                }else{
 
-                    ul+="<table class='metrics'>";
-
-                    $.each(val.metrics,function(pkey,pval){
-                        ul+="<tr> " +
-                                "<td>"+pval.name+"</td>" +
-                                "<td>"+pval.value+"</td>" +
-                            "</tr>";
-
-                    });
-
-                    ul+="</table>" +
-                            "</div>" +
-                        "</div>";
-
-
-                    counter++;
-
-                });
-
-                $("#search-results").html(ul);
+                    $("#search-results").html("<a href='<@spring.url "/login"/>' >Create a profile!</a>");
+                        
+                }
 
                 unlockLinks();
             }

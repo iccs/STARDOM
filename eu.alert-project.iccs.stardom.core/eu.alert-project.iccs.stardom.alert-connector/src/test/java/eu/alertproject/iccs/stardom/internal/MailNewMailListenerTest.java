@@ -77,7 +77,7 @@ public class MailNewMailListenerTest extends SpringDbUnitJpaTest {
     public void testSendEvent() throws IOException {
 
         jmsTemplate.send(
-                Topics.ALERT_KEUI_MailNew_Annotated,
+                Topics.ALERT_METADATA_MailNew_Updated,
                 new TextMessageCreator(
                         IOUtils.toString(this.getClass().getResourceAsStream("/connector/ALERT.KEUI.MailNew.Annotated.xml"))
                 )

@@ -48,7 +48,7 @@ public class InputStreamIssuesVisitor implements InputStreamVisitor {
 
 
         template.send(
-                Topics.ALERT_KEUI_IssueUpdate_Annotated,
+                Topics.ALERT_METADATA_IssueUpdate_Updated,
                 new TextMessageCreator(s));
 
 

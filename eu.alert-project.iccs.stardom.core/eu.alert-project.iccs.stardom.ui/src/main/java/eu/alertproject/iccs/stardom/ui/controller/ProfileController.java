@@ -91,7 +91,7 @@ public class ProfileController {
                 p.setEmail(identity.getEmail());
                 p.setLastname(identity.getEmail());
                 p.setName(identity.getName());
-                p.setLastname(identity.getLastname());
+                p.setUsername(identity.getUsername());
                 Identity smIdentity = identifier.find(
                         p
                         , "form");

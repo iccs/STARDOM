@@ -46,7 +46,7 @@ public class InputStreamMailVisitor implements InputStreamVisitor {
 
 
         template.send(
-                Topics.ALERT_KEUI_MailNew_Annotated,
+                Topics.ALERT_METADATA_MailNew_Updated,
                 new TextMessageCreator(s));
 
             logger.trace("void handle() sent {} ",counter++);

@@ -1,10 +1,9 @@
 package eu.alertproject.iccs.stardom.ui.controller;
 
-import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
-import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Metric;
-import eu.alertproject.iccs.stardom.identifier.api.IdentityMergeService;
+import eu.alertproject.iccs.stardom.ui.service.DefaultIdentityMergeService;
 import eu.alertproject.iccs.stardom.ui.beans.SearchResult;
+import eu.alertproject.iccs.stardom.ui.service.MergeService;
 import eu.alertproject.iccs.stardom.ui.service.SearchService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -35,7 +34,7 @@ public class SearchController {
     SearchService searchService;
     
     @Autowired
-    IdentityMergeService identityMergeService;
+    MergeService mergeService;
 
 
     @RequestMapping(method = RequestMethod.GET)
@@ -101,7 +100,7 @@ public class SearchController {
 
         logger.trace("ModelMap merge(ids) {} ",ids);
 
-        identityMergeService.merge(ids);
+        mergeService.merge(ids);
         
         //get the first one
         Integer id = ids[0];

@@ -41,13 +41,13 @@
     </bean>
 
 
-    <bean id="ALERT_KEUI_MailNew_Annotated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <bean id="ALERT_METADATA_MailNew_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
         <property name="destination">
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_KEUI_MailNew_Annotated"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_MailNew_Updated"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -56,13 +56,13 @@
         <property name="cacheLevel" value="3" />
     </bean>
 
-    <bean id="ALERT_KEUI_CommitNew_Annotated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <bean id="ALERT_METADATA_CommitNew_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
         <property name="destination">
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_KEUI_CommitNew_Annotated"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_CommitNew_Updated"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -71,13 +71,13 @@
         <property name="cacheLevel" value="3" />
     </bean>
 
-    <bean id="ALERT_KEUI_IssueNew_Annotated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <bean id="ALERT_METADATA_IssueNew_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
         <property name="destination">
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_KEUI_IssueNew_Annotated"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_IssueNew_Updated"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -86,13 +86,13 @@
         <property name="cacheLevel" value="3" />
     </bean>
 
-    <bean id="ALERT_KEUI_IssueUpdate_Annotated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <bean id="ALERT_METADATA_IssueUpdate_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
         <property name="destination">
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_KEUI_IssueUpdate_Annotated"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_IssueUpdate_Updated"/>
                 </constructor-arg>
             </bean>
         </property>
@@ -101,13 +101,13 @@
         <property name="cacheLevel" value="3" />
     </bean>
 
-    <bean id="ALERT_KEUI_ForumPost_Annotated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <bean id="ALERT_METADATA_ForumPost_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
         <property name="destination">
             <bean
                 class="org.apache.activemq.command.ActiveMQTopic">
                 <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_KEUI_ForumPost_Annotated"/>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_ForumPost_Updated"/>
                 </constructor-arg>
             </bean>
         </property>

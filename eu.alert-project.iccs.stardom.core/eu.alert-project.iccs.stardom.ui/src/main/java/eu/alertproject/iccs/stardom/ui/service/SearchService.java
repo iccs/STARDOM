@@ -3,6 +3,10 @@ package eu.alertproject.iccs.stardom.ui.service;
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.ProfileDao;
+import eu.alertproject.iccs.stardom.datastore.api.metrics.MetricValueStrategy;
+import eu.alertproject.iccs.stardom.datastore.api.metrics.MostRecentMetricValueStrategy;
+import eu.alertproject.iccs.stardom.datastore.api.metrics.NumberMetricValueStrategy;
+import eu.alertproject.iccs.stardom.datastore.api.metrics.TemporalMetricValueStrategy;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Metric;
 import eu.alertproject.iccs.stardom.domain.api.MetricQuantitative;
@@ -14,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 /**
@@ -32,7 +37,26 @@ public class SearchService {
 
     @Autowired
     MetricDao metricDao;
-    
+    private HashMap<String, MetricValueStrategy<? extends Metric>> metrics;
+
+
+    @PostConstruct
+    public void init(){
+                 //get the metrics for each
+        metrics = new HashMap<String,MetricValueStrategy<? extends Metric>>();
+
+        metrics.put("ScmActivityMetric", new NumberMetricValueStrategy<ScmTemporalMetric>(ScmTemporalMetric.class));
+        metrics.put("ScmApiIntroducedMetric", new NumberMetricValueStrategy<ScmApiIntroducedMetric>(ScmApiIntroducedMetric.class));
+        metrics.put("ScmTemporalMetric", new TemporalMetricValueStrategy<ScmTemporalMetric>(ScmTemporalMetric.class));
+
+        metrics.put("ItsActivityMetric", new NumberMetricValueStrategy<ItsTemporalMetric>(ItsTemporalMetric.class));
+        metrics.put("ItsIssuesResolvedMetric", new MostRecentMetricValueStrategy<ItsIssuesResolvedMetric>(ItsIssuesResolvedMetric.class));
+        metrics.put("ItsTemporalMetric", new TemporalMetricValueStrategy<ItsTemporalMetric>(ItsTemporalMetric.class));
+
+        metrics.put("CommunicationActivityMetric", new TemporalMetricValueStrategy<MailingListTemporalMetric>(MailingListTemporalMetric.class));
+        metrics.put("CommunicationTemporalMetric", new NumberMetricValueStrategy<MailingListTemporalMetric>(MailingListTemporalMetric.class));
+
+    }
     @Transactional(readOnly = true)
     public Map<String, SearchResult> search(String query){
         
@@ -118,6 +142,7 @@ public class SearchService {
                                                     new ArrayList<Class<? extends Metric>>();
 
 
+        
         profileMetrics.add(ScmActivityMetric.class);
         profileMetrics.add(ScmTemporalMetric.class);
         profileMetrics.add(ScmApiIntroducedMetric.class);
@@ -127,19 +152,20 @@ public class SearchService {
         profileMetrics.add(MailingListTemporalMetric.class);
 
         List<MetricResult> metricList = new ArrayList<MetricResult>();
+        Set<String> strings = metrics.keySet();
 
-        for(Class<? extends Metric> profileMetric : profileMetrics){
+        int id = 0;
+        for(String key: strings){
 
-            Metric recentMetric = metricDao.getMostRecentMetric(identity, profileMetric);
-            if(recentMetric !=null){
+            MetricValueStrategy<? extends Metric> metricValueStrategy = metrics.get(key);
 
-                metricList.add(new MetricResult(
-                        recentMetric.getId(),
-                        recentMetric.getLabel(),
-                        ((Number)recentMetric.getValue()).intValue()
+            Integer value = metricValueStrategy.getValue(metricDao, identity);
+
+            metricList.add(new MetricResult(
+                        id++,
+                        key,
+                        value
                 ));
-            }
-
         }
 
         return metricList;

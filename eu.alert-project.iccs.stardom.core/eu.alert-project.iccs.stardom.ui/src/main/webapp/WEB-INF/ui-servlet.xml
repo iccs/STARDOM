@@ -139,7 +139,7 @@
     <!-- ActiveMQ -->
         <bean   id="jmsConnectionFactory"
             class="org.apache.activemq.ActiveMQConnectionFactory" >
-        <property name="brokerURL" value="tcp://www.cimcollege.rs:61616" />
+        <property name="brokerURL" value="${activemq.url}" />
         <property name="userName" value="" />
         <property name="password" value="" />
     </bean>
@@ -183,6 +183,22 @@
             </bean>
         </property>
         <property name="messageListener"  ref="annotationService"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+    <!-- ActiveMQ Listeners -->
+    <bean id="ALERT_METADATA_IdentityUpdate_Stored" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_IdentityUpdate_Stored"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener"  ref="mergeService"/>
         <property name="recoveryInterval" value="60000"/>
         <property name="cacheLevel" value="3" />
     </bean>

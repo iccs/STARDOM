@@ -80,6 +80,9 @@ public class ItsEventHandler {
         handleDirtyProfile(action.getAssigned(),action);
         handleDirtyProfile(action.getReporter(), action);
 
+        Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,action.getBugId(),action.getConcepts()));
+
+
 
     }
 
@@ -153,7 +156,6 @@ public class ItsEventHandler {
         } finally {
 
             Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,identity,action.getConcepts()));
-            Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,action.getBugId(),action.getConcepts()));
         }
     }
 
