@@ -69,4 +69,7 @@ public abstract class AbstractTemporalAnalyzer<T extends ConnectorAction,E exten
         return this.clazz;
     }
 
+    public MetricDao getMetricDao() {
+        return metricDao;
+    }
 }

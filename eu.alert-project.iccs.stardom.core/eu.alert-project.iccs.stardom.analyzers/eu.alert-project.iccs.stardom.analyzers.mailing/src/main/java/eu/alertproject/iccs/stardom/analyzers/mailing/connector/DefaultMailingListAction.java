@@ -17,6 +17,8 @@ public class DefaultMailingListAction implements MailingListAction{
     private String fromUri;
     private String subject;
     private String text;
+    private String inReplyTo;
+    private String messageId;
     private List<Keui.Concept> concepts;
 
     public Date getDate() {
@@ -67,6 +69,24 @@ public class DefaultMailingListAction implements MailingListAction{
         this.concepts = concepts;
     }
 
+
+    public void setMessageId(String messageId) {
+        this.messageId=messageId;
+
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public String getInReplyTo() {
+        return inReplyTo;
+    }
+
+    public void setInReplyTo(String inReplyTo) {
+        this.inReplyTo = inReplyTo;
+    }
+
     @Override
     public String toString() {
         return "DefaultMailingListAction{" +
@@ -76,4 +96,5 @@ public class DefaultMailingListAction implements MailingListAction{
                 ", text='" + text + '\'' +
                 '}';
     }
+
 }

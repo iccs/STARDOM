@@ -36,7 +36,14 @@ public abstract class ALERTActiveMQListener extends AbstractActiveMQListener{
     public final void process(Message message) throws IOException, JMSException {
         
         String text = ((TextMessage) message).getText();
-        processXml(text);
+        if(StringUtils.isNotEmpty(text)){
+            logger.trace("void process() {} ",text);
+            processXml(text);
+            
+        }else{
+            logger.warn("void process() {} Empty event received");
+        }
+            
         
     }
 

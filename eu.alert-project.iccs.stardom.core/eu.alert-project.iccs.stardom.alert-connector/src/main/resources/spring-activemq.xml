@@ -40,6 +40,22 @@
       <property name="pubSubDomain" value="true"/>
     </bean>
 
+    <!-- The following is for none annotated e-mails -->
+    <bean id="ALERT_METADATA_MailNew" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_MLSensor_Mail_New"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="messageListener" ref="mailNewListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
 
     <bean id="ALERT_METADATA_MailNew_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
@@ -55,6 +71,7 @@
         <property name="recoveryInterval" value="60000"/>
         <property name="cacheLevel" value="3" />
     </bean>
+
 
     <bean id="ALERT_METADATA_CommitNew_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
