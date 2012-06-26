@@ -40,22 +40,31 @@
       <property name="pubSubDomain" value="true"/>
     </bean>
 
-    <!-- The following is for none annotated e-mails -->
-    <bean id="ALERT_METADATA_MailNew" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-        <property name="connectionFactory" ref="jmsConnectionFactory"/>
-        <property name="destination">
-            <bean
-                class="org.apache.activemq.command.ActiveMQTopic">
-                <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_MLSensor_Mail_New"/>
-                </constructor-arg>
-            </bean>
-        </property>
-        <property name="messageListener" ref="mailNewListener"/>
-        <property name="recoveryInterval" value="60000"/>
-        <property name="cacheLevel" value="3" />
-    </bean>
 
+
+    <!-- The following is for none annotated e-mails -->
+    <bean id="ALERT_METADATA_MailNew"
+          class="eu.alertproject.iccs.stardom.spring.ALERTDefaultMessageListenerContainer">
+        <constructor-arg>
+            <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_MLSensor_Mail_New"/>
+        </constructor-arg>
+        <constructor-arg ref="mailNewListener"/>
+  </bean>
+    
+    <!--<bean id="ALERT_METADATA_MailNew" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
+        <!--<property name="connectionFactory" ref="jmsConnectionFactory"/>-->
+        <!--<property name="destination">-->
+            <!--<bean-->
+                <!--class="org.apache.activemq.command.ActiveMQTopic">-->
+                <!--<constructor-arg>-->
+                    <!--<util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_MLSensor_Mail_New"/>-->
+                <!--</constructor-arg>-->
+            <!--</bean>-->
+        <!--</property>-->
+        <!--<property name="messageListener" ref="mailNewListener"/>-->
+        <!--<property name="recoveryInterval" value="60000"/>-->
+        <!--<property name="cacheLevel" value="3" />-->
+    <!--</bean>-->
 
     <bean id="ALERT_METADATA_MailNew_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
@@ -147,68 +156,5 @@
         <property name="recoveryInterval" value="60000"/>
         <property name="cacheLevel" value="3" />
     </bean>
-
-    
-    <bean id="ICCS_Scm_NewCommit" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-        <property name="connectionFactory" ref="jmsConnectionFactory"/>
-        <property name="destination">
-            <bean
-                class="org.apache.activemq.command.ActiveMQTopic">
-                <constructor-arg>
-                    <value>ICCS.Scm.NewCommit</value>
-                </constructor-arg>
-            </bean>
-        </property>
-        <property name="messageListener" ref="scmNewCommitListener"/>
-        <property name="recoveryInterval" value="60000"/>
-        <property name="cacheLevel" value="3" />
-    </bean>
-
-    <!--<bean id="iccsItsHistoryListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
-        <!--<property name="connectionFactory" ref="jmsConnectionFactory"/>-->
-        <!--<property name="destination">-->
-            <!--<bean-->
-                <!--class="org.apache.activemq.command.ActiveMQTopic">-->
-                <!--<constructor-arg>-->
-                    <!--<util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsHistory"/>-->
-                <!--</constructor-arg>-->
-            <!--</bean>-->
-        <!--</property>-->
-        <!--<property name="messageListener" ref="itsHistoryListener"/>-->
-        <!--<property name="recoveryInterval" value="60000"/>-->
-        <!--<property name="cacheLevel" value="3" />-->
-    <!--</bean>-->
-
-    <!--<bean id="iccsItsNewCommentListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
-        <!--<property name="connectionFactory" ref="jmsConnectionFactory"/>-->
-        <!--<property name="destination">-->
-            <!--<bean-->
-                <!--class="org.apache.activemq.command.ActiveMQTopic">-->
-                <!--<constructor-arg>-->
-                    <!--<util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsNewComment"/>-->
-                <!--</constructor-arg>-->
-            <!--</bean>-->
-        <!--</property>-->
-        <!--<property name="messageListener" ref="itsNewCommentListener"/>-->
-        <!--<property name="recoveryInterval" value="60000"/>-->
-        <!--<property name="cacheLevel" value="3" />-->
-    <!--</bean>-->
-
-    <!--<bean id="iccsItsNewIssueListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
-        <!--<property name="connectionFactory" ref="jmsConnectionFactory"/>-->
-        <!--<property name="destination">-->
-            <!--<bean-->
-                <!--class="org.apache.activemq.command.ActiveMQTopic">-->
-                <!--<constructor-arg>-->
-                    <!--<util:constant static-field="eu.alertproject.iccs.events.api.Topics.IccsItsNewIssue"/>-->
-                <!--</constructor-arg>-->
-            <!--</bean>-->
-        <!--</property>-->
-        <!--<property name="messageListener" ref="itsNewIssueListener"/>-->
-        <!--<property name="recoveryInterval" value="60000"/>-->
-        <!--<property name="cacheLevel" value="3" />-->
-    <!--</bean>-->
-
-
 
 </beans>

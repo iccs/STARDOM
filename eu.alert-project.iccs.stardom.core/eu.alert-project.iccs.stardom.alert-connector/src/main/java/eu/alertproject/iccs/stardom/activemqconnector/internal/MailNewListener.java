@@ -15,6 +15,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
+ *
+ * @Topic eu.alertproject.iccs.events.api.Topics.ALERT_MLSensor_Mail_New
+ *
+ *
  * User: fotis
  * Date: 05/11/11
  * Time: 19:12

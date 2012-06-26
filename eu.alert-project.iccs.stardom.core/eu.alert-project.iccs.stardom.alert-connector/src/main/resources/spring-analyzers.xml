@@ -14,25 +14,13 @@
 
     <!--<bean class="eu.alertproject.iccs.stardom.analyzers.forums.bus.ForumEventHandler>-->
 
-   <!--<bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsActivityAnalyzer"/>-->
-   <!--<bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsActivityHistoryAnalyzer"/>-->
    <bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsIssueCountAnalyzer"/>
    <bean class="eu.alertproject.iccs.stardom.analyzers.its.constructor.ItsTemporalAnalyzer"/>
 
     <!-- Analyzers -->
-
-
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityAnalyzer"/>-->
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityHistoryAnalyzer"/>-->
     <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmTemporalAnalyzer"/>
     <bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmApiIntroducedHistoryAnalyzer"/>
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmApiIntroducedHistoryAnalyzer"/>-->
 
-
-
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.forums.constructor.ForumActivityAnalyzer"/>-->
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.mailing.constructor.MailingListActivityAnalyzer"/>-->
-    <!--<bean class="eu.alertproject.iccs.stardom.analyzers.mailing.constructor.MailingListActivityHistoryAnalyzer"/>-->
     <bean class="eu.alertproject.iccs.stardom.analyzers.mailing.constructor.MailingListTemporalAnalyzer"/>
 
 

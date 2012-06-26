@@ -24,6 +24,10 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ *
+ * @Topic
+ * eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_IssueNew_Updated
+ *
  * User: fotis
  * Date: 25/02/12
  * Time: 15:09

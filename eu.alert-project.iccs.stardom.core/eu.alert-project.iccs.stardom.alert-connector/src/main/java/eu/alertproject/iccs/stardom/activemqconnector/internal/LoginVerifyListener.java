@@ -25,11 +25,13 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ *
+ * @Topic eu.alertproject.iccs.events.api.Topics.ALERT_ALL_STARDOM_LoginVerifyRequest
  * User: fotis
  * Date: 26/03/12
  * Time: 17:05
- * To change this template use File | Settings | File Templates.
+ *
+ *
  */
 @Component("loginVerifyListener")
 public class LoginVerifyListener extends ALERTActiveMQListener{

@@ -29,7 +29,6 @@ import java.util.Properties;
  */
 @Service("scmNewCommitListener")
 public class ScmNewCommitListener extends ALERTActiveMQListener {
-;
 
     private Logger logger = LoggerFactory.getLogger(ScmNewCommitListener.class);
 

@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Properties;
 
 /**
+ *
+ * @Topic eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_MailNew_Updated
+ *
  * User: fotis
  * Date: 05/11/11
  * Time: 19:12
