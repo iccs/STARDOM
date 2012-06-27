@@ -16,6 +16,7 @@ public class DefaultItsCommentAction implements ItsAction{
     private Date date;
     private String text;
     private List<Keui.Concept> concepts;
+    private String component;
 
 
     public Integer getBugId() {
@@ -50,5 +51,13 @@ public class DefaultItsCommentAction implements ItsAction{
 
     public void setConcepts(List<Keui.Concept> concepts) {
         this.concepts = concepts;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
+    }
+
+    public String getComponent() {
+        return component;
     }
 }

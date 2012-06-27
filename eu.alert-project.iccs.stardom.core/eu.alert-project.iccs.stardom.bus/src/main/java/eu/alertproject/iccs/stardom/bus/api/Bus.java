@@ -35,6 +35,8 @@ public class Bus {
             throw new IllegalArgumentException("Can't publish to null topic.");
         }
 
+
+
         EventServiceLocator.getEventBusService().publish(topic.toString(), o);
 
     }

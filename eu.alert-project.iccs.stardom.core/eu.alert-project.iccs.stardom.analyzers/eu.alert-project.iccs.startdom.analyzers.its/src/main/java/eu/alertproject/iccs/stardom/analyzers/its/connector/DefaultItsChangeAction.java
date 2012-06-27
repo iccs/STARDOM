@@ -17,6 +17,7 @@ public class DefaultItsChangeAction implements ItsAction{
     private String what;
     private String added;
     private String removed;
+    private String component;
 
 
     @Override
@@ -58,5 +59,15 @@ public class DefaultItsChangeAction implements ItsAction{
 
     public void setRemoved(String removed) {
         this.removed = removed;
+    }
+
+    public void setComponent(String component) {
+
+        this.component = component;
+
+    }
+
+    public String getComponent() {
+        return component;
     }
 }

@@ -4,9 +4,10 @@ import eu.alertproject.iccs.events.activemq.TextMessageCreator;
 import eu.alertproject.iccs.events.alert.Keui;
 import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.events.internal.ArtefactUpdated;
+import eu.alertproject.iccs.events.internal.ComponentUpdated;
 import eu.alertproject.iccs.events.internal.IdentityUpdated;
 import eu.alertproject.iccs.stardom.bus.api.AnnotatedUpdateEvent;
-import eu.alertproject.iccs.stardom.bus.api.STARDOMTopics;
+import eu.alertproject.iccs.stardom.bus.api.Component;
 import eu.alertproject.iccs.stardom.classification.CI;
 import eu.alertproject.iccs.stardom.classification.CIUtils;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
@@ -19,7 +20,6 @@ import eu.alertproject.iccs.stardom.domain.api.Metric;
 import eu.alertproject.iccs.stardom.domain.api.metrics.*;
 import org.apache.commons.math.distribution.NormalDistribution;
 import org.apache.commons.math.distribution.NormalDistributionImpl;
-import org.bushe.swing.event.annotation.EventTopicSubscriber;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,24 +125,9 @@ public class UpdateCiServiceImpl implements UpdateCiService{
         id.setCis(ciForClass);
         //send to the
 
-        String updateEvent = null;
-        try {
-            ObjectMapper om = new ObjectMapper();
-            updateEvent= om.writeValueAsString(id);
-        } catch (IOException e) {
-            logger.error("Can't send the updated event ",e);
-        } finally {
 
-            if(updateEvent !=null ){
+        sendEvent(Topics.ICCS_STARDOM_Identity_Updated, id);
 
-                jmsTemplate.send(
-                        Topics.ICCS_STARDOM_Identity_Updated,
-                        new TextMessageCreator(updateEvent)
-                );
-
-            }
-            logger.trace("void identityUpdated() It took {} millis to complete {}",start-System.currentTimeMillis(),updateEvent);
-        }
     }
 
     @Override
@@ -154,6 +139,28 @@ public class UpdateCiServiceImpl implements UpdateCiService{
         au.setConcepts((List<Keui.Concept>) event.getAnnotations());
         au.setId(String.valueOf(event.getPayload()));
 
+        sendEvent(Topics.ICCS_STARDOM_Issue_Updated, au);
+        
+    }
+
+
+    @Override
+    public void componentUpdated(AnnotatedUpdateEvent event) {
+
+        long start = System.currentTimeMillis();
+        ComponentUpdated au = new ComponentUpdated();
+
+        Component payload = (Component) event.getPayload();
+        
+        au.setId(String.valueOf(payload.getIssueId()));
+        au.setComponent(payload.getComponent());
+        au.setConcepts((List<Keui.Concept>) event.getAnnotations());
+
+        sendEvent(Topics.ICCS_STARDOM_Component_Updated, au);
+
+    }
+    
+    private void sendEvent(String topic, ArtefactUpdated au){
         String updateEvent = null;
         try {
             ObjectMapper om = new ObjectMapper();
@@ -165,13 +172,11 @@ public class UpdateCiServiceImpl implements UpdateCiService{
             if(updateEvent !=null ){
 
                 jmsTemplate.send(
-                        Topics.ICCS_STARDOM_Issue_Updated,
+                        topic,
                         new TextMessageCreator(updateEvent)
                 );
 
             }
-            logger.trace("void identityUpdated() It took {} millis to complete {}",start-System.currentTimeMillis(),updateEvent);
         }
     }
-
 }

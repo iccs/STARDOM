@@ -13,5 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UpdateCiService {
     void updateIndentityCI(AnnotatedUpdateEvent event);
     void issueUpdated(AnnotatedUpdateEvent event);
+    void componentUpdated(AnnotatedUpdateEvent event);
 
 }

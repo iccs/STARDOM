@@ -53,4 +53,11 @@ public class ArtefactUpdateEventHandler {
     public void issueUpdated(String topic, AnnotatedUpdateEvent event){
         updateCiService.issueUpdated(event);
     }
+
+    @EventTopicSubscriber(topic= STARDOMTopics.ComponentUpdated)
+    public void componentUpdated(String topic, AnnotatedUpdateEvent event){
+        updateCiService.componentUpdated(event);
+    }
+
+
 }

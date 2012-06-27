@@ -2,10 +2,8 @@ package eu.alertproject.iccs.stardom.analyzers.mailing.bus;
 
 import eu.alertproject.iccs.stardom.analyzers.mailing.api.ProfileFromMailFromService;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
-import eu.alertproject.iccs.stardom.analyzers.mailing.constructor.AbstractMailingListAnalyzer;
 import eu.alertproject.iccs.stardom.bus.api.AnnotatedUpdateEvent;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
-import eu.alertproject.iccs.stardom.bus.api.Event;
 import eu.alertproject.iccs.stardom.bus.api.STARDOMTopics;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;

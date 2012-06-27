@@ -2,7 +2,6 @@ package eu.alertproject.iccs.stardom.internal;
 
 import eu.alertproject.iccs.events.activemq.TextMessageCreator;
 import eu.alertproject.iccs.events.api.Topics;
-import eu.alertproject.iccs.stardom.activemqconnector.internal.IssueNewAnnotatedListener;
 import eu.alertproject.iccs.stardom.activemqconnector.internal.IssueUpdatedAnnotatedListener;
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;

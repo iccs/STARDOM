@@ -72,4 +72,25 @@
     </bean>
 
 
+  <!-- Keeping this here for reference -->
+  <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--<property name="driverClassName" value="${jdbc.driverClassName}" />-->
+    <!--<property name="url" value="${jdbc.url}" />-->
+    <!--<property name="username" value="${jdbc.username}" />-->
+    <!--<property name="password" value="${jdbc.password}" />-->
+  <!--</bean>-->
+
+  <!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+    <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--<property name="jpaVendorAdapter">-->
+      <!--<bean-->
+          <!--class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">-->
+        <!--<property name="showSql" value="false" />-->
+        <!--<property name="generateDdl" value="false" />-->
+        <!--<property name="databasePlatform"-->
+                  <!--value="org.hibernate.dialect.MySQLDialect" />-->
+      <!--</bean>-->
+    <!--</property>-->
+  <!--</bean>-->
+
 </beans>

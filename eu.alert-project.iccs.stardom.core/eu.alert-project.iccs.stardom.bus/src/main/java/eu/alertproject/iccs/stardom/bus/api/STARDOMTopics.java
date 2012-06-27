@@ -9,5 +9,6 @@ public class STARDOMTopics {
 
     public static final String IdentityUpdated="STARDOM.IdentityUpdated";
     public static final String IssueUpdated="STARDOM.IssueUpdated";
+    public static final String ComponentUpdated="STARDOM.ComponentUpdated";
 
 }

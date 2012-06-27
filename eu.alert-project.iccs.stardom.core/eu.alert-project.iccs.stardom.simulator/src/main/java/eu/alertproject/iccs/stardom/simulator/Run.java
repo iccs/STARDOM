@@ -2,6 +2,7 @@ package eu.alertproject.iccs.stardom.simulator;
 
 import eu.alertproject.iccs.stardom.simulator.services.InputStreamIssuesVisitor;
 import eu.alertproject.iccs.stardom.simulator.services.InputStreamMailVisitor;
+import eu.alertproject.iccs.stardom.simulator.services.ScmSimulationService;
 import eu.alertproject.iccs.stardom.simulator.services.ZipSimulationService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -25,12 +26,15 @@ public class Run {
 
         Properties systemProperties = (Properties) context.getBean("systemProperties");
         ZipSimulationService service = (ZipSimulationService) context.getBean("zipSimulationService");
+        ScmSimulationService scmSimulationService = (ScmSimulationService) context.getBean("scmSimulationService");
+
         JmsTemplate template= (JmsTemplate) context.getBean("jmsTemplate");
 
         try {
 
             service.start(systemProperties.getProperty("keui.issues.path"),new InputStreamIssuesVisitor(template));
-            service.start(systemProperties.getProperty("keui.mailnew.path"),new InputStreamMailVisitor(template));
+//            service.start(systemProperties.getProperty("keui.mailnew.path"),new InputStreamMailVisitor(template));
+//            scmSimulationService.start();
 
 
         } catch (IOException e) {

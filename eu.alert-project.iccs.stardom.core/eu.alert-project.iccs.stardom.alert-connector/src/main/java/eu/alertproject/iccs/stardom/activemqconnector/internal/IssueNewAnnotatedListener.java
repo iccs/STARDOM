@@ -25,8 +25,7 @@ import java.util.List;
 
 /**
  *
- * @Topic
- * eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_IssueNew_Updated
+ * @Topic eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_IssueNew_Updated
  *
  * User: fotis
  * Date: 25/02/12
@@ -94,6 +93,7 @@ public class IssueNewAnnotatedListener extends ALERTActiveMQListener{
         logger.trace("void handleComments() Assigned {}",itsAction.getAssigned());
 
 
+        itsAction.setComponent(kesi.getProduct().getComponentId());
         itsAction.setBugId(kesi.getId());
         itsAction.setBugStatus(kesi.getStatus());
         itsAction.setDate(kesi.getDateOpened());

@@ -21,6 +21,7 @@ public class DefaultItsAction implements ItsAction{
     private Profile assigned;
     private Profile reporter;
     private List<Keui.Concept> concepts;
+    private String component;
 
     @Override
     public Date getDate() {
@@ -88,6 +89,14 @@ public class DefaultItsAction implements ItsAction{
         this.concepts = concepts;
     }
 
+    public void setComponent(String component) {
+        this.component = component;
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
     @Override
     public String toString() {
         return "DefaultItsAction{" +
@@ -100,4 +109,5 @@ public class DefaultItsAction implements ItsAction{
                 ", reporter=" + reporter +
                 '}';
     }
+
 }

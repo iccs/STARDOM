@@ -60,6 +60,7 @@ public class IssueUpdatedAnnotatedListener extends ALERTActiveMQListener{
         handleComments(kesi,mdService,keui);
         handleChange(kesi, mdService, keui);
 
+
     }
 
     private void handleChange(KesiITS kesi, MdServiceITS mdService, Keui keui) {
@@ -78,6 +79,9 @@ public class IssueUpdatedAnnotatedListener extends ALERTActiveMQListener{
         if(mdService !=null){
             mdIterator = mdService.getActivity().iterator();
         }
+
+
+        String component = kesi.getProduct().getComponentId();
 
         for(KesiITS.Activity a :activity){
 
@@ -98,6 +102,7 @@ public class IssueUpdatedAnnotatedListener extends ALERTActiveMQListener{
 
             DefaultItsChangeAction defaultItsChangeAction = new DefaultItsChangeAction();
             defaultItsChangeAction.setWhat(a.getActivityWhat());
+            defaultItsChangeAction.setComponent(component);
             defaultItsChangeAction.setRemoved(a.getActivityRemoved());
             defaultItsChangeAction.setAdded(a.getActivityAdded());
             defaultItsChangeAction.setDate(a.getDate());
@@ -132,6 +137,9 @@ public class IssueUpdatedAnnotatedListener extends ALERTActiveMQListener{
 
         Iterator<Keui.Comment> keuiCommentIterator = keui.getIssueComment().iterator();
 
+
+        String component = kesi.getProduct().getComponentId();
+
         for(KesiITS.Comment comment : comments){
 
 
@@ -157,6 +165,7 @@ public class IssueUpdatedAnnotatedListener extends ALERTActiveMQListener{
             logger.trace("void handleIssue() Commenter {} ",context.getProfile());
             commentAction.setDate(comment.getDate());
             commentAction.setText(comment.getText());
+            commentAction.setComponent(component);
             commentAction.setBugId(kesi.getId());
             
             Keui.Comment keuiComment = keuiCommentIterator.next();

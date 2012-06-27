@@ -12,5 +12,7 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public interface ItsAction extends ConnectorAction {
+    
+    String getComponent();
 
 }

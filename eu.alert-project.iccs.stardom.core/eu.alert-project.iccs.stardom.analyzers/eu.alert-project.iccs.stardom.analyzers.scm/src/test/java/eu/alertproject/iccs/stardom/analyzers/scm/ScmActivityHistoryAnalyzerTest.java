@@ -3,7 +3,6 @@ package eu.alertproject.iccs.stardom.analyzers.scm;
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.DefaultScmAction;
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmAction;
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmFile;
-import eu.alertproject.iccs.stardom.analyzers.scm.constructor.ScmActivityAnalyzer;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
