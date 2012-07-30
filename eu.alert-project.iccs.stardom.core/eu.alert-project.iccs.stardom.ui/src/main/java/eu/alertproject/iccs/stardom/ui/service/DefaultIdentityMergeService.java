@@ -41,7 +41,7 @@ public class DefaultIdentityMergeService implements MergeService,MessageListener
 
 
     @Autowired
-    JmsTemplate jmsTemplate;
+    MessagingService messagingService;
     
     private Integer id=0;
 
@@ -255,9 +255,9 @@ public class DefaultIdentityMergeService implements MergeService,MessageListener
         //wait for the reply
         logger.trace("void merge(ids) Sending {} ",event);
 
-        jmsTemplate.send(
+        messagingService.send(
                 Topics.ALERT_STARDOM_Identity_Updated,
-                new TextMessageCreator(event)
+                event
         );
 
         countDownLatch.countDown();

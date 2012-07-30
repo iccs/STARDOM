@@ -12,18 +12,16 @@
     <name>Alert - STARDOM Core</name>
 
     <modules>
+        <module>eu.alert-project.iccs.stardom.domain</module>
+        <module>eu.alert-project.iccs.stardom.datastore</module>
         <module>eu.alert-project.iccs.stardom.identifier</module>
         <module>eu.alert-project.iccs.stardom.constructor</module>
         <module>eu.alert-project.iccs.stardom.connector</module>
-        <module>eu.alert-project.iccs.stardom.datastore</module>
         <module>eu.alert-project.iccs.stardom.alert-connector</module>
-        <module>eu.alert-project.iccs.stardom.domain</module>
-        <module>eu.alert-project.iccs.stardom.metrics</module>
         <module>eu.alert-project.iccs.stardom.testdata</module>
         <module>eu.alert-project.iccs.stardom.bus</module>
         <module>eu.alert-project.iccs.stardom.analyzers</module>
         <module>eu.alert-project.iccs.stardom.ui</module>
-
         <module>eu.alert-project.iccs.stardom.spring</module>
         <module>eu.alert-project.iccs.stardom.classification</module>
         <module>eu.alert-project.iccs.stardom.simulator</module>

@@ -6,8 +6,9 @@ REC_DIR="$DEV_DIR/Recommender/eu.alert-project.iccs.recommender.core"
 STARDOM_DIR="$DEV_DIR/STARDOM/eu.alert-project.iccs.stardom.core"
 
 LAUS_PORT="22"
-LAUS_KEY="/Users/fotis/.ssh/id_rsa_2048"
-LAUS_HOST="laus.perimeter.fzi.de"
+LAUS_KEY="~/.ssh/id_rsa_2048"
+#LAUS_HOST="laus.perimeter.fzi.de"
+LAUS_HOST="192.168.1.101"
 LAUS_USER="alerticcs"
 
 pwd
@@ -16,6 +17,7 @@ cd $EVENTS_DIR; pwd; mvn clean compile package install || exit 1
 cd $REC_DIR; pwd; mvn clean compile package install -Denv=prod -Ddb.port=8889 -Dmaven.test.skip=true || exit 1
 cd $STARDOM_DIR; pwd; mvn clean compile package install -Denv=prod -Ddb.port=8889 -DfilterDate=1970-01-01 -Dmaven.test.skip=true || exit 1
 
+#exit 0
 
 #upload
 echo "Uploading...."

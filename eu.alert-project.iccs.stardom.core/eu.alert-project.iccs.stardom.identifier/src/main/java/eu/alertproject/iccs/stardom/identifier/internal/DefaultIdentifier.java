@@ -227,6 +227,7 @@ public class DefaultIdentifier implements Identifier{
 
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Identity find(Profile profile) {
         return find(profile,"none");
     }

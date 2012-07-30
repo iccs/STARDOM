@@ -17,6 +17,17 @@
         </property>
 	</bean>
 
+    <!--  Properties -->
+    <bean id="systemProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean" >
+        <property name="locations">
+            <list>
+                <value>classpath:/test/system.properties</value>
+                <value>classpath:/connector/system.properties</value>
+            </list>
+        </property>
+	</bean>
+
+
     <bean id="eventservice" class="eu.alertproject.iccs.stardom.bus.api.StardomEventService"/>
 
     <bean id="eventbusInit" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">

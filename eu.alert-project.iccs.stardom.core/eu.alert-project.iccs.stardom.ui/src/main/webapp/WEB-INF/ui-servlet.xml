@@ -137,8 +137,8 @@
 
 
     <!-- ActiveMQ -->
-        <bean   id="jmsConnectionFactory"
-            class="org.apache.activemq.ActiveMQConnectionFactory" >
+    <bean   id="jmsConnectionFactory"
+        class="org.apache.activemq.ActiveMQConnectionFactory" >
         <property name="brokerURL" value="${activemq.url}" />
         <property name="userName" value="" />
         <property name="password" value="" />
@@ -169,6 +169,7 @@
     </bean>
 
 
+    <bean id="messagingService" class="eu.alertproject.iccs.stardom.ui.service.JmsMessagingService"/>
 
     <!-- ActiveMQ Listeners -->
     <bean id="annotationService" class="eu.alertproject.iccs.stardom.ui.service.KEUIAnnotationService" />

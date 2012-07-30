@@ -208,8 +208,8 @@ public class GraphViewerController {
 
 
         BasicVisualizationServer<Integer,String> basicVisualizationServer = new BasicVisualizationServer<Integer, String>(layout,panel.getViewDimension());
-        basicVisualizationServer.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
-        basicVisualizationServer.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+//        basicVisualizationServer.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+//        basicVisualizationServer.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
 
         layout.setSize(panel.getViewDimension()); // sets the initial size of the space
         panel.setGraphView(basicVisualizationServer);

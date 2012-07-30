@@ -11,6 +11,7 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
  * Date: 22/01/12
  * Time: 13:58
  */
+@ContextConfiguration("classpath:/ui/uiTestApplicationContext.xml")
 public class IdentityMergeServiceTest extends SpringDbUnitJpaTest{
 
     @Autowired
@@ -33,7 +35,7 @@ public class IdentityMergeServiceTest extends SpringDbUnitJpaTest{
 
 
     @Autowired
-    DefaultIdentityMergeService identityMergeService;
+    MergeService identityMergeService;
 
 
     @Override
@@ -180,7 +182,7 @@ public class IdentityMergeServiceTest extends SpringDbUnitJpaTest{
 
         metricList = metricDao.findAll();
         Assert.assertNotNull(metricList);
-        Assert.assertEquals(15, metricList.size(), 0);
+        Assert.assertEquals(18, metricList.size(), 0);
 
 
 
@@ -269,9 +271,9 @@ public class IdentityMergeServiceTest extends SpringDbUnitJpaTest{
         this.<MailingListActivityMetric>assertQuantitativeMetric(identity, MailingListActivityMetric.class, 26, 125);
 
 
-        this.<ScmTemporalMetric>assertTemporalMetric(identity, ScmTemporalMetric.class, 5, "2010-07-17");
-        this.<ItsTemporalMetric>assertTemporalMetric(identity, ItsTemporalMetric.class, 17, "2009-07-17");
-        this.<MailingListTemporalMetric>assertTemporalMetric(identity, MailingListTemporalMetric.class, 29, "2014-07-17");
+        this.<ScmTemporalMetric>assertTemporalMetric(identity, ScmTemporalMetric.class, 5, "2010-07-17",2);
+        this.<ItsTemporalMetric>assertTemporalMetric(identity, ItsTemporalMetric.class, 17, "2009-07-17",2);
+        this.<MailingListTemporalMetric>assertTemporalMetric(identity, MailingListTemporalMetric.class, 29, "2014-07-17",2);
 
     }
 
@@ -393,7 +395,7 @@ public class IdentityMergeServiceTest extends SpringDbUnitJpaTest{
 
         metricList = metricDao.findAll();
         Assert.assertNotNull(metricList);
-        Assert.assertEquals(15, metricList.size(), 0);
+        Assert.assertEquals(18, metricList.size(), 0);
 
 
 
@@ -489,9 +491,9 @@ public class IdentityMergeServiceTest extends SpringDbUnitJpaTest{
         this.<MailingListActivityMetric>assertQuantitativeMetric(identity, MailingListActivityMetric.class, 26, 125);
 
 
-        this.<ScmTemporalMetric>assertTemporalMetric(identity, ScmTemporalMetric.class, 5, "2010-07-17");
-        this.<ItsTemporalMetric>assertTemporalMetric(identity, ItsTemporalMetric.class, 17, "2009-07-17");
-        this.<MailingListTemporalMetric>assertTemporalMetric(identity, MailingListTemporalMetric.class, 29, "2014-07-17");
+        this.<ScmTemporalMetric>assertTemporalMetric(identity, ScmTemporalMetric.class, 5, "2010-07-17",2);
+        this.<ItsTemporalMetric>assertTemporalMetric(identity, ItsTemporalMetric.class, 17, "2009-07-17",2);
+        this.<MailingListTemporalMetric>assertTemporalMetric(identity, MailingListTemporalMetric.class, 29, "2014-07-17",2);
 
 
 
@@ -522,12 +524,17 @@ public class IdentityMergeServiceTest extends SpringDbUnitJpaTest{
     }
 
 
-    private <T extends MetricTemporal> void  assertTemporalMetric(Identity identity, Class<? extends MetricTemporal> clazz, Integer id, String temporal) {
+    private <T extends MetricTemporal> void  assertTemporalMetric(
+                                                Identity identity,
+                                                Class<? extends MetricTemporal> clazz,
+                                                Integer id,
+                                                String temporal,
+                                                Integer amount) {
 
         List<T> forIdentity = (List<T>) metricDao.getForIdentity(identity, clazz);
 
         Assert.assertNotNull(forIdentity);
-        Assert.assertEquals(1,forIdentity.size(),0);
+        Assert.assertEquals(amount,forIdentity.size(),0);
 
         MetricTemporal metric = forIdentity.get(0);
         Assert.assertEquals(id, metric.getId(), 0);

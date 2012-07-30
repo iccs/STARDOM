@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -56,6 +57,7 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
         };  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Transactional
     protected final <T extends MetricQuantitative> void assertInsertQuantitativeMetric(
             Integer identityId,
             T bean,
@@ -68,6 +70,8 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
         metricDao.insert(bean);
 
         T forIdentity = metricDao.getMostRecentMetric(byId, metricClass);
+
+        Assert.assertNotNull(forIdentity);
 
         Assert.assertEquals(DateFormatUtils.format(forIdentity.getCreatedAt(),"yyyy-MM-dd"),
                             DateFormatUtils.format(new Date(),"yyyy-MM-dd"));
@@ -117,6 +121,8 @@ public abstract class MetricDaoTest extends SpringDbUnitJpaTest {
         metricDao.insert(bean);
 
         T forIdentity = metricDao.getMostRecentMetric(byId, metricClass);
+
+        Assert.assertNotNull(forIdentity);
 
         Assert.assertEquals(DateFormatUtils.format(forIdentity.getCreatedAt(),"yyyy-MM-dd"),
                             DateFormatUtils.format(new Date(),"yyyy-MM-dd"));

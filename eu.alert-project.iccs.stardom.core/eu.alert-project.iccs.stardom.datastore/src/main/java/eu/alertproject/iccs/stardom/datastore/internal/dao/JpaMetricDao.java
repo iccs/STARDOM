@@ -29,12 +29,12 @@ public class JpaMetricDao extends JpaCommonDao<Metric> implements MetricDao{
         super(Metric.class);
     }
 
-    @Override
-    public Metric insert(Metric bean) {
-
-
-        return super.insert(bean);    //To change body of overridden methods use File | Settings | File Templates.
-    }
+//    @Override
+//    public Metric insert(Metric bean) {
+//
+//
+//        return super.insert(bean);    //To change body of overridden methods use File | Settings | File Templates.
+//    }
 
     @Override
     public <T extends Metric> List<T> findAll(Class<T> aClass) {

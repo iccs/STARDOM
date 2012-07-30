@@ -11,6 +11,7 @@ import eu.alertproject.iccs.stardom.identifier.api.Identifier;
 import eu.alertproject.iccs.stardom.ui.beans.Concept;
 import eu.alertproject.iccs.stardom.ui.beans.ProfileBean;
 import eu.alertproject.iccs.stardom.ui.service.AnnotationService;
+import eu.alertproject.iccs.stardom.ui.service.MessagingService;
 import eu.alertproject.iccs.stardom.ui.validator.ProfileValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,10 +45,9 @@ public class ProfileController {
 
     @Autowired
     Identifier identifier;
-    
-    @Autowired
-    JmsTemplate jmsTemplate;
 
+    @Autowired
+    MessagingService messagingService;
 
     @RequestMapping(value="/login",method = RequestMethod.GET)
     public ModelAndView login(){
@@ -118,10 +118,9 @@ public class ProfileController {
                 
                 logger.trace("String create() Sending event {} ",stardomIdentityNew);
 
-
-                jmsTemplate.send(
+                messagingService.send(
                         Topics.ALERT_STARDOM_New_Identity,
-                        new TextMessageCreator(stardomIdentityNew));
+                        stardomIdentityNew);
 
                 return "redirect:/login";
 

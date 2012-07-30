@@ -1,8 +1,8 @@
-drop database if exists alert;
+drop database if exists stardom;
 
-create database alert;
+create database stardom;
 
-grant all privileges on alert.* to 'alert'@'localhost' identified by '1234';
+grant all privileges on stardom.* to 'stardom'@'localhost' identified by '1234';
 
 
-use alert;
+use stardom;
