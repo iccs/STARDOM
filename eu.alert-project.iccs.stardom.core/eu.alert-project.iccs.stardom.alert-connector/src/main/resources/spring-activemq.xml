@@ -50,7 +50,7 @@
         </constructor-arg>
         <constructor-arg ref="mailNewListener"/>
   </bean>
-    
+    <!---->
     <!--<bean id="ALERT_METADATA_MailNew" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
         <!--<property name="connectionFactory" ref="jmsConnectionFactory"/>-->
         <!--<property name="destination">-->

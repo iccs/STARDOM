@@ -11,12 +11,16 @@ import eu.alertproject.iccs.stardom.analyzers.mailing.connector.DefaultMailingLi
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -34,9 +38,9 @@ import java.util.Properties;
 public class MailNewAnnotatedListener extends ALERTActiveMQListener {
 
     private Logger logger = LoggerFactory.getLogger(MailNewAnnotatedListener.class);
-
     @Override
     public void processXml(String text) {
+
 
         MailingListAnnotatedEnvelope envelope = EventFactory.<MailingListAnnotatedEnvelope>fromXml(
                 text,
