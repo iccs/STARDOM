@@ -19,19 +19,7 @@ recommend sticking to 'spring' -->
 </head>
 <body>
 
-<div class="form-container">
-    <form method="POST" action="<@spring.url "/login/authenticate" />" >
-
-    <@iccs.field "identity.email"/>
-    <@iccs.password "identity.code"/>
-
-    <div class="form-controls">
-        <input type="submit" value="Login" name="login"/>
-        <input type="submit" value="Remind Me" name="remind"/>
-    </div>
-
-    </form>
-</div>
+<h1>An access code has been sent to <strong>${email}</strong></h1>
+<a href="<@spring.url "/login" />" >Login</a>
 
 </body>
-</html>

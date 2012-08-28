@@ -5,7 +5,7 @@
     </span>
 </#macro>
 <#macro field name>
-    <div class="form-field">
+<div class="form-field">
     <div class="form-label">
         <@spring.message "${name}" />
     </div>
@@ -16,8 +16,22 @@
     <div class="form-errors">
         <#list spring.status.errorMessages as error> <b>${error}</b> <br> </#list>
     </div>
-    </div>
+</div>
+</#macro>
 
+<#macro password name>
+<div class="form-field">
+    <div class="form-label">
+        <@spring.message "${name}" />
+    </div>
+    <div class="form-input">
+        <@spring.bind "${name}" />
+        <input type="password" name="${spring.status.expression}" value="${spring.status.value?default("")}" />
+    </div>
+    <div class="form-errors">
+        <#list spring.status.errorMessages as error> <b>${error}</b> <br> </#list>
+    </div>
+</div>
 </#macro>
 
 <#macro textField name>

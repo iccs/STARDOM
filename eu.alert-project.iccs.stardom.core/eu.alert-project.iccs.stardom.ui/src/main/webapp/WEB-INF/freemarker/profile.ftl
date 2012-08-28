@@ -17,21 +17,22 @@ recommend sticking to 'spring' -->
     <script src="<@spring.url "/static/js/jquery-ui-1.8.17.custom.min.js"/>" type="text/javascript"></script>
     <script src="<@spring.url "/static/js/slimScroll.min.js"/>" type="text/javascript"></script>
 </head>
-<body>
+    <body>
 
-<div class="form-container">
-    <form method="POST" action="<@spring.url "/login/authenticate" />" >
+        <div class="form-container">
+        <form method="POST" action="<@spring.url "/profile/create" />" >
 
-    <@iccs.field "identity.email"/>
-    <@iccs.password "identity.code"/>
+            <@iccs.field "identity.name"/>
+            <@iccs.field "identity.lastname"/>
+            <@iccs.field "identity.username"/>
+            <@iccs.field "identity.email"/>
+            <@iccs.textField "identity.description"/>
 
-    <div class="form-controls">
-        <input type="submit" value="Login" name="login"/>
-        <input type="submit" value="Remind Me" name="remind"/>
-    </div>
+            <div class="form-controls">
+                <input type="submit" value="Create"/>
+            </div>
+        </form>
+        </div>
 
-    </form>
-</div>
-
-</body>
+    </body>
 </html>
