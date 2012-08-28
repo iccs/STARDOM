@@ -14,5 +14,6 @@ import java.util.Date;
 public interface ItsAction extends ConnectorAction {
     
     String getComponent();
+    String getSubject();
 
 }

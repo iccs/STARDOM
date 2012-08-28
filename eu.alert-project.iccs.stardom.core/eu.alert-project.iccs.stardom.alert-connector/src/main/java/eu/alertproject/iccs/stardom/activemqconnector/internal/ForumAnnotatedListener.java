@@ -14,7 +14,7 @@ public class ForumAnnotatedListener extends ALERTActiveMQListener{
     @Override
     public void processXml(String xml){
 
-        //process the issue here
+        //process the event here here
 
 
     }

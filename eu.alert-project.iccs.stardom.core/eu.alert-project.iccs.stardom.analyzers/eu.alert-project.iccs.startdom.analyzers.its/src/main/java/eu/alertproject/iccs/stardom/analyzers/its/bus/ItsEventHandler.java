@@ -1,5 +1,7 @@
 package eu.alertproject.iccs.stardom.analyzers.its.bus;
 
+import eu.alertproject.iccs.events.internal.IdentityUpdated;
+import eu.alertproject.iccs.events.internal.IssueUpdated;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.*;
 import eu.alertproject.iccs.stardom.analyzers.its.internal.ProfileFromItsKdeWhoService;
 import eu.alertproject.iccs.stardom.bus.api.*;
@@ -77,7 +79,14 @@ public class ItsEventHandler {
         handleDirtyProfile(action.getAssigned(),action);
         handleDirtyProfile(action.getReporter(), action);
 
-        Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,action.getBugId(),action.getConcepts()));
+        IssueUpdated iu = new IssueUpdated();
+        iu.setDate(action.getDate());
+        iu.setSubject(action.getSubject());
+        iu.setConcepts(action.getConcepts());
+        iu.setId(String.valueOf(action.getBugId()));
+
+        Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,iu,action.getConcepts()));
+
         Bus.publish(STARDOMTopics.ComponentUpdated, new AnnotatedUpdateEvent(this,
                 new Component(
                         action.getComponent(),
@@ -131,7 +140,14 @@ public class ItsEventHandler {
         } finally {
 
             Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,identity,action.getConcepts()));
-            Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,action.getBugId(),action.getConcepts()));
+
+            IssueUpdated iu = new IssueUpdated();
+            iu.setDate(action.getDate());
+            iu.setSubject(action.getSubject());
+            iu.setConcepts(action.getConcepts());
+            iu.setId(String.valueOf(action.getBugId()));
+
+            Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,iu,action.getConcepts()));
             Bus.publish(STARDOMTopics.ComponentUpdated, new AnnotatedUpdateEvent(this,
                     new Component(
                             action.getComponent(),

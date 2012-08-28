@@ -137,7 +137,7 @@
                 </constructor-arg>
             </bean>
         </property>
-        <property name="messageListener" ref="issueUpdatedAnnotatedListener"/>
+        <property name="messageListener" ref="forumAnnotatedListener"/>
         <property name="recoveryInterval" value="60000"/>
         <property name="cacheLevel" value="3" />
     </bean>

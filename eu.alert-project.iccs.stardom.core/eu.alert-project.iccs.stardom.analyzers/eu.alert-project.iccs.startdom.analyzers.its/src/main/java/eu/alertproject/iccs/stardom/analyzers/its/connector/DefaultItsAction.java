@@ -22,6 +22,7 @@ public class DefaultItsAction implements ItsAction{
     private Profile reporter;
     private List<Keui.Concept> concepts;
     private String component;
+    private String subject;
 
     @Override
     public Date getDate() {
@@ -95,6 +96,14 @@ public class DefaultItsAction implements ItsAction{
 
     public String getComponent() {
         return component;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     @Override

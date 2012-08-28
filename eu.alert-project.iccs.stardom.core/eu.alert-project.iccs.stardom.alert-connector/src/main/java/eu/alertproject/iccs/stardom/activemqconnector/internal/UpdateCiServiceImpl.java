@@ -6,6 +6,7 @@ import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.events.internal.ArtefactUpdated;
 import eu.alertproject.iccs.events.internal.ComponentUpdated;
 import eu.alertproject.iccs.events.internal.IdentityUpdated;
+import eu.alertproject.iccs.events.internal.IssueUpdated;
 import eu.alertproject.iccs.stardom.bus.api.AnnotatedUpdateEvent;
 import eu.alertproject.iccs.stardom.bus.api.Component;
 import eu.alertproject.iccs.stardom.classification.CI;
@@ -133,13 +134,9 @@ public class UpdateCiServiceImpl implements UpdateCiService{
     @Override
     public void issueUpdated(AnnotatedUpdateEvent event) {
 
-        long start = System.currentTimeMillis();
-        ArtefactUpdated au = new ArtefactUpdated();
 
-        au.setConcepts((List<Keui.Concept>) event.getAnnotations());
-        au.setId(String.valueOf(event.getPayload()));
-
-        sendEvent(Topics.ICCS_STARDOM_Issue_Updated, au);
+        IssueUpdated iu = (IssueUpdated) event.getPayload();
+        sendEvent(Topics.ICCS_STARDOM_Issue_Updated, iu);
         
     }
 

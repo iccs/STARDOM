@@ -16,6 +16,7 @@ public class DefaultItsCommentAction implements ItsAction{
     private Date date;
     private String text;
     private List<Keui.Concept> concepts;
+    private String subject;
     private String component;
 
 
@@ -59,5 +60,13 @@ public class DefaultItsCommentAction implements ItsAction{
 
     public String getComponent() {
         return component;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

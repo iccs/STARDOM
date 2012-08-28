@@ -65,6 +65,7 @@ public class IssueNewAnnotatedListener extends ALERTActiveMQListener{
         handleComments(kesi,mdService,keui);
 
 
+
     }
 
     private void handleIssue(KesiITS kesi, MdServiceITS mdService, Keui keui) {
@@ -93,6 +94,7 @@ public class IssueNewAnnotatedListener extends ALERTActiveMQListener{
         logger.trace("void handleComments() Assigned {}",itsAction.getAssigned());
 
 
+        itsAction.setSubject(kesi.getSummary());
         itsAction.setComponent(kesi.getProduct().getComponentId());
         itsAction.setBugId(kesi.getId());
         itsAction.setBugStatus(kesi.getStatus());
@@ -109,6 +111,7 @@ public class IssueNewAnnotatedListener extends ALERTActiveMQListener{
 
         itsAction.setResolution(kesi.getResolution());
         itsAction.setSeverity(kesi.getSeverity());
+
         itsAction.setConcepts(keui.getIssueDescriptionConcepts());
         context.setAction(itsAction);
 
@@ -149,6 +152,7 @@ public class IssueNewAnnotatedListener extends ALERTActiveMQListener{
             logger.trace("void handleIssue() Commenter {} ",context.getProfile());
             commentAction.setDate(comment.getDate());
             commentAction.setText(comment.getText());
+            commentAction.setSubject(kesi.getSummary());
             commentAction.setConcepts(keui.getCommentTextConcepts());
 
             context.setAction(commentAction);
