@@ -1,6 +1,7 @@
 package eu.alertproject.iccs.stardom.ui.service;
 
 import eu.alertproject.iccs.events.activemq.TextMessageCreator;
+import eu.alertproject.iccs.events.api.AbstractActiveMQListener;
 import eu.alertproject.iccs.events.api.EventFactory;
 import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.events.stardom.IdentityPersons;
@@ -19,6 +20,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +32,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Time: 13:41
  */
 @Service("mergeService")
-public class DefaultIdentityMergeService implements MergeService,MessageListener {
+public class DefaultIdentityMergeService extends AbstractActiveMQListener implements MergeService{
 
 
     private Logger logger = LoggerFactory.getLogger(DefaultIdentityMergeService.class);
@@ -302,11 +304,11 @@ public class DefaultIdentityMergeService implements MergeService,MessageListener
 
     }
 
-    @Override
-    public void onMessage(Message message) {
 
+    @Override
+    public void process(Message message) throws IOException, JMSException {
         String text="error";
-        
+
         try{
             text=((TextMessage) message).getText();
             logger.trace("void onMessage() Success \n\n{}\n\n ",text);
@@ -315,6 +317,7 @@ public class DefaultIdentityMergeService implements MergeService,MessageListener
         }
 
         responseEvent.set(text);
+
 
     }
 }

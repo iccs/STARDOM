@@ -2,7 +2,7 @@ package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
 import eu.alertproject.iccs.events.alert.*;
 import eu.alertproject.iccs.events.api.EventFactory;
-import eu.alertproject.iccs.stardom.activemqconnector.api.ALERTActiveMQListener;
+import eu.alertproject.iccs.stardom.activemqconnector.api.STARDOMActiveMQListener;
 import eu.alertproject.iccs.stardom.analyzers.mailing.bus.MailingEvent;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.DefaultMailingListAction;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
@@ -11,8 +11,6 @@ import eu.alertproject.iccs.stardom.domain.api.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  *
@@ -24,7 +22,7 @@ import java.util.List;
  * Time: 19:12
  */
 @Component("mailNewListener")
-public class MailNewListener extends ALERTActiveMQListener {
+public class MailNewListener extends STARDOMActiveMQListener {
 
     private Logger logger = LoggerFactory.getLogger(MailNewListener.class);
 

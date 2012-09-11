@@ -178,7 +178,7 @@
         <dependency>
             <version>${project.version}</version>
             <groupId>${project.groupId}</groupId>
-            <artifactId>connector</artifactId>
+            <artifactId>datastore</artifactId>
         </dependency>
 
         <dependency>
@@ -232,7 +232,7 @@
             <artifactId>activemq-camel</artifactId>
         </dependency>
 
-        <dependency>
+            <dependency>
             <groupId>eu.alert-project.iccs.events</groupId>
             <artifactId>core</artifactId>
         </dependency>

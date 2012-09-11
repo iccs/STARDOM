@@ -5,26 +5,17 @@ import eu.alertproject.iccs.events.alert.MailingList;
 import eu.alertproject.iccs.events.alert.MailingListAnnotatedEnvelope;
 import eu.alertproject.iccs.events.alert.MailingListAnnotatedPayload;
 import eu.alertproject.iccs.events.api.EventFactory;
-import eu.alertproject.iccs.stardom.activemqconnector.api.ALERTActiveMQListener;
+import eu.alertproject.iccs.stardom.activemqconnector.api.STARDOMActiveMQListener;
 import eu.alertproject.iccs.stardom.analyzers.mailing.bus.MailingEvent;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.DefaultMailingListAction;
 import eu.alertproject.iccs.stardom.analyzers.mailing.connector.MailingListConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 /**
  *
@@ -35,7 +26,7 @@ import java.util.Properties;
  * Time: 19:12
  */
 @Component("mailNewAnnotatedListener")
-public class MailNewAnnotatedListener extends ALERTActiveMQListener {
+public class MailNewAnnotatedListener extends STARDOMActiveMQListener {
 
     private Logger logger = LoggerFactory.getLogger(MailNewAnnotatedListener.class);
     @Override

@@ -3,6 +3,7 @@ package eu.alertproject.iccs.stardom.ui.service;
 import com.thoughtworks.xstream.XStream;
 import eu.alertproject.iccs.events.activemq.TextMessageCreator;
 import eu.alertproject.iccs.events.alert.Keui;
+import eu.alertproject.iccs.events.api.AbstractActiveMQListener;
 import eu.alertproject.iccs.events.api.EventFactory;
 import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.events.alert.TextToAnnotateReplyEnvelope;
@@ -18,6 +19,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -30,7 +32,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Date: 14/03/12
  * Time: 16:51
  */
-public class KEUIAnnotationService implements AnnotationService,MessageListener {
+public class KEUIAnnotationService extends AbstractActiveMQListener implements AnnotationService{
 
 
     private Logger logger = LoggerFactory.getLogger(KEUIAnnotationService.class);
@@ -125,7 +127,8 @@ public class KEUIAnnotationService implements AnnotationService,MessageListener 
 
 
     @Override
-    public void onMessage(Message message) {
+    public void process(Message message) throws IOException, JMSException {
+
 
         String text = null;
         try {

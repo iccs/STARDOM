@@ -2,7 +2,7 @@ package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
 import eu.alertproject.iccs.events.alert.*;
 import eu.alertproject.iccs.events.api.EventFactory;
-import eu.alertproject.iccs.stardom.activemqconnector.api.ALERTActiveMQListener;
+import eu.alertproject.iccs.stardom.activemqconnector.api.STARDOMActiveMQListener;
 import eu.alertproject.iccs.stardom.analyzers.its.bus.ItsChangeEvent;
 import eu.alertproject.iccs.stardom.analyzers.its.bus.ItsCommentEvent;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.DefaultItsChangeAction;
@@ -11,13 +11,10 @@ import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsChangeConnectorCo
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsCommentConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
-import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,7 +28,7 @@ import java.util.List;
  * Time: 15:09
  */
 @Component("issueUpdatedAnnotatedListener")
-public class IssueUpdatedAnnotatedListener extends ALERTActiveMQListener{
+public class IssueUpdatedAnnotatedListener extends STARDOMActiveMQListener {
     private Logger logger = LoggerFactory.getLogger(IssueUpdatedAnnotatedListener.class);
 
     @Override

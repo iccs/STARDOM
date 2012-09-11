@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+        default-autowire="byName"
+        >
+
+    <!-- The following is for none annotated e-mails -->
+    <bean id="ALERT_METADATA_CommitNew_Updated" class="eu.alertproject.iccs.events.activemq.ALERTDefaultMessageListenerContainer">
+        <constructor-arg>
+            <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_CommitNew_Updated"/>
+        </constructor-arg>
+        <constructor-arg ref="commitNewAnnotatedListener"/>
+        <constructor-arg ref="jmsConnectionFactory"/>
+        <constructor-arg value="${activemq.recoveryInterval}" />
+        <constructor-arg value="${activemq.cacheLevel}" />
+    </bean>
+
+
+    <bean id="ALERT_METADATA_IssueNew_Updated" class="eu.alertproject.iccs.events.activemq.ALERTDefaultMessageListenerContainer">
+        <constructor-arg>
+            <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_IssueNew_Updated"/>
+        </constructor-arg>
+        <constructor-arg ref="issueNewAnnotatedListener"/>
+        <constructor-arg ref="jmsConnectionFactory"/>
+        <constructor-arg value="${activemq.recoveryInterval}" />
+        <constructor-arg value="${activemq.cacheLevel}" />
+    </bean>
+
+    <bean id="ALERT_METADATA_IssueUpdate_Updated" class="eu.alertproject.iccs.events.activemq.ALERTDefaultMessageListenerContainer">
+        <constructor-arg>
+            <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_IssueUpdate_Updated"/>
+        </constructor-arg>
+        <constructor-arg ref="issueUpdatedAnnotatedListener"/>
+        <constructor-arg ref="jmsConnectionFactory"/>
+        <constructor-arg value="${activemq.recoveryInterval}" />
+        <constructor-arg value="${activemq.cacheLevel}" />
+    </bean>
+
+    <bean id="ALERT_METADATA_MailNew_Updated" class="eu.alertproject.iccs.events.activemq.ALERTDefaultMessageListenerContainer">
+        <constructor-arg>
+            <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_MailNew_Updated"/>
+        </constructor-arg>
+        <constructor-arg ref="mailNewAnnotatedListener"/>
+        <constructor-arg ref="jmsConnectionFactory"/>
+        <constructor-arg value="${activemq.recoveryInterval}" />
+        <constructor-arg value="${activemq.cacheLevel}" />
+    </bean>
+
+
+    <bean id="ALERT_METADATA_ForumPost_Updated" class="eu.alertproject.iccs.events.activemq.ALERTDefaultMessageListenerContainer">
+        <constructor-arg>
+            <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_ForumPost_Updated"/>
+        </constructor-arg>
+        <constructor-arg ref="forumAnnotatedListener"/>
+        <constructor-arg ref="jmsConnectionFactory"/>
+        <constructor-arg value="${activemq.recoveryInterval}" />
+        <constructor-arg value="${activemq.cacheLevel}" />
+    </bean>
+
+    <bean id="ALERT_ALL_STARDOM_LoginVerifyRequest" class="eu.alertproject.iccs.events.activemq.ALERTDefaultMessageListenerContainer">
+        <constructor-arg>
+            <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_ALL_STARDOM_LoginVerifyRequest"/>
+        </constructor-arg>
+        <constructor-arg ref="loginVerifyListener"/>
+        <constructor-arg ref="jmsConnectionFactory"/>
+        <constructor-arg value="${activemq.recoveryInterval}" />
+        <constructor-arg value="${activemq.cacheLevel}" />
+    </bean>
+
+
+</beans>

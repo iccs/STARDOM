@@ -5,7 +5,7 @@ import eu.alertproject.iccs.events.api.EventFactory;
 import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.events.stardom.LoginVerifyEnvelope;
 import eu.alertproject.iccs.events.stardom.LoginVerifyPayload;
-import eu.alertproject.iccs.stardom.activemqconnector.api.ALERTActiveMQListener;
+import eu.alertproject.iccs.stardom.activemqconnector.api.STARDOMActiveMQListener;
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.ProfileDao;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
@@ -29,7 +29,7 @@ import java.util.List;
  *
  */
 @Component("loginVerifyListener")
-public class LoginVerifyListener extends ALERTActiveMQListener{
+public class LoginVerifyListener extends STARDOMActiveMQListener {
 
     private Logger logger = LoggerFactory.getLogger(LoginVerifyListener.class);
 

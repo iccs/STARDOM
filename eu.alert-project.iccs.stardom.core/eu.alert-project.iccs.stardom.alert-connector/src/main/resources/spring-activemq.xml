@@ -9,79 +9,6 @@
         >
 
 
-    <!-- ActiveMQ -->
-    <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory" >
-      <property name="brokerURL" value="${activemq.url}" />
-      <property name="userName" value="" />
-      <property name="password" value="" />
-    </bean>
-
-    <bean id="pooledJmsConnectionFactory"
-          class="org.apache.activemq.pool.PooledConnectionFactory"
-          destroy-method="stop">
-      <property name="connectionFactory" ref="jmsConnectionFactory"/>
-    </bean>
-
-    <bean id="jmsConfig"
-          class="org.apache.camel.component.jms.JmsConfiguration">
-      <property name="connectionFactory" ref="pooledJmsConnectionFactory"/>
-      <property name="transacted" value="false"/>
-      <property name="concurrentConsumers" value="10"/>
-    </bean>
-
-    <bean id="activemq"
-          class="org.apache.activemq.camel.component.ActiveMQComponent">
-      <property name="configuration" ref="jmsConfig"/>
-    </bean>
-
-    <!-- Spring JMS Template -->
-    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-      <property name="connectionFactory" ref="pooledJmsConnectionFactory" />
-      <property name="pubSubDomain" value="true"/>
-    </bean>
-
-
-
-    <!-- The following is for none annotated e-mails -->
-    <bean id="ALERT_METADATA_MailNew"
-          class="eu.alertproject.iccs.stardom.spring.ALERTDefaultMessageListenerContainer">
-        <constructor-arg>
-            <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_MLSensor_Mail_New"/>
-        </constructor-arg>
-        <constructor-arg ref="mailNewListener"/>
-  </bean>
-    <!---->
-    <!--<bean id="ALERT_METADATA_MailNew" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
-        <!--<property name="connectionFactory" ref="jmsConnectionFactory"/>-->
-        <!--<property name="destination">-->
-            <!--<bean-->
-                <!--class="org.apache.activemq.command.ActiveMQTopic">-->
-                <!--<constructor-arg>-->
-                    <!--<util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_MLSensor_Mail_New"/>-->
-                <!--</constructor-arg>-->
-            <!--</bean>-->
-        <!--</property>-->
-        <!--<property name="messageListener" ref="mailNewListener"/>-->
-        <!--<property name="recoveryInterval" value="60000"/>-->
-        <!--<property name="cacheLevel" value="3" />-->
-    <!--</bean>-->
-
-    <bean id="ALERT_METADATA_MailNew_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-        <property name="connectionFactory" ref="jmsConnectionFactory"/>
-        <property name="destination">
-            <bean
-                class="org.apache.activemq.command.ActiveMQTopic">
-                <constructor-arg>
-                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_MailNew_Updated"/>
-                </constructor-arg>
-            </bean>
-        </property>
-        <property name="messageListener" ref="mailNewAnnotatedListener"/>
-        <property name="recoveryInterval" value="60000"/>
-        <property name="cacheLevel" value="3" />
-    </bean>
-
-
     <bean id="ALERT_METADATA_CommitNew_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
         <property name="destination">
@@ -92,9 +19,15 @@
                 </constructor-arg>
             </bean>
         </property>
+
+        <!--<property name="clientId" value="STARDOM" />-->
+        <property name="subscriptionDurable" value="true" />
+        <property name="durableSubscriptionName" value="ALERT.Metadata.CommitNew.Updated" />
+
         <property name="messageListener" ref="commitNewAnnotatedListener"/>
         <property name="recoveryInterval" value="60000"/>
         <property name="cacheLevel" value="3" />
+
     </bean>
 
     <bean id="ALERT_METADATA_IssueNew_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
@@ -107,6 +40,11 @@
                 </constructor-arg>
             </bean>
         </property>
+
+        <!--<property name="clientId" value="STARDOM" />-->
+        <property name="subscriptionDurable" value="true" />
+        <property name="durableSubscriptionName" value="ALERT.Metadata.IssueNew.Updated" />
+
         <property name="messageListener" ref="issueNewAnnotatedListener"/>
         <property name="recoveryInterval" value="60000"/>
         <property name="cacheLevel" value="3" />
@@ -122,7 +60,31 @@
                 </constructor-arg>
             </bean>
         </property>
+
+        <!--<property name="clientId" value="STARDOM" />-->
+        <property name="subscriptionDurable" value="true" />
+        <property name="durableSubscriptionName" value="ALERT.Metadata.IssueUpdate.Updated" />
+
         <property name="messageListener" ref="issueUpdatedAnnotatedListener"/>
+        <property name="recoveryInterval" value="60000"/>
+        <property name="cacheLevel" value="3" />
+    </bean>
+
+    <bean id="ALERT_METADATA_MailNew_Updated" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination">
+            <bean
+                    class="org.apache.activemq.command.ActiveMQTopic">
+                <constructor-arg>
+                    <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_MailNew_Updated"/>
+                </constructor-arg>
+            </bean>
+        </property>
+        <!--<property name="clientId" value="STARDOM" />-->
+        <property name="subscriptionDurable" value="true" />
+        <property name="durableSubscriptionName" value="ALERT.Metadata.MailNew.Updated" />
+
+        <property name="messageListener" ref="mailNewAnnotatedListener"/>
         <property name="recoveryInterval" value="60000"/>
         <property name="cacheLevel" value="3" />
     </bean>
@@ -137,6 +99,11 @@
                 </constructor-arg>
             </bean>
         </property>
+
+        <!--<property name="clientId" value="STARDOM" />-->
+        <property name="subscriptionDurable" value="true" />
+        <property name="durableSubscriptionName" value="ALERT.Metadata.ForumPostNew.Updated" />
+
         <property name="messageListener" ref="forumAnnotatedListener"/>
         <property name="recoveryInterval" value="60000"/>
         <property name="cacheLevel" value="3" />
@@ -152,6 +119,12 @@
                 </constructor-arg>
             </bean>
         </property>
+
+        <!--- ALERT.*.LoginVerifyRequest-->
+        <!--<property name="clientId" value="STARDOM" />-->
+        <property name="subscriptionDurable" value="true" />
+        <property name="durableSubscriptionName" value="ALERT.*.LoginVerifyRequest" />
+
         <property name="messageListener" ref="loginVerifyListener"/>
         <property name="recoveryInterval" value="60000"/>
         <property name="cacheLevel" value="3" />

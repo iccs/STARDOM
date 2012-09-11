@@ -40,57 +40,8 @@
 
 
     <!-- ActiveMQ -->
-    <bean   id="jmsConnectionFactory"
-            class="org.apache.activemq.ActiveMQConnectionFactory" >
-        <property name="brokerURL" value="tcp://localhost:61616" />
-        <property name="userName" value="" />
-        <property name="password" value="" />
-    </bean>
 
-    <bean id="pooledJmsConnectionFactory"
-          class="org.apache.activemq.pool.PooledConnectionFactory"
-          destroy-method="stop">
-        <property name="connectionFactory" ref="jmsConnectionFactory"/>
-    </bean>
+    <import resource="classpath:/iccs/active-mq-connection.xml"/>
 
-    <bean id="jmsConfig"
-          class="org.apache.camel.component.jms.JmsConfiguration">
-        <property name="connectionFactory" ref="pooledJmsConnectionFactory"/>
-        <property name="transacted" value="false"/>
-        <property name="concurrentConsumers" value="10"/>
-    </bean>
-
-    <bean id="activemq"
-          class="org.apache.activemq.camel.component.ActiveMQComponent">
-        <property name="configuration" ref="jmsConfig"/>
-    </bean>
-
-    <!-- Spring JMS Template -->
-    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-        <property name="connectionFactory" ref="pooledJmsConnectionFactory" />
-        <property name="pubSubDomain" value="true"/>
-    </bean>
-
-
-  <!-- Keeping this here for reference -->
-  <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-    <!--<property name="driverClassName" value="${jdbc.driverClassName}" />-->
-    <!--<property name="url" value="${jdbc.url}" />-->
-    <!--<property name="username" value="${jdbc.username}" />-->
-    <!--<property name="password" value="${jdbc.password}" />-->
-  <!--</bean>-->
-
-  <!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
-    <!--<property name="dataSource" ref="dataSource"/>-->
-    <!--<property name="jpaVendorAdapter">-->
-      <!--<bean-->
-          <!--class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">-->
-        <!--<property name="showSql" value="false" />-->
-        <!--<property name="generateDdl" value="false" />-->
-        <!--<property name="databasePlatform"-->
-                  <!--value="org.hibernate.dialect.MySQLDialect" />-->
-      <!--</bean>-->
-    <!--</property>-->
-  <!--</bean>-->
 
 </beans>
