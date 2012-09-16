@@ -20,6 +20,6 @@ recommend sticking to 'spring' -->
 <body>
 
 <h1>An access code has been sent to <strong>${email}</strong></h1>
+<p>Please check you <strong>junk mail</strong></p>
 <a href="<@spring.url "/login" />" >Login</a>
-
 </body>

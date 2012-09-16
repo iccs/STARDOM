@@ -3,6 +3,13 @@ jdbc.url=jdbc:mysql://localhost:${db.port}/alert_dev
 jdbc.username=alert
 jdbc.password=1234
 
+##########################################################
+#                Authenticaation
+##########################################################
+
+auth.loginUrl=http://imu.ntua.gr
+auth.sessionTimeout=36000
+auth.adminEmail=foo@acme.lan
 
 ##########################################################
 #               ActiveMQ
@@ -80,3 +87,12 @@ identifier.properties.username.ml=0.2
 identifier.properties.email.ul=1
 identifier.properties.email.vpl=0.6
 identifier.properties.email.ml=0.4
+
+
+# Make a copy of this file to set up your mail sender
+# Sending e-mails
+mail.host=smtp.gmail.com
+mail.username=iccs.stardom@gmail.com
+mail.password=E:8^4dQD474P
+mail.port=465
+mail.protocol=smtps

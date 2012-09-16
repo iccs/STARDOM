@@ -5,15 +5,20 @@
         xmlns:mvc="http://www.springframework.org/schema/mvc"
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+        xmlns:task="http://www.springframework.org/schema/task"
         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 	    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 	    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
-	    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd"
+	    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd"
         default-autowire="byName"
         >
 
     <context:annotation-config/>
     <tx:annotation-driven/>
+
+
+    <task:scheduler id="taskScheduler"/>
+    <task:executor id="taskExecutor" pool-size="1"/>
 
 
     <!-- Since we are spliting our jars then we need to define each
@@ -59,7 +64,7 @@
                 </bean>
             </list>
         </property>
-        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="ignoreAcceptHeader" value="false"/>
     </bean>
 
     <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
@@ -231,6 +236,23 @@
             </bean>
         </constructor-arg>
 
+    </bean>
+
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+
+        <property name="defaultEncoding" value="${mail.encoding}" />
+        <property name="host" value="${mail.host}" />
+        <property name="username" value="${mail.username}" />
+        <property name="password" value="${mail.password}" />
+        <property name="port" value="${mail.port}" />
+        <property name="protocol" value="${mail.protocol}" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">false</prop>
+            </props>
+        </property>
     </bean>
 
 </beans>

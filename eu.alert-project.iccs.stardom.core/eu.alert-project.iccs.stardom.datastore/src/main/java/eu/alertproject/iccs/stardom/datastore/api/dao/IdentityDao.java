@@ -20,4 +20,5 @@ public interface IdentityDao extends CommonDao<Identity> {
     List<Identity> findAllPaginableOrderByLastName(int page, int pageSize);
     Identity findByProfileId(Integer profileId);
     Identity findByProfileUuid(String uuid);
+    Identity findByEmail(String email);
 }

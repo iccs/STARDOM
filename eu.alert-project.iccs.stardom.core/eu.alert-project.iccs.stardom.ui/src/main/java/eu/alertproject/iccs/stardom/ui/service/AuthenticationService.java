@@ -1,5 +1,6 @@
 package eu.alertproject.iccs.stardom.ui.service;
 
+import eu.alertproject.iccs.stardom.ui.beans.AuthenticationInfo;
 import eu.alertproject.iccs.stardom.ui.beans.ProfileBean;
 
 /**
@@ -10,5 +11,7 @@ import eu.alertproject.iccs.stardom.ui.beans.ProfileBean;
  * To change this template use File | Settings | File Templates.
  */
 public interface AuthenticationService {
-    void remind(ProfileBean identity);
+    boolean remind(ProfileBean identity);
+    boolean authenticate(ProfileBean identity);
+    AuthenticationInfo checkAuthenticationInfo(String email);
 }

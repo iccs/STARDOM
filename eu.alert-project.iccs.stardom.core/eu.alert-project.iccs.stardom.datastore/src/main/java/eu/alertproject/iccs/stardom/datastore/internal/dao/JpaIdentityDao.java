@@ -187,4 +187,27 @@ public class JpaIdentityDao extends JpaCommonDao<Identity> implements IdentityDa
         return i;
 
     }
+
+    @Override
+    public Identity findByEmail(String email) {
+
+        Query query = getEntityManager().createQuery(
+                "SELECT i FROM Identity  i " +
+                        " JOIN i.profiles p " +
+                        " WHERE p.email = :email"
+        );
+
+        query.setParameter("email",email);
+
+        Identity i = null;
+
+        try {
+            i = (Identity) query.getSingleResult();
+        } catch (NoResultException e) {
+            logger.warn("Couldn't find identity for email={}",email);
+        }
+
+        return i;
+
+    }
 }

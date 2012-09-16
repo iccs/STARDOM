@@ -117,6 +117,17 @@ public class Identity implements SimpleBean{
         this.metrics = metrics;
     }
 
+
+    @Transient
+    public String getAuthcode(){
+
+
+        if(this.getUuid() ==null ){
+            return null;
+        }
+        return getUuid().substring(getUuid().length()-8);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
