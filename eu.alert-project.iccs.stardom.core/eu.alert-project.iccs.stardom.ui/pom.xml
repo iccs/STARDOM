@@ -29,6 +29,7 @@
                 <filtering>false</filtering>
                 <includes>
                     <include>*.xml</include>
+                    <include>freemarker</include>
                 </includes>
                 <excludes>
                     <exclude>*.properties</exclude>
