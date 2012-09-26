@@ -71,7 +71,7 @@
                     <plugin>
                         <groupId>com.carbonfive.db-support</groupId>
                         <artifactId>db-migration-maven-plugin</artifactId>
-                        <version>RELEASE</version>
+                        <version>0.9.9-m5</version>
                         <configuration>
                             <url>jdbc:mysql://${db.migration.host}:${db.port}/alert_test?allowMultiQueries=true</url>
                             <username>${db.migration.username}</username>
