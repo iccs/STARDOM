@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -92,7 +94,11 @@ public class ProfileController {
 
         }
 
-        return "redirect:"+systemProperties.getProperty("auth.loginUrl");
+        String ret = "redirect:"+systemProperties.getProperty("auth.loginUrl")+"/?email="+identity.getEmail();
+
+        logger.trace("String login([identity, result]) {} ",ret);
+       return ret;
+
 
     }
 
