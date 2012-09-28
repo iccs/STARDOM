@@ -50,17 +50,6 @@
         <constructor-arg value="${activemq.cacheLevel}" />
     </bean>
 
-
-    <bean id="ALERT_METADATA_ForumPost_Updated" class="eu.alertproject.iccs.events.activemq.ALERTDefaultMessageListenerContainer">
-        <constructor-arg>
-            <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_ForumPost_Updated"/>
-        </constructor-arg>
-        <constructor-arg ref="forumAnnotatedListener"/>
-        <constructor-arg ref="jmsConnectionFactory"/>
-        <constructor-arg value="${activemq.recoveryInterval}" />
-        <constructor-arg value="${activemq.cacheLevel}" />
-    </bean>
-
     <bean id="ALERT_ALL_STARDOM_LoginVerifyRequest" class="eu.alertproject.iccs.events.activemq.ALERTDefaultMessageListenerContainer">
         <constructor-arg>
             <util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_ALL_STARDOM_LoginVerifyRequest"/>
