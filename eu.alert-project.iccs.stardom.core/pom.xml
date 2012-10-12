@@ -111,6 +111,11 @@
                     <encoding>utf-8</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+            </plugin>
         </plugins>
 
     </build>
@@ -490,7 +495,7 @@
         <repository>
           <id>imu-repository</id>
           <name>Maven Repository Manager running on repo.mycompany.com</name>
-          <url>http://imu.epd.ece.ntua.gr:9991/artifactory/repos/</url>
+          <url>http://one.imu.ntua.gr:9991/artifactory/repo</url>
         </repository>
 
     </repositories>
@@ -498,7 +503,7 @@
 	    <pluginRepository>
           <id>imu-repository</id>
           <name>Maven Repository Manager running on repo.mycompany.com</name>
-          <url>http://imu.epd.ece.ntua.gr:9991/artifactory/repos/</url>
+          <url>http://one.imu.ntua.gr:9991/artifactory/repo</url>
 	    </pluginRepository>
 	</pluginRepositories>
 </project>
