@@ -17,31 +17,37 @@ import java.util.zip.ZipFile;
  * Time: 17:57
  */
 @Service("zipSimulationService")
-public class ZipSimulationService {
+public class ZipSimulationService implements SimulationService{
 
     private Logger logger = LoggerFactory.getLogger(ZipSimulationService.class);
 
     int elementCounter = 0;
-    public void start(String path, InputStreamVisitor visitor) throws IOException {
 
-        ZipFile zipFile = new ZipFile(path);
+    @Override
+    public void start(String path, InputStreamVisitor visitor){
 
 
-        Enumeration<? extends ZipEntry> entries = zipFile.entries();
+        try {
+            ZipFile zipFile = new ZipFile(path);
 
-        while(entries.hasMoreElements()) {
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
 
-            ZipEntry z = entries.nextElement();
+            while(entries.hasMoreElements()) {
 
-            logger.trace("void start() {} ",z.getName());
-            if(z.getName().endsWith(".xml")){
-                visitor.handle(zipFile.getInputStream(z));
-                elementCounter++;
-            }else{
-                logger.info("void start() Not an xml file {}", z.getName());
+                ZipEntry z = entries.nextElement();
+
+                logger.trace("void start() {} ",z.getName());
+                if(z.getName().endsWith(".xml")){
+                    visitor.handle(zipFile.getInputStream(z));
+                    elementCounter++;
+                }else{
+                    logger.info("void start() Not an xml file {}", z.getName());
+                }
+
+
             }
-
-
+        } catch (IOException e) {
+            logger.warn("Couldn't handle zip file {}",path);
         }
 
 
