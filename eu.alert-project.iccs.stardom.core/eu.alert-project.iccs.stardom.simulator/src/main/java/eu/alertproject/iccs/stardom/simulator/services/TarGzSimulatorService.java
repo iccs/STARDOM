@@ -27,6 +27,8 @@ public class TarGzSimulatorService implements SimulationService{
     private Logger logger = LoggerFactory.getLogger(TarGzSimulatorService.class);
 
 
+    int count=0;
+
     @Override
     public void start(String path, InputStreamVisitor streamIssuesVisitor){
 
@@ -51,6 +53,8 @@ public class TarGzSimulatorService implements SimulationService{
 
                 if(entry.getName().toLowerCase().endsWith(".xml")){
 
+                    logger.debug("void start([path, streamIssuesVisitor]) Handling {} ",entry.getName());
+
                     File stardom = File.createTempFile("stardom", "rar-simulator");
                     stardom.createNewFile();
 
@@ -63,6 +67,7 @@ public class TarGzSimulatorService implements SimulationService{
 
                     tarFile.delete();
 
+                    count++;
                 }
 
                 entry = tarArchiveInputStream.getNextTarEntry();
@@ -71,6 +76,8 @@ public class TarGzSimulatorService implements SimulationService{
 
 
             tarFile.delete();
+
+            logger.trace("void start([path, streamIssuesVisitor]) Handled {} events ",count);
         } catch (IOException e) {
             logger.warn("Couldn't extract files from tar entry ",e);
 
