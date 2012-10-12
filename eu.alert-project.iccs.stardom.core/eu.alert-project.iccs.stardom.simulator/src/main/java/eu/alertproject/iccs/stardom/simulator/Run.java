@@ -87,7 +87,7 @@ public class Run {
             ((SimulationService)context.getBean(service)).start(
                     absolutePath,
                     new InputStreamTopicVisitor(topic,
-                            Boolean.valueOf(systemProperties.getProperty("activemq.processDisabled")),
+                            !Boolean.valueOf(systemProperties.getProperty("activemq.processDisabled")),
                             (JmsTemplate) context.getBean("jmsTemplate")));
 
 
