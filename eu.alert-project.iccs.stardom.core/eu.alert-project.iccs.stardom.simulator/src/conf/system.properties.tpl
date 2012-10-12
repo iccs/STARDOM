@@ -29,7 +29,7 @@ activemq.processDisabled=false
 #               Data
 ##########################################################
 
-data.basePath=/Users/fotis/.dropbox-alt/Dropbox/Library/Projects/2010 IST FP7 5th -ALERT (63-727)/00 - material/db/Final-Events
+data.basePath=
 
 ##########################################################
 #               KDE
