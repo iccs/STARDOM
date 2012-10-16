@@ -9,6 +9,6 @@ package eu.alertproject.iccs.stardom.simulator.services;
  */
 public interface SimulationService {
 
-    public void start(String path, InputStreamVisitor visitor);
+    public int start(String path, InputStreamVisitor visitor);
 
 }

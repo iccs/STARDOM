@@ -30,9 +30,23 @@
             <directory>${basedir}/../../</directory>
             <outputDirectory>sources</outputDirectory>
             <includes>
-               <include>eu.alert-project.iccs.stardom.core</include>
                <include>eu.alert-project.iccs.graph</include>
                <include>eu.alert-project.iccs.analysis</include>
+            </includes>
+            <excludes>
+                <exclude>**/*.iml</exclude>
+                <exclude>**/target/**</exclude>
+                <exclude>**/bin/**</exclude>
+                <exclude>**/.settings/**</exclude>
+                <exclude>**/.classpath</exclude>
+                <exclude>**/.project</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${basedir}/../../eu.alert-project.iccs.stardom.core</directory>
+            <outputDirectory>sources/eu.alert-project.iccs.stardom.core</outputDirectory>
+            <includes>
+                <include>**/**</include>
             </includes>
             <excludes>
                 <exclude>**/*.iml</exclude>

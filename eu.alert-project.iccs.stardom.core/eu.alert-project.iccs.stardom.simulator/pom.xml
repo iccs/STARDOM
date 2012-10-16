@@ -128,7 +128,7 @@
                 <configuration>
                     <programs>
                         <program>
-                            <mainClass>eu.alertproject.iccs.stardom.simulator.Run</mainClass>
+                            <mainClass>eu.alertproject.iccs.stardom.simulator.ALERTSimulator</mainClass>
                             <name>iccs-simulator</name>
                         </program>
                     </programs>

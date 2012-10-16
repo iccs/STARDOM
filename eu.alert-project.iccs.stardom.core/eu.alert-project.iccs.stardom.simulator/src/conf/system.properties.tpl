@@ -3,7 +3,7 @@
 ##########################################################
 
 jdbc.driverClassName=com.mysql.jdbc.Driver
-jdbc.url=jdbc:mysql://localhost:8889/cvsanaly_alert
+jdbc.url=jdbc:mysql://localhost:3306/cvsanaly_alert
 jdbc.username=alert
 jdbc.password=1234
 

@@ -1,6 +1,7 @@
 package eu.alertproject.iccs.stardom.activemqconnector.api;
 
-import eu.alertproject.iccs.events.api.AbstractActiveMQListener;
+import eu.alertproject.iccs.events.api.AbstractActiveMQHandler;
+import eu.alertproject.iccs.events.api.ActiveMQMessageBroker;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -22,7 +23,7 @@ import java.util.Properties;
  * Date: 16/12/11
  * Time: 22:14
  */
-public abstract class STARDOMActiveMQListener extends AbstractActiveMQListener{
+public abstract class STARDOMActiveMQListener extends AbstractActiveMQHandler {
 
 
     private Logger logger = LoggerFactory.getLogger(STARDOMActiveMQListener.class);
@@ -30,17 +31,11 @@ public abstract class STARDOMActiveMQListener extends AbstractActiveMQListener{
     @Autowired
     Properties systemProperties;
 
-    @PostConstruct
-    public void post(){
-
-        setProcessDisabled(
-                Boolean.valueOf(systemProperties.getProperty("activemq.processDisabled")));
-
-    }
-
+    @Autowired
+    ActiveMQMessageBroker messageBroker;
 
     @Override
-    public final void process(Message message) throws IOException, JMSException {
+    public final void process(ActiveMQMessageBroker messageBroker, Message message) throws IOException, JMSException {
         
         String text = ((TextMessage) message).getText();
         processXml(text);

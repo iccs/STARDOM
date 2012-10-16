@@ -1,6 +1,7 @@
 package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
 import eu.alertproject.iccs.events.activemq.TextMessageCreator;
+import eu.alertproject.iccs.events.api.ActiveMQMessageBroker;
 import eu.alertproject.iccs.events.api.EventFactory;
 import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.events.stardom.LoginVerifyEnvelope;
@@ -14,7 +15,6 @@ import eu.alertproject.iccs.stardom.identifier.api.SluggifierService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -44,12 +44,7 @@ public class LoginVerifyListener extends STARDOMActiveMQListener {
     SluggifierService sluggifierService;
 
     @Autowired
-    JmsTemplate jmsTemplate;
-    
-    private Integer sequence = 0;
-
-
-
+    ActiveMQMessageBroker messageBroker;
 
     @Override
     public void processXml(String text){
@@ -98,7 +93,7 @@ public class LoginVerifyListener extends STARDOMActiveMQListener {
                             .getEventId(),
                     start,
                     System.currentTimeMillis(),
-                    sequence++,
+                    messageBroker.requestSequence(),
                     login.getUsername(),
                     login.getEmail(),
                     byProfileId.getUuid()
@@ -106,11 +101,8 @@ public class LoginVerifyListener extends STARDOMActiveMQListener {
 
             logger.trace("void process() Sending {} ",stardomLoginVerifyEnvelope);
 
-            jmsTemplate.send(
-                Topics.ALERT_STARDOM_LoginVerify,
-                new TextMessageCreator(
-                        stardomLoginVerifyEnvelope)
-            );
+            messageBroker.sendTextMessage(Topics.ALERT_STARDOM_LoginVerify,stardomLoginVerifyEnvelope);
+
         }
 
 

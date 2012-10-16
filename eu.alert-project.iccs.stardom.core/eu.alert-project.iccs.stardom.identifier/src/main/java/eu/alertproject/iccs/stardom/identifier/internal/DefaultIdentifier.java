@@ -241,6 +241,7 @@ public class DefaultIdentifier implements Identifier{
 
         //sluggify profile email
         profile.setEmail(sluggifierService.sluggify(profile.getEmail()));
+        profile.setUsername(sluggifierService.sluggify(profile.getUsername()));
         profile.setSource(source);
 
         List<Identity> possibleMatches = identityDao.findPossibleMatches(profile);

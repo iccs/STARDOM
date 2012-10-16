@@ -26,13 +26,9 @@ public class TarGzSimulatorService implements SimulationService{
 
     private Logger logger = LoggerFactory.getLogger(TarGzSimulatorService.class);
 
-
-    int count=0;
-
     @Override
-    public void start(String path, InputStreamVisitor streamIssuesVisitor){
-
-
+    public int start(String path, InputStreamVisitor streamIssuesVisitor){
+        int count=0;
         try {
 
             File tarFile = File.createTempFile("targzSimulator","tarfile");
@@ -77,11 +73,13 @@ public class TarGzSimulatorService implements SimulationService{
 
             tarFile.delete();
 
-            logger.trace("void start([path, streamIssuesVisitor]) Handled {} events ",count);
+            logger.info("void start([path, streamIssuesVisitor]) Handled {} events ",count);
         } catch (IOException e) {
             logger.warn("Couldn't extract files from tar entry ",e);
 
         }
+
+        return count;
 
     }
 

@@ -21,11 +21,12 @@ public class ZipSimulationService implements SimulationService{
 
     private Logger logger = LoggerFactory.getLogger(ZipSimulationService.class);
 
-    int elementCounter = 0;
 
     @Override
-    public void start(String path, InputStreamVisitor visitor){
+    public int start(String path, InputStreamVisitor visitor){
 
+        int elementCounter=0;
+        logger.info("Starging... ");
 
         try {
             ZipFile zipFile = new ZipFile(path);
@@ -51,10 +52,11 @@ public class ZipSimulationService implements SimulationService{
         }
 
 
-        logger.trace("void start() Handled {} events",elementCounter);
+        logger.info("void start() Handled {} events",elementCounter);
 
 
 
+        return  elementCounter;
 
 
     }

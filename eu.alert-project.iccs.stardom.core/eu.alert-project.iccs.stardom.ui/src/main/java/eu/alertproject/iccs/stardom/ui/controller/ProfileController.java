@@ -1,5 +1,6 @@
 package eu.alertproject.iccs.stardom.ui.controller;
 
+import eu.alertproject.iccs.events.api.ActiveMQMessageBroker;
 import eu.alertproject.iccs.events.api.EventFactory;
 import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.events.stardom.IdentityPersons;
@@ -12,7 +13,6 @@ import eu.alertproject.iccs.stardom.ui.beans.Concept;
 import eu.alertproject.iccs.stardom.ui.beans.ProfileBean;
 import eu.alertproject.iccs.stardom.ui.service.AnnotationService;
 import eu.alertproject.iccs.stardom.ui.service.AuthenticationService;
-import eu.alertproject.iccs.stardom.ui.service.MessagingService;
 import eu.alertproject.iccs.stardom.ui.validator.LoginValidator;
 import eu.alertproject.iccs.stardom.ui.validator.ProfileValidator;
 import eu.alertproject.iccs.stardom.ui.validator.RemindValidator;
@@ -30,8 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -46,8 +44,7 @@ public class ProfileController {
 
     private Logger logger = LoggerFactory.getLogger(ProfileController.class);
 
-    int id = 0;
-    
+
     @Autowired
     AnnotationService annotationService;
 
@@ -58,7 +55,7 @@ public class ProfileController {
     AuthenticationService authenticationService;
 
     @Autowired
-    MessagingService messagingService;
+    ActiveMQMessageBroker messageBroker;
 
     @Autowired
     Properties systemProperties;
@@ -195,10 +192,10 @@ public class ProfileController {
                 newPerson.setEmail(identity.getEmail());
 
                 String stardomIdentityNew = EventFactory.createStardomIdentityNew(
-                        id++,
+                        messageBroker.requestEventId(),
                         start,
                         System.currentTimeMillis(),
-                        id++,
+                        messageBroker.requestSequence(),
                         new StardomIdentityNewPayload.EventData.Identity(
                                 smIdentity.getUuid(),
                                 new IdentityPersons(Arrays.asList(newPerson), null))
@@ -206,7 +203,7 @@ public class ProfileController {
                 
                 logger.trace("String create() Sending event {} ",stardomIdentityNew);
 
-                messagingService.send(
+                messageBroker.sendTextMessage(
                         Topics.ALERT_STARDOM_New_Identity,
                         stardomIdentityNew);
 

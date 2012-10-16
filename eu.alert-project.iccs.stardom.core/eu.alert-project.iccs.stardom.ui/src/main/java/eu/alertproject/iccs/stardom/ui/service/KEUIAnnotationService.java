@@ -1,23 +1,22 @@
 package eu.alertproject.iccs.stardom.ui.service;
 
 import com.thoughtworks.xstream.XStream;
-import eu.alertproject.iccs.events.activemq.TextMessageCreator;
 import eu.alertproject.iccs.events.alert.Keui;
-import eu.alertproject.iccs.events.api.AbstractActiveMQListener;
-import eu.alertproject.iccs.events.api.EventFactory;
-import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.events.alert.TextToAnnotateReplyEnvelope;
 import eu.alertproject.iccs.events.alert.TextToAnnotateReplyPayload;
+import eu.alertproject.iccs.events.api.AbstractActiveMQHandler;
+import eu.alertproject.iccs.events.api.ActiveMQMessageBroker;
+import eu.alertproject.iccs.events.api.EventFactory;
+import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.stardom.ui.beans.Concept;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
+import org.springframework.stereotype.Service;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +31,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * Date: 14/03/12
  * Time: 16:51
  */
-public class KEUIAnnotationService extends AbstractActiveMQListener implements AnnotationService{
+@Service("annotationService")
+public class KEUIAnnotationService extends AbstractActiveMQHandler implements AnnotationService{
 
 
     private Logger logger = LoggerFactory.getLogger(KEUIAnnotationService.class);
@@ -41,7 +41,7 @@ public class KEUIAnnotationService extends AbstractActiveMQListener implements A
     private Integer sequence = 0 ;
 
     @Autowired
-    JmsTemplate jmsTemplate;
+    ActiveMQMessageBroker messageBroker;
 
     AtomicReference<String> event;
     private TextToAnnotateReplyPayload.EventData eventData;
@@ -55,14 +55,15 @@ public class KEUIAnnotationService extends AbstractActiveMQListener implements A
         event= new AtomicReference<String>();
 
 
-        jmsTemplate.send(Topics.ALERT_STARDOM_TextToAnnotate,
-                        new TextMessageCreator(
-                                    EventFactory.createTextToAnnotateRequestEvent(
-                                            id++,
-                                            start,
-                                            System.currentTimeMillis(),
-                                            sequence++,
-                                            text)));
+        messageBroker.sendTextMessage(
+                Topics.ALERT_STARDOM_TextToAnnotate,
+                EventFactory.createTextToAnnotateRequestEvent(
+                        messageBroker.requestEventId(),
+                        start,
+                        System.currentTimeMillis(),
+                        messageBroker.requestSequence(),
+                        text));
+
 
         countDownLatch.countDown();
 
@@ -127,7 +128,7 @@ public class KEUIAnnotationService extends AbstractActiveMQListener implements A
 
 
     @Override
-    public void process(Message message) throws IOException, JMSException {
+    public void process(ActiveMQMessageBroker broker, Message message) throws IOException, JMSException {
 
 
         String text = null;

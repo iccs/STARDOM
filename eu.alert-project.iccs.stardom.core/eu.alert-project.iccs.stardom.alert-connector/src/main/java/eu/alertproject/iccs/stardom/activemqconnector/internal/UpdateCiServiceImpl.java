@@ -2,22 +2,28 @@ package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
 import eu.alertproject.iccs.events.activemq.TextMessageCreator;
 import eu.alertproject.iccs.events.alert.Keui;
+import eu.alertproject.iccs.events.api.ActiveMQMessageBroker;
+import eu.alertproject.iccs.events.api.EventFactory;
 import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.events.internal.ArtefactUpdated;
 import eu.alertproject.iccs.events.internal.ComponentUpdated;
 import eu.alertproject.iccs.events.internal.IdentityUpdated;
 import eu.alertproject.iccs.events.internal.IssueUpdated;
+import eu.alertproject.iccs.events.stardom.StardomIdentitySnapshotPayload;
 import eu.alertproject.iccs.stardom.bus.api.AnnotatedUpdateEvent;
 import eu.alertproject.iccs.stardom.bus.api.Component;
 import eu.alertproject.iccs.stardom.classification.CI;
 import eu.alertproject.iccs.stardom.classification.CIUtils;
+import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
+import eu.alertproject.iccs.stardom.datastore.api.dao.ProfileDao;
 import eu.alertproject.iccs.stardom.datastore.api.metrics.MetricValueStrategy;
 import eu.alertproject.iccs.stardom.datastore.api.metrics.MostRecentMetricValueStrategy;
 import eu.alertproject.iccs.stardom.datastore.api.metrics.NumberMetricValueStrategy;
 import eu.alertproject.iccs.stardom.datastore.api.metrics.TemporalMetricValueStrategy;
 import eu.alertproject.iccs.stardom.domain.api.Identity;
 import eu.alertproject.iccs.stardom.domain.api.Metric;
+import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.domain.api.metrics.*;
 import org.apache.commons.math.distribution.NormalDistribution;
 import org.apache.commons.math.distribution.NormalDistributionImpl;
@@ -25,15 +31,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * User: fotis
@@ -49,7 +52,14 @@ public class UpdateCiServiceImpl implements UpdateCiService{
     MetricDao metricDao;
 
     @Autowired
-    JmsTemplate jmsTemplate;
+    IdentityDao identityDao;
+
+    @Autowired
+    ProfileDao profileDao;
+
+    @Autowired
+    ActiveMQMessageBroker messageBroker;
+
     private CI ci;
     private Map<String,MetricValueStrategy<? extends Metric>> metrics;
 
@@ -76,6 +86,7 @@ public class UpdateCiServiceImpl implements UpdateCiService{
     @Override
     @Transactional(readOnly = true)
     public void updateIndentityCI(AnnotatedUpdateEvent event) {
+
         //get the ci
         List<CI.Classifier> classifiers = ci.getClassifiers();
 
@@ -121,10 +132,41 @@ public class UpdateCiServiceImpl implements UpdateCiService{
 
         //create the JSON event
         IdentityUpdated id = new IdentityUpdated();
-        id.setId(((Identity) event.getPayload()).getUuid());
+        Identity identity = (Identity) event.getPayload();
+        id.setId(identity.getUuid());
         id.setConcepts((List<Keui.Concept>) event.getAnnotations());
         id.setCis(ciForClass);
         //send to the
+
+
+
+        //prepare competency update event
+
+
+        Identity byProfileUuid = identityDao.findByProfileUuid(identity.getUuid());
+
+        StardomIdentitySnapshotPayload.EventData.Identity sIdentity =
+                new StardomIdentitySnapshotPayload.EventData.Identity();
+
+        sIdentity.setUuid(byProfileUuid.getUuid());
+
+        Set<Profile> profiles = byProfileUuid.getProfiles();
+
+        List<String> persons = new ArrayList<String>();
+        for(Profile p : profiles){
+            persons.add(p.getUri());
+        }
+
+        sIdentity.setPersons(persons);
+
+        messageBroker.sendTextMessage(
+                Topics.ALERT_STARDOM_Identity_Snapshot,
+                EventFactory.createStardomIdentitySnapshot(
+                        messageBroker.requestEventId(),
+                        start,
+                        System.currentTimeMillis(),
+                        messageBroker.requestSequence(),
+                        sIdentity));
 
 
         sendEvent(Topics.ICCS_STARDOM_Identity_Updated, id);
@@ -133,9 +175,8 @@ public class UpdateCiServiceImpl implements UpdateCiService{
 
     @Override
     public void issueUpdated(AnnotatedUpdateEvent event) {
-
-
         IssueUpdated iu = (IssueUpdated) event.getPayload();
+        logger.trace("void issueUpdated([event]) {} ",iu);
         sendEvent(Topics.ICCS_STARDOM_Issue_Updated, iu);
         
     }
@@ -167,11 +208,7 @@ public class UpdateCiServiceImpl implements UpdateCiService{
         } finally {
 
             if(updateEvent !=null ){
-
-                jmsTemplate.send(
-                        topic,
-                        new TextMessageCreator(updateEvent)
-                );
+                messageBroker.sendTextMessage(topic,updateEvent);
 
             }
         }

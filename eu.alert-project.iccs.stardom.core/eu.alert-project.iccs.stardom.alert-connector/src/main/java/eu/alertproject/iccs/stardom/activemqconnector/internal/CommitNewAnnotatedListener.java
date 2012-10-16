@@ -79,8 +79,8 @@ public class CommitNewAnnotatedListener extends STARDOMActiveMQListener {
 
         context.setProfile(
                 ALERTUtils.extractProfile(
-                        kesi.getAuthor(),
-                        mdService.getAuthorUri(),
+                        kesi,
+                        mdService,
                         "scm"
                 ));
 
@@ -98,7 +98,7 @@ public class CommitNewAnnotatedListener extends STARDOMActiveMQListener {
 
         fixProfile(context);
         ScmEvent scmEvent = new ScmEvent(this,context);
-        logger.trace("void onMessage() {}/{} {} ",new Object[]{getMessageSentCount(),getMessageCount(),scmEvent});
+
         Bus.publish(scmEvent);
 
     }

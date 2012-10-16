@@ -17,9 +17,9 @@ import java.util.Properties;
  * Date: 19/04/12
  * Time: 17:52
  */
-public class Run {
+public class ALERTSimulator {
 
-    private static Logger logger = LoggerFactory.getLogger(Run.class);
+    private static Logger logger = LoggerFactory.getLogger(ALERTSimulator.class);
 
     public static void main(String[] args) {
 
@@ -45,23 +45,28 @@ public class Run {
         String forumPostNewFile = basePath+systemProperties.getProperty(repo+".path.forums");
 
 
-        handleFile(context,Topics.ALERT_METADATA_CommitNew_Updated,commitFile);
-        handleFile(context,Topics.ALERT_METADATA_IssueNew_Updated,issuesNewFile);
-        handleFile(context,Topics.ALERT_METADATA_IssueUpdate_Updated,issuesUpdateFile);
-        handleFile(context,Topics.ALERT_METADATA_MailNew_Updated,mailNewFile);
-        handleFile(context,Topics.ALERT_METADATA_ForumPost_Updated,forumPostNewFile);
+        int commitNewUpdated = handleFile(context,Topics.ALERT_METADATA_CommitNew_Updated,commitFile);
+        int issueNewUpdated = handleFile(context,Topics.ALERT_METADATA_IssueNew_Updated,issuesNewFile);
+        int issueUpdateUpdated = handleFile(context,Topics.ALERT_METADATA_IssueUpdate_Updated,issuesUpdateFile);
+        int mailNewUpdated = handleFile(context,Topics.ALERT_METADATA_MailNew_Updated,mailNewFile);
+        int forumPostUpdated = handleFile(context,Topics.ALERT_METADATA_ForumPost_Updated,forumPostNewFile);
 
 
-        System.exit(0);
+        logger.info("Handled {} = {}", Topics.ALERT_METADATA_CommitNew_Updated, commitNewUpdated);
+        logger.info("Handled {} = {}", Topics.ALERT_METADATA_IssueNew_Updated, issueNewUpdated);
+        logger.info("Handled {} = {}", Topics.ALERT_METADATA_IssueUpdate_Updated, issueUpdateUpdated);
+        logger.info("Handled {} = {}", Topics.ALERT_METADATA_MailNew_Updated, mailNewUpdated);
+        logger.info("Handled {} = {}", Topics.ALERT_METADATA_ForumPost_Updated, forumPostUpdated);
+
 
     }
 
-    private static void handleFile(ApplicationContext context, String topic, String commitFile) {
+    private static int handleFile(ApplicationContext context, String topic, String commitFile) {
 
         Properties systemProperties = (Properties) context.getBean("systemProperties");
 
         if(StringUtils.isEmpty(commitFile)){
-            return;
+            return 0;
         }
 
         File file = new File(commitFile);
@@ -79,12 +84,12 @@ public class Run {
                 service = "zipSimulationService";
             }else{
                 logger.error("Couldn't find service for this file");
-                return;
+                return 0;
             }
 
             logger.info("Using service {} ",service);
 
-            ((SimulationService)context.getBean(service)).start(
+            return ((SimulationService)context.getBean(service)).start(
                     absolutePath,
                     new InputStreamTopicVisitor(topic,
                             !Boolean.valueOf(systemProperties.getProperty("activemq.processDisabled")),
@@ -94,6 +99,8 @@ public class Run {
         }else{
             logger.error("Couldn't handle {} ",commitFile);
         }
+
+        return -1;
     }
 
 }

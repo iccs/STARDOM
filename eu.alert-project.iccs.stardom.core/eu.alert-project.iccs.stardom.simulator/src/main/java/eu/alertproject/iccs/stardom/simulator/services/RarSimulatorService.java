@@ -22,11 +22,11 @@ public class RarSimulatorService implements SimulationService{
 
     private Logger logger = LoggerFactory.getLogger(RarSimulatorService.class);
 
-    private Integer entries=0;
 
     @Override
-    public void start(String path, InputStreamVisitor streamIssuesVisitor){
+    public int start(String path, InputStreamVisitor streamIssuesVisitor){
 
+        int entries=0;
         FileOutputStream fos =null;
         FileInputStream inputStream=null;
         try {
@@ -57,7 +57,7 @@ public class RarSimulatorService implements SimulationService{
                 fh = archive.nextFileHeader();
             }
 
-            logger.trace("void start([path, streamIssuesVisitor]) Handled {} entries ",entries);
+            logger.info("void start([path, streamIssuesVisitor]) Handled {} entries ",entries);
 
         } catch (IOException e) {
             logger.warn("Couldn't extract files from tar entry ",e);
@@ -67,6 +67,8 @@ public class RarSimulatorService implements SimulationService{
             IOUtils.closeQuietly(fos);
             IOUtils.closeQuietly(inputStream);
         }
+
+        return entries;
 
     }
 

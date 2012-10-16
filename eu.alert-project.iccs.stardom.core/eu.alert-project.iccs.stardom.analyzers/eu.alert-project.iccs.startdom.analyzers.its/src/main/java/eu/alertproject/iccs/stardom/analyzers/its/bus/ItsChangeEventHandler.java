@@ -92,7 +92,7 @@ public class ItsChangeEventHandler {
             }
             
             if(who == null){
-                logger.warn("We can't process the metrics of a Ghost");
+                logger.warn("We can't process the metrics of a Ghost for {} ",context.getProfile());
                 return;
             }
 

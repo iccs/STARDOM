@@ -1,7 +1,7 @@
 package eu.alertproject.iccs.stardom.ui.service;
 
-import eu.alertproject.iccs.events.activemq.TextMessageCreator;
-import eu.alertproject.iccs.events.api.AbstractActiveMQListener;
+import eu.alertproject.iccs.events.api.AbstractActiveMQHandler;
+import eu.alertproject.iccs.events.api.ActiveMQMessageBroker;
 import eu.alertproject.iccs.events.api.EventFactory;
 import eu.alertproject.iccs.events.api.Topics;
 import eu.alertproject.iccs.events.stardom.IdentityPersons;
@@ -12,13 +12,11 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import java.io.IOException;
 import java.util.*;
@@ -32,7 +30,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Time: 13:41
  */
 @Service("mergeService")
-public class DefaultIdentityMergeService extends AbstractActiveMQListener implements MergeService{
+public class DefaultIdentityMergeService extends AbstractActiveMQHandler implements MergeService{
 
 
     private Logger logger = LoggerFactory.getLogger(DefaultIdentityMergeService.class);
@@ -43,9 +41,7 @@ public class DefaultIdentityMergeService extends AbstractActiveMQListener implem
 
 
     @Autowired
-    MessagingService messagingService;
-    
-    private Integer id=0;
+    ActiveMQMessageBroker messageBroker;
 
     private AtomicReference<String> responseEvent;
 
@@ -234,10 +230,10 @@ public class DefaultIdentityMergeService extends AbstractActiveMQListener implem
         Collections.addAll(updateIdentites,firstIdentity);
 
         String event = EventFactory.createStardomIdentityUpdate(
-                id++,
+                messageBroker.requestEventId(),
                 start,
                 System.currentTimeMillis(),
-                id,
+                messageBroker.requestSequence(),
                 updateIdentites.toArray(
                         new StardomIdentityUpdatePayload.EventData.Identity[updateIdentites.size()]
 
@@ -254,13 +250,11 @@ public class DefaultIdentityMergeService extends AbstractActiveMQListener implem
         responseEvent = new AtomicReference<String>();
 //
 
-        //wait for the reply
-        logger.trace("void merge(ids) Sending {} ",event);
-
-        messagingService.send(
+        messageBroker.sendTextMessage(
                 Topics.ALERT_STARDOM_Identity_Updated,
                 event
         );
+
 
         countDownLatch.countDown();
 
@@ -306,7 +300,7 @@ public class DefaultIdentityMergeService extends AbstractActiveMQListener implem
 
 
     @Override
-    public void process(Message message) throws IOException, JMSException {
+    public void process(ActiveMQMessageBroker broker, Message message) throws IOException, JMSException {
         String text="error";
 
         try{
@@ -317,7 +311,5 @@ public class DefaultIdentityMergeService extends AbstractActiveMQListener implem
         }
 
         responseEvent.set(text);
-
-
     }
 }

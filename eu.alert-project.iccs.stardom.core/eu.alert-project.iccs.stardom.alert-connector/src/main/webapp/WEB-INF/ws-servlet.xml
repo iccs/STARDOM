@@ -43,6 +43,7 @@
             </list>
           </property>
     </bean>
+
     <!-- Keeping this here for reference -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}" />
@@ -87,10 +88,6 @@
     <bean id="systemProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean" >
             <property name="location" value="classpath:system.properties"/>
     </bean>
-
-
-
-
 
     <bean class="eu.alertproject.iccs.stardom.bus.api.annotation.EventHandlersBeanPostProcessor"/>
     <bean class="eu.alertproject.iccs.stardom.constructor.api.spring.AnalyzerBeanPostProcessor"/>

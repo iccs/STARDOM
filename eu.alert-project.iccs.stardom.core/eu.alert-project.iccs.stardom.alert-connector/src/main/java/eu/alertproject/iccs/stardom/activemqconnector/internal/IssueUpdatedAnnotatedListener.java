@@ -10,9 +10,11 @@ import eu.alertproject.iccs.stardom.analyzers.its.connector.DefaultItsCommentAct
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsChangeConnectorContext;
 import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsCommentConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
+import eu.alertproject.iccs.stardom.domain.api.IssueMetadata;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
@@ -30,6 +32,9 @@ import java.util.List;
 @Component("issueUpdatedAnnotatedListener")
 public class IssueUpdatedAnnotatedListener extends STARDOMActiveMQListener {
     private Logger logger = LoggerFactory.getLogger(IssueUpdatedAnnotatedListener.class);
+
+    @Autowired
+    PersistanceService persistanceService;
 
     @Override
     public void processXml(String xml){
@@ -54,15 +59,28 @@ public class IssueUpdatedAnnotatedListener extends STARDOMActiveMQListener {
         Keui keui = eventData.getKeui();
 
 
-        handleComments(kesi,mdService,keui);
-        handleChange(kesi, mdService, keui);
 
+        /**
+         * KESI does no longer sen the product information in each updted event
+         */
+        IssueMetadata issueMetadata = persistanceService.getForIssue(mdService.getUri());
+
+
+
+        if(issueMetadata != null){
+
+            handleComments(kesi,mdService,keui, issueMetadata);
+            handleChange(kesi, mdService,issueMetadata);
+
+        }else{
+            logger.error("We are attemping to handle an issue update event without a creation {}",mdService.getUri());
+        }
 
     }
 
-    private void handleChange(KesiITS kesi, MdServiceITS mdService, Keui keui) {
+    private void handleChange(KesiITS kesi, MdServiceITS mdService, IssueMetadata issueMetadata) {
 
-        if(isIgnoredBasedOnDate(kesi.getDateOpened())){return;}
+        if(isIgnoredBasedOnDate(issueMetadata.getIssueCreated())){return;}
 
         List<KesiITS.Activity> activity = kesi.getActivity();
 
@@ -78,7 +96,7 @@ public class IssueUpdatedAnnotatedListener extends STARDOMActiveMQListener {
         }
 
 
-        String component = kesi.getProduct().getComponentId();
+
 
         for(KesiITS.Activity a :activity){
 
@@ -99,12 +117,12 @@ public class IssueUpdatedAnnotatedListener extends STARDOMActiveMQListener {
 
             DefaultItsChangeAction defaultItsChangeAction = new DefaultItsChangeAction();
             defaultItsChangeAction.setWhat(a.getActivityWhat());
-            defaultItsChangeAction.setComponent(component);
+            defaultItsChangeAction.setComponent(issueMetadata.getComponent());
             defaultItsChangeAction.setRemoved(a.getActivityRemoved());
             defaultItsChangeAction.setAdded(a.getActivityAdded());
             defaultItsChangeAction.setDate(a.getDate());
+            defaultItsChangeAction.setSubject(issueMetadata.getSubject());
             defaultItsChangeAction.setBugId(kesi.getId());
-
 
             fixProfile(context);
 
@@ -118,7 +136,7 @@ public class IssueUpdatedAnnotatedListener extends STARDOMActiveMQListener {
 
     }
 
-    private void handleComments(KesiITS kesi, MdServiceITS mdService, Keui keui) {
+    private void handleComments(KesiITS kesi, MdServiceITS mdService, Keui keui, IssueMetadata issueMetadata) {
 
         List<KesiITS.Comment> comments = kesi.getComments();
         if(comments == null || comments.size() <=0){
@@ -127,15 +145,13 @@ public class IssueUpdatedAnnotatedListener extends STARDOMActiveMQListener {
 
 
         Iterator<MdServiceITS.Comment> commentIterator = null;
-        if(mdService !=null){
+        Iterator<Keui.Comment> keuiCommentIterator = null;
+        if(keui.getIssueComment() !=null){
+            keuiCommentIterator= keui.getIssueComment().iterator();
             commentIterator = mdService.getComment().iterator();
         }
 
 
-        Iterator<Keui.Comment> keuiCommentIterator = keui.getIssueComment().iterator();
-
-
-        String component = kesi.getProduct().getComponentId();
 
         for(KesiITS.Comment comment : comments){
 
@@ -160,9 +176,11 @@ public class IssueUpdatedAnnotatedListener extends STARDOMActiveMQListener {
                     "its"));
 
             logger.trace("void handleIssue() Commenter {} ",context.getProfile());
+            commentAction.setBugId(kesi.getId());
             commentAction.setDate(comment.getDate());
             commentAction.setText(comment.getText());
-            commentAction.setComponent(component);
+            commentAction.setSubject(issueMetadata.getSubject());
+            commentAction.setComponent(issueMetadata.getComponent());
             commentAction.setBugId(kesi.getId());
             
             Keui.Comment keuiComment = keuiCommentIterator.next();

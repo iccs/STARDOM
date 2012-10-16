@@ -1,18 +1,13 @@
 package eu.alertproject.iccs.stardom.activemqconnector.internal;
 
 import eu.alertproject.iccs.events.alert.Author;
-import eu.alertproject.iccs.events.converters.KESIDateConverter;
+import eu.alertproject.iccs.events.alert.KesiSCM;
+import eu.alertproject.iccs.events.alert.MdServiceSCM;
 import eu.alertproject.iccs.stardom.domain.api.MetricTemporal;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
-import eu.alertproject.iccs.stardom.domain.api.metrics.ScmTemporalMetric;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeUtils;
 import org.joda.time.Days;
-import org.joda.time.Period;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
 
 import java.util.Date;
 
@@ -22,23 +17,43 @@ import java.util.Date;
  * Time: 15:22
  */
 public class ALERTUtils {
-    
-    public static Profile extractProfile(Author author,String uri,String source){
+
+
+    public  static Profile extractProfile(Author author,String uri,String source){
 
         String name = author.getName();
-        
-        
         String[] split = name.split(" ");
 
         return new Profile(
-            StringUtils.defaultIfEmpty(split[0], ""),
-            (split.length >=2 ? StringUtils.substringAfter(name," ") : ""),
-            author.getId(),
-            author.getEmail(),
-            uri,
-            source
+                StringUtils.defaultIfEmpty(split[0], ""),
+                (split.length >=2 ? StringUtils.substringAfter(name," ") : ""),
+                author.getId(),
+                author.getEmail(),
+                uri,
+                source
         );
-        
+
+
+    }
+
+
+    public static Profile extractProfile(KesiSCM kesi,MdServiceSCM mdservice,String source){
+
+        Author author = kesi.getAuthor();
+
+
+        if(author == null){
+            author = kesi.getCommitter();
+        }
+
+
+        String authorUri = mdservice.getAuthorUri();
+        if(authorUri == null){
+            authorUri = mdservice.getCommitterUri();
+        }
+
+        return extractProfile(author,authorUri,source);
+
         
     }
 

@@ -12,7 +12,9 @@ import eu.alertproject.iccs.stardom.analyzers.its.connector.ItsConnectorContext;
 import eu.alertproject.iccs.stardom.bus.api.Bus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +32,8 @@ public class IssueNewAnnotatedListener extends STARDOMActiveMQListener {
 
     private Logger logger = LoggerFactory.getLogger(IssueNewAnnotatedListener.class);
 
+    @Autowired
+    PersistanceService persistanceService;
 
     @Override
     public void processXml(String xml){
@@ -55,12 +59,22 @@ public class IssueNewAnnotatedListener extends STARDOMActiveMQListener {
         MdServiceITS mdService = eventData.getMdService();
         Keui keui = eventData.getKeui();
 
-        handleIssue(kesi,mdService,keui);
+        persistanceService.recordIssueMetadata(
+                kesi.getId(),
+                kesi.getProduct().getComponentId(),
+                kesi.getSummary() == null ? kesi.getDescription() : "None",
+                kesi.getDateOpened(),
+                mdService.getUri(),
+                mdService.getProduct().getComponentUri()
+        );
+
+        handleIssue(kesi, mdService, keui);
         handleComments(kesi,mdService,keui);
 
 
-
     }
+
+
 
     private void handleIssue(KesiITS kesi, MdServiceITS mdService, Keui keui) {
 
@@ -88,7 +102,10 @@ public class IssueNewAnnotatedListener extends STARDOMActiveMQListener {
         logger.trace("void handleComments() Assigned {}",itsAction.getAssigned());
 
 
-        itsAction.setSubject(kesi.getSummary());
+        itsAction.setSubject(
+                kesi.getSummary() ==null ?
+                        kesi.getDescription() : "None"
+                );
         itsAction.setComponent(kesi.getProduct().getComponentId());
         itsAction.setBugId(kesi.getId());
         itsAction.setBugStatus(kesi.getStatus());
@@ -144,11 +161,16 @@ public class IssueNewAnnotatedListener extends STARDOMActiveMQListener {
                     "its"));
 
             logger.trace("void handleIssue() Commenter {} ",context.getProfile());
+            commentAction.setBugId(kesi.getId());
             commentAction.setDate(comment.getDate());
             commentAction.setText(comment.getText());
-            commentAction.setSubject(kesi.getSummary());
-            commentAction.setConcepts(keui.getCommentTextConcepts());
+            commentAction.setComponent(kesi.getProduct().getComponentId());
+            commentAction.setSubject(
+                    kesi.getSummary() ==null ?
+                            kesi.getDescription() : "None"
+            );
 
+            commentAction.setConcepts(keui.getCommentTextConcepts());
             context.setAction(commentAction);
             Bus.publish(new ItsCommentEvent(this,context));
 
