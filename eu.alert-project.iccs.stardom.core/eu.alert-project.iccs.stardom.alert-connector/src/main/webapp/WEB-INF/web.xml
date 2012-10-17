@@ -9,7 +9,6 @@
 
     <!---->
     <!-- Reads request input using UTF-8 encoding -->
-
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -35,13 +34,14 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>default</servlet-name>
-        <url-pattern>/favicon.ico</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
         <servlet-name>ws</servlet-name>
         <url-pattern>/ws/*</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/favicon.ico</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

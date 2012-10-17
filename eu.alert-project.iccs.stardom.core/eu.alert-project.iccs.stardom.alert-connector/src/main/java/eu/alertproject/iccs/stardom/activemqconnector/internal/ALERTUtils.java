@@ -22,7 +22,10 @@ public class ALERTUtils {
     public  static Profile extractProfile(Author author,String uri,String source){
 
         String name = author.getName();
-        String[] split = name.split(" ");
+        String[] split = new String[]{"",""};
+        if(name != null ){
+            split =name.split(" ");
+        }
 
         return new Profile(
                 StringUtils.defaultIfEmpty(split[0], ""),

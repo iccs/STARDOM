@@ -61,11 +61,11 @@ public class IssueNewAnnotatedListener extends STARDOMActiveMQListener {
 
         persistanceService.recordIssueMetadata(
                 kesi.getId(),
-                kesi.getProduct().getComponentId(),
+                kesi.getProduct() == null ? "None" : kesi.getProduct().getComponentId(),
                 kesi.getSummary() == null ? kesi.getDescription() : "None",
                 kesi.getDateOpened(),
                 mdService.getUri(),
-                mdService.getProduct().getComponentUri()
+                kesi.getProduct() == null ? "None" : mdService.getProduct().getComponentUri()
         );
 
         handleIssue(kesi, mdService, keui);
@@ -106,7 +106,8 @@ public class IssueNewAnnotatedListener extends STARDOMActiveMQListener {
                 kesi.getSummary() ==null ?
                         kesi.getDescription() : "None"
                 );
-        itsAction.setComponent(kesi.getProduct().getComponentId());
+        itsAction.setComponent(
+                kesi.getProduct() == null ? "None" : kesi.getProduct().getComponentId());
         itsAction.setBugId(kesi.getId());
         itsAction.setBugStatus(kesi.getStatus());
         itsAction.setDate(kesi.getDateOpened());
@@ -164,7 +165,9 @@ public class IssueNewAnnotatedListener extends STARDOMActiveMQListener {
             commentAction.setBugId(kesi.getId());
             commentAction.setDate(comment.getDate());
             commentAction.setText(comment.getText());
-            commentAction.setComponent(kesi.getProduct().getComponentId());
+            commentAction.setComponent(
+                    kesi.getProduct() == null ? "None" : kesi.getProduct().getComponentId());
+
             commentAction.setSubject(
                     kesi.getSummary() ==null ?
                             kesi.getDescription() : "None"
