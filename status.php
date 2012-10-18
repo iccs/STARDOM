@@ -92,6 +92,6 @@ EOF
 	pretty_counts($socrates)));
 
 
-	sleep(5);
+	sleep(1);
 
 }

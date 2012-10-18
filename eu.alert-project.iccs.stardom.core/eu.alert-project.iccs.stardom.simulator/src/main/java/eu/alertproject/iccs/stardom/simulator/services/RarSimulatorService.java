@@ -51,9 +51,9 @@ public class RarSimulatorService implements SimulationService{
                     inputStream.close();
 
 
-                    stardom.delete();
                     entries++;
                 }
+                stardom.delete();
                 fh = archive.nextFileHeader();
             }
 

@@ -51,7 +51,7 @@ public class TarGzSimulatorService implements SimulationService{
 
                     logger.debug("void start([path, streamIssuesVisitor]) Handling {} ",entry.getName());
 
-                    File stardom = File.createTempFile("stardom", "rar-simulator");
+                    File stardom = File.createTempFile("stardom", "tar-gz-simulator");
                     stardom.createNewFile();
 
                     final OutputStream outputFileStream = new FileOutputStream(stardom);
@@ -60,8 +60,7 @@ public class TarGzSimulatorService implements SimulationService{
                     outputFileStream.close();
 
                     streamIssuesVisitor.handle(new FileInputStream(stardom));
-
-                    tarFile.delete();
+                    stardom.delete();
 
                     count++;
                 }
