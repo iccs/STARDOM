@@ -9,6 +9,7 @@ import eu.alertproject.iccs.events.internal.ArtefactUpdated;
 import eu.alertproject.iccs.events.internal.ComponentUpdated;
 import eu.alertproject.iccs.events.internal.IdentityUpdated;
 import eu.alertproject.iccs.events.internal.IssueUpdated;
+import eu.alertproject.iccs.events.stardom.StardomCIUpdatePayload;
 import eu.alertproject.iccs.events.stardom.StardomIdentitySnapshotPayload;
 import eu.alertproject.iccs.stardom.bus.api.AnnotatedUpdateEvent;
 import eu.alertproject.iccs.stardom.bus.api.Component;
@@ -88,11 +89,13 @@ public class UpdateCiServiceImpl implements UpdateCiService{
     public void updateIndentityCI(AnnotatedUpdateEvent event) {
 
         //get the ci
+        List<StardomCIUpdatePayload.EventData.CI> eventCis = new ArrayList<StardomCIUpdatePayload.EventData.CI>();
         List<CI.Classifier> classifiers = ci.getClassifiers();
 
         long start = System.currentTimeMillis();
 
         Map<String, Double> ciForClass = new HashMap<String, Double>();
+        Map<String, Integer> metricsValues = new HashMap<String, Integer>();
 
         for(CI.Classifier classifier : classifiers){
 
@@ -104,9 +107,12 @@ public class UpdateCiServiceImpl implements UpdateCiService{
 
                 try {
                     if(metrics.containsKey(cim.getName())){
-                        
+
+
                         
                         Integer value = metrics.get(cim.getName()).getValue(metricDao, (Identity) event.getPayload());
+                        metricsValues.put(cim.getName(),value);
+
                         if(cim.getStandardDeviation() > 0.0){
                             NormalDistribution d = new NormalDistributionImpl(cim.getMean(),cim.getStandardDeviation());
                             if(value >= cim.getMean()){
@@ -127,6 +133,7 @@ public class UpdateCiServiceImpl implements UpdateCiService{
             }
 
             ciForClass.put(classifier.getName(),prob);
+            eventCis.add(new StardomCIUpdatePayload.EventData.CI(classifier.getName(),prob));
         }
 
 
@@ -141,8 +148,6 @@ public class UpdateCiServiceImpl implements UpdateCiService{
 
 
         //prepare competency update event
-
-
         Identity byProfileUuid = identityDao.findByProfileUuid(identity.getUuid());
 
         StardomIdentitySnapshotPayload.EventData.Identity sIdentity =
@@ -160,6 +165,31 @@ public class UpdateCiServiceImpl implements UpdateCiService{
         sIdentity.setPersons(persons);
 
         messageBroker.sendTextMessage(
+                Topics.ALERT_STARDOM_CompetencyUpdate,
+                EventFactory.createCompetencyUpdateEvent(
+                        messageBroker.requestEventId(),
+                        start,
+                        System.currentTimeMillis(),
+                        messageBroker.requestSequence(),
+                        byProfileUuid.getUuid(),
+                        persons,
+                        eventCis,
+                        new StardomCIUpdatePayload.EventData.Metrics.Fluency(metricsValues.get("ScmApiIntroducedMetric")),
+                        new StardomCIUpdatePayload.EventData.Metrics.Effectiveness(metricsValues.get("ItsIssuesResolvedMetric")),
+                        new StardomCIUpdatePayload.EventData.Metrics.Contribution(
+                                        metricsValues.get("ScmActivityMetric"),
+                                        metricsValues.get("ItsActivityMetric"),
+                                        metricsValues.get("CommunicationActivityMetric")
+                        ),
+                        new StardomCIUpdatePayload.EventData.Metrics.Recency(
+                                metricsValues.get("ScmTemporalMetric"),
+                                metricsValues.get("ItsTemporalMetric"),
+                                metricsValues.get("CommunicationTemporalMetric")
+                        )
+                )
+        );
+
+        messageBroker.sendTextMessage(
                 Topics.ALERT_STARDOM_Identity_Snapshot,
                 EventFactory.createStardomIdentitySnapshot(
                         messageBroker.requestEventId(),
@@ -169,6 +199,7 @@ public class UpdateCiServiceImpl implements UpdateCiService{
                         sIdentity));
 
 
+        //send competency updated
         sendEvent(Topics.ICCS_STARDOM_Identity_Updated, id);
 
     }

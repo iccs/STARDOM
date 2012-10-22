@@ -1,0 +1,1 @@
+create index identity_id_idx on metric(identity_id);

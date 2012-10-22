@@ -73,19 +73,23 @@ public class MailingListEventHandler {
 
 
         //whatever your do, do it here
+        int changed= 0;
         try{
             for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
                 if(a.canHandle(context.getAction())){
                   a.analyze(identity,context.getAction());
+                    changed++;
                 }
             }
 
 
-            //update !!!
-            Bus.publish(STARDOMTopics.IdentityUpdated, new AnnotatedUpdateEvent(this,identity,context.getAction().getConcepts()));
-
         }catch (ClassCastException e){
             logger.warn("Something happened in the analyzer {} ",e);
+        }finally {
+            if(changed >0){
+                //update !!!
+                Bus.publish(STARDOMTopics.IdentityUpdated, new AnnotatedUpdateEvent(this,identity,context.getAction().getConcepts()));
+            }
         }
 
     }

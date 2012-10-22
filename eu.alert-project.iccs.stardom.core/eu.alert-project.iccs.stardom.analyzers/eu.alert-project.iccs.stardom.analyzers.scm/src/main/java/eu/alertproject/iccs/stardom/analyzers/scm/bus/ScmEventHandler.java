@@ -81,21 +81,26 @@ public class ScmEventHandler {
 
         logger.debug("Memory {}/{} ",Runtime.getRuntime().freeMemory(),Runtime.getRuntime().totalMemory());
         //whatever your do, do it here
+        int changes =0;
         try {
+
             for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
                 //if you are wondering how on earth this
                 //is not breaking, it is because if context.getAction()
                 // is not an instance of ScmAction, it will throw
                 // a class cast exception.
-
                 if(a.canHandle(context.getAction())){
-                        a.analyze(identity,context.getAction());
+                    a.analyze(identity,context.getAction());
+                    changes++;
                 }
             }
-            Bus.publish(STARDOMTopics.IdentityUpdated, new AnnotatedUpdateEvent(this,identity,context.getAction().getConcepts()));
 
         } catch (Exception e) {
             logger.error("Error analying action ", e);
+        }finally {
+            if(changes > 0){
+                Bus.publish(STARDOMTopics.IdentityUpdated, new AnnotatedUpdateEvent(this,identity,context.getAction().getConcepts()));
+            }
         }
 
     }

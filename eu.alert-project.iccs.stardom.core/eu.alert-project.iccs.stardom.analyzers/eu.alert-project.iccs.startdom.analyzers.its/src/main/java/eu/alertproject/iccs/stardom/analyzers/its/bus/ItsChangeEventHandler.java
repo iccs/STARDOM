@@ -80,6 +80,7 @@ public class ItsChangeEventHandler {
          */
 
         Identity who = null;
+        int changed = 0;
         try {
             if(!StringUtils.isEmpty(context.getProfile().getEmail())){
 
@@ -99,19 +100,23 @@ public class ItsChangeEventHandler {
 //            itsMlService.recordItsHistory(who, context.getAction());
 
             //whatever your do, do it here
+
             for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
                 if(a.canHandle(context.getAction())){
                     try{
                         a.analyze(who,context.getAction());
+                        changed++;
                     }catch (Exception e){
                         logger.error("Something is up in the analyzer",e);
                     }
                 }
             }
+
+
         } catch (Exception e) {
             logger.error("Something is up here ",e);
         }finally {
-            if(who !=null){
+            if(who !=null && changed >0){
                 Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,who,new ArrayList<Keui.Concept>()));
             }
         }

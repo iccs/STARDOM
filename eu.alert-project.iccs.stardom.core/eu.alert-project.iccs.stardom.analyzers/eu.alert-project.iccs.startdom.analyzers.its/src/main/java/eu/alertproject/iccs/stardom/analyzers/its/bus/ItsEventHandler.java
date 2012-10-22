@@ -76,22 +76,24 @@ public class ItsEventHandler {
          *
          */
 
-        handleDirtyProfile(action.getAssigned(),action);
-        handleDirtyProfile(action.getReporter(), action);
+        int changed = 0;
+        changed += handleDirtyProfile(action.getAssigned(),action);
+        changed += handleDirtyProfile(action.getReporter(), action);
 
-        IssueUpdated iu = new IssueUpdated();
-        iu.setDate(action.getDate());
-        iu.setSubject(action.getSubject());
-        iu.setConcepts(action.getConcepts());
-        iu.setId(String.valueOf(action.getBugId()));
+        if(changed > 0 ){
+            IssueUpdated iu = new IssueUpdated();
+            iu.setDate(action.getDate());
+            iu.setSubject(action.getSubject());
+            iu.setConcepts(action.getConcepts());
+            iu.setId(String.valueOf(action.getBugId()));
 
-        Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,iu,action.getConcepts()));
-
-        Bus.publish(STARDOMTopics.ComponentUpdated, new AnnotatedUpdateEvent(this,
-                new Component(
-                        action.getComponent(),
-                        action.getBugId()),
-                action.getConcepts()));
+            Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,iu,action.getConcepts()));
+            Bus.publish(STARDOMTopics.ComponentUpdated, new AnnotatedUpdateEvent(this,
+                    new Component(
+                            action.getComponent(),
+                            action.getBugId()),
+                    action.getConcepts()));
+        }
 
     }
 
@@ -127,55 +129,63 @@ public class ItsEventHandler {
         Identity identity = identifier.find(context.getProfile(),"its-comment");
         logger.trace("void event() Identity {}",identity.getUuid());
 
-
+        int changed = 0 ;
         try {
             //whatever your do, do it here
             for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
                 if(a.canHandle(context.getAction())){
                     a.analyze(identity,context.getAction());
+                    changed++;
                 }
             }
         } catch (Exception e) {
             logger.error("Error in handler ",e);
         } finally {
 
-            Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,identity,action.getConcepts()));
+            if(changed > 0){
+                Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,identity,action.getConcepts()));
 
-            IssueUpdated iu = new IssueUpdated();
-            iu.setDate(action.getDate());
-            iu.setSubject(action.getSubject());
-            iu.setConcepts(action.getConcepts());
-            iu.setId(String.valueOf(action.getBugId()));
+                IssueUpdated iu = new IssueUpdated();
+                iu.setDate(action.getDate());
+                iu.setSubject(action.getSubject());
+                iu.setConcepts(action.getConcepts());
+                iu.setId(String.valueOf(action.getBugId()));
 
-            Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,iu,action.getConcepts()));
-            Bus.publish(STARDOMTopics.ComponentUpdated, new AnnotatedUpdateEvent(this,
-                    new Component(
-                            action.getComponent(),
-                            action.getBugId()),
-                            action.getConcepts()));
+                Bus.publish(STARDOMTopics.IssueUpdated,new AnnotatedUpdateEvent(this,iu,action.getConcepts()));
+                Bus.publish(STARDOMTopics.ComponentUpdated, new AnnotatedUpdateEvent(this,
+                        new Component(
+                                action.getComponent(),
+                                action.getBugId()),
+                                action.getConcepts()));
 
+            }
         }
 
 
     }
 
-    private void handleDirtyProfile(Profile dirty, DefaultItsAction action ){
+    private int handleDirtyProfile(Profile dirty, DefaultItsAction action ){
 
         Identity identity = identifier.find(dirty,"its");
 
+        int changed = 0;
         //whatever your do, do it here
         try {
             for(Analyzer<ConnectorAction> a : analyzers.getAnalyzers()){
                 if(a.canHandle(action)){
                     a.analyze(identity,action);
+                    changed++;
                 }
             }
         } catch (Exception e) {
             logger.error("Error in handler ",e);
         } finally {
-
-            Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,identity,action.getConcepts()));
+            if(changed > 0 ){
+                Bus.publish(STARDOMTopics.IdentityUpdated,new AnnotatedUpdateEvent(this,identity,action.getConcepts()));
+            }
         }
+
+        return changed;
     }
 
 }

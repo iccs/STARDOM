@@ -27,11 +27,20 @@ public class ALERTUtils {
             split =name.split(" ");
         }
 
+
+        String name1 = StringUtils.defaultIfEmpty(split[0], null);
+        String lastname = split.length >= 2 ? StringUtils.substringAfter(name, " ") : "";
+        String id = author.getId();
+        String email = author.getEmail();
         return new Profile(
-                StringUtils.defaultIfEmpty(split[0], ""),
-                (split.length >=2 ? StringUtils.substringAfter(name," ") : ""),
-                author.getId(),
-                author.getEmail(),
+                name1 == null ? null :
+                        ("none".equals(name1.toLowerCase()) ? null : name1),
+                lastname == null ? null:
+                        ("none".equals(lastname.toLowerCase()) ? null : lastname),
+                id == null ? null :
+                        ("none".equals(id.toLowerCase()) ? null : id),
+                email == null ? null :
+                        ("none".equals(email.toLowerCase()) ?null :email),
                 uri,
                 source
         );

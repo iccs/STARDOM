@@ -112,6 +112,7 @@ public class IssueNewAnnotatedListener extends STARDOMActiveMQListener {
         itsAction.setBugStatus(kesi.getStatus());
         itsAction.setDate(kesi.getDateOpened());
         itsAction.setReporter(
+
                 ALERTUtils.extractProfile(
                         kesi.getAuthor(),
                         mdService.getAuthorUri(),
