@@ -63,9 +63,6 @@ public class ScmApiIntroducedHistoryAnalyzer extends AbstractScmAnalyzer {
         for(ScmFile sf: files){
 
             String path = sf.getName();
-
-
-
             List<String> functions = sf.getFunctions();
             for(String signature: functions) {
 
@@ -105,9 +102,8 @@ public class ScmApiIntroducedHistoryAnalyzer extends AbstractScmAnalyzer {
 
             Metric insert = metricDao.insert(scmApiIntroducedMetric);
             logger.trace("void analyze() Created ScmApiIntroducedMetric {} ",insert);
-
-
         }
+
 
     }
 

@@ -91,7 +91,7 @@ public class ItsEventHandler {
             Bus.publish(STARDOMTopics.ComponentUpdated, new AnnotatedUpdateEvent(this,
                     new Component(
                             action.getComponent(),
-                            action.getBugId()),
+                            String.valueOf(action.getBugId())),
                     action.getConcepts()));
         }
 
@@ -155,7 +155,7 @@ public class ItsEventHandler {
                 Bus.publish(STARDOMTopics.ComponentUpdated, new AnnotatedUpdateEvent(this,
                         new Component(
                                 action.getComponent(),
-                                action.getBugId()),
+                                String.valueOf(action.getBugId())),
                                 action.getConcepts()));
 
             }

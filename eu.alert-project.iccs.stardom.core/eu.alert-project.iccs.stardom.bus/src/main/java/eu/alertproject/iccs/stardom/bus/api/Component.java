@@ -12,14 +12,14 @@ import java.util.List;
 public class Component {
 
     private String component;
-    private Integer issueId;
+    private String parentId;
 
     public Component() {
     }
 
-    public Component(String component, Integer issueId) {
+    public Component(String component, String parentId) {
         this.component = component;
-        this.issueId = issueId;
+        this.parentId = parentId;
     }
 
     public String getComponent() {
@@ -30,20 +30,19 @@ public class Component {
         this.component = component;
     }
 
-    public Integer getIssueId() {
-        return issueId;
+    public String getParentId() {
+        return parentId;
     }
 
-    public void setIssueId(Integer issueId) {
-        this.issueId = issueId;
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
-
 
     @Override
     public String toString() {
         return "Component{" +
                 "component='" + component + '\'' +
-                ", issueId='" + issueId + '\'' +
+                ", issueId='" + parentId + '\'' +
                 '}';
     }
 }

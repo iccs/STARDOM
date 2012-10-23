@@ -1,10 +1,8 @@
 package eu.alertproject.iccs.stardom.analyzers.scm.bus;
 
 import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmConnectorContext;
-import eu.alertproject.iccs.stardom.bus.api.AnnotatedUpdateEvent;
-import eu.alertproject.iccs.stardom.bus.api.Bus;
-import eu.alertproject.iccs.stardom.bus.api.Event;
-import eu.alertproject.iccs.stardom.bus.api.STARDOMTopics;
+import eu.alertproject.iccs.stardom.analyzers.scm.connector.ScmFile;
+import eu.alertproject.iccs.stardom.bus.api.*;
 import eu.alertproject.iccs.stardom.bus.api.annotation.EventHandler;
 import eu.alertproject.iccs.stardom.connector.api.ConnectorAction;
 import eu.alertproject.iccs.stardom.constructor.api.Analyzer;
@@ -100,6 +98,18 @@ public class ScmEventHandler {
         }finally {
             if(changes > 0){
                 Bus.publish(STARDOMTopics.IdentityUpdated, new AnnotatedUpdateEvent(this,identity,context.getAction().getConcepts()));
+
+                for(ScmFile f : context.getAction().getFiles()){
+                    for(String module : f.getModules()){
+                        Bus.publish(STARDOMTopics.ComponentUpdated, new AnnotatedUpdateEvent(this,
+                                new Component(
+                                        module,
+                                        f.getName()),
+                                context.getAction().getConcepts()));
+                        //components here
+                    }
+
+                }
             }
         }
 

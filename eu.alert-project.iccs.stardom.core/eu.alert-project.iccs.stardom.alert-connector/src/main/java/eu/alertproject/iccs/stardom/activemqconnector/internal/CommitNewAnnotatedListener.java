@@ -91,7 +91,6 @@ public class CommitNewAnnotatedListener extends STARDOMActiveMQListener {
         scmAction.setFiles(extractToScmFiles(kesi));
         scmAction.setConcepts(keui.getCommitMessageLogConcepts());
 
-
         context.setAction(scmAction);
 
         if(isIgnoredBasedOnDate(kesi.getDate())){return;}
@@ -108,6 +107,7 @@ public class CommitNewAnnotatedListener extends STARDOMActiveMQListener {
 
         List<KesiSCM.File> files = kesi.getFiles();
 
+
         if(files !=null && files.size() >0){
 
             for(KesiSCM.File file : files){
@@ -116,12 +116,16 @@ public class CommitNewAnnotatedListener extends STARDOMActiveMQListener {
                 scmFile.setName(file.getFileName());
 
                 List<String> functions = new ArrayList<String>();
-
+                List<String> fileModules = new ArrayList<String>();
                 List<KesiSCM.File.Module> modules = file.getModules();
 
                 //modules may not exist
                 if(modules !=null && modules.size() > 0){
                     for(KesiSCM.File.Module mod : modules){
+
+                        if(!fileModules.contains(mod.getName())){
+                            fileModules.add(mod.getName());
+                        }
 
                         List<KesiSCM.File.Module.Methods> modMethods = mod.getMethods();
 
@@ -137,6 +141,7 @@ public class CommitNewAnnotatedListener extends STARDOMActiveMQListener {
 
                 }
 
+                scmFile.setModules(fileModules);
                 scmFile.setFunctions(functions);
                 scmFiles.add(scmFile);
             }

@@ -221,7 +221,7 @@ public class UpdateCiServiceImpl implements UpdateCiService{
 
         Component payload = (Component) event.getPayload();
         
-        au.setId(String.valueOf(payload.getIssueId()));
+        au.setId(payload.getParentId());
         au.setComponent(payload.getComponent());
         au.setConcepts((List<Keui.Concept>) event.getAnnotations());
 
