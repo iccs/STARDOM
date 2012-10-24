@@ -13,5 +13,8 @@ import eu.alertproject.iccs.stardom.ui.beans.ProfileBean;
 public interface AuthenticationService {
     boolean remind(ProfileBean identity);
     boolean authenticate(ProfileBean identity);
+    void logout(String email);
     AuthenticationInfo checkAuthenticationInfo(String email);
+
+
 }

@@ -57,7 +57,7 @@ public class DefaultAuthenticationService implements AuthenticationService {
     @PostConstruct
     public void init(){
 
-        authSession = Collections.synchronizedMap(new HashMap<String, Long>());
+        authSession = new HashMap<String, Long>();
         cfg = new Configuration();
         cfg.setEncoding(new Locale("el","GR"),"UTF-8");
         cfg.setObjectWrapper(new DefaultObjectWrapper());
@@ -167,6 +167,15 @@ public class DefaultAuthenticationService implements AuthenticationService {
 
         return success;
 
+
+    }
+
+    @Override
+    public void logout(String email) {
+
+        if(authSession.containsKey(email)){
+            authSession.remove(email);
+        }
 
     }
 

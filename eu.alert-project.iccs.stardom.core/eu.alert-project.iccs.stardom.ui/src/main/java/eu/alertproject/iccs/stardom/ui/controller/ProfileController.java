@@ -23,10 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
@@ -71,14 +68,14 @@ public class ProfileController {
     }
 
     @RequestMapping(value="/login/authenticate",method = RequestMethod.POST,params = "login")
-    public String login(
+    public ModelAndView login(
                               @ModelAttribute("identity") ProfileBean identity,
                               BindingResult result){
 
         new LoginValidator().validate(identity,result);
 
         if(result.hasErrors()){
-            return "login";
+            return new ModelAndView("login");
         }
 
         if(!authenticationService.authenticate(identity)){
@@ -86,18 +83,19 @@ public class ProfileController {
                     new FieldError("auth.invalid","code","Invalid Authetication!")
                     );
 
-            return "login";
+            return new ModelAndView("login");
 
 
         }
 
-        String ret = "redirect:"+systemProperties.getProperty("auth.loginUrl")+"/?email="+identity.getEmail();
-
-        logger.trace("String login([identity, result]) {} ",ret);
-       return ret;
+        ModelAndView modelAndView = new ModelAndView("redirect");
+        modelAndView.addObject("redirect",systemProperties.getProperty("auth.loginUrl")+"?email="+identity.getEmail() );
+        return modelAndView;
 
 
     }
+
+
 
     @RequestMapping(value="/login/authenticate",method = RequestMethod.POST,params = "remind")
     public ModelAndView remind(
@@ -122,6 +120,17 @@ public class ProfileController {
         return modelAndView;
 
     }
+
+
+    @RequestMapping(value="/{email}/logout",method = RequestMethod.GET)
+    public ModelAndView logout(@PathVariable String email ){
+
+        authenticationService.logout(email);
+        ModelAndView modelAndView = new ModelAndView("redirect");
+        modelAndView.addObject("redirect",systemProperties.getProperty("auth.logoutUrl"));
+        return modelAndView;
+    }
+
 
 
     @RequestMapping(value="/login/authenticated",method = RequestMethod.POST)
@@ -201,7 +210,7 @@ public class ProfileController {
                                 new IdentityPersons(Arrays.asList(newPerson), null))
                 );
                 
-                logger.trace("String create() Sending event {} ",stardomIdentityNew);
+                logger.trace("String create() Sending event {} ", stardomIdentityNew);
 
                 messageBroker.sendTextMessage(
                         Topics.ALERT_STARDOM_New_Identity,
