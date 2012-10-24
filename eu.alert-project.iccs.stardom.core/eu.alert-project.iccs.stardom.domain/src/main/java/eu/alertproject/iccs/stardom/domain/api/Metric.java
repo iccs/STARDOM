@@ -12,8 +12,10 @@ import java.util.Date;
  * Time: 18:18
  */
 @Entity
-@Table(name="metric")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name="metric_single_table")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
+@DiscriminatorValue("metric")
 public abstract class Metric implements SimpleBean,Serializable,MetricDescriptor{
 
     @TableGenerator(
@@ -21,7 +23,7 @@ public abstract class Metric implements SimpleBean,Serializable,MetricDescriptor
             table="sequence",
             pkColumnName="sequence_name",
             valueColumnName="sequence_index",
-            pkColumnValue="metric_sequence",
+            pkColumnValue="metric_single_sequence",
             allocationSize = 1)
     @GeneratedValue(strategy= GenerationType.TABLE, generator="tseq")
     @Id

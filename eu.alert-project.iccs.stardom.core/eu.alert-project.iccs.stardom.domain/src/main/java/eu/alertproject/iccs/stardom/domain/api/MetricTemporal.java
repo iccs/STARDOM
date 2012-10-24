@@ -9,8 +9,10 @@ import java.util.Date;
  * Time: 21:18
  */
 @Entity
-@Table(name="metric_temporal")
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Table(name="metric_temporal")
+//@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "type")
+@DiscriminatorValue("metric_temporal")
 public abstract class MetricTemporal extends Metric{
 
     @Column(name="temporal")

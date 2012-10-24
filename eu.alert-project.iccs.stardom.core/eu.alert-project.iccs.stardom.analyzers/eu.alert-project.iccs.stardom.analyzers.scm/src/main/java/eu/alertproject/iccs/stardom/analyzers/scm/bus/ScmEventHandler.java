@@ -20,10 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -99,17 +96,16 @@ public class ScmEventHandler {
             if(changes > 0){
                 Bus.publish(STARDOMTopics.IdentityUpdated, new AnnotatedUpdateEvent(this,identity,context.getAction().getConcepts()));
 
-                for(ScmFile f : context.getAction().getFiles()){
-                    for(String module : f.getModules()){
-                        Bus.publish(STARDOMTopics.ComponentUpdated, new AnnotatedUpdateEvent(this,
-                                new Component(
-                                        module,
-                                        f.getName()),
-                                context.getAction().getConcepts()));
-                        //components here
-                    }
+                Map<String,List<String>> modules = new HashMap<String, List<String>>();
 
+
+                for(ScmFile f : context.getAction().getFiles()){
+                    modules.put(f.getName(), f.getModules());
                 }
+
+                Bus.publish(STARDOMTopics.ComponentUpdated, new AnnotatedUpdateEvent(this,
+                        modules,
+                        context.getAction().getConcepts()));
             }
         }
 

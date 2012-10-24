@@ -8,8 +8,10 @@ import javax.persistence.*;
  * Time: 22:59
  */
 @Entity
-@Table(name="metric_quantitative")
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Table(name="metric_quantitative")
+//@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "type")
+@DiscriminatorValue("metric_quantitative")
 public abstract class MetricQuantitative extends Metric {
 
     @Column(name="quantity")

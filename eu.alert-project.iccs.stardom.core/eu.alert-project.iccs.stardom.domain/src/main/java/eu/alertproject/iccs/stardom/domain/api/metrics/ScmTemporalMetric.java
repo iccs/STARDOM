@@ -2,6 +2,8 @@ package eu.alertproject.iccs.stardom.domain.api.metrics;
 
 import eu.alertproject.iccs.stardom.domain.api.MetricTemporal;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -12,7 +14,9 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="scm_temporal_metric")
+//@Table(name="scm_temporal_metric")
+@DiscriminatorColumn(name = "type")
+@DiscriminatorValue("scm_temporal_metric")
 public class ScmTemporalMetric extends MetricTemporal{
 
     @Override

@@ -59,6 +59,7 @@ public class ScmApiIntroducedHistoryAnalyzer extends AbstractScmAnalyzer {
         
         //check if the api has been introduced before
         List<ScmFile> files = action.getFiles();
+        logger.debug("About to handle {} files ",files);
         int amount =0;
         for(ScmFile sf: files){
 

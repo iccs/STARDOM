@@ -2,9 +2,7 @@ package eu.alertproject.iccs.stardom.domain.api.metrics;
 
 import eu.alertproject.iccs.stardom.domain.api.MetricTemporal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * User: fotis
@@ -14,6 +12,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="its_temporal_metric")
+@DiscriminatorColumn(name = "type")
+@DiscriminatorValue("its_temporal_metric")
 public class ItsTemporalMetric extends MetricTemporal{
 
     

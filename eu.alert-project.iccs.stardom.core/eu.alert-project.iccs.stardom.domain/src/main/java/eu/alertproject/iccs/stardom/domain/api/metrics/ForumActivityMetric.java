@@ -2,6 +2,8 @@ package eu.alertproject.iccs.stardom.domain.api.metrics;
 
 import eu.alertproject.iccs.stardom.domain.api.MetricQuantitative;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -12,7 +14,9 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="forum_activity_metric")
+//@Table(name="forum_activity_metric")
+@DiscriminatorColumn(name = "type")
+@DiscriminatorValue("forum_activity_metric")
 public class ForumActivityMetric extends MetricQuantitative{
 
     @Override

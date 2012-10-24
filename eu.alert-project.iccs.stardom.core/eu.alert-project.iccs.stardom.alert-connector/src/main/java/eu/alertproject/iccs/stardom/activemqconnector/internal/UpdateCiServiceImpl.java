@@ -213,19 +213,47 @@ public class UpdateCiServiceImpl implements UpdateCiService{
     }
 
 
+    @SuppressWarnings("unchecked")
     @Override
     public void componentUpdated(AnnotatedUpdateEvent event) {
 
-        long start = System.currentTimeMillis();
-        ComponentUpdated au = new ComponentUpdated();
 
-        Component payload = (Component) event.getPayload();
-        
-        au.setId(payload.getParentId());
-        au.setComponent(payload.getComponent());
-        au.setConcepts((List<Keui.Concept>) event.getAnnotations());
 
-        sendEvent(Topics.ICCS_STARDOM_Component_Updated, au);
+        if(event.getPayload() instanceof Map<?,?>){
+            Map<String,List<String>> payload = (Map<String, List<String>>) event.getPayload();
+
+            Set<String> keys = payload.keySet();
+            for(String key : keys){
+
+                ComponentUpdated au = new ComponentUpdated();
+
+
+                au.setId(key);
+                au.setComponents(payload.get(key));
+                au.setConcepts((List<Keui.Concept>) event.getAnnotations());
+                logger.trace("void componentUpdated([event]) Sending {} for {} ",
+                        Topics.ICCS_STARDOM_Component_Updated,au.getId());
+                List<String> modules = payload.get(key);
+                sendEvent(Topics.ICCS_STARDOM_Component_Updated, au);
+            }
+
+        }else if(event.getPayload() instanceof Component){
+            ComponentUpdated au = new ComponentUpdated();
+
+
+
+            Component payload = (Component) event.getPayload();
+            au.setId(payload.getParentId());
+            au.setComponent(payload.getComponent());
+            au.setConcepts((List<Keui.Concept>) event.getAnnotations());
+
+            logger.trace("void componentUpdated([event]) Sending {} for {} ",
+                    Topics.ICCS_STARDOM_Component_Updated,payload.getComponent());
+
+            sendEvent(Topics.ICCS_STARDOM_Component_Updated, au);
+
+
+        }
 
     }
     

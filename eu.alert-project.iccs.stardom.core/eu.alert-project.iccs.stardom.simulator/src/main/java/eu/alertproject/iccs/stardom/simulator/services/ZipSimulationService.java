@@ -37,7 +37,7 @@ public class ZipSimulationService implements SimulationService{
 
                 ZipEntry z = entries.nextElement();
 
-                logger.trace("void start() {} ",z.getName());
+                logger.debug("void start() {} ",z.getName());
                 if(z.getName().endsWith(".xml")){
                     visitor.handle(zipFile.getInputStream(z));
                     elementCounter++;

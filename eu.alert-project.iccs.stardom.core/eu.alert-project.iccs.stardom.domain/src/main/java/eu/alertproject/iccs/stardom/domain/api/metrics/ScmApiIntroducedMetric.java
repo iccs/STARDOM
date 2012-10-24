@@ -3,9 +3,7 @@ package eu.alertproject.iccs.stardom.domain.api.metrics;
 import eu.alertproject.iccs.stardom.domain.api.MetricQuantitative;
 import eu.alertproject.iccs.stardom.domain.api.MetricTemporal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * User: fotis
@@ -14,7 +12,9 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="scm_api_introduced_metric")
+//@Table(name="scm_api_introduced_metric")
+@DiscriminatorColumn(name = "type")
+@DiscriminatorValue("scm_api_introduced_metric")
 public class ScmApiIntroducedMetric extends MetricTemporal{
 
 
