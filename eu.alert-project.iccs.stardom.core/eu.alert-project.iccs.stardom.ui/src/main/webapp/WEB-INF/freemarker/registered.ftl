@@ -21,10 +21,23 @@ recommend sticking to 'spring' -->
 
 <div class="container">
 
+    <script type='text/javascript'>
+
+        function loginToUi(){
+            window.top.location.href = "${redirect}";
+            return false;
+        }
+
+    </script>
+
     <div class="tabswrapper padding-10">
-        <h1>An access code has been sent to <strong>${email}</strong></h1>
-        <p>Please check you <strong>junk mail</strong></p>
-        <a class="nice-button center" href="<@spring.url "/login" />" >Login</a>
+        <h1>Welcome to ALERT!</h1>
+        <div class="code">
+            This is your authentication code
+            <h1>${code}</h1>
+
+        </div>
+        <a class="nice-button  center" onclick="return loginToUi();" href="#">Continue</a>
     </div>
 
 </body>

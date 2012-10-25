@@ -161,14 +161,14 @@ public class ProfileController {
 
 
     @RequestMapping(value="/profile/create",method = RequestMethod.POST)
-    public String create(
+    public ModelAndView create(
                         @ModelAttribute("identity") ProfileBean identity,
                         BindingResult result){
 
         new ProfileValidator().validate(identity,result);
 
         if(result.hasErrors()){
-            return "profile";
+            return new ModelAndView("profile");
         }else {
 
             long start = System.currentTimeMillis();
@@ -220,17 +220,20 @@ public class ProfileController {
                         Topics.ALERT_STARDOM_New_Identity,
                         stardomIdentityNew);
 
-                return "redirect:/profile";
+
+                //force authenticate
+                authenticationService.initSession(identity.getEmail());
+
+                ModelAndView registred = new ModelAndView("registered");
+                registred.addObject("code",smIdentity.getAuthcode());
+                registred.addObject("uuid",smIdentity.getAuthcode());
+                registred.addObject("redirect",systemProperties.getProperty("auth.loginUrl")+"?email="+identity.getEmail());
+
+                return  registred;
 
             }else{
-
-
-                return "profile";
+                return new ModelAndView("profile");
             }
-
-
-
-
 
         }
     }

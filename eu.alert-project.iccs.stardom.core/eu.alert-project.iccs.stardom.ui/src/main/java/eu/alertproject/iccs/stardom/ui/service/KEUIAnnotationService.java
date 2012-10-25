@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
@@ -31,7 +32,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * Date: 14/03/12
  * Time: 16:51
  */
-@Service("annotationService")
 public class KEUIAnnotationService extends AbstractActiveMQHandler implements AnnotationService{
 
 
@@ -45,6 +45,11 @@ public class KEUIAnnotationService extends AbstractActiveMQHandler implements An
 
     AtomicReference<String> event;
     private TextToAnnotateReplyPayload.EventData eventData;
+
+    @PostConstruct
+    public void init(){
+        logger.debug("void init([]) Initializing instance");
+    }
 
     @Override
     public List<Concept> annotateText(String text){

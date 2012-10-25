@@ -143,6 +143,7 @@
     <import resource="classpath:/iccs/active-mq-connection.xml"/>
 
 
+    <bean id="annotationService" class="eu.alertproject.iccs.stardom.ui.service.KEUIAnnotationService" />
     <bean id="messageBroker" class="eu.alertproject.iccs.events.api.ActiveMQMessageBroker">
         <property name="processDisabled" value="${activemq.processDisabled}"/>
         <property name="recordIncoming" value="${activemq.recordIncoming}"/>
@@ -152,7 +153,8 @@
             <util:map>
                 <entry>
                     <key><util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_KEUI_TextToAnnotate_Annotated"/></key>
-                    <bean id="annotationService" class="eu.alertproject.iccs.stardom.ui.service.KEUIAnnotationService" />
+                    <ref bean="annotationService"/>
+
                 </entry>
                 <entry>
                     <key><util:constant static-field="eu.alertproject.iccs.events.api.Topics.ALERT_METADATA_IdentityUpdate_Stored"/></key>

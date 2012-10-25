@@ -171,6 +171,11 @@ public class DefaultAuthenticationService implements AuthenticationService {
     }
 
     @Override
+    public void initSession(String email) {
+        authSession.put(email,System.currentTimeMillis());
+    }
+
+    @Override
     public void logout(String email) {
 
         if(authSession.containsKey(email)){

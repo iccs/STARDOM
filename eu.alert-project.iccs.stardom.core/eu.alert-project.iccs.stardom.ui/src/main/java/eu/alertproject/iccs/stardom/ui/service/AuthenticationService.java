@@ -15,6 +15,6 @@ public interface AuthenticationService {
     boolean authenticate(ProfileBean identity);
     void logout(String email);
     AuthenticationInfo checkAuthenticationInfo(String email);
-
+    void initSession(String email);
 
 }

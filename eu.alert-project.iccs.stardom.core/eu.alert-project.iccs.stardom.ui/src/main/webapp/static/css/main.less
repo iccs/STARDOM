@@ -12,7 +12,7 @@ table { border-collapse: separate; border-spacing: 0; } /* tables still need 'ce
 blockquote:before, blockquote:after, q:before, q:after { content: ""; }
 blockquote, q { quotes: "" ""; }
 
-@blue:#3A6997;
+@blue:#ADD94E;
 
 @layout-identity:25%;
 @layout-profile:35%;
@@ -419,6 +419,7 @@ div.pagination{
 
 
 .tabswrapper {
+    position:relative;
     margin:10px;
     padding: 10px;
     -moz-box-shadow: 0px 0px 3px #aaa;
@@ -517,7 +518,14 @@ a.nice-button{
         #B6DE8F 78%
     );
 
-    filter: ~"progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=rgb(150,200,100),endColorstr=rgb(182,222,143));"
+    filter: ~"progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=rgb(150,200,100),endColorstr=rgb(182,222,143));";
+
+
+    &.center{
+        float: none;
+        margin:0 auto;
+        width:100px;
+    }
 }
 
 .clearfix:after {
