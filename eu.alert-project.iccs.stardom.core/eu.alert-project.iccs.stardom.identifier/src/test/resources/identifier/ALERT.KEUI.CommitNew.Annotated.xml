@@ -9,7 +9,11 @@
                     <wsa:Address>http://www.alert-project.eu/metadata</wsa:Address>
                 </wsnt:ProducerReference>
                 <wsnt:Message>
-                    <ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:sm="http://www.alert-project.eu/stardom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/"
+                               xmlns:o="http://www.alert-project.eu/ontoevents-mdservice"
+                               xmlns:s="http://www.alert-project.eu/strevents-kesi"
+                               xmlns:s1="http://www.alert-project.eu/strevents-keui"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
                         <ns1:head>
                             <ns1:sender>METADATASERVICE</ns1:sender>
                             <ns1:timestamp>10003</ns1:timestamp>

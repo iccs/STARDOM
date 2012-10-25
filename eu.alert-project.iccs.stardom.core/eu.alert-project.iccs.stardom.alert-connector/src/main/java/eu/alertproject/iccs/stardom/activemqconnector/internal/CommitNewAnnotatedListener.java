@@ -90,12 +90,10 @@ public class CommitNewAnnotatedListener extends STARDOMActiveMQListener {
         scmAction.setType(ScmAction.RepositoryType.Git);
         scmAction.setFiles(extractToScmFiles(kesi));
         scmAction.setConcepts(keui.getCommitMessageLogConcepts());
-
         context.setAction(scmAction);
 
         if(isIgnoredBasedOnDate(kesi.getDate())){return;}
 
-        fixProfile(context);
         ScmEvent scmEvent = new ScmEvent(this,context);
 
         Bus.publish(scmEvent);

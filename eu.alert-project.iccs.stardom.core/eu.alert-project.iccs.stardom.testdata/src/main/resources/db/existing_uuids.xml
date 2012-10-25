@@ -1,0 +1,120 @@
+<dataset>
+    <metric/>
+    <metric_quantitative/>
+    <metric_temporal/>
+    <its_ml/>
+    <sequence
+            sequence_name="its_ml_sequence"
+            sequence_index="1"/>
+    <sequence
+            sequence_name="metric_sequence"
+            sequence_index="1"/>
+
+    <sequence
+            sequence_name="profile_sequence"
+            sequence_index="8"/>
+
+    <identity
+            id="1"
+            uuid="fd2a6ff5-0397-41d3-8b83-d9fb90f9ee3e"
+            />
+
+
+    <profile
+            id="1"
+            name="Dario"
+            lastname="Freddi"
+            username="drf kde org"
+            email="drf kde org"
+            source="its"
+            source_id="none"/>
+
+    <profile
+            id="2"
+            name="NULL"
+            username="drf kde org"
+            email="drf@kde.org"
+            source="its-change"
+            source_id="200"/>
+
+    <profile
+            id="3"
+            name="Dario"
+            lastname="Freddi"
+            username="drf kde org"
+            source="scm"
+            source_id="809"/>
+
+    <profile
+            id="4"
+            name="Dario"
+            lastname="Freddi"
+            username="drf54321 gmail com"
+            source="mailing"
+            source_id="none"/>
+
+    <profile
+            id="5"
+            name="Dario"
+            lastname="Freddi"
+            username="drf"
+            email="drf"
+            source="its"
+            source_id="none"
+            uri="http://www.alert-project.eu/ontologies/alert_scm.owl#Person22"/>
+
+    <profile
+            id="6"
+            name="Dario"
+            lastname="Freddi"
+            email="drf kde org"
+            source="mailing"
+            source_id="none"
+            uri="http://www.alert-project.eu/ontologies/alert_scm.owl#Person1575"/>
+
+    <profile
+            id="7"
+            username="drf"
+            email="drf"
+            source="its-change"
+            source_id="none"
+            uri="http://www.alert-project.eu/ontologies/alert_scm.owl#Person22"/>
+
+    <identity_is_profile
+            identity_id="1"
+            profile_id="1"/>
+
+    <identity_is_profile
+            identity_id="1"
+            profile_id="2"/>
+
+
+
+    <identity_is_profile
+            identity_id="1"
+            profile_id="3"/>
+
+
+
+    <identity_is_profile
+            identity_id="1"
+            profile_id="4"/>
+
+
+
+    <identity_is_profile
+            identity_id="1"
+            profile_id="5"/>
+
+
+
+    <identity_is_profile
+            identity_id="1"
+            profile_id="6"/>
+
+    <identity_is_profile
+            identity_id="1"
+            profile_id="7"/>
+
+
+</dataset>

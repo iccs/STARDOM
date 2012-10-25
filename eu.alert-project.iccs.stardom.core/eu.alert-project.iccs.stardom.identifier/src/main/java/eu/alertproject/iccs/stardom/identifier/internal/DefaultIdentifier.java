@@ -102,6 +102,8 @@ public class DefaultIdentifier implements Identifier{
         //check if any of the information in between them is the same
         List<Double> ifs = new ArrayList<Double>();
 
+
+        //add uri
         if(
                 (!StringUtils.isEmpty(a.getName()) && !StringUtils.isEmpty(b.getName()))
             &&  StringUtils.equalsIgnoreCase(a.getName(),b.getName())){
@@ -360,6 +362,7 @@ public class DefaultIdentifier implements Identifier{
             String incomingLastname = StringUtils.trimToEmpty(profile.getLastname());
             String incomingUsername = StringUtils.trimToEmpty(profile.getUsername());
             String incomingEmail = StringUtils.trimToEmpty(profile.getEmail());
+            String incomingUri = StringUtils.trimToEmpty(profile.getUri());
 
 
 
@@ -369,12 +372,16 @@ public class DefaultIdentifier implements Identifier{
                 String existingLastname = StringUtils.trimToEmpty(existing.getLastname());
                 String existingUsername = StringUtils.trimToEmpty(existing.getUsername());
                 String existingEmail = StringUtils.trimToEmpty(existing.getEmail());
+                String existingUri = StringUtils.trimToEmpty(existing.getUri());
 
                 if(
                     existingName.toLowerCase().equals(incomingName.toLowerCase())
                     && existingLastname.toLowerCase().equals(incomingLastname.toLowerCase())
                     && existingUsername.toLowerCase().equals(incomingUsername.toLowerCase())
-                    && existingEmail.toLowerCase().equals(incomingEmail.toLowerCase())){
+                    && existingEmail.toLowerCase().equals(incomingEmail.toLowerCase())
+                    && existingUri.toLowerCase().equals(incomingUri.toLowerCase())
+
+                        ){
 
                     profileExists = true;
                     break;

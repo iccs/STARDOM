@@ -29,7 +29,7 @@ public class ALERTUtils {
 
 
         String name1 = StringUtils.defaultIfEmpty(split[0], null);
-        String lastname = split.length >= 2 ? StringUtils.substringAfter(name, " ") : "";
+        String lastname = split.length >= 2 ? StringUtils.substringAfter(name, " ") : null;
         String id = author.getId();
         String email = author.getEmail();
         return new Profile(
@@ -52,17 +52,14 @@ public class ALERTUtils {
     public static Profile extractProfile(KesiSCM kesi,MdServiceSCM mdservice,String source){
 
         Author author = kesi.getAuthor();
+        String authorUri = mdservice.getAuthorUri();
 
 
         if(author == null){
             author = kesi.getCommitter();
-        }
-
-
-        String authorUri = mdservice.getAuthorUri();
-        if(authorUri == null){
             authorUri = mdservice.getCommitterUri();
         }
+
 
         return extractProfile(author,authorUri,source);
 

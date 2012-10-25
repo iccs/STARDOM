@@ -9,7 +9,11 @@
                     <wsa:Address>http://www.alert-project.eu/metadata</wsa:Address>
                 </wsnt:ProducerReference>
                 <wsnt:Message>
-                    <ns1:event xmlns:ns1="http://www.alert-project.eu/" xmlns:o="http://www.alert-project.eu/ontoevents-mdservice" xmlns:r="http://www.alert-project.eu/rawevents-forum" xmlns:r1="http://www.alert-project.eu/rawevents-mailinglist" xmlns:r2="http://www.alert-project.eu/rawevents-wiki" xmlns:s="http://www.alert-project.eu/strevents-kesi" xmlns:s1="http://www.alert-project.eu/strevents-keui" xmlns:sm="http://www.alert-project.eu/stardom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alert-project.eu/alert-root.xsd">
+                    <ns1:event xmlns:ns1="http://www.alert-project.eu/"
+                               xmlns:o="http://www.alert-project.eu/ontoevents-mdservice"
+                               xmlns:s="http://www.alert-project.eu/strevents-kesi"
+                               xmlns:s1="http://www.alert-project.eu/strevents-keui"
+                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
                         <ns1:head>
                             <ns1:sender>METADATASERVICE</ns1:sender>
                             <ns1:timestamp>10003</ns1:timestamp>
@@ -25,11 +29,6 @@
                             </ns1:meta>
                             <ns1:eventData>
                                 <s:kesi>
-                                    <s:commitAuthor>
-                                        <s:email>drf@kde.org</s:email>
-                                        <s:name>Dario Freddi</s:name>
-                                        <s:id>drf@kde.org</s:id>
-                                    </s:commitAuthor>
                                     <s:commitDate>2011-01-07 13:51:46.0</s:commitDate>
                                     <s:commitMessageLog>    Fix typo in the policy agent
 
@@ -216,7 +215,7 @@
                                 <o:mdservice>
                                     <o:commitUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Commit269</o:commitUri>
                                     <o:commitAuthorUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1621</o:commitAuthorUri>
-                                    <o:commitCommitterUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1621</o:commitCommitterUri>
+                                    <o:commitCommitterUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Person1620</o:commitCommitterUri>
                                     <o:commitRepositoryUri>http://www.alert-project.eu/ontologies/alert_scm.owl#Repository1</o:commitRepositoryUri>
                                     <o:commitFile>
                                         <o:fileUri>http://www.alert-project.eu/ontologies/alert_scm.owl#File954</o:fileUri>
