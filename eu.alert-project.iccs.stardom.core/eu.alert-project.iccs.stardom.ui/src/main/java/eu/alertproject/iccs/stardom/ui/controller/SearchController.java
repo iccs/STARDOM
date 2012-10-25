@@ -1,6 +1,7 @@
 package eu.alertproject.iccs.stardom.ui.controller;
 
 import eu.alertproject.iccs.stardom.domain.api.Metric;
+import eu.alertproject.iccs.stardom.ui.beans.CIResults;
 import eu.alertproject.iccs.stardom.ui.service.DefaultIdentityMergeService;
 import eu.alertproject.iccs.stardom.ui.beans.SearchResult;
 import eu.alertproject.iccs.stardom.ui.service.MergeService;
@@ -66,6 +67,11 @@ public class SearchController {
 
         return m;
 
+    }
+
+    @RequestMapping(value = "/{uuid}/uuid", method = RequestMethod.GET)
+    public @ResponseBody CIResults searchByUuid(@PathVariable("uuid") String uuid){
+        return searchService.searchByUuid(uuid);
     }
 
     @RequestMapping(value = "/quantitative/{query}", method = RequestMethod.GET)

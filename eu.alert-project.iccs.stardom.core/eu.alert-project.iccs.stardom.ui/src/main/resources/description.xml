@@ -1,0 +1,280 @@
+<ci>
+    <classifier name="core developers" prior="1.0">
+        <metric name="ForumActivityMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ForumTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsActivityMetric">
+            <s>10.2948</s>
+            <c>12.4976815</c>
+        </metric>
+        <metric name="ItsIssuesResolvedMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="MailingListActivityMetric">
+            <s>28.65345</s>
+            <c>1.40679353</c>
+        </metric>
+        <metric name="MailingListTemporalMetric">
+            <s>0.1234</s>
+            <c>0.0002</c>
+        </metric>
+        <metric name="ScmActivityMetric">
+            <s>2.52312 </s>
+            <c>69.52258943</c>
+        </metric>
+        <metric name="ScmApiIntroducedMetric">
+            <s>13.5938</s>
+            <c>18.6179986</c>
+        </metric>
+        <metric name="ScmApiUsageCountMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ScmTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+    </classifier>
+    <classifier name="testers" prior="2.0">
+        <metric name="ForumActivityMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ForumTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsActivityMetric">
+            <s>1.234</s>
+            <c>1.4976815</c>
+        </metric>
+        <metric name="ItsIssuesResolvedMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="MailingListActivityMetric">
+            <s>0.9482</s>
+            <c>1.40679353</c>
+        </metric>
+        <metric name="MailingListTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ScmActivityMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ScmApiIntroducedMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ScmApiUsageCountMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ScmTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+    </classifier>
+
+    <classifier name="bug triagers" prior="3.0">
+        <metric name="ForumActivityMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ForumTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsActivityMetric">
+            <s> 195</s>
+            <c>11.4976815</c>
+        </metric>
+        <metric name="ItsIssuesResolvedMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="MailingListActivityMetric">
+            <s>0.5  </s>
+            <c>1.840679353</c>
+        </metric>
+        <metric name="MailingListTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ScmActivityMetric">
+            <s>159.5</s>
+            <c>639.52258943</c>
+        </metric>
+        <metric name="ScmApiIntroducedMetric">
+            <s>213.5</s>
+            <c>328.6179986</c>
+        </metric>
+        <metric name="ScmApiUsageCountMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ScmTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+    </classifier>
+    <classifier name="developers to engage" prior="1.0">
+        <metric name="ForumActivityMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ForumTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsActivityMetric">
+            <s>1.2345</s>
+            <c> 10.4976815</c>
+        </metric>
+        <metric name="ItsIssuesResolvedMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="MailingListActivityMetric">
+            <s>2.9549</s>
+            <c>1.230679353</c>
+        </metric>
+        <metric name="MailingListTemporalMetric">
+            <s>0.1234</s>
+            <c>0.0002</c>
+        </metric>
+        <metric name="ScmActivityMetric">
+            <s>684.533</s>
+            <c>429.52258943</c>
+        </metric>
+        <metric name="ScmApiIntroducedMetric">
+            <s>83.932</s>
+            <c>320.6179986</c>
+        </metric>
+        <metric name="ScmApiUsageCountMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ScmTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+    </classifier>
+    <classifier name="occasional contributors" prior="2.0">
+        <metric name="ForumActivityMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ForumTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsActivityMetric">
+            <s>0.5 </s>
+            <c>13.4976815</c>
+        </metric>
+        <metric name="ItsIssuesResolvedMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="MailingListActivityMetric">
+            <s>0.9482</s>
+            <c>1.40679353</c>
+        </metric>
+        <metric name="MailingListTemporalMetric">
+            <s>0.19408867</s>
+            <c>2.40679353</c>
+        </metric>
+        <metric name="ScmActivityMetric">
+            <s>4885</s>
+            <c>809.52258943</c>
+        </metric>
+        <metric name="ScmApiIntroducedMetric">
+            <s>4767</s>
+            <c>308.6179986</c>
+        </metric>
+        <metric name="ScmApiUsageCountMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ScmTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+    </classifier>
+
+    <classifier name="reviewers" prior="3.0">
+        <metric name="ForumActivityMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ForumTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsActivityMetric">
+            <s>2.17241379</s>
+            <c>12.4976815</c>
+        </metric>
+        <metric name="ItsIssuesResolvedMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ItsTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="MailingListActivityMetric">
+            <s>0.19408867</s>
+            <c>1.40679353</c>
+        </metric>
+        <metric name="MailingListTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ScmActivityMetric">
+            <s>103.27487685</s>
+            <c>679.52258943</c>
+        </metric>
+        <metric name="ScmApiIntroducedMetric">
+            <s>73.28374384</s>
+            <c>398.6179986</c>
+        </metric>
+        <metric name="ScmApiUsageCountMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+        <metric name="ScmTemporalMetric">
+            <s>0.0</s>
+            <c>0.0</c>
+        </metric>
+    </classifier>
+</ci>

@@ -1,5 +1,9 @@
 package eu.alertproject.iccs.stardom.ui.service;
 
+import eu.alertproject.iccs.events.stardom.StardomCIUpdatePayload;
+import eu.alertproject.iccs.stardom.classification.CI;
+import eu.alertproject.iccs.stardom.classification.CIUtils;
+import eu.alertproject.iccs.stardom.constructor.api.CiCalculatorService;
 import eu.alertproject.iccs.stardom.datastore.api.dao.IdentityDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.MetricDao;
 import eu.alertproject.iccs.stardom.datastore.api.dao.ProfileDao;
@@ -12,13 +16,19 @@ import eu.alertproject.iccs.stardom.domain.api.Metric;
 import eu.alertproject.iccs.stardom.domain.api.MetricQuantitative;
 import eu.alertproject.iccs.stardom.domain.api.Profile;
 import eu.alertproject.iccs.stardom.domain.api.metrics.*;
+import eu.alertproject.iccs.stardom.ui.beans.CIResults;
 import eu.alertproject.iccs.stardom.ui.beans.MetricResult;
 import eu.alertproject.iccs.stardom.ui.beans.SearchResult;
+import org.apache.commons.math.distribution.NormalDistribution;
+import org.apache.commons.math.distribution.NormalDistributionImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -29,6 +39,8 @@ import java.util.*;
 @Service("searchService")
 public class SearchService {
 
+    private Logger logger = LoggerFactory.getLogger(SearchService.class);
+
     @Autowired
     ProfileDao profileDao;
 
@@ -36,13 +48,19 @@ public class SearchService {
     IdentityDao identityDao;
 
     @Autowired
+    CiCalculatorService ciCalculatorService;
+
+    @Autowired
     MetricDao metricDao;
     private HashMap<String, MetricValueStrategy<? extends Metric>> metrics;
+    private CI ci;
 
 
     @PostConstruct
-    public void init(){
-                 //get the metrics for each
+    public void init() throws IOException {
+
+        ci = CIUtils.loadFromDefaultLocation();
+        //get the metrics for each
         metrics = new HashMap<String,MetricValueStrategy<? extends Metric>>();
 
         metrics.put("ScmActivityMetric", new NumberMetricValueStrategy<ScmTemporalMetric>(ScmTemporalMetric.class));
@@ -86,6 +104,66 @@ public class SearchService {
 
         return map;
     }
+
+
+    @Transactional(readOnly = true)
+    public CIResults searchByUuid(String uuid){
+
+        Identity byProfileUuid = identityDao.findByProfileUuid(uuid);
+        //get the ci
+        List<CI.Classifier> classifiers = ci.getClassifiers();
+
+        Map<String, Double> ciForClass = new HashMap<String, Double>();
+        Map<String, Integer> metricsValues = new HashMap<String, Integer>();
+
+        for(CI.Classifier classifier : classifiers){
+
+            List<CI.Classifier.Metric> classifierMetrics = classifier.getMetrics();
+
+            Double prob = classifier.getPrior();
+
+            for(CI.Classifier.Metric cim: classifierMetrics){
+
+                try {
+                    if(metrics.containsKey(cim.getName())){
+
+                        Integer value = metrics.get(cim.getName()).getValue(metricDao, byProfileUuid);
+                        metricsValues.put(cim.getName(),value);
+
+                        if(cim.getStandardDeviation() > 0.0){
+                            NormalDistribution d = new NormalDistributionImpl(cim.getMean(),cim.getStandardDeviation());
+                            if(value >= cim.getMean()){
+                                prob *= d.density(cim.getMean());
+                            }else{
+                                prob *= d.density(Double.valueOf(value));
+                            }
+                        }else{
+                            prob *=1;
+                        }
+
+                    }
+                } catch (RuntimeException e) {
+                    logger.warn("The metric standard deviation is incorrect",e);
+                    prob=0.0;
+                } finally {
+                }
+            }
+
+            ciForClass.put(classifier.getName(),prob);
+
+        }
+
+
+        return new CIResults(
+            byProfileUuid.getUuid(),
+            getMetricsResultList(byProfileUuid),
+            getProfiles(byProfileUuid),
+            ciForClass
+        );
+
+    }
+
+
 
     @Transactional(readOnly = true)
     public Map<String, SearchResult> searchMetricQuantitative(int quantity){
