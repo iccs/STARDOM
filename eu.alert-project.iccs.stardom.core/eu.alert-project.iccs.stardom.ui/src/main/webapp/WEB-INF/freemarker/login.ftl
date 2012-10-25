@@ -19,18 +19,22 @@ recommend sticking to 'spring' -->
 </head>
 <body>
 
-<div class="form-container">
+<div class="container">
+
+<div class="form-container tabswrapper">
     <form method="POST" action="<@spring.url "/login/authenticate" />" >
 
     <@iccs.field "identity.email"/>
     <@iccs.password "identity.code"/>
 
-    <div class="form-controls">
-        <input type="submit" value="Login" name="login"/>
-        <input type="submit" value="Remind Me" name="remind"/>
+    <div class="form-controls clearfix">
+        <input type="submit" value="Register" name="register" class="nice-button"/>
+        <input type="submit" value="Login" name="login" class="nice-button"/>
+        <input type="submit" value="Remind Me" name="remind" class="nice-button"/>
     </div>
 
     </form>
+</div>
 </div>
 
 </body>

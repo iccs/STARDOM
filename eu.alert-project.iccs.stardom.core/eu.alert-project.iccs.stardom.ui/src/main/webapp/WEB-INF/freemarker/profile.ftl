@@ -19,7 +19,9 @@ recommend sticking to 'spring' -->
 </head>
     <body>
 
-        <div class="form-container">
+    <div class="container">
+
+        <div class="form-container tabswrapper">
         <form method="POST" action="<@spring.url "/profile/create" />" >
 
             <@iccs.field "identity.name"/>
@@ -29,10 +31,12 @@ recommend sticking to 'spring' -->
             <@iccs.textField "identity.description"/>
 
             <div class="form-controls">
-                <input type="submit" value="Create"/>
+                <a href="<@spring.url "/login"/>" class="nice-button" >Back</a>
+                <input type="submit" value="Create" class="nice-button"/>
             </div>
         </form>
         </div>
+    </div>
 
     </body>
 </html>

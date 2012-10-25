@@ -5,7 +5,7 @@ recommend sticking to 'spring' -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>Identity Representation</title>
@@ -19,7 +19,12 @@ recommend sticking to 'spring' -->
 </head>
 <body>
 
-<h1>An access code has been sent to <strong>${email}</strong></h1>
-<p>Please check you <strong>junk mail</strong></p>
-<a href="<@spring.url "/login" />" >Login</a>
+<div class="container">
+
+    <div class="tabswrapper padding-10">
+        <h1>An access code has been sent to <strong>${email}</strong></h1>
+        <p>Please check you <strong>junk mail</strong></p>
+        <a class="nice-button" href="<@spring.url "/login" />" >Login</a>
+    </div>
+
 </body>

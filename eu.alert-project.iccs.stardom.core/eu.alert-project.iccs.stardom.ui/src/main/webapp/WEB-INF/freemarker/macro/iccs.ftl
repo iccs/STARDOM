@@ -5,7 +5,7 @@
     </span>
 </#macro>
 <#macro field name>
-<div class="form-field">
+<div class="form-field clearfix">
     <div class="form-label">
         <@spring.message "${name}" />
     </div>

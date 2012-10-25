@@ -67,6 +67,10 @@ public class ProfileController {
         return new ModelAndView("login",mm);
     }
 
+    @RequestMapping(value="/login/authenticate",method = RequestMethod.POST,params = "register")
+    public String regiseter(){
+        return "redirect:/profile";
+    }
     @RequestMapping(value="/login/authenticate",method = RequestMethod.POST,params = "login")
     public ModelAndView login(
                               @ModelAttribute("identity") ProfileBean identity,
