@@ -14,17 +14,73 @@
 
     <dependencies>
 
+
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <!-- Jpa -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.java-persistence</groupId>
+            <artifactId>jpa-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <version>${project.version}</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>domain</artifactId>
+        </dependency>
+        <dependency>
+            <version>${project.version}</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>datastore</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>eu.alert-project.iccs.events</groupId>
             <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <version>${project.version}</version>
-            <artifactId>alert-connector</artifactId>
-            <classifier>war</classifier>
-        </dependency>
+
     </dependencies>
 
 
