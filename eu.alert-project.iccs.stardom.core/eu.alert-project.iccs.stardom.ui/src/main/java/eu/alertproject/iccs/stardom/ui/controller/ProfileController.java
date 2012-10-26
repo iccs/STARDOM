@@ -187,15 +187,11 @@ public class ProfileController {
 
                 Profile p = new Profile();
                 p.setEmail(identity.getEmail());
-                p.setLastname(identity.getEmail());
+                p.setLastname(identity.getLastname());
                 p.setName(identity.getName());
                 p.setUsername(identity.getUsername());
-                Identity smIdentity = identifier.find(
-                        p
-                        , "form");
+                Identity smIdentity = identifier.find(p, "form");
 
-
-              
 
                 IdentityPersons.Persons.Person newPerson = new IdentityPersons.Persons.Person();
 

@@ -236,29 +236,31 @@ public class DefaultIdentifier implements Identifier{
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Identity find(Profile profile, String source) {
+    public Identity find(Profile incomingProfile, String source) {
 
         lock.lock();
         try{
 
         //sluggify profile email
-        profile.setEmail(sluggifierService.sluggify(profile.getEmail()));
-        profile.setUsername(sluggifierService.sluggify(profile.getUsername()));
-        profile.setSource(source);
+//        incomingProfile.setEmail(sluggifierService.sluggify(incomingProfile.getEmail()));
+        String incomingSlugifiedEmail = sluggifierService.sluggify(incomingProfile.getEmail());
 
-        List<Identity> possibleMatches = identityDao.findPossibleMatches(profile);
+        incomingProfile.setUsername(sluggifierService.sluggify(incomingProfile.getUsername()));
+        incomingProfile.setSource(source);
+
+        List<Identity> possibleMatches = identityDao.findPossibleMatches(incomingProfile);
         Map<Identity, List<Profile>> matches = new HashMap<Identity, List<Profile>>();
 
         for(Identity i : possibleMatches){
 
             logger.trace("List<Identity> identify() find candidate identity  ");
-            List<Profile> identityMatchedProfiles = hasMatchingPoperty(i, profile);
+            List<Profile> identityMatchedProfiles = hasMatchingPoperty(i, incomingProfile);
 
             if(identityMatchedProfiles.size() <= 0 ){
                 logger.trace("List<Identity> identify() No matching cadidate found, a new one is created");
 
                 Identity newIdentity = new Identity();
-                newIdentity.addToProfiles(profile);
+                newIdentity.addToProfiles(incomingProfile);
 
                 Identity insert = identityDao.insert(i);
                 return insert;
@@ -304,8 +306,8 @@ public class DefaultIdentifier implements Identifier{
             List<Profile> possibleProfiles = matches.get(next);
             for(Profile lookupProfile : possibleProfiles){
 
-                logger.trace("List<Identity> identify() checking {} agains {} ",profile, lookupProfile);
-                double anIf = getIf(profile, lookupProfile);
+                logger.trace("List<Identity> identify() checking {} agains {} ", incomingProfile, lookupProfile);
+                double anIf = getIf(incomingProfile, lookupProfile);
 
                 logger.trace("List<Identity> identify() got an IF of {} ",anIf);
                 if(anIf >= this.getWeightConfiguration().getThreshold()){
@@ -330,7 +332,7 @@ public class DefaultIdentifier implements Identifier{
             //no one was matched, create the identity
             logger.trace("List<Identity> identify() No possible identity matched  a new one is created");
             Identity newIdentity = new Identity();
-            newIdentity.addToProfiles(profile);
+            newIdentity.addToProfiles(incomingProfile);
             Identity insert = identityDao.insert(newIdentity);
 
             return insert;
@@ -358,11 +360,11 @@ public class DefaultIdentifier implements Identifier{
 
             boolean profileExists = false;
 
-            String incomingName = StringUtils.trimToEmpty(profile.getName());
-            String incomingLastname = StringUtils.trimToEmpty(profile.getLastname());
-            String incomingUsername = StringUtils.trimToEmpty(profile.getUsername());
-            String incomingEmail = StringUtils.trimToEmpty(profile.getEmail());
-            String incomingUri = StringUtils.trimToEmpty(profile.getUri());
+            String incomingName = StringUtils.trimToEmpty(incomingProfile.getName());
+            String incomingLastname = StringUtils.trimToEmpty(incomingProfile.getLastname());
+            String incomingUsername = StringUtils.trimToEmpty(incomingProfile.getUsername());
+            String incomingEmail = StringUtils.trimToEmpty(incomingProfile.getEmail());
+            String incomingUri = StringUtils.trimToEmpty(incomingProfile.getUri());
 
 
 
@@ -391,7 +393,7 @@ public class DefaultIdentifier implements Identifier{
             }
 
             if(!profileExists){
-                byId.addToProfiles(profile);
+                byId.addToProfiles(incomingProfile);
             }
 
 
