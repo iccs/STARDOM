@@ -23,6 +23,7 @@
             <groupId>${project.groupId}</groupId>
             <version>${project.version}</version>
             <artifactId>alert-connector</artifactId>
+            <classifier>war</classifier>
         </dependency>
     </dependencies>
 
