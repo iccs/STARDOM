@@ -144,6 +144,7 @@ public class DefaultAuthenticationService implements AuthenticationService {
 
                 }else{
 
+
                     authSession.remove(identity.getEmail());
                 }
 
